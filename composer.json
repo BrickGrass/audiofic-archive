@@ -35,7 +35,8 @@
         "drupal/twig_tweak": "^3.2",
         "drupal/vfd": "^2.0",
         "cweagans/composer-patches": "^1.7",
-        "drush/drush": "^11 || ^12"
+        "drush/drush": "^11 || ^12",
+        "drupal/field_group": "^3.4"
     },
     "require-dev": {
         "drupal/core-dev": "^10"
