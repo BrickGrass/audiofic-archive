@@ -37,7 +37,8 @@
         "cweagans/composer-patches": "^1.7",
         "drush/drush": "^11 || ^12",
         "drupal/field_group": "^3.4",
-        "drupal/podcast": "^1.5"
+        "drupal/podcast": "^1.5",
+        "drupal/epp": "^1.6"
     },
     "require-dev": {
         "drupal/core-dev": "^10"
