@@ -38,7 +38,8 @@
         "drush/drush": "^11 || ^12",
         "drupal/field_group": "^3.4",
         "drupal/podcast": "^1.5",
-        "drupal/epp": "^1.6"
+        "drupal/epp": "^1.6",
+        "drupal/field_formatter_file_size": "^2.0"
     },
     "require-dev": {
         "drupal/core-dev": "^10"
