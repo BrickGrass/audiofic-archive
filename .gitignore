@@ -58,7 +58,6 @@
 /drush/Commands/contrib/
 /web/core/
 /web/modules/contrib/
-!/web/modules/contrib/field_formatter_file_size/
 /web/themes/contrib/
 /web/profiles/contrib/
 /web/libraries/
