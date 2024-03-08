@@ -22,6 +22,7 @@
 {# <rss version="2.0" xml:base="{{ link }}"{{ namespaces }}> #}
 <rss version="2.0" xml:base="https://dev-audiofic.pantheonsite.io/" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:podcast="https://podcastindex.org/namespace/1.0" xmlns:atom="http://www.w3.org/">
   <channel>
+  <atom:link href="https://www.podstandards.org/my-podcast.rss" rel="self" type="application/rss+xml" />
     <language>{{ langcode }}</language>
     {% for item in podcast_elements -%}
       <{{ item.key }}{{ item.attributes -}}
