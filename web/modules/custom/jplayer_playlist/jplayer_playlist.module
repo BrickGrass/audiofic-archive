@@ -1,0 +1,47 @@
+<?php
+
+/**
+ * @file
+ * Contains jplayer_playlist.module.
+ */
+
+use Drupal\views\ViewExecutable;
+use Drupal\Core\File\FileSystemInterface;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function jplayer_playlist_views_pre_render(\Drupal\views\ViewExecutable $view) {
+  if ($view->id() == 'chapter') {
+    $mp3Files = [];
+    foreach ($view->result as $row) {
+      if ($row->_entity->hasField('field_audiofield') && !$row->_entity->get('field_audiofield')->isEmpty()) {
+        foreach ($row->_entity->get('field_audiofield') as $item) {
+          if ($item->entity) {
+            // $audio_file = $item->entity->getFileUri();
+            // $audio_url = '';
+            $file = \Drupal\file\Entity\File::load($item->entity->id());
+            $audio_url = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+            $mp3Files[] = [
+              'title' => $row->_entity->label(),
+              'url' => $audio_url,
+            ];
+          }
+        }
+      }
+    }
+    \Drupal::messenger()->addMessage(print_r($mp3Files, TRUE));
+    $view->element['#attached']['drupalSettings']['jplayer_playlist']['mp3Files'] = $mp3Files;
+    $view->element['#attached']['library'][] = 'jplayer_playlist/jplayer_playlist';
+  }
+}
+
+function jplayer_playlist_theme($existing, $type, $theme, $path) {
+  return [
+    'jplayer' => [
+      'template' => 'jplayer',
+      'path' => $path . '/templates',
+    ],
+  ];
+}

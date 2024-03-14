@@ -1,0 +1,13 @@
+jplayer_playlist:
+  version: 1.x
+  css:
+    theme:
+      css/skin/pink.flag/css/jplayer.pink.flag.min.css: {}
+      css/custom.css: {}
+  js:
+    https://cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.min.js: { type: external, minified: true }
+    https://cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/add-on/jplayer.playlist.min.js: { type: external, minified: true }
+    js/jplayer_playlist.js: {}
+    js/jplayer.playlist.min.js: {}
+  dependencies:
+    - core/jquery

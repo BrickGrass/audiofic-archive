@@ -1,0 +1,6 @@
+name: jPlayer Playlist
+description: A custom module that uses the jPlayer library to play a list of MP3 files.
+core_version_requirement: ^8 || ^9 || ^10
+type: module
+libraries:
+  - jplayer_playlist/jplayer_playlist
