@@ -1,3 +1,5 @@
 .jp-audio {
     width: 100%!important;
+    min-height: 300px!important;
+    margin-bottom: 50px!important;
 }
