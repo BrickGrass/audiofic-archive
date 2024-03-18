@@ -2,7 +2,8 @@ jplayer_playlist:
   version: 1.x
   css:
     theme:
-      css/skin/pink.flag/css/jplayer.pink.flag.min.css: {}
+      #css/skin/pink.flag/css/jplayer.pink.flag.min.css: {}
+      css/skin/blue.monday/css/jplayer.blue.monday.min.css: {}
       css/custom.css: {}
   js:
     https://cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.min.js: { type: external, minified: true }
