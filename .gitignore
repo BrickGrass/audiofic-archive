@@ -61,6 +61,8 @@
 /web/themes/contrib/
 /web/profiles/contrib/
 !/web/libraries/
+!/web/libraries/jplayer/
+!/web/libraries/*
 /web/private/scripts/quicksilver
 
 
