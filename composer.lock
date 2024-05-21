@@ -3029,56 +3029,6 @@
             }
         },
         {
-            "name": "drupal/media_name",
-            "version": "1.0.0-alpha3",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/media_name.git",
-                "reference": "8.x-1.0-alpha3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/media_name-8.x-1.0-alpha3.zip",
-                "reference": "8.x-1.0-alpha3",
-                "shasum": "635a3c153e49c4ddcf20c4b059f72b44d6463b04"
-            },
-            "require": {
-                "drupal/core": "^8.8.0 || ^9.0 || ^10"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "8.x-1.0-alpha3",
-                    "datestamp": "1689018051",
-                    "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Project has not opted into security advisory coverage!"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "colorfield",
-                    "homepage": "https://www.drupal.org/u/colorfield",
-                    "role": "Maintainer"
-                }
-            ],
-            "description": "If the Media name is displayed on the create/edit form, make it not mandatory. If the name has been set previously or updated, preserve it on file change.",
-            "homepage": "http://drupal.org/project/media_name",
-            "keywords": [
-                "Drupal",
-                "Media"
-            ],
-            "support": {
-                "source": "http://cgit.drupalcode.org/media_name",
-                "issues": "https://www.drupal.org/project/issues/media_name"
-            }
-        },
-        {
             "name": "drupal/pathauto",
             "version": "1.12.0",
             "source": {
@@ -13550,8 +13500,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "pantheon-upstreams/upstream-configuration": 20,
-        "drupal/inline_entity_form": 5,
-        "drupal/media_name": 15
+        "drupal/inline_entity_form": 5
     },
     "prefer-stable": true,
     "prefer-lowest": false,
