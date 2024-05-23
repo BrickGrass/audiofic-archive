@@ -40,7 +40,8 @@
         "drupal/podcast": "^1.5",
         "drupal/epp": "^1.6",
         "drupal/field_formatter_file_size": "^2.0",
-        "drupal/file_download": "^1.6"
+        "drupal/file_download": "^1.6",
+        "drupal/taxonomy_unique": "^2.5"
     },
     "require-dev": {
         "drupal/core-dev": "^10"
