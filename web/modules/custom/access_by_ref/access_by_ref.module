@@ -1,0 +1,215 @@
+<?php
+
+use Drupal\node\NodeInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\user\Entity\User;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Routing\Access\AccessInterface;
+use Drupal\Core\Entity;
+
+function haveNodeAccess($target_id, $op, $account){
+
+    $target_node = \Drupal::service('entity_type.manager')->getStorage('node')->load($target_id);
+
+    if(isset($target_node) && $target_node->access($op) !== false){
+        return $target_node;
+    }
+    else{
+        return false;
+    }
+
+}
+
+function haveUserAccess($target_id, $op, $account){
+
+    $target_user = \Drupal::service('entity_type.manager')->getStorage('user')->load($target_id);
+
+    if(isset($target_user) && $target_user->access($op) !== false){
+        return $target_user;
+    }
+    else{
+        return false;
+    }
+
+}
+
+/******************
+ *
+ * If access not already granted, and if it's a content type we manage, and if user has permission
+ * Check to see whether the content meets one of the access by reference conditions and grant accordingly
+ *
+ ******************/
+
+function access_by_ref_node_access(NodeInterface $node, $op, AccountInterface $account) {
+
+    // Perform basic access checks
+    if(
+        !isset($account) || $op == 'create' || $account->id() == 0 || !isset($node) || !$account->hasPermission('access node by reference')
+    ) {
+        return AccessResult::neutral();
+    }
+
+    $configs = access_by_ref_get_config($node);
+
+    $control_entity = $node;
+
+    foreach($configs as $config){
+        /** @var  $config \Drupal\access_by_ref\Entity\Abrconfig  **/
+
+        $grant_access_read = false;
+        $grant_access_update = false;
+        $grant_access_delete = false;
+
+        $field_str = $config->getField();
+        $node_field = $node->$field_str;
+        $node_field_value = $node->$field_str->getValue();
+
+        $config_bool_read = $config->getRightsRead();
+        $config_bool_update = $config->getRightsUpdate();
+        $config_bool_delete = $config->getRightsDelete();
+
+        switch($config->getReferenceType()){
+
+            case 'user':  //allow if user is in this field
+
+                $uid = (\Drupal::currentUser()->id());
+
+                foreach($node_field_value as $value){
+                    if(isset($value['target_id']) && $value['target_id'] == $uid){
+                        $control_entity = \Drupal::currentUser();
+                        $grant_access_read = $config_bool_read ? true : false;
+                        $grant_access_update = $config_bool_update ? true : false;
+                        $grant_access_delete = $config_bool_delete ? true : false;
+                        break;
+                    }
+                }
+                break;
+
+            case 'user_mail':  //allow if user mail is in this field
+
+                $umail = \Drupal::currentUser()->getEmail();
+
+                foreach($node_field_value as $value){
+                    if(strcasecmp($value['value'], $umail) == 0){
+                        $control_entity = \Drupal::currentUser();
+                        $grant_access_read = $config_bool_read ? true : false;
+                        $grant_access_update = $config_bool_update ? true : false;
+                        $grant_access_delete = $config_bool_delete ? true : false;
+                        break;
+                    }
+                }
+                break;
+
+            case 'shared':  //allow if user shares a value is in this field
+
+                $user = User::load(\Drupal::currentUser()->id());
+                $user_field = $config->getExtra();
+                $user_field_values =  $user->get($user_field)->getValue();
+
+                foreach($node_field_value as $value){
+                    foreach($user_field_values as $uvalue){
+                        if($value['value'] == $uvalue['value'] ){
+                            $control_entity = $user;
+                            $grant_access_read = $config_bool_read ? true : false;
+                            $grant_access_update = $config_bool_update ? true : false;
+                            $grant_access_delete = $config_bool_delete ? true : false;
+                            break;
+                        }
+                    }
+                }
+                break;
+
+            case 'inherit':  //inherit the CRUD of the referenced, if more liberal
+
+                $handler = $node->$field_str->getFieldDefinition()->getSetting('handler'); // switch based on handler
+
+                switch ($handler){
+                    case 'default:node':
+                    case 'views':
+                        foreach($node_field_value as $value){
+                            $target = $value['target_id'];
+                            if ($control_entity = haveNodeAccess($target, $config->getRightsType(), $account)){
+                                $grant_access_read = $config_bool_read ? true : false;
+                                $grant_access_update = $config_bool_update ? true : false;
+                                $grant_access_delete = $config_bool_delete ? true : false;
+                                break;
+                            }
+                        }
+                        break;
+                    case 'default:user':
+                        foreach($node_field_value as $value){
+                            $target = $value['target_id'];
+                            if ($control_entity = haveUserAccess($target, $config->getRightsType(), $account)){
+                                $grant_access_read = $config_bool_read ? true : false;
+                                $grant_access_update = $config_bool_update ? true : false;
+                                $grant_access_delete = $config_bool_delete ? true : false;
+                                break;
+                            }
+                        }
+                        break;
+                    // todo: paragraph support needs to be checked
+                    // todo: At this moment, extra is only used in user field
+                    // todo: I can't seem to figure out if this ever worked...
+                    case 'default:paragraph':
+                        foreach($node_field_value as $value){ // this is pointing to a paragraph
+                            $target = $value['target_id'];
+                            $paragraph = \Drupal\paragraphs\Entity\Paragraph::load( $target );
+                            $extra = $config->getExtra();
+                            $parvals = $paragraph->$extra->getValue();
+                            foreach($parvals as $target){
+                                if ($control_entity = haveNodeAccess($target, $config->getRightsType(), $account)){
+                                    $grant_access_read = $config_bool_read ? true : false;
+                                    $grant_access_update = $config_bool_update ? true : false;
+                                    $grant_access_delete = $config_bool_delete ? true : false;
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+                }
+                break;
+
+        } // end of switch
+
+        if ($grant_access_read && $op == 'view'){
+
+            return AccessResult::allowed()
+                ->cachePerPermissions()
+                ->cachePerUser()
+                ->addCacheableDependency($control_entity);
+            // job done. Break out of the loop and go home
+        }
+
+        else if ($grant_access_update && $op == 'update'){
+            return AccessResult::allowed()
+                ->cachePerPermissions()
+                ->cachePerUser()
+                ->addCacheableDependency($control_entity);
+            // job done. Break out of the loop and go home
+        }
+        else if ($grant_access_delete && $op == 'delete'){
+            return AccessResult::allowed()
+                ->cachePerPermissions()
+                ->cachePerUser()
+                ->addCacheableDependency($control_entity);
+            // job done. Break out of the loop and go home
+        }
+
+    }
+
+    return AccessResult::neutral()
+        ->cachePerPermissions()
+        ->addCacheableDependency($control_entity);
+}
+
+function access_by_ref_get_config(NodeInterface $node){
+
+    $entity = \Drupal::entityTypeManager()
+        ->getStorage('abrconfig')
+        ->loadByProperties(array('bundle' => $node->bundle()));
+
+    return $entity;
+}
+
+

@@ -1,0 +1,9 @@
+access node by reference:
+    title: 'Apply Access by Reference'
+    description: 'Applies the access by reference rules for the selected roles. If unchecked, the permissions will not be affected in any way (neutral).'
+    restrict access: false
+
+administer access_by_ref settings:
+    title: 'Administer Access by Reference'
+    description: 'Set references which create edit permissions.'
+    restrict access: true

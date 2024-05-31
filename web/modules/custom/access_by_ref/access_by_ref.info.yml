@@ -1,0 +1,10 @@
+name: Access by Reference
+type: module
+description: Provide CRUD access to nodes based on user or access in a referenced field
+configure: entity.abrconfig.collection
+package: Permissons
+core_version_requirement: ^9.2 || ^10
+# Information added by Drupal.org packaging script on 2024-03-05
+version: '3.0.3'
+project: 'access_by_ref'
+datestamp: 1709636700
