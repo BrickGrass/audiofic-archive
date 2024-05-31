@@ -4,7 +4,7 @@ description: Provide CRUD access to nodes based on user or access in a reference
 configure: entity.abrconfig.collection
 package: Permissons
 core_version_requirement: ^9.2 || ^10
-# Information added by Drupal.org packaging script on 2024-03-05
-version: '3.0.3'
+# Information added by Drupal.org packaging script on 2023-10-30
+version: '3.0.1'
 project: 'access_by_ref'
-datestamp: 1709636700
+datestamp: 1698691310

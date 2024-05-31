@@ -12,21 +12,8 @@ function haveNodeAccess($target_id, $op, $account){
 
     $target_node = \Drupal::service('entity_type.manager')->getStorage('node')->load($target_id);
 
-    if(isset($target_node) && $target_node->access($op) !== false){
+    if(isset($target_node) && $target_node->access($op)==1 ){
         return $target_node;
-    }
-    else{
-        return false;
-    }
-
-}
-
-function haveUserAccess($target_id, $op, $account){
-
-    $target_user = \Drupal::service('entity_type.manager')->getStorage('user')->load($target_id);
-
-    if(isset($target_user) && $target_user->access($op) !== false){
-        return $target_user;
     }
     else{
         return false;
@@ -109,7 +96,7 @@ function access_by_ref_node_access(NodeInterface $node, $op, AccountInterface $a
 
                 foreach($node_field_value as $value){
                     foreach($user_field_values as $uvalue){
-                        if(isset($value['target_id']) && isset($uvalue['target_id']) && $value['target_id'] == $uvalue['target_id']) {
+                        if(isset($value['target_id']) && isset($uvalue['target_id']) && $value['target_id'] == $uvalue['target_id']){
                             $control_entity = $user;
                             $grant_access_read = $config_bool_read ? true : false;
                             $grant_access_update = $config_bool_update ? true : false;
@@ -137,17 +124,7 @@ function access_by_ref_node_access(NodeInterface $node, $op, AccountInterface $a
                             }
                         }
                         break;
-                    case 'default:user':
-                        foreach($node_field_value as $value){
-                            $target = $value['target_id'];
-                            if ($control_entity = haveUserAccess($target, $config->getRightsType(), $account)){
-                                $grant_access_read = $config_bool_read ? true : false;
-                                $grant_access_update = $config_bool_update ? true : false;
-                                $grant_access_delete = $config_bool_delete ? true : false;
-                                break;
-                            }
-                        }
-                        break;
+
                     // todo: paragraph support needs to be checked
                     // todo: At this moment, extra is only used in user field
                     // todo: I can't seem to figure out if this ever worked...
