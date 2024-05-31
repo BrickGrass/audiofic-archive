@@ -1,5 +1,0 @@
-name: Audiofic
-description: 'Customizations for the Audiofic site.'
-type: module
-package: Custom
-core_version_requirement: ^10
