@@ -40,7 +40,8 @@
         "drupal/epp": "^1.6",
         "drupal/field_formatter_file_size": "^2.0",
         "drupal/file_download": "^1.6",
-        "drupal/taxonomy_unique": "^2.5"
+        "drupal/taxonomy_unique": "^2.5",
+        "drupal/views_autocomplete_filters": "^2.0"
     },
     "require-dev": {
         "drupal/core-dev": "^10"
