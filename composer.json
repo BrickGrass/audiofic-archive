@@ -41,7 +41,9 @@
         "drupal/field_formatter_file_size": "^2.0",
         "drupal/file_download": "^1.6",
         "drupal/taxonomy_unique": "^2.5",
-        "drupal/views_autocomplete_filters": "^2.0"
+        "drupal/views_autocomplete_filters": "^2.0",
+        "drupal/selective_better_exposed_filters": "^3.0",
+        "drupal/flag": "^4.0@beta"
     },
     "require-dev": {
         "drupal/core-dev": "^10"
