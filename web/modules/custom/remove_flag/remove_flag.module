@@ -9,7 +9,7 @@ use Drupal\user\Entity\Role;
 /**
  * Removes the 'flag to_listen' permission from all roles.
  */
-function remove_flag_update_8001() {
+function remove_flag_update_8002() {
   $all_roles = Role::loadMultiple();
   foreach ($all_roles as $role) {
     if ($role->hasPermission('flag to_listen')) {
