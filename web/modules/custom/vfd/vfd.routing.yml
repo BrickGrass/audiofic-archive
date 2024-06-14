@@ -1,0 +1,16 @@
+vfd.download_view:
+  path: '/download-view/{path}'
+  defaults:
+    _controller: '\Drupal\vfd\Controller\DownloadViewController::download'
+    _title: 'Download Files'
+    _custom_arg: '{path}'
+  requirements:
+    _permission: 'access vfd'
+
+vfd.settings:
+  path: '/admin/structure/views/settings/vfd'
+  defaults:
+    _form: '\Drupal\vfd\Form\ViewsFileDownloaderSettingsForm'
+    _title: 'Views File Downloader'
+  requirements:
+    _permission: 'administer site configuration'

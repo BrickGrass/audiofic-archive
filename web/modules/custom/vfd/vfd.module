@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Handles module administration and download link of Views File Downloader.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function vfd_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.vfd':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Views Files Downloader provides an option to download all the files attached to a view and a node. It provides a dedicated link for every view to download files. Downloaded files are added to a Zip file , which can be used by site visitor.') . '</p>';
+      return $output;
+  }
+}

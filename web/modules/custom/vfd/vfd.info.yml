@@ -1,0 +1,9 @@
+name: Views File Downloader
+description: Download files attached to a view or node in a Zip file.
+type: module
+core_version_requirement: ^8.8 || ^9 || ^10
+
+# Information added by Drupal.org packaging script on 2022-10-20
+version: '2.0.1'
+project: 'vfd'
+datestamp: 1666246252

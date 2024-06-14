@@ -1,0 +1,4 @@
+vfd.settings_tab:
+  route_name: vfd.settings
+  title: Views File Downloader Settings
+  base_route: entity.view.collection

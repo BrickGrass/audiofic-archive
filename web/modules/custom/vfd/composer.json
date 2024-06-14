@@ -1,0 +1,12 @@
+{
+  "name": "drupal/vfd",
+  "type": "drupal-module",
+  "description": "Download files attached to a view or node in a Zip file.",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/vfd",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/vfd"
+  }
+}
