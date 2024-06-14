@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * @file
+ * Contains audiofic_player.module.
+ */
+
+use Drupal\views\ViewExecutable;
+use Drupal\Core\File\FileSystemInterface;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function audiofic_player_views_pre_render(\Drupal\views\ViewExecutable $view) {
+  if ($view->id() == 'playlist_test') {
+    $mp3Files = [];
+    foreach ($view->result as $row) {
+      // \Drupal::logger('audiofic_player')->notice('Entity: @entity', ['@entity' => $row->_entity->label()]);
+      if ($row->_entity->hasField('field_mp3_files') && !$row->_entity->get('field_mp3_files')->isEmpty()) {
+        foreach ($row->_entity->get('field_mp3_files') as $item) {
+          if ($item->entity && $item->entity->id()) {
+            $media = $item->entity;
+            if ($media->hasField('field_media_audio_file') && !$media->get('field_media_audio_file')->isEmpty()) {
+              $file = \Drupal\file\Entity\File::load($media->get('field_media_audio_file')->target_id);
+              if ($file && $file->getMimeType() == 'audio/mpeg') {
+                $audio_url = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+                // Check if the file actually exists.
+                $headers = get_headers($audio_url);
+                if (stripos($headers[0],'200 OK')) { // Use stripos to ignore case
+                  // \Drupal::logger('audiofic_player')->notice('MP3 file: @file', ['@file' => $audio_url]);
+                  $mp3Files[] = [
+                    'title' => $media->getName(), // Use the 'name' field of the media entity as the title.
+                    'url' => $audio_url,
+                  ];
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    $view->element['#attached']['drupalSettings']['audiofic_player']['mp3Files'] = $mp3Files;
+    $view->element['#attached']['library'][] = 'audiofic_player/audiofic_player';
+  }
+}
+
+function audiofic_player_theme($existing, $type, $theme, $path) {
+  return [
+    'aplayer' => [
+      'template' => 'aplayer',
+      'path' => $path . '/templates',
+    ],
+  ];
+}
