@@ -13,7 +13,7 @@ use Drupal\Core\Url;
  * Implements hook_views_pre_render().
  */
 function audiofic_player_views_pre_render(\Drupal\views\ViewExecutable $view) {
-  if ($view->id() == 'playlist_test') {
+  if ($view->id() == 'audiofic_playlist_test') {
     $mp3Files = [];
     foreach ($view->result as $row) {
       // \Drupal::logger('audiofic_player')->notice('Entity: @entity', ['@entity' => $row->_entity->label()]);
