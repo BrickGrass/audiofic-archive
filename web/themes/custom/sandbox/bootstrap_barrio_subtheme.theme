@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the SASS Starterkit subtheme.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_system_theme_settings_alter() for settings form.
+ *
+ * Replace Barrio setting options with subtheme ones.
+ *
+ * Example on how to alter theme settings form
+ */
+// function bootstrap_barrio_subtheme_form_system_theme_settings_alter(&$form, FormStateInterface $form_state) {
+//   $form['components']['navbar']['bootstrap_barrio_navbar_top_background']['#options'] = [
+//     'bg-primary' => t('Primary'),
+//     'bg-secondary' => t('Secondary'),
+//     'bg-light' => t('Light'),
+//     'bg-dark' => t('Dark'),
+//     'bg-white' => t('White'),
+//     'bg-transparent' => t('Transparent'),
+//   ];
+//   $form['components']['navbar']['bootstrap_barrio_navbar_background']['#options'] = [
+//     'bg-primary' => t('Primary'),
+//     'bg-secondary' => t('Secondary'),
+//     'bg-light' => t('Light'),
+//     'bg-dark' => t('Dark'),
+//     'bg-white' => t('White'),
+//     'bg-transparent' => t('Transparent'),
+//   ];
+// }
+
+/**
+ * Prepares variables for `breadcrumb.html.twig`.
+ */
+function bootstrap_barrio_subtheme_preprocess_breadcrumb(&$variables) {
+  // Remove 'Home' from breadcrumb trail.
+  if (count($variables['breadcrumb'])) {
+    array_shift($variables['breadcrumb']);
+  }
+}
+
+function bootstrap_barrio_subtheme_preprocess_views_view_fields(&$variables) {
+  $row = $variables["row"];
+  $entity = $row->_entity;
+
+  // TODO: actually want to fetch (in order) Fandom, Relationships, Warnings, Category, Info
+  $fandoms = $entity->get("field_fandom2")->referencedEntities();
+  $ships = $entity->get("field_relationship")->referencedEntities();
+
+  $all_tags = [];
+
+  foreach ($fandoms as $fandom) {
+    array_push($all_tags, $fandom);
+  }
+  foreach ($ships as $ship) {
+    array_push($all_tags, $ship);
+  }
+
+  $variables["all_tags"] = $all_tags;
+}

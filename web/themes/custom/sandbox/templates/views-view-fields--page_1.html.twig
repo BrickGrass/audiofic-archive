@@ -1,0 +1,84 @@
+{#
+/**
+  * @file
+  * Theme override to display all the fields in a row.
+  *
+  * Available variables:
+  * - view: The view in use.
+  * - fields: A list of fields, each one contains:
+  *   - content: The output of the field.
+  *   - raw: The raw data for the field, if it exists. This is NOT output safe.
+  *   - class: The safe class ID to use.
+  *   - handler: The Views field handler controlling this field.
+  *   - inline: Whether or not the field should be inline.
+  *   - wrapper_element: An HTML element for a wrapper.
+  *   - wrapper_attributes: List of attributes for wrapper element.
+  *   - separator: An optional separator that may appear before a field.
+  *   - label: The field's label text.
+  *   - label_element: An HTML element for a label wrapper.
+  *   - label_attributes: List of attributes for label wrapper.
+  *   - label_suffix: Colon after the label.
+  *   - element_type: An HTML element for the field content.
+  *   - element_attributes: List of attributes for HTML element for field content.
+  *   - has_label_colon: A boolean indicating whether to display a colon after
+  *     the label.
+  *   - element_type: An HTML element for the field content.
+  *   - element_attributes: List of attributes for HTML element for field content.
+  * - row: The raw result from the query, with all data it fetched.
+  *
+  * @see template_preprocess_views_view_fields()
+  */
+#}
+
+{% set content_type = row._entity.bundle %}
+
+<div class="mb-3 work-card-wrapper">
+  <div class="rounded work-card p-2">
+    <div class="work-card-upper-info">
+      {% set has_image = content_type != "legacy_work" and row._entity.field_cover[0].entity.uri.value != null %}
+      {% if has_image %}
+        <img
+          src="{{ file_url(row._entity.field_cover[0].entity.uri.value) }}"
+          alt="{{ row._entity.field_cover[0].entity.alt.value }}"
+          class="float-start"
+        >
+      {% endif %}
+      <h6 class="mb-1 me-1">{{ fields.title.content }}</h6>
+
+      <div class="d-flex flex-column flex-wrap mb-2">
+        {% if fields.field_author.content|striptags|trim is not empty %}
+          <span class="me-1">Written by {{ fields.field_author.content }}</span>
+        {% endif %}
+
+        {% if fields.field_reader.content|striptags|trim is not empty %}
+          <span>Read by {{ fields.field_reader.content }}</span>
+        {% endif %}
+      </div>
+    </div>
+    <div class="work-card-lower-info {{ has_image ? '' : 'work-card-no-cover' }}">
+      <div class="mb-1">
+        {% for tag in all_tags %}
+          {# TODO: Our query string has a space in it! Do not like! Fix! #}
+          <a href="/Works?{{ tag.vid.value[0]["target_id"] }}={{ tag.name.value }} ({{ tag.id }})">{{ tag.name.value }}</a>{{- not loop.last ? ', ' -}}
+          {# <a href="{{ path('entity.taxonomy_term.canonical', {'taxonomy_term': tag.id}) }}">{{ tag.name.value }}</a>{{- not loop.last ? ', ' -}} #}
+        {% endfor %}
+      </div>
+
+      <div class="d-flex justify-content-end">
+        <small class="d-flex flex-wrap justify-content-end">
+          {{ fields.field_rating.content }}
+
+          {% if content_type == "playlist" or content_type == "rec_list" %}
+            <span class="badge bg-primary ms-1">{{ fields.type.content }}</span></br>
+          {% endif %}
+
+          {% if fields.field_wip.content|striptags|trim is not empty %}
+            <span class="badge bg-primary ms-1">{{ fields.field_wip.content|striptags|trim }}</span></br>
+          {% endif %}
+
+          <span class="ms-1">{% if fields.field_length is not empty %}length: {{ fields.field_length.content|striptags|trim }}, {% endif %}{{ fields.revision_timestamp.content|striptags|trim }}</span>
+        </small>
+      </div>
+    </div>
+  </div>
+</div>

@@ -4,6 +4,7 @@ description: 'Basic structure for a Bootstrap Barrio SubTheme.'
 core: 8.x
 core_version_requirement: ^8 || ^9 || ^10
 base theme: bootstrap_barrio
+logo: audiofic_archive_logo.png
 
 libraries:
   - bootstrap_barrio_subtheme/bootstrap_cdn
