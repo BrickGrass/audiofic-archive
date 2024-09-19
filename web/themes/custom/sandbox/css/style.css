@@ -68,6 +68,17 @@
 	font-weight: normal;
 }
 
+@media (max-width: 475px) {
+	.work-card {
+		min-height: 75px !important;
+	}
+
+	.work-card img {
+		width: 75px !important;
+		height: 75px !important;
+	}
+}
+
 @media (max-width: 768px) {
 	.work-card {
 		min-height: 100px;
