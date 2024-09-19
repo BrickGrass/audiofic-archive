@@ -50,6 +50,9 @@ function bootstrap_barrio_subtheme_preprocess_views_view_fields(&$variables) {
   // TODO: actually want to fetch (in order) Fandom, Relationships, Warnings, Category, Info
   $fandoms = $entity->get("field_fandom2")->referencedEntities();
   $ships = $entity->get("field_relationship")->referencedEntities();
+  // Warnings
+  $categories = $entity->get("field_category")->referencedEntities();
+  $info_tags = $entity->get("field_format")->referencedEntities();
 
   $all_tags = [];
 
@@ -58,6 +61,12 @@ function bootstrap_barrio_subtheme_preprocess_views_view_fields(&$variables) {
   }
   foreach ($ships as $ship) {
     array_push($all_tags, $ship);
+  }
+  foreach ($categories as $category) {
+    array_push($all_tags, $category);
+  }
+  foreach ($info_tags as $info) {
+    array_push($all_tags, $info);
   }
 
   $variables["all_tags"] = $all_tags;

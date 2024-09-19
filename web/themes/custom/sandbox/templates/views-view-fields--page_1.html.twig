@@ -58,8 +58,10 @@
     <div class="work-card-lower-info {{ has_image ? '' : 'work-card-no-cover' }}">
       <div class="mb-1">
         {% for tag in all_tags %}
+          {% set vocabulary = tag.vid.value[0]["target_id"] %}
+          {% set fandom_or_ship = vocabulary == "fandom" or vocabulary == "relationship" %}
           {# TODO: Our query string has a space in it! Do not like! Fix! #}
-          <a href="/Works?{{ tag.vid.value[0]["target_id"] }}={{ tag.name.value }} ({{ tag.id }})">{{ tag.name.value }}</a>{{- not loop.last ? ', ' -}}
+          <a class="{{ fandom_or_ship ? "fw-bolder" : "" }}" href="/Works?{{ vocabulary }}={{ tag.name.value }} ({{ tag.id }})">{{ tag.name.value }}</a>{{- not loop.last ? ', ' -}}
           {# <a href="{{ path('entity.taxonomy_term.canonical', {'taxonomy_term': tag.id}) }}">{{ tag.name.value }}</a>{{- not loop.last ? ', ' -}} #}
         {% endfor %}
       </div>
