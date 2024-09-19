@@ -54,7 +54,7 @@ function bootstrap_barrio_subtheme_preprocess_views_view_fields(&$variables) {
   $ships = $entity->get("field_relationship")->referencedEntities();
   // Warnings
   // $categories = $entity->get("field_category")->referencedEntities();
-  $info_tags = $entity->get("field_format")->referencedEntities();
+  // $info_tags = $entity->get("field_format")->referencedEntities();
 
   $all_tags = [];
 
@@ -67,9 +67,9 @@ function bootstrap_barrio_subtheme_preprocess_views_view_fields(&$variables) {
   // foreach ($categories as $category) {
   //   array_push($all_tags, $category);
   // }
-  foreach ($info_tags as $info) {
-    array_push($all_tags, $info);
-  }
+  // foreach ($info_tags as $info) {
+  //   array_push($all_tags, $info);
+  // }
 
   $variables["all_tags"] = $all_tags;
 }
