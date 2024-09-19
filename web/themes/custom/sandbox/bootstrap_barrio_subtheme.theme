@@ -47,7 +47,7 @@ function bootstrap_barrio_subtheme_preprocess_views_view_fields(&$variables) {
   $row = $variables["row"];
   $entity = $row->_entity;
 
-  dump($entity);
+  // dump($entity);
 
   // TODO: actually want to fetch (in order) Fandom, Relationships, Warnings, Category, Info
   $fandoms = $entity->get("field_fandom2")->referencedEntities();
