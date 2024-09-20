@@ -48,7 +48,8 @@
         "drupal/access_by_ref": "^3.0",
         "drupal/vfd": "^2.0",
         "drupal/search_api_pantheon": "^8.1",
-        "drupal/search_api_solr": "^4.3"
+        "drupal/search_api_solr": "^4.3",
+        "drupal/facets": "^2.0"
     },
     "require-dev": {
         "drupal/core-dev": "^10"
