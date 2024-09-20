@@ -1,7 +1,0 @@
-access vfd:
-  title: 'Download files'
-  description: 'Download all files linked with view or node'
-administer vfd:
-  title: 'Administer vfd Settings'
-  description: 'Acess the vfd administerative settings'
-  restrict access: true
