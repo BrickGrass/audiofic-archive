@@ -1,5 +1,0 @@
-access_by_ref.collection:
-  title: 'Set Access by Reference'
-  parent: system.admin_config_content
-  description: 'Set access to node editing by entity/field references.'
-  route_name: entity.abrconfig.collection

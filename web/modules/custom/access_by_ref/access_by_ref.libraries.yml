@@ -1,7 +1,0 @@
-configform:
-  version: 2.01
-  js:
-    js/behaviors_access_by_ref.js: {}
-  dependencies:
-    - core/drupal
-    - core/once

@@ -1,5 +1,0 @@
-entity.abrconfig.add_form:
-  route_name: 'entity.abrconfig.add_form'
-  title: 'Add abr configuration'
-  appears_on:
-    - entity.abrconfig.collection
