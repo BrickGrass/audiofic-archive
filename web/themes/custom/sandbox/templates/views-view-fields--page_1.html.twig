@@ -74,8 +74,8 @@
             <span class="badge bg-primary ms-1">{{ fields.type.content }}</span></br>
           {% endif %}
 
-          {% if fields.field_wip.content|striptags|trim is not empty %}
-            <span class="badge bg-primary ms-1">{{ fields.field_wip.content|striptags|trim }}</span></br>
+          {% if fields.field_completion_status.content|striptags|trim == "wip" %}
+            <span class="badge bg-primary ms-1">WIP</span></br>
           {% endif %}
 
           <span class="ms-1">{% if fields.field_length is not empty %}length: {{ fields.field_length.content|striptags|trim }}, {% endif %}{{ fields.created.content|striptags|trim }}</span>
