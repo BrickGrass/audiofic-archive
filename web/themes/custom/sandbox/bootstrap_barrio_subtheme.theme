@@ -43,33 +43,34 @@ function bootstrap_barrio_subtheme_preprocess_breadcrumb(&$variables) {
   }
 }
 
+/**
+ * Fetches all the tags from a vocabulary and adds them to all_tags.
+ */
+function fetch_vocabulary_tags($entity, $vocab_name, &$all_tags) {
+  if ($entity->hasField($vocab_name)) {
+    $tags = $entity->get($vocab_name)->referencedEntities();
+    foreach ($tags as $tag) {
+      array_push($all_tags, $tag);
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_views_view_fields() for the browse works view.
+ */
 function bootstrap_barrio_subtheme_preprocess_views_view_fields(&$variables) {
-  $row = $variables["row"];
-  $entity = $row->_entity;
+  if ($variables["view"]->current_display === "page_1") {
+    $row = $variables["row"];
+    $entity = $row->_entity;
 
-  // dump($entity);
+    $all_tags = [];
 
-  // TODO: actually want to fetch (in order) Fandom, Relationships, Warnings, Category, Info
-  $fandoms = $entity->get("field_fandom2")->referencedEntities();
-  $ships = $entity->get("field_relationship")->referencedEntities();
-  // Warnings
-  // $categories = $entity->get("field_category")->referencedEntities();
-  // $info_tags = $entity->get("field_format")->referencedEntities();
+    fetch_vocabulary_tags($entity, "field_fandom2", $all_tags);
+    fetch_vocabulary_tags($entity, "field_relationship", $all_tags);
+    fetch_vocabulary_tags($entity, "field_warning", $all_tags);
+    fetch_vocabulary_tags($entity, "field_category", $all_tags);
+    fetch_vocabulary_tags($entity, "field_format", $all_tags);
 
-  $all_tags = [];
-
-  foreach ($fandoms as $fandom) {
-    array_push($all_tags, $fandom);
+    $variables["all_tags"] = $all_tags;
   }
-  foreach ($ships as $ship) {
-    array_push($all_tags, $ship);
-  }
-  // foreach ($categories as $category) {
-  //   array_push($all_tags, $category);
-  // }
-  // foreach ($info_tags as $info) {
-  //   array_push($all_tags, $info);
-  // }
-
-  $variables["all_tags"] = $all_tags;
 }

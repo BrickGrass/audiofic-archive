@@ -115,3 +115,9 @@
 .work-card-no-cover {
 	margin-left: 0px !important;
 }
+
+.work-card-info-series {
+	position: absolute;
+	bottom: 0.5rem;
+	right: 0.5rem;
+}
