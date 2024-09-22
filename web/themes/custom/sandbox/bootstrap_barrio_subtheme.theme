@@ -59,7 +59,8 @@ function fetch_vocabulary_tags($entity, $vocab_name, &$all_tags) {
  * Implements hook_preprocess_views_view_fields() for the browse works view.
  */
 function bootstrap_barrio_subtheme_preprocess_views_view_fields(&$variables) {
-  if ($variables["view"]->current_display === "page_1") {
+  $current_view = $variables["view"]->current_display;
+  if ($current_view === "page_1" or $current_view === "browse") {
     $row = $variables["row"];
     $entity = $row->_entity;
 
