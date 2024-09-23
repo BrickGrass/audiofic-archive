@@ -59,7 +59,6 @@
 	object-fit: cover;
 	width: 125px;
 	height: 125px;
-	border-top-left-radius: 0.375rem;
 	margin: -0.5rem 0.5rem 0.5rem -0.5rem;
 }
 
@@ -120,4 +119,39 @@
 	position: absolute;
 	bottom: 0.5rem;
 	right: 0.5rem;
+	margin-left: 125px;
+}
+
+/* Forms & Facets */
+
+.fieldset-wrapper div.checkbox {
+	margin-bottom: 0px !important;
+}
+
+.btn-full-width {
+	width: 100%;
+	text-align: left;
+	padding-right: 2.25rem;
+	color: #212529;
+	background-color: #fff;
+	border: 1px solid #ced4da;
+}
+
+.btn-full-width:hover, .btn-full-width:focus {
+	background-color: #ebebeb;
+	color: #212529;
+}
+
+.btn-full-width[aria-expanded="true"] {
+	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23212529' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 11 6 -6 6 6'/%3e%3c/svg%3e");
+	background-repeat: no-repeat;
+	background-position: right .75rem center;
+	background-size: 16px 12px;
+}
+
+.btn-full-width[aria-expanded="false"] {
+	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23212529' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+	background-repeat: no-repeat;
+	background-position: right .75rem center;
+	background-size: 16px 12px;
 }

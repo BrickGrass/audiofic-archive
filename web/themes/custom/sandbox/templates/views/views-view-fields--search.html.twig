@@ -33,7 +33,7 @@
 {% set content_type = row._entity.bundle %}
 
 <div class="mb-3 work-card-wrapper">
-  <div class="rounded work-card p-2 {{ content_type == 'playlist' ? 'position-relative' : '' }}">
+  <div class="work-card p-2 {{ content_type == 'playlist' ? 'position-relative' : '' }}">
     <div class="work-card-upper-info">
       {% set has_image = row._entity.field_cover[0].entity.uri.value != null %}
       {% if has_image %}
@@ -59,10 +59,9 @@
       <div class="mb-1">
         {% for tag in all_tags %}
           {% set vocabulary = tag.vid.value[0]["target_id"] %}
-          {% set fandom_or_ship = vocabulary == "fandom" or vocabulary == "relationship" %}
-          {# TODO: Our query string has a space in it! Do not like! Fix! #}
-          <a class="{{ fandom_or_ship ? "fw-bolder" : "" }}" href="/Works?{{ vocabulary }}={{ tag.name.value }} ({{ tag.id }})">{{ tag.name.value }}</a>{{- not loop.last ? ', ' -}}
-          {# <a href="{{ path('entity.taxonomy_term.canonical', {'taxonomy_term': tag.id}) }}">{{ tag.name.value }}</a>{{- not loop.last ? ', ' -}} #}
+          {% set fandom_or_ship = vocabulary in ["fandom", "relationship"] ? "fw-bolder" : "" %}
+          {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': tag.id}) %}
+          <a class="{{ fandom_or_ship }}" href="{{ taxonomy_path }}">{{ tag.name.value }}</a>{{- not loop.last ? ', ' -}}
         {% endfor %}
       </div>
 

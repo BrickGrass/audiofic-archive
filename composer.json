@@ -28,12 +28,12 @@
         "drupal/entityqueue": "^1.7",
         "drupal/field_token_value": "^3.0",
         "drupal/inline_entity_form": "^3.0@RC",
-        "drupal/pathauto": "^1.12",
+        "drupal/pathauto": "^1.13",
         "drupal/tac_lite": "^1.7",
         "drupal/tiny_html_audio_player": "^1.0",
         "drupal/twig_tweak": "^3.2",
         "cweagans/composer-patches": "^1.7",
-        "drush/drush": "^11 || ^12",
+        "drush/drush": "^13.2",
         "drupal/field_group": "^3.4",
         "drupal/podcast": "^1.5",
         "drupal/epp": "^1.6",
@@ -49,7 +49,8 @@
         "drupal/vfd": "^2.0",
         "drupal/search_api_pantheon": "^8.1",
         "drupal/search_api_solr": "^4.3",
-        "drupal/facets": "^2.0"
+        "drupal/facets": "^2.0",
+        "drupal/auto_entitylabel": "^3.3"
     },
     "require-dev": {
         "drupal/core-dev": "^10"

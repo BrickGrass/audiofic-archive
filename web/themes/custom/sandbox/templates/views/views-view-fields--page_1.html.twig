@@ -33,7 +33,7 @@
 {% set content_type = row._entity.bundle %}
 
 <div class="mb-3 work-card-wrapper">
-  <div class="rounded work-card p-2 {{ content_type == 'playlist' ? 'position-relative' : '' }}">
+  <div class="work-card p-2 {{ content_type == 'playlist' ? 'position-relative' : '' }}">
     <div class="work-card-upper-info">
       {% set has_image = row._entity.field_cover[0].entity.uri.value != null %}
       {% if has_image %}
