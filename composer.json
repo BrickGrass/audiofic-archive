@@ -50,7 +50,8 @@
         "drupal/search_api_pantheon": "^8.1",
         "drupal/search_api_solr": "^4.3",
         "drupal/facets": "^2.0",
-        "drupal/auto_entitylabel": "^3.3"
+        "drupal/auto_entitylabel": "^3.3",
+        "drupal/duration_field": "^2.1"
     },
     "require-dev": {
         "drupal/core-dev": "^10"
@@ -87,6 +88,11 @@
         "composer-exit-on-patch-failure": true,
         "patchLevel": {
             "drupal/core": "-p2"
+        },
+        "patches": {
+            "drupal/access_by_ref": {
+                "Access by ref, fix accessing array value by incorrect key": "patches/fixed_access_by_ref.patch"
+            }
         },
         "enable-patching": true
     },

@@ -1,0 +1,13 @@
+diff --git access_by_ref.module access_by_ref.module
+index f87384d..76a32b2 100644
+--- access_by_ref.module
++++ access_by_ref.module
+@@ -109,7 +109,7 @@ function access_by_ref_node_access(NodeInterface $node, $op, AccountInterface $a
+ 
+                 foreach($node_field_value as $value){
+                     foreach($user_field_values as $uvalue){
+-                        if($value['value'] == $uvalue['value'] ){
++                        if($value['target_id'] == $uvalue['target_id'] ){
+                             $control_entity = $user;
+                             $grant_access_read = $config_bool_read ? true : false;
+                             $grant_access_update = $config_bool_update ? true : false;
