@@ -51,7 +51,8 @@
         "drupal/search_api_solr": "^4.3",
         "drupal/facets": "^2.0",
         "drupal/auto_entitylabel": "^3.3",
-        "drupal/duration_field": "^2.1"
+        "drupal/duration_field": "^2.1",
+        "drupal/search_api_block": "^1.1"
     },
     "require-dev": {
         "drupal/core-dev": "^10"

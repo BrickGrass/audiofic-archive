@@ -134,7 +134,7 @@
 {% else %}
   <div{{ attributes.addClass(classes, 'mb-2', 'd-flex', 'align-items-center', float_label ? 'form-floating') }}>
     {% if label_display in ['before', 'invisible'] %}
-      {{ label }}
+      <label class="me-2 text-nowrap" for="{{ input_attributes.id }}">{{ input_title | raw }}</label>
     {% endif %}
     {% if (prefix is not empty) or (suffix is not empty) %}
       <div class="input-group{{ errors ? ' is-invalid' : '' }}">

@@ -155,3 +155,23 @@
 	background-position: right .75rem center;
 	background-size: 16px 12px;
 }
+
+#edit-actions--2 {
+	margin-bottom: 0 !important;
+}
+
+#views-exposed-form-testing-search-api-search {
+	margin-bottom: 0;
+}
+
+#search-api-form {
+	display: flex;
+}
+
+#search-api-form > div {
+	margin-bottom: 0 !important;
+}
+
+#search-api-form .form-type-search {
+	margin-right: 0.25rem;
+}
