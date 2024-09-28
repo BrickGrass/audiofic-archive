@@ -1,0 +1,161 @@
+{#
+/**
+ * @file
+ * Bootstrap Barrio's theme implementation to display a node.
+ *
+ * Available variables:
+ * - node: The node entity with limited access to object properties and methods.
+     Only "getter" methods (method names starting with "get", "has", or "is")
+     and a few common methods such as "id" and "label" are available. Calling
+     other methods (such as node.delete) will result in an exception.
+ * - label: The title of the node.
+ * - content: All node items. Use {{ content }} to print them all,
+ *   or print a subset such as {{ content.field_example }}. Use
+ *   {{ content|without('field_example') }} to temporarily suppress the printing
+ *   of a given child element.
+ * - author_picture: The node author user entity, rendered using the "compact"
+ *   view mode.
+ * - metadata: Metadata for this node.
+ * - date: Themed creation date field.
+ * - author_name: Themed author name field.
+ * - url: Direct URL of the current node.
+ * - display_submitted: Whether submission information should be displayed.
+ * - attributes: HTML attributes for the containing element.
+ *   The attributes.class element may contain one or more of the following
+ *   classes:
+ *   - node: The current template type (also known as a "theming hook").
+ *   - node--type-[type]: The current node type. For example, if the node is an
+ *     "Article" it would result in "node--type-article". Note that the machine
+ *     name will often be in a short form of the human readable label.
+ *   - node--view-mode-[view_mode]: The View Mode of the node; for example, a
+ *     teaser would result in: "node--view-mode-teaser", and
+ *     full: "node--view-mode-full".
+ *   The following are controlled through the node publishing options.
+ *   - node--promoted: Appears on nodes promoted to the front page.
+ *   - node--sticky: Appears on nodes ordered above other non-sticky nodes in
+ *     teaser listings.
+ *   - node--unpublished: Appears on unpublished nodes visible only to site
+ *     admins.
+ * - title_attributes: Same as attributes, except applied to the main title
+ *   tag that appears in the template.
+ * - content_attributes: Same as attributes, except applied to the main
+ *   content tag that appears in the template.
+ * - author_attributes: Same as attributes, except applied to the author of
+ *   the node tag that appears in the template.
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the main title tag that appears in the template.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the main title tag that appears in the template.
+ * - view_mode: View mode; for example, "teaser" or "full".
+ * - teaser: Flag for the teaser state. Will be true if view_mode is 'teaser'.
+ * - page: Flag for the full page state. Will be true if view_mode is 'full'.
+ * - readmore: Flag for more state. Will be true if the teaser content of the
+ *   node cannot hold the main body content.
+ * - logged_in: Flag for authenticated user status. Will be true when the
+ *   current user is a logged-in member.
+ * - is_admin: Flag for admin user status. Will be true when the current user
+ *   is an administrator.
+ *
+ * @see template_preprocess_node()
+ */
+#}
+{{ attach_library('bootstrap_barrio/node') }}
+
+{% set content_type = node.type.value[0].target_id %}
+
+{% if content_type in ["work", "legacy_work", "playlist"] %}
+  <div class="mb-3 work-card-wrapper">
+    <div class="work-card p-2 {{ content_type == 'playlist' ? 'position-relative' : '' }}">
+      <div class="work-card-upper-info">
+        {% set has_image = node.field_cover[0].entity.uri.value != null %}
+        {% if has_image %}
+          <img
+            src="{{ file_url(node.field_cover[0].entity.uri.value) }}"
+            alt="{{ node.field_cover[0].entity.alt.value }}"
+            class="float-start"
+          >
+        {% endif %}
+        <h6 class="mb-1 me-1"><a href="{{ url }}">{{ label }}</a></h6>
+
+        <div class="d-flex flex-column flex-wrap mb-2">
+          {% if node.field_author is not empty %}
+            <span class="me-1">
+              Written by
+              {% for author in node.field_author %}
+                {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': author.entity.id}) %}
+                <a href="{{ taxonomy_path }}">{{ author.entity.name.value }}</a>{{- not loop.last ? ', ' -}}
+              {% endfor %}
+            </span>
+          {% endif %}
+
+          {% if node.field_reader is not empty %}
+            <span class="me-1">
+              Read by
+              {% for reader in node.field_reader %}
+                {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': reader.entity.id}) %}
+                <a href="{{ taxonomy_path }}">{{ reader.entity.name.value }}</a>{{- not loop.last ? ', ' -}}
+              {% endfor %}
+            </span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="work-card-lower-info {{ has_image ? '' : 'work-card-no-cover' }}">
+        <div class="mb-1">
+          {% for tag in all_tags %}
+            {% set vocabulary = tag.vid.value[0]["target_id"] %}
+            {% set fandom_or_ship = vocabulary in ["fandom", "relationship"] ? "fw-bolder" : "" %}
+            {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': tag.id}) %}
+            <a class="{{ fandom_or_ship }}" href="{{ taxonomy_path }}">{{ tag.name.value }}</a>{{- not loop.last ? ', ' -}}
+          {% endfor %}
+        </div>
+
+        <div class="d-flex justify-content-end {{ content_type == 'playlist' ? 'work-card-info-series' : '' }}">
+          <small class="d-flex flex-wrap justify-content-end">
+            {% if content.field_rating is not empty %}
+              {{ content.field_rating }}
+            {% else %}
+              <span class="badge bg-secondary ms-1">No Age Rating</span>
+            {% endif %}
+
+            {% if content_type == "playlist" %}
+              {# TODO: display Series OR Collection #}
+              <span class="badge bg-primary ms-1">Series</span>
+            {% endif %}
+
+            {% if node.field_completion_status.value == "wip" %}
+              <span class="badge bg-primary ms-1">WIP</span>
+            {% endif %}
+
+            <span class="ms-1">{% if node.field_length is not empty %}length: {{ node.field_length[0].entity.name.value }}, {% endif %}{{ created_at }}</span>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+{% else %}
+  {%
+  set classes = [
+    'node',
+    'node--type-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'node--promoted',
+    node.isSticky() ? 'node--sticky',
+    not node.isPublished() ? 'node--unpublished',
+    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+    'clearfix',
+  ]
+  %}
+  <article{{ attributes.addClass(classes) }}>
+  <header>
+    {{ title_prefix }}
+    {% if label and not page %}
+    <h2{{ title_attributes.addClass('node__title') }}>
+      <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+    </h2>
+    {% endif %}
+    {{ title_suffix }}
+  </header>
+  <div{{ content_attributes.addClass('node__content', 'clearfix') }}>
+    {{ content }}
+  </div>
+  </article>
+{% endif %}

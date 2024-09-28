@@ -60,7 +60,7 @@ function fetch_vocabulary_tags($entity, $vocab_name, &$all_tags) {
  */
 function bootstrap_barrio_subtheme_preprocess_views_view_fields(&$variables) {
   $current_view = $variables["view"]->current_display;
-  if ($current_view === "page_1" or $current_view === "search") {
+  if (in_array($current_view, ["page_1", "search", "search_taxonomy"])) {
     $row = $variables["row"];
     $entity = $row->_entity;
 
@@ -82,4 +82,26 @@ function bootstrap_barrio_subtheme_preprocess_views_view_fields(&$variables) {
 function bootstrap_barrio_subtheme_preprocess_fieldset(&$variables) {
   $variables["fieldset_name"] = str_replace("_", "-", $variables["element"]["#name"]);
   $variables["selection_made"] = !empty($variables["element"]["#value"]);
+}
+
+/**
+ * Implements hook_preprocess_node() for content teasers.
+ */
+function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
+  $node = $variables["node"];
+  if (in_array($node->getType(), ["work", "legacy_work", "playlist"])) {
+    $all_tags = [];
+
+    fetch_vocabulary_tags($node, "field_fandom2", $all_tags);
+    fetch_vocabulary_tags($node, "field_relationship", $all_tags);
+    fetch_vocabulary_tags($node, "field_warning", $all_tags);
+    fetch_vocabulary_tags($node, "field_category", $all_tags);
+    fetch_vocabulary_tags($node, "field_format", $all_tags);
+
+    $variables["all_tags"] = $all_tags;
+
+    $date_formatter = \Drupal::service('date.formatter');
+    $date = $date_formatter->format($node->getCreatedTime(), "custom", "j F Y");
+    $variables['created_at'] = $date;
+  }
 }
