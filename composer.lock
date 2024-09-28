@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "16b998d31bc2b03ac0b7386a7548a60f",
+    "content-hash": "e5634683af6173d5df61fb06e058546f",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5328,16 +5328,16 @@
         },
         {
             "name": "illuminate/collections",
-            "version": "v11.24.0",
+            "version": "v11.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
-                "reference": "f205537e0ad131a1a87cb3cf04924e9edda4f2b1"
+                "reference": "465044f988f9a07c901388beeb15201d711387aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/collections/zipball/f205537e0ad131a1a87cb3cf04924e9edda4f2b1",
-                "reference": "f205537e0ad131a1a87cb3cf04924e9edda4f2b1",
+                "url": "https://api.github.com/repos/illuminate/collections/zipball/465044f988f9a07c901388beeb15201d711387aa",
+                "reference": "465044f988f9a07c901388beeb15201d711387aa",
                 "shasum": ""
             },
             "require": {
@@ -5379,11 +5379,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2024-09-16T14:32:15+00:00"
+            "time": "2024-09-25T15:08:32+00:00"
         },
         {
             "name": "illuminate/conditionable",
-            "version": "v11.24.0",
+            "version": "v11.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/conditionable.git",
@@ -5429,7 +5429,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v11.24.0",
+            "version": "v11.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -5477,7 +5477,7 @@
         },
         {
             "name": "illuminate/macroable",
-            "version": "v11.24.0",
+            "version": "v11.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
@@ -10180,16 +10180,16 @@
         },
         {
             "name": "composer/ca-bundle",
-            "version": "1.5.1",
+            "version": "1.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/ca-bundle.git",
-                "reference": "063d9aa8696582f5a41dffbbaf3c81024f0a604a"
+                "reference": "48a792895a2b7a6ee65dd5442c299d7b835b6137"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/063d9aa8696582f5a41dffbbaf3c81024f0a604a",
-                "reference": "063d9aa8696582f5a41dffbbaf3c81024f0a604a",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/48a792895a2b7a6ee65dd5442c299d7b835b6137",
+                "reference": "48a792895a2b7a6ee65dd5442c299d7b835b6137",
                 "shasum": ""
             },
             "require": {
@@ -10199,8 +10199,8 @@
             },
             "require-dev": {
                 "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^8 || ^9",
                 "psr/log": "^1.0 || ^2.0 || ^3.0",
-                "symfony/phpunit-bridge": "^4.2 || ^5",
                 "symfony/process": "^4.0 || ^5.0 || ^6.0 || ^7.0"
             },
             "type": "library",
@@ -10236,7 +10236,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/ca-bundle/issues",
-                "source": "https://github.com/composer/ca-bundle/tree/1.5.1"
+                "source": "https://github.com/composer/ca-bundle/tree/1.5.2"
             },
             "funding": [
                 {
@@ -10252,7 +10252,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-07-08T15:28:20+00:00"
+            "time": "2024-09-25T07:49:53+00:00"
         },
         {
             "name": "composer/class-map-generator",
@@ -11221,16 +11221,16 @@
         },
         {
             "name": "mglaman/phpstan-drupal",
-            "version": "1.2.12",
+            "version": "1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mglaman/phpstan-drupal.git",
-                "reference": "346bdddda169a56b6ebb7dc17893f0ac8f33a4f1"
+                "reference": "2bc25a59b53c8f3990f168efd71241d9c25ea0c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mglaman/phpstan-drupal/zipball/346bdddda169a56b6ebb7dc17893f0ac8f33a4f1",
-                "reference": "346bdddda169a56b6ebb7dc17893f0ac8f33a4f1",
+                "url": "https://api.github.com/repos/mglaman/phpstan-drupal/zipball/2bc25a59b53c8f3990f168efd71241d9c25ea0c3",
+                "reference": "2bc25a59b53c8f3990f168efd71241d9c25ea0c3",
                 "shasum": ""
             },
             "require": {
@@ -11239,7 +11239,7 @@
                 "phpstan/phpstan-deprecation-rules": "^1.1.4",
                 "symfony/finder": "^4.2 || ^5.0 || ^6.0 || ^7.0",
                 "symfony/yaml": "^4.2|| ^5.0 || ^6.0 || ^7.0",
-                "webflo/drupal-finder": "^1.2"
+                "webflo/drupal-finder": "^1.3.1"
             },
             "require-dev": {
                 "behat/mink": "^1.8",
@@ -11305,7 +11305,7 @@
             "description": "Drupal extension and rules for PHPStan",
             "support": {
                 "issues": "https://github.com/mglaman/phpstan-drupal/issues",
-                "source": "https://github.com/mglaman/phpstan-drupal/tree/1.2.12"
+                "source": "https://github.com/mglaman/phpstan-drupal/tree/1.3.1"
             },
             "funding": [
                 {
@@ -11321,7 +11321,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-08-07T21:15:21+00:00"
+            "time": "2024-09-27T08:54:16+00:00"
         },
         {
             "name": "micheh/phpcs-gitlab",
@@ -12596,16 +12596,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.31.0",
+            "version": "1.32.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "249f15fb843bf240cf058372dad29e100cee6c17"
+                "reference": "6ca22b154efdd9e3c68c56f5d94670920a1c19a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/249f15fb843bf240cf058372dad29e100cee6c17",
-                "reference": "249f15fb843bf240cf058372dad29e100cee6c17",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/6ca22b154efdd9e3c68c56f5d94670920a1c19a4",
+                "reference": "6ca22b154efdd9e3c68c56f5d94670920a1c19a4",
                 "shasum": ""
             },
             "require": {
@@ -12637,22 +12637,22 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.31.0"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.32.0"
             },
-            "time": "2024-09-22T11:32:18+00:00"
+            "time": "2024-09-26T07:23:32+00:00"
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.12.4",
+            "version": "1.12.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "ffa517cb918591b93acc9b95c0bebdcd0e4538bd"
+                "reference": "7e6c6cb7cecb0a6254009a1a8a7d54ec99812b17"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/ffa517cb918591b93acc9b95c0bebdcd0e4538bd",
-                "reference": "ffa517cb918591b93acc9b95c0bebdcd0e4538bd",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/7e6c6cb7cecb0a6254009a1a8a7d54ec99812b17",
+                "reference": "7e6c6cb7cecb0a6254009a1a8a7d54ec99812b17",
                 "shasum": ""
             },
             "require": {
@@ -12697,7 +12697,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-09-19T07:58:01+00:00"
+            "time": "2024-09-26T12:45:22+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",

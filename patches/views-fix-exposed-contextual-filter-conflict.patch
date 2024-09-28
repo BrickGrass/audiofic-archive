@@ -1,0 +1,138 @@
+diff --git a/core/modules/views/src/Form/ViewsExposedForm.php b/core/modules/views/src/Form/ViewsExposedForm.php
+index d68b1dd536..f488bbdc8e 100644
+--- a/core/modules/views/src/Form/ViewsExposedForm.php
++++ b/core/modules/views/src/Form/ViewsExposedForm.php
+@@ -10,6 +10,7 @@
+ use Drupal\Core\Render\Element\Checkboxes;
+ use Drupal\Core\Url;
+ use Drupal\views\ExposedFormCache;
++use Drupal\views\Views;
+ use Symfony\Component\DependencyInjection\ContainerInterface;
+ 
+ /**
+@@ -53,7 +54,7 @@ public function __construct(ExposedFormCache $exposed_form_cache, CurrentPathSta
+   public static function create(ContainerInterface $container) {
+     return new static(
+       $container->get('views.exposed_form_cache'),
+-      $container->get('path.current')
++      $container->get('path.current'),
+     );
+   }
+ 
+@@ -74,6 +75,13 @@ public function buildForm(array $form, FormStateInterface $form_state) {
+     /** @var \Drupal\views\ViewExecutable $view */
+     $view = $form_state->get('view');
+     $display = &$form_state->get('display');
++    // Existing arguments need to be passed as this exposed form might
++    // be used in a block. Without this contextual views arguments
++    // will be lost.
++    if ($this->getRouteMatch()->getRouteObject() && $this->getRouteMatch()->getRouteName() !== 'views.ajax' && empty($view->args)) {
++      $args = Views::buildArgs($this->getRouteMatch());
++      $view->setArguments($args);
++    }
+ 
+     $form_state->setUserInput($view->getExposedInput());
+ 
+@@ -132,6 +140,14 @@ public function buildForm(array $form, FormStateInterface $form_state) {
+       }
+     }
+     else {
++      $view_url = $view->getUrl();
++      $parameters = [];
++      foreach ($view_url->getRouteParameters() as $k => $parameter) {
++        $parameters[$k] = $parameter;
++      }
++      if (!empty($parameters)) {
++        $view_url->setRouteParameters($parameters);
++      }
+       $form_action = $view->getUrl()->toString();
+     }
+ 
+diff --git a/core/modules/views/src/Routing/ViewPageController.php b/core/modules/views/src/Routing/ViewPageController.php
+index d1d4770e7a..7e78a447af 100644
+--- a/core/modules/views/src/Routing/ViewPageController.php
++++ b/core/modules/views/src/Routing/ViewPageController.php
+@@ -27,28 +27,8 @@ class ViewPageController {
+    *   A render array or a Response object.
+    */
+   public function handle($view_id, $display_id, RouteMatchInterface $route_match) {
+-    $args = [];
++    $args = Views::buildArgs($route_match);
+     $route = $route_match->getRouteObject();
+-    $map = $route->hasOption('_view_argument_map') ? $route->getOption('_view_argument_map') : [];
+-
+-    foreach ($map as $attribute => $parameter_name) {
+-      // Allow parameters be pulled from the request.
+-      // The map stores the actual name of the parameter in the request. Views
+-      // which override existing controller, use for example 'node' instead of
+-      // arg_nid as name.
+-      if (isset($map[$attribute])) {
+-        $attribute = $map[$attribute];
+-      }
+-      if ($arg = $route_match->getRawParameter($attribute)) {
+-      }
+-      else {
+-        $arg = $route_match->getParameter($attribute);
+-      }
+-
+-      if (isset($arg)) {
+-        $args[] = $arg;
+-      }
+-    }
+ 
+     $class = $route->getOption('_view_display_plugin_class');
+     if ($route->getOption('returns_response')) {
+diff --git a/core/modules/views/src/Views.php b/core/modules/views/src/Views.php
+index 1d443d4093..0171f6faf8 100644
+--- a/core/modules/views/src/Views.php
++++ b/core/modules/views/src/Views.php
+@@ -2,6 +2,8 @@
+ 
+ namespace Drupal\views;
+ 
++use Drupal\Core\Routing\RouteMatchInterface;
++
+ /**
+  * Static service container wrapper for views.
+  */
+@@ -537,4 +539,40 @@ protected static function t($string, array $args = [], array $options = []) {
+     return static::$translationManager->translate($string, $args, $options);
+   }
+ 
++  /**
++   * Builds args.
++   *
++   * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
++   *   The route match.
++   *
++   * @return array
++   *   Array of args.
++   */
++  public static function buildArgs(RouteMatchInterface $route_match): array {
++    $args = [];
++    $route = $route_match->getRouteObject();
++    $map = $route->hasOption('_view_argument_map') ? $route->getOption('_view_argument_map') : [];
++
++    foreach ($map as $attribute => $parameter_name) {
++      // Allow parameters be pulled from the request.
++      // The map stores the actual name of the parameter in the request. Views
++      // which override existing controller, use for example 'node' instead of
++      // arg_nid as name.
++      if (isset($map[$attribute])) {
++        $attribute = $map[$attribute];
++      }
++
++      $arg = $route_match->getRawParameter($attribute);
++      if (!$arg) {
++        $arg = $route_match->getParameter($attribute);
++      }
++
++      if (isset($arg)) {
++        $args[] = $arg;
++      }
++    }
++
++    return $args;
++  }
++
+ }
