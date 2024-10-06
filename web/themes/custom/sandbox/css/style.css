@@ -39,7 +39,6 @@
 }
 
 /* Work card */
-
 .work-card {
 	min-height: 125px;
 	background-color: #f6f6f2;
@@ -114,12 +113,12 @@
 	margin-left: 0px !important;
 }
 
-.work-card-info-series {
+/* .work-card-info-series {
 	position: absolute;
 	bottom: 0.5rem;
 	right: 0.5rem;
 	margin-left: 125px;
-}
+} */
 
 /* Full Work */
 .full-work {
