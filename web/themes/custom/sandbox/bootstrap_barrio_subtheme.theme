@@ -42,7 +42,7 @@ function fetch_media_files($entity, $media_type, $is_series, &$files) {
       $name = NULL;
       if ($media_type === "mp3") {
         $phys_file = \Drupal\file\Entity\File::load($file->field_media_audio_file[0]->target_id);
-        $name = $file->field_chapter_label;
+        $name = $file->get("field_chapter_label")[0]->value;
       } else {
         $phys_file = \Drupal\file\Entity\File::load($file->field_media_file[0]->target_id);
         $name = $file->name->value;
