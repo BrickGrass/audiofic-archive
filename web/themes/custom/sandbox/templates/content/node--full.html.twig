@@ -163,9 +163,11 @@ set classes = [
           <span><b>Language</b> {{ node.field_language[0].entity.name.value }}</span>
         {% endif %}
 
+        {# TODO: Jump to player + downloads button for breakpoints without sidebar! #}
+
         {% if content_type == "playlist" %}
           <div class="mt-2">
-            {{ drupal_view("series_works_test", "block_1") }}
+            {{ drupal_view("works_series", "works_series") }}
           </div>
         {% endif %}
       </div>
