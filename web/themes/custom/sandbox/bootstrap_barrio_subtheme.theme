@@ -56,9 +56,7 @@ function fetch_media_files($entity, $media_type, $is_series, &$files) {
         "url" => $phys_file->createFileUrl(),
       ];
 
-      if ($is_series) {
-        $data["work_label"] = $entity->get("field_part_label")[0]->value;
-      }
+      $data["work_label"] = $entity->get("field_part_label")[0]->value;
 
       array_push($files, $data);
     }
