@@ -1,5 +1,0 @@
-name: Remove Flag
-type: module
-description: 'A custom module to remove the "flag to_listen" permission from all roles.'
-package: Custom
-core_version_requirement: ^8 || ^9 || ^10 || ^11

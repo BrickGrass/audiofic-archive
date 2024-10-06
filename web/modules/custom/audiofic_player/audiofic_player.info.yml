@@ -1,6 +1,6 @@
 name: AudioFic Player
 description: A custom module that uses the jPlayer library to play a list of MP3 files.
-core_version_requirement: ^8 || ^9 || ^10
+core_version_requirement: ^8 || ^9 || ^10 || ^11
 type: module
 libraries:
   - audiofic_player/audiofic_player

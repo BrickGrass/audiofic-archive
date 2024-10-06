@@ -2,7 +2,7 @@ name: Bootstrap Barrio Subtheme
 type: theme
 description: 'Basic structure for a Bootstrap Barrio SubTheme.'
 core: 8.x
-core_version_requirement: ^8 || ^9 || ^10
+core_version_requirement: ^10.3 || ^11.0
 base theme: bootstrap_barrio
 logo: audiofic_archive_logo.png
 
@@ -41,6 +41,11 @@ regions:
   footer_fifth: 'Footer fifth'
 
 # Information added by Drupal.org packaging script on 2023-12-03
-version: '5.5.16'
+# version: '5.5.16'
+# project: 'bootstrap_barrio'
+# datestamp: 1701646129
+
+# Information added by Drupal.org packaging script on 2024-09-09
+version: '5.5.17'
 project: 'bootstrap_barrio'
-datestamp: 1701646129
+datestamp: 1725856217
