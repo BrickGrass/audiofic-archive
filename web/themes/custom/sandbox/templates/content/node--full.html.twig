@@ -163,15 +163,15 @@ set classes = [
           <span><b>Language</b> {{ node.field_language[0].entity.name.value }}</span>
         {% endif %}
 
-        {# TODO: Jump to player + downloads button for breakpoints without sidebar! #}
-
         {% if content_type == "playlist" %}
+          <a class="btn btn-outline-primary full-work-jump-btn" href="full-work-player-downloads">Jump to streaming and download section</a>
+
           <div class="mt-2">
             {{ drupal_view("works_in_collections", "works_series") }}
           </div>
         {% endif %}
       </div>
-      <div class="full-work-player-downloads {{ has_image ? '' : 'full-work-no-image' }}">
+      <div id="full-work-player-downloads" class="full-work-player-downloads {{ has_image ? '' : 'full-work-no-image' }}">
         {% if content_type == "legacy_work" %}
           {{ node.body.value | raw }}
         {% endif %}
@@ -283,7 +283,7 @@ set classes = [
                       {% endif %}
                       <td>{{ file.mime_type }}</td>
                       <td>{{ file.file_size }}</td>
-                      <td><a href="{{ file.url }}" download>Download</a></td>
+                      <td class="table-no-collapse"><a href="{{ file.url }}" download>Download</a></td>
                     </tr>
                   {% endfor %}
                 {% endfor %}

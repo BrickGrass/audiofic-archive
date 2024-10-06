@@ -113,13 +113,6 @@
 	margin-left: 0px !important;
 }
 
-/* .work-card-info-series {
-	position: absolute;
-	bottom: 0.5rem;
-	right: 0.5rem;
-	margin-left: 125px;
-} */
-
 /* Full Work */
 .full-work {
 	display: grid;
@@ -173,6 +166,14 @@
 	max-width: 1px;
 }
 
+.full-work td.table-no-collapse {
+	max-width: initial;
+}
+
+.full-work-jump-btn {
+	display: none;
+}
+
 @media (max-width: 1280px) {
 	.full-work {
 		grid-template-columns: 200px 1fr 400px;
@@ -196,6 +197,10 @@
 
 	.full-work-player-downloads.full-work-no-image {
 		grid-column: 1 / span 2;
+	}
+
+	.full-work-jump-btn {
+		display: initial;
 	}
 }
 
