@@ -96,9 +96,14 @@ set classes = [
 <header>
   {{ title_prefix }}
   {% if label and not page %}
-  <h2{{ title_attributes.addClass('node__title') }}>
-    <a href="{{ url }}" rel="bookmark">{{ label }}</a>
-  </h2>
+    {% if not page %}
+    <h2{{ title_attributes.addClass('node__title') }}>
+      <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+    </h2>
+    {% endif %}
+    {% if page and content_type not in ["work", "legacy_work", "playlist"] %}
+      <h2{{ title_attributes.addClass('node__title') }}>{{ label }}</h2>
+    {% endif %}
   {% endif %}
   {{ title_suffix }}
   {% if display_submitted %}
