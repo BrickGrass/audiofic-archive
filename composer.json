@@ -41,7 +41,6 @@
         "drupal/facets": "^2.0",
         "drupal/auto_entitylabel": "^3.3",
         "drupal/duration_field": "^2.1",
-        "drupal/search_api_block": "^1.1",
         "drupal/bootstrap_barrio": "^5.5",
         "drupal/upgrade_status": "^4.3",
         "drush/drush": "^13.2"
