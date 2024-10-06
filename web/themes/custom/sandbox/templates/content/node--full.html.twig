@@ -223,10 +223,10 @@ set classes = [
             {% for file in streaming_files %}
               <div class="full-work-player-streaming-item {{ not loop.first ? 'not-playing' : '' }}">
                 {% if content_type == "work" %}
-                  <span>{{ file.name == "Work" ? file.work_name : file.name }}</span>
+                  <span>{{ file.name }}</span>
                 {% endif %}
                 {% if content_type == "playlist" %}
-                  <span>{{ file.work_name }} {{ file.name == "Work" ? "" : file.name }}</span>
+                  <span>{{ file.name }}</span>
                 {% endif %}
                 <audio controls preload="metadata" src="{{ file.url }}" />
               </div>
@@ -250,10 +250,10 @@ set classes = [
               {% for file in streaming_files %}
                 <button class="d-flex justify-content-between p-2">
                   {% if content_type == "work" %}
-                    <span class="full-work-player-playlist-name text-start">{{ file.name == "Work" ? file.work_name : file.name }}</span>
+                    <span class="full-work-player-playlist-name text-start">{{ file.name }}</span>
                   {% endif %}
                   {% if content_type == "playlist" %}
-                    <span class="full-work-player-playlist-name text-start">{{ file.work_name }} {{ file.name == "Work" ? "" : file.name }}</span>
+                    <span class="full-work-player-playlist-name text-start">{{ file.work_name }} {{ file.name }}</span>
                   {% endif %}
                   <span class="full-work-player-playlist-length ms-2">--:--:--</span>
                   </button>
@@ -276,10 +276,10 @@ set classes = [
                   {% for file in arr %}
                     <tr>
                       {% if content_type == "work" %}
-                        <td scope="row">{{ file.name == "Work" ? file.work_name : file.name }}</th>
+                        <td scope="row">{{ file.name }}</th>
                       {% endif %}
                       {% if content_type == "playlist" %}
-                        <td scope="row">{{ file.work_name }} {{ file.name == "Work" ? "" : file.name }}</th>
+                        <td scope="row">{{ file.work_name }} {{ file.name }}</th>
                       {% endif %}
                       <td>{{ file.mime_type }}</td>
                       <td>{{ file.file_size }}</td>

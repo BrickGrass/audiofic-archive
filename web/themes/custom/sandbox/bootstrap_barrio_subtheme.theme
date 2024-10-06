@@ -39,15 +39,18 @@ function fetch_media_files($entity, $media_type, $is_series, &$files) {
   if ($entity->hasField($field_name)) {
     foreach ($entity->get($field_name)->referencedEntities() as $file) {
       $phys_file = NULL;
+      $name = NULL;
       if ($media_type === "mp3") {
         $phys_file = \Drupal\file\Entity\File::load($file->field_media_audio_file[0]->target_id);
+        $name = $file->field_chapter_label;
       } else {
         $phys_file = \Drupal\file\Entity\File::load($file->field_media_file[0]->target_id);
+        $name = $file->name->value;
       }
 
       $data = [
         "work_name" => $entity->getTitle(),
-        "name" => $file->name->value,
+        "name" => $name,
         "file_size" => make_bytes_readable($phys_file->filesize->value),
         "mime_type" => get_file_type($phys_file->filemime->value),
         "url" => $phys_file->createFileUrl(),

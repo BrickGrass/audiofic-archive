@@ -161,6 +161,7 @@
 
 .full-work table {
 	font-size: 0.8em;
+	word-wrap: break-word;
 }
 
 .full-work table i {
