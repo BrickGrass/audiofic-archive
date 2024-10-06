@@ -78,25 +78,8 @@
         <h6 class="mb-1 me-1"><a href="{{ url }}">{{ label }}</a></h6>
 
         <div class="d-flex flex-column flex-wrap mb-2">
-          {% if node.field_author is not empty %}
-            <span class="me-1">
-              Written by
-              {% for author in node.field_author %}
-                {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': author.entity.id}) %}
-                <a href="{{ taxonomy_path }}">{{ author.entity.name.value }}</a>{{- not loop.last ? ', ' -}}
-              {% endfor %}
-            </span>
-          {% endif %}
-
-          {% if node.field_reader is not empty %}
-            <span class="me-1">
-              Read by
-              {% for reader in node.field_reader %}
-                {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': reader.entity.id}) %}
-                <a href="{{ taxonomy_path }}">{{ reader.entity.name.value }}</a>{{- not loop.last ? ', ' -}}
-              {% endfor %}
-            </span>
-          {% endif %}
+          {{ content.field_author }}
+          {{ content.field_reader }}
         </div>
       </div>
       <div class="work-card-lower-info {{ has_image ? '' : 'work-card-no-cover' }}">
@@ -118,15 +101,12 @@
             {% endif %}
 
             {% if content_type == "playlist" %}
-              {# TODO: display Series OR Collection #}
               <span class="badge bg-primary ms-1">Series</span>
             {% endif %}
 
-            {% if node.field_completion_status.value == "wip" %}
-              <span class="badge bg-primary ms-1">WIP</span>
-            {% endif %}
+            {{ content.field_completion_status }}
 
-            <span class="ms-1">{% if node.field_length is not empty %}length: {{ node.field_length[0].entity.name.value }}, {% endif %}{{ created_at }}</span>
+            <span class="ms-1">{% if node.field_length is not empty %}length: {{ node.field_length[0].entity.name.value }}, {% endif %}{% if content_type == "playlist" %}{{ series_length }} part series, {% endif %}{{ created_at }}</span>
           </small>
         </div>
       </div>

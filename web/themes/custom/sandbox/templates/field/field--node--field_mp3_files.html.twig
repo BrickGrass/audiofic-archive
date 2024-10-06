@@ -37,18 +37,23 @@
  * @see template_preprocess_field()
  */
 #}
+{%
+  set classes = [
+    'field',
+    'field--name-' ~ field_name|clean_class,
+    'field--type-' ~ field_type|clean_class,
+    'field--label-' ~ label_display,
+  ]
+%}
 
-{% set rating = items[0]["content"]["#title"] %}
-{% set margin = view_mode == 'full' ? 'me-1' : 'ms-1' %}
-
-{% if rating == "Explicit" %}
-  <span class="badge bg-danger {{ margin }}">E</span>
-{% elseif rating == "Mature" %}
-  <span class="badge rating-mature {{ margin }}">M</span>
-{% elseif rating == "Teen and up" %}
-  <span class="badge bg-warning {{ margin }}">T</span>
-{% elseif rating == "Gen" %}
-  <span class="badge bg-success {{ margin }}">G</span>
-{% else %}
-  <span class="badge bg-secondary {{ margin }}">No Age Rating</span>
-{% endif %}
+<div{{ attributes.addClass(classes) }}>
+  {% if multiple %}
+    <div class='field__items'>
+  {% endif %}
+  {% for item in items %}
+    <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+  {% endfor %}
+  {% if multiple %}
+    </div>
+  {% endif %}
+</div>

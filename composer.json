@@ -31,7 +31,7 @@
         "drupal/pathauto": "^1.13",
         "drupal/tac_lite": "^1.7",
         "drupal/tiny_html_audio_player": "^1.0",
-        "drupal/twig_tweak": "^3.2",
+        "drupal/twig_tweak": "^3.4",
         "cweagans/composer-patches": "^1.7",
         "drush/drush": "^13.2",
         "drupal/field_group": "^3.4",

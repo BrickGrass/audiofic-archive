@@ -6,6 +6,13 @@ global-styling:
     component:
       css/colors.css: {}
       css/style.css: {}
+playlist:
+  js:
+    https://code.jquery.com/jquery-3.7.1.min.js: { type: external, minified: true }
+    js/playlist.js: {}
+  css:
+    component:
+      https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css: { type: external, minified: true }
 bootstrap:
   js:
     /libraries/popper.js/dist/umd/popper.min.js: { weight: -19 }

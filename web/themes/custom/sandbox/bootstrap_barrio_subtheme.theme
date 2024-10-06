@@ -5,33 +5,8 @@
  * Functions to support theming in the SASS Starterkit subtheme.
  */
 
-use Drupal\Core\Form\FormStateInterface;
-
-/**
- * Implements hook_form_system_theme_settings_alter() for settings form.
- *
- * Replace Barrio setting options with subtheme ones.
- *
- * Example on how to alter theme settings form
- */
-// function bootstrap_barrio_subtheme_form_system_theme_settings_alter(&$form, FormStateInterface $form_state) {
-//   $form['components']['navbar']['bootstrap_barrio_navbar_top_background']['#options'] = [
-//     'bg-primary' => t('Primary'),
-//     'bg-secondary' => t('Secondary'),
-//     'bg-light' => t('Light'),
-//     'bg-dark' => t('Dark'),
-//     'bg-white' => t('White'),
-//     'bg-transparent' => t('Transparent'),
-//   ];
-//   $form['components']['navbar']['bootstrap_barrio_navbar_background']['#options'] = [
-//     'bg-primary' => t('Primary'),
-//     'bg-secondary' => t('Secondary'),
-//     'bg-light' => t('Light'),
-//     'bg-dark' => t('Dark'),
-//     'bg-white' => t('White'),
-//     'bg-transparent' => t('Transparent'),
-//   ];
-// }
+use Drupal\file\Entity\File;
+use Drupal\Core\Url;
 
 /**
  * Prepares variables for `breadcrumb.html.twig`.
@@ -56,23 +31,34 @@ function fetch_vocabulary_tags($entity, $vocab_name, &$all_tags) {
 }
 
 /**
- * Implements hook_preprocess_views_view_fields() for the browse works view.
+ * Fetches the media files from a node and adds them to $files.
  */
-function bootstrap_barrio_subtheme_preprocess_views_view_fields(&$variables) {
-  $current_view = $variables["view"]->current_display;
-  if (in_array($current_view, ["page_1", "search", "search_taxonomy"])) {
-    $row = $variables["row"];
-    $entity = $row->_entity;
+function fetch_media_files($entity, $media_type, $is_series, &$files) {
+  $field_name = $media_type === "mp3" ? "field_mp3_files" : "field_other_files";
 
-    $all_tags = [];
+  if ($entity->hasField($field_name)) {
+    foreach ($entity->get($field_name)->referencedEntities() as $file) {
+      $phys_file = NULL;
+      if ($media_type === "mp3") {
+        $phys_file = \Drupal\file\Entity\File::load($file->field_media_audio_file[0]->target_id);
+      } else {
+        $phys_file = \Drupal\file\Entity\File::load($file->field_media_file[0]->target_id);
+      }
 
-    fetch_vocabulary_tags($entity, "field_fandom2", $all_tags);
-    fetch_vocabulary_tags($entity, "field_relationship", $all_tags);
-    fetch_vocabulary_tags($entity, "field_warning", $all_tags);
-    fetch_vocabulary_tags($entity, "field_category", $all_tags);
-    fetch_vocabulary_tags($entity, "field_format", $all_tags);
+      $data = [
+        "work_name" => $entity->getTitle(),
+        "name" => $file->name->value,
+        "file_size" => make_bytes_readable($phys_file->filesize->value),
+        "mime_type" => get_file_type($phys_file->filemime->value),
+        "url" => $phys_file->createFileUrl(),
+      ];
 
-    $variables["all_tags"] = $all_tags;
+      if ($is_series) {
+        $data["work_label"] = $entity->get("field_part_label")[0]->value;
+      }
+
+      array_push($files, $data);
+    }
   }
 }
 
@@ -85,11 +71,70 @@ function bootstrap_barrio_subtheme_preprocess_fieldset(&$variables) {
 }
 
 /**
+ * Sorts an array of arrays by the column 'work_label'.
+ */
+function sort_by_part_label(&$array) {
+  $work_label = array_column($array, 'work_label');
+  array_multisort($work_label, SORT_ASC, $array);
+}
+
+/**
+ * Converts bytes to a human readable format.
+ *
+ * Adapted from: https://gist.github.com/liunian/9338301.
+ */
+function make_bytes_readable($bytes) {
+  $i = floor(log($bytes, 1024));
+  return round($bytes / pow(1024, $i), [0, 0, 0, 0, 0][$i]) . ['B', 'kB', 'MB', 'GB', 'TB'][$i];
+}
+
+/**
+ * Converts a mime type to a human readable filetype.
+ */
+function get_file_type($mime_type) {
+  switch ($mime_type) {
+    case "audio/mpeg":
+      return "MP3";
+
+    case "audio/wav":
+      return "WAV";
+
+    case "audio/webm":
+      return "WEBM Audio";
+
+    case "audio/m4a":
+      return "M4A";
+
+    case "audio/m4b":
+      return "M4B";
+
+    case "application/pdf":
+      return "PDF";
+
+    case "application/zip":
+      return "ZIP";
+
+    case "image/jpeg":
+      return "JPEG";
+
+    case "image/png":
+      return "PNG";
+
+    case "image/webp":
+      return "WEBP";
+
+    case "text/plain":
+      return "TXT";
+  }
+}
+
+/**
  * Implements hook_preprocess_node() for content teasers.
  */
 function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
   $node = $variables["node"];
-  if (in_array($node->getType(), ["work", "legacy_work", "playlist"])) {
+  $node_type = $node->getType();
+  if (in_array($node_type, ["work", "legacy_work", "playlist"])) {
     $all_tags = [];
 
     fetch_vocabulary_tags($node, "field_fandom2", $all_tags);
@@ -101,7 +146,128 @@ function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
     $variables["all_tags"] = $all_tags;
 
     $date_formatter = \Drupal::service('date.formatter');
-    $date = $date_formatter->format($node->getCreatedTime(), "custom", "j F Y");
-    $variables['created_at'] = $date;
+    $created_date = $date_formatter->format($node->getCreatedTime(), "custom", "j F Y");
+    $variables['created_at'] = $created_date;
+
+    $updated_date = $date_formatter->format($node->getChangedTime(), "custom", "j F Y");
+    $variables['updated_at'] = $updated_date;
+
+    $streaming_files = [];
+    fetch_media_files($node, "mp3", FALSE, $streaming_files);
+    $variables['streaming_files'] = $streaming_files;
+
+    $other_files = [];
+    fetch_media_files($node, "other", FALSE, $other_files);
+    $variables['other_files'] = $other_files;
+  }
+
+  // TODO: This is only for playlists, check display type so that this work
+  // isn't done for cards where it isn't needed
+  if ($node_type == "playlist") {
+    if ($node->hasField("field_series_type")) {
+      $series_type = $node->get("field_series_type")->referencedEntities()[0]->name->value;
+
+      $query = \Drupal::entityQuery('node');
+      $node_type_group = $query
+        ->orConditionGroup()
+        ->condition('type', 'work')
+        ->condition('type', 'legacy_work');
+      $query = $query
+        ->condition($node_type_group)
+        ->accessCheck(TRUE);
+
+      $results = NULL;
+
+      if ($series_type === "Series") {
+        $query = $query->condition('field_series.entity:node.nid', $node->id());
+        $results = $query->execute();
+      } elseif ($series_type === "Reader collection") {
+        $query = $query->condition('field_reader_collections.entity:node.nid', $node->id());
+        $results = $query->execute();
+      }
+
+      if ($results !== NULL) {
+        $variables["series_length"] = count($results);
+        $work_text_links = [];
+        $work_podfic_links = [];
+        $streaming_files = [];
+        $other_files = [];
+
+        foreach ($results as $result) {
+          $work = \Drupal::entityTypeManager()->getStorage('node')->load($result);
+
+          $links = $work->get("field_text_post");
+          if (count($links) == 1) {
+            array_push($work_text_links, [
+              "uri" => $links[0]->uri,
+              "title" => $work->getTitle(),
+              "work_label" => $work->get("field_part_label")[0]->value,
+            ]);
+          } else {
+            $index = 1;
+            foreach ($links as $link) {
+              array_push($work_text_links, [
+                "uri" => $link->uri,
+                "title" => "{$work->getTitle()} {$index}",
+                "work_label" => $work->get("field_part_label")[0]->value,
+              ]);
+              $index++;
+            }
+          }
+
+          $links = $work->get("field_podfic_post");
+          if (count($links) == 1) {
+            array_push($work_podfic_links, [
+              "uri" => $links[0]->uri,
+              "title" => $work->getTitle(),
+              "work_label" => $work->get("field_part_label")[0]->value,
+            ]);
+          } else {
+            $index = 1;
+            foreach ($links as $link) {
+              array_push($work_podfic_links, [
+                "uri" => $link->uri,
+                "title" => "{$work->getTitle()} {$index}",
+                "work_label" => $work->get("field_part_label")[0]->value,
+              ]);
+              $index++;
+            }
+          }
+
+          fetch_media_files($work, "mp3", TRUE, $streaming_files);
+          fetch_media_files($work, "other", TRUE, $other_files);
+        }
+
+        // Sort into series order
+        sort_by_part_label($work_text_links);
+        sort_by_part_label($work_podfic_links);
+        sort_by_part_label($streaming_files);
+        sort_by_part_label($other_files);
+
+        $variables['work_text_links'] = $work_text_links;
+        $variables['work_podfic_links'] = $work_podfic_links;
+        $variables['streaming_files'] = $streaming_files;
+        $variables['other_files'] = $other_files;
+      } else {
+        $variables["series_length"] = 0;
+      }
+    }
+  }
+}
+
+/**
+ * Implements template_preprocess_field() for works and playlists.
+ */
+function bootstrap_barrio_subtheme_preprocess_field(&$variables) {
+  $variables['view_mode'] = $variables['element']['#view_mode'];
+}
+
+/**
+ * Implements hook_preprocess_page() for works and series nodes.
+ */
+function bootstrap_barrio_subtheme_preprocess_page(&$variables) {
+  $path = \Drupal::service('path.current')->getPath();
+  if (str_starts_with($path, "/node")) {
+    $variables['#attached']['library'][] = 'bootstrap_barrio_subtheme/playlist';
   }
 }

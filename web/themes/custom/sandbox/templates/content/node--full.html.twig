@@ -1,0 +1,298 @@
+{#
+/**
+ * @file
+ * Bootstrap Barrio's theme implementation to display a node.
+ *
+ * Available variables:
+ * - node: The node entity with limited access to object properties and methods.
+     Only "getter" methods (method names starting with "get", "has", or "is")
+     and a few common methods such as "id" and "label" are available. Calling
+     other methods (such as node.delete) will result in an exception.
+ * - label: The title of the node.
+ * - content: All node items. Use {{ content }} to print them all,
+ *   or print a subset such as {{ content.field_example }}. Use
+ *   {{ content|without('field_example') }} to temporarily suppress the printing
+ *   of a given child element.
+ * - author_picture: The node author user entity, rendered using the "compact"
+ *   view mode.
+ * - metadata: Metadata for this node.
+ * - date: Themed creation date field.
+ * - author_name: Themed author name field.
+ * - url: Direct URL of the current node.
+ * - display_submitted: Whether submission information should be displayed.
+ * - attributes: HTML attributes for the containing element.
+ *   The attributes.class element may contain one or more of the following
+ *   classes:
+ *   - node: The current template type (also known as a "theming hook").
+ *   - node--type-[type]: The current node type. For example, if the node is an
+ *     "Article" it would result in "node--type-article". Note that the machine
+ *     name will often be in a short form of the human readable label.
+ *   - node--view-mode-[view_mode]: The View Mode of the node; for example, a
+ *     teaser would result in: "node--view-mode-teaser", and
+ *     full: "node--view-mode-full".
+ *   The following are controlled through the node publishing options.
+ *   - node--promoted: Appears on nodes promoted to the front page.
+ *   - node--sticky: Appears on nodes ordered above other non-sticky nodes in
+ *     teaser listings.
+ *   - node--unpublished: Appears on unpublished nodes visible only to site
+ *     admins.
+ * - title_attributes: Same as attributes, except applied to the main title
+ *   tag that appears in the template.
+ * - content_attributes: Same as attributes, except applied to the main
+ *   content tag that appears in the template.
+ * - author_attributes: Same as attributes, except applied to the author of
+ *   the node tag that appears in the template.
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the main title tag that appears in the template.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the main title tag that appears in the template.
+ * - view_mode: View mode; for example, "teaser" or "full".
+ * - teaser: Flag for the teaser state. Will be true if view_mode is 'teaser'.
+ * - page: Flag for the full page state. Will be true if view_mode is 'full'.
+ * - readmore: Flag for more state. Will be true if the teaser content of the
+ *   node cannot hold the main body content.
+ * - logged_in: Flag for authenticated user status. Will be true when the
+ *   current user is a logged-in member.
+ * - is_admin: Flag for admin user status. Will be true when the current user
+ *   is an administrator.
+ *
+ * @see template_preprocess_node()
+ */
+#}
+{{ attach_library('bootstrap_barrio/node') }}
+
+{% set content_type = node.type.value[0].target_id %}
+
+{%
+set classes = [
+  'node',
+  'node--type-' ~ node.bundle|clean_class,
+  node.isPromoted() ? 'node--promoted',
+  node.isSticky() ? 'node--sticky',
+  not node.isPublished() ? 'node--unpublished',
+  view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+  'clearfix',
+]
+%}
+
+<noscript>
+  <style>
+    .full-work-player-now-playing,
+    .full-work-player-playlist {
+      display: none !important;
+    }
+
+    .full-work-player-streaming-item.not-playing {
+      display: initial !important;
+    }
+
+    .full-work-player-streaming-item span {
+      display: initial !important;
+    }
+  </style>
+</noscript>
+
+<article{{ attributes.addClass(classes) }}>
+<header>
+  {{ title_prefix }}
+  {% if label and not page %}
+  <h2{{ title_attributes.addClass('node__title') }}>
+    <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+  </h2>
+  {% endif %}
+  {{ title_suffix }}
+  {% if display_submitted %}
+  <div class="node__meta">
+    {{ author_picture }}
+    {% block submitted %}
+    <em{{ author_attributes }}>
+      {% trans %}Submitted by {{ author_name }} on {{ date }}{% endtrans %}
+    </em>
+    {% endblock %}
+    {{ metadata }}
+  </div>
+  {% endif %}
+</header>
+<div{{ content_attributes.addClass('node__content', 'clearfix') }}>
+  {% if content_type in ["work", "legacy_work", "playlist"] %}
+    <div class="p-2 full-work">
+      {% set has_image = node.field_cover[0].entity.uri.value != null %}
+      {% if has_image %}
+        <img
+          src="{{ file_url(node.field_cover[0].entity.uri.value) }}"
+          alt="{{ node.field_cover[0].entity.alt.value }}"
+        >
+      {% endif %}
+      <div class="d-flex flex-column w-100 full-work-main-content {{ has_image ? '' : 'full-work-no-image' }}">
+        <h1>{{ label }}</h1>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="d-flex full-work-lozenges">
+            {% if content.field_rating is not empty %}
+              {{ content.field_rating }}
+            {% else %}
+              <span class="badge bg-secondary me-1">No Age Rating</span>
+            {% endif %}
+
+            {% if content_type == "playlist" %}
+              <span class="badge bg-primary me-1">Series</span>
+            {% endif %}
+
+            {{ content.field_completion_status }}
+          </div>
+          <div class="d-flex flex-column justify-content-end text-end full-work-dates">
+            <small class="fw-bold">Published: {{ created_at }}</small>
+            <small class="fw-bold">Last Updated: {{ updated_at }}</small>
+          </div>
+        </div>
+        {{ content.field_author }}
+        {{ content.field_reader }}
+        <div class="mb-1">
+          {% for tag in all_tags %}
+            {% set vocabulary = tag.vid.value[0]["target_id"] %}
+            {% set fandom_or_ship = vocabulary in ["fandom", "relationship"] ? "fw-bolder" : "" %}
+            {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': tag.id}) %}
+            <a class="{{ fandom_or_ship }}" href="{{ taxonomy_path }}">{{ tag.name.value }}</a>{{- not loop.last ? ', ' -}}
+          {% endfor %}
+        </div>
+
+        {% if node.field_length is not empty %}
+          <span><b>Length</b> {{ node.field_length[0].entity.name.value }}</span>
+        {% endif %}
+
+        {% if node.field_language is not empty %}
+          <span><b>Language</b> {{ node.field_language[0].entity.name.value }}</span>
+        {% endif %}
+
+        {% if content_type == "playlist" %}
+          <div class="mt-2">
+            {{ drupal_view("series_works_test", "block_1") }}
+          </div>
+        {% endif %}
+      </div>
+      <div class="full-work-player-downloads {{ has_image ? '' : 'full-work-no-image' }}">
+        {% if content_type == "legacy_work" %}
+          {{ node.body.value | raw }}
+        {% endif %}
+
+        {% set warning_text = "For ratings, tags, warnings, summaries and to leave comments please see the" %}
+        {% set warning_text_multiple = "written work(s) and podfic post(s)." %}
+
+        {% if content_type == "work" %}
+          {% if node.field_podfic_post.getvalue | length == 1 and node.field_text_post.getvalue | length == 1 %}
+            <p>
+              {{ warning_text }}
+              <a href="{{ node.field_text_post.value[0].uri }}">written work</a>
+              and
+              <a href="{{ node.field_podfic_post.value[0].uri }}">podfic post</a>.
+            </p>
+          {% else %}
+            <p>{{ warning_text }} {{ warning_text_multiple }}</p>
+            <p>
+              Written work(s):
+              {% for link in node.field_text_post.value %}
+                <a href="{{ link.uri }}">link {{ loop.index }}</a>{% if not loop.last %},{% endif %}
+              {% endfor %}
+            </p>
+            <p>
+              Podfic post(s):
+              {% for link in node.field_podfic_post.value %}
+                <a href="{{ link.uri }}">link {{ loop.index }}</a>{% if not loop.last %},{% endif %}
+              {% endfor %}
+            </p>
+          {% endif %}
+        {% elseif content_type == "playlist" %}
+          <p>{{ warning_text }} {{ warning_text_multiple }}</p>
+          <p>
+            Written work(s):
+            {% for link in work_text_links %}
+              <a href="{{ link.uri }}">{{ link.title }}</a>{% if not loop.last %},{% endif %}
+            {% endfor %}
+          </p>
+          <p>
+            Podfic post(s):
+            {% for link in work_podfic_links %}
+              <a href="{{ link.uri }}">{{ link.title }}</a>{% if not loop.last %},{% endif %}
+            {% endfor %}
+          </p>
+        {% endif %}
+
+        {% if content_type == "work" or content_type == "playlist" %}
+          <div class="full-work-player d-flex flex-column">
+            {% for file in streaming_files %}
+              <div class="full-work-player-streaming-item {{ not loop.first ? 'not-playing' : '' }}">
+                {% if content_type == "work" %}
+                  <span>{{ file.name == "Work" ? file.work_name : file.name }}</span>
+                {% endif %}
+                {% if content_type == "playlist" %}
+                  <span>{{ file.work_name }} {{ file.name == "Work" ? "" : file.name }}</span>
+                {% endif %}
+                <audio controls preload="metadata" src="{{ file.url }}" />
+              </div>
+            {% endfor %}
+
+            <div class="full-work-player-now-playing d-flex align-items-center justify-content-between p-2 mb-2 mt-2 {{ streaming_files | length < 2 ? 'full-work-player-single-file' : '' }}">
+              <span>Now Playing:</span>
+              <div class="d-flex ms-1">
+                <button class="player-control" id="player-prev" aria-label="Previous Track" disabled>
+                  <i class="bi bi-arrow-left-circle-fill"></i>
+                  <i class="bi bi-arrow-left-circle chrome-only"></i>
+                </button>
+                <button class="player-control" id="player-next" aria-label="Next Track">
+                  <i class="bi bi-arrow-right-circle-fill"></i>
+                  <i class="bi bi-arrow-right-circle chrome-only"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="full-work-player-playlist {{ streaming_files | length < 2 ? 'full-work-player-single-file' : '' }}">
+              {% for file in streaming_files %}
+                <button class="d-flex justify-content-between p-2">
+                  {% if content_type == "work" %}
+                    <span class="full-work-player-playlist-name text-start">{{ file.name == "Work" ? file.work_name : file.name }}</span>
+                  {% endif %}
+                  {% if content_type == "playlist" %}
+                    <span class="full-work-player-playlist-name text-start">{{ file.work_name }} {{ file.name == "Work" ? "" : file.name }}</span>
+                  {% endif %}
+                  <span class="full-work-player-playlist-length ms-2">--:--:--</span>
+                  </button>
+              {% endfor %}
+            </div>
+          </div>
+
+          {% if streaming_files | length > 0 or other_files | length > 0 %}
+            <table class="table table-striped table-bordered mt-3">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">File Type</th>
+                  <th scope="col">File Size</th>
+                  <th scope="col" class="text-center"><i class="bi bi-download" aria-label="Download"></i></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for arr in [streaming_files, other_files] %}
+                  {% for file in arr %}
+                    <tr>
+                      {% if content_type == "work" %}
+                        <td scope="row">{{ file.name == "Work" ? file.work_name : file.name }}</th>
+                      {% endif %}
+                      {% if content_type == "playlist" %}
+                        <td scope="row">{{ file.work_name }} {{ file.name == "Work" ? "" : file.name }}</th>
+                      {% endif %}
+                      <td>{{ file.mime_type }}</td>
+                      <td>{{ file.file_size }}</td>
+                      <td><a href="{{ file.url }}" download>Download</a></td>
+                    </tr>
+                  {% endfor %}
+                {% endfor %}
+              </tbody>
+            </table>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  {% else %}
+    {{ content }}
+  {% endif %}
+</div>
+</article>

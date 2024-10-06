@@ -38,17 +38,8 @@
  */
 #}
 
-{% set rating = items[0]["content"]["#title"] %}
 {% set margin = view_mode == 'full' ? 'me-1' : 'ms-1' %}
 
-{% if rating == "Explicit" %}
-  <span class="badge bg-danger {{ margin }}">E</span>
-{% elseif rating == "Mature" %}
-  <span class="badge rating-mature {{ margin }}">M</span>
-{% elseif rating == "Teen and up" %}
-  <span class="badge bg-warning {{ margin }}">T</span>
-{% elseif rating == "Gen" %}
-  <span class="badge bg-success {{ margin }}">G</span>
-{% else %}
-  <span class="badge bg-secondary {{ margin }}">No Age Rating</span>
+{% if items[0].content['#markup'] == "wip" %}
+    <span class="badge bg-primary {{ margin }}">WIP</span>
 {% endif %}
