@@ -101,9 +101,6 @@ set classes = [
       <a href="{{ url }}" rel="bookmark">{{ label }}</a>
     </h2>
     {% endif %}
-    {% if page and content_type not in ["work", "legacy_work", "playlist"] %}
-      <h2{{ title_attributes.addClass('node__title') }}>{{ label }}</h2>
-    {% endif %}
   {% endif %}
   {{ title_suffix }}
   {% if display_submitted %}
@@ -130,6 +127,7 @@ set classes = [
       {% endif %}
       <div class="d-flex flex-column w-100 full-work-main-content {{ has_image ? '' : 'full-work-no-image' }}">
         <h1>{{ label }}</h1>
+
         <div class="d-flex justify-content-between align-items-center">
           <div class="d-flex full-work-lozenges">
             {% if content.field_rating is not empty %}
@@ -149,8 +147,11 @@ set classes = [
             <small class="fw-bold">Last Updated: {{ updated_at }}</small>
           </div>
         </div>
+
         {{ content.field_author }}
+
         {{ content.field_reader }}
+
         <div class="mb-1">
           {% for tag in all_tags %}
             {% set vocabulary = tag.vid.value[0]["target_id"] %}
@@ -171,6 +172,7 @@ set classes = [
         {% if content_type == "playlist" %}
           <a class="btn btn-outline-primary full-work-jump-btn" href="#full-work-player-downloads">Jump to streaming and download section</a>
 
+          {# All works in this series as teasers #}
           <div class="mt-2">
             {{ drupal_view("works_in_collections", "works_series") }}
           </div>
@@ -184,41 +186,33 @@ set classes = [
         {% set warning_text = "For ratings, tags, warnings, summaries and to leave comments please see the" %}
         {% set warning_text_multiple = "written work(s) and podfic post(s)." %}
 
-        {% if content_type == "work" %}
-          {% if node.field_podfic_post.getvalue | length == 1 and node.field_text_post.getvalue | length == 1 %}
-            <p>
-              {{ warning_text }}
-              <a href="{{ node.field_text_post.value[0].uri }}">written work</a>
-              and
-              <a href="{{ node.field_podfic_post.value[0].uri }}">podfic post</a>.
-            </p>
-          {% else %}
-            <p>{{ warning_text }} {{ warning_text_multiple }}</p>
-            <p>
-              Written work(s):
-              {% for link in node.field_text_post.value %}
-                <a href="{{ link.uri }}">link {{ loop.index }}</a>{% if not loop.last %},{% endif %}
-              {% endfor %}
-            </p>
-            <p>
-              Podfic post(s):
-              {% for link in node.field_podfic_post.value %}
-                <a href="{{ link.uri }}">link {{ loop.index }}</a>{% if not loop.last %},{% endif %}
-              {% endfor %}
-            </p>
-          {% endif %}
-        {% elseif content_type == "playlist" %}
+        {% if content_type == "work" and
+        node.field_podfic_post.getvalue | length == 1 and
+        node.field_text_post.getvalue | length == 1 %}
+          <p>
+            {{ warning_text }}
+            <a href="{{ node.field_text_post.value[0].uri }}">written work</a>
+            and
+            <a href="{{ node.field_podfic_post.value[0].uri }}">podfic post</a>.
+          </p>
+        {% else %}
           <p>{{ warning_text }} {{ warning_text_multiple }}</p>
+          {% set text_links = content_type == "work" ? node.field_text_post.value : work_text_links %}
+          {% set podfic_links = content_type == "work" ? node.field_podfic_post.value : work_podfic_links %}
           <p>
             Written work(s):
-            {% for link in work_text_links %}
-              <a href="{{ link.uri }}">{{ link.title }}</a>{% if not loop.last %},{% endif %}
+            {% for link in text_links %}
+              {# TODO: for multiple links on a single work use the links text field
+              to add a label? #}
+              {% set title = content_type == "work" ? "link %s"|format(loop.index) : link.title %}
+              <a href="{{ link.uri }}">{{ title }}</a>{% if not loop.last %},{% endif %}
             {% endfor %}
           </p>
           <p>
             Podfic post(s):
-            {% for link in work_podfic_links %}
-              <a href="{{ link.uri }}">{{ link.title }}</a>{% if not loop.last %},{% endif %}
+            {% for link in podfic_links %}
+              {% set title = content_type == "work" ? "link %s"|format(loop.index) : link.title %}
+              <a href="{{ link.uri }}">{{ title }}</a>{% if not loop.last %},{% endif %}
             {% endfor %}
           </p>
         {% endif %}
@@ -227,12 +221,7 @@ set classes = [
           <div class="full-work-player d-flex flex-column">
             {% for file in streaming_files %}
               <div class="full-work-player-streaming-item {{ not loop.first ? 'not-playing' : '' }}">
-                {% if content_type == "work" %}
-                  <span>{{ file.name }}</span>
-                {% endif %}
-                {% if content_type == "playlist" %}
-                  <span>{{ file.name }}</span>
-                {% endif %}
+                <span>{{ file.name }}</span>
                 <audio controls preload="metadata" src="{{ file.url }}" />
               </div>
             {% endfor %}
@@ -254,12 +243,7 @@ set classes = [
             <div class="full-work-player-playlist {{ streaming_files | length < 2 ? 'full-work-player-single-file' : '' }}">
               {% for file in streaming_files %}
                 <button class="d-flex justify-content-between p-2">
-                  {% if content_type == "work" %}
-                    <span class="full-work-player-playlist-name text-start">{{ file.name }}</span>
-                  {% endif %}
-                  {% if content_type == "playlist" %}
-                    <span class="full-work-player-playlist-name text-start">{{ file.work_name }} {{ file.name }}</span>
-                  {% endif %}
+                  <span class="full-work-player-playlist-name text-start">{{ file.name }}</span>
                   <span class="full-work-player-playlist-length ms-2">--:--:--</span>
                   </button>
               {% endfor %}
@@ -280,12 +264,7 @@ set classes = [
                 {% for arr in [streaming_files, other_files] %}
                   {% for file in arr %}
                     <tr>
-                      {% if content_type == "work" %}
-                        <td scope="row">{{ file.name }}</th>
-                      {% endif %}
-                      {% if content_type == "playlist" %}
-                        <td scope="row">{{ file.work_name }} {{ file.name }}</th>
-                      {% endif %}
+                      <td scope="row">{{ file.name }}</th>
                       <td>{{ file.mime_type }}</td>
                       <td>{{ file.file_size }}</td>
                       <td class="table-no-collapse"><a href="{{ file.url }}" download>Download</a></td>

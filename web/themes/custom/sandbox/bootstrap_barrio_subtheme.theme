@@ -54,8 +54,13 @@ function fetch_media_files($entity, $media_type, $is_series, &$files) {
         $name = "";
       }
 
+      if ($is_series) {
+        $name = trim(implode(' ', array($entity->getTitle(), $name)), "");
+      } else {
+        $name = $name != "" ? $name : $entity->getTitle();
+      }
+
       $data = [
-        "work_name" => $entity->getTitle(),
         "name" => $name,
         "file_size" => make_bytes_readable($phys_file->filesize->value),
         "mime_type" => get_file_type($phys_file->filemime->value),
@@ -63,7 +68,7 @@ function fetch_media_files($entity, $media_type, $is_series, &$files) {
       ];
 
       if ($is_series) {
-        $data["work_label"] = $entity->get("field_part_label")[0]->value;
+        $data["work_label"] = get_part_label($entity);
       }
 
       array_push($files, $data);
@@ -138,6 +143,15 @@ function get_file_type($mime_type) {
 }
 
 /**
+ * Function to get the part label of a work, which is used to sort it in a series.
+ */
+function get_part_label($work) {
+  $field = $work->get("field_part_label")[0];
+  // Use work title as fallback
+  return $field != NULL ? $field->value : $work->getTitle();
+}
+
+/**
  * Implements hook_preprocess_node() for content teasers.
  */
 function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
@@ -173,93 +187,84 @@ function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
   // TODO: This is only for playlists, check display type so that this work
   // isn't done for cards where it isn't needed
   if ($node_type == "playlist") {
-    if ($node->hasField("field_series_type")) {
-      $series_type = $node->get("field_series_type")->referencedEntities()[0]->name->value;
+    $query = \Drupal::entityQuery('node');
+    $node_type_group = $query
+      ->orConditionGroup()
+      ->condition('type', 'work')
+      ->condition('type', 'legacy_work');
+    $query = $query
+      ->condition($node_type_group)
+      ->accessCheck(TRUE);
 
-      $query = \Drupal::entityQuery('node');
-      $node_type_group = $query
-        ->orConditionGroup()
-        ->condition('type', 'work')
-        ->condition('type', 'legacy_work');
-      $query = $query
-        ->condition($node_type_group)
-        ->accessCheck(TRUE);
+    $results = NULL;
 
-      $results = NULL;
+    $query = $query->condition('field_series.entity:node.nid', $node->id());
+    $results = $query->execute();
 
-      if ($series_type === "Series") {
-        $query = $query->condition('field_series.entity:node.nid', $node->id());
-        $results = $query->execute();
-      } elseif ($series_type === "Reader collection") {
-        $query = $query->condition('field_reader_collections.entity:node.nid', $node->id());
-        $results = $query->execute();
-      }
+    if ($results !== NULL) {
+      $variables["series_length"] = count($results);
+      $work_text_links = [];
+      $work_podfic_links = [];
+      $streaming_files = [];
+      $other_files = [];
 
-      if ($results !== NULL) {
-        $variables["series_length"] = count($results);
-        $work_text_links = [];
-        $work_podfic_links = [];
-        $streaming_files = [];
-        $other_files = [];
+      foreach ($results as $result) {
+        $work = \Drupal::entityTypeManager()->getStorage('node')->load($result);
 
-        foreach ($results as $result) {
-          $work = \Drupal::entityTypeManager()->getStorage('node')->load($result);
-
-          $links = $work->get("field_text_post");
-          if (count($links) == 1) {
+        $links = $work->get("field_text_post");
+        if (count($links) == 1) {
+          array_push($work_text_links, [
+            "uri" => $links[0]->uri,
+            "title" => $work->getTitle(),
+            "work_label" => get_part_label($work),
+          ]);
+        } else {
+          $index = 1;
+          foreach ($links as $link) {
             array_push($work_text_links, [
-              "uri" => $links[0]->uri,
-              "title" => $work->getTitle(),
-              "work_label" => $work->get("field_part_label")[0]->value,
+              "uri" => $link->uri,
+              "title" => "{$work->getTitle()} {$index}",
+              "work_label" => get_part_label($work),
             ]);
-          } else {
-            $index = 1;
-            foreach ($links as $link) {
-              array_push($work_text_links, [
-                "uri" => $link->uri,
-                "title" => "{$work->getTitle()} {$index}",
-                "work_label" => $work->get("field_part_label")[0]->value,
-              ]);
-              $index++;
-            }
+            $index++;
           }
-
-          $links = $work->get("field_podfic_post");
-          if (count($links) == 1) {
-            array_push($work_podfic_links, [
-              "uri" => $links[0]->uri,
-              "title" => $work->getTitle(),
-              "work_label" => $work->get("field_part_label")[0]->value,
-            ]);
-          } else {
-            $index = 1;
-            foreach ($links as $link) {
-              array_push($work_podfic_links, [
-                "uri" => $link->uri,
-                "title" => "{$work->getTitle()} {$index}",
-                "work_label" => $work->get("field_part_label")[0]->value,
-              ]);
-              $index++;
-            }
-          }
-
-          fetch_media_files($work, "mp3", TRUE, $streaming_files);
-          fetch_media_files($work, "other", TRUE, $other_files);
         }
 
-        // Sort into series order
-        sort_by_part_label($work_text_links);
-        sort_by_part_label($work_podfic_links);
-        sort_by_part_label($streaming_files);
-        sort_by_part_label($other_files);
+        $links = $work->get("field_podfic_post");
+        if (count($links) == 1) {
+          array_push($work_podfic_links, [
+            "uri" => $links[0]->uri,
+            "title" => $work->getTitle(),
+            "work_label" => get_part_label($work),
+          ]);
+        } else {
+          $index = 1;
+          foreach ($links as $link) {
+            array_push($work_podfic_links, [
+              "uri" => $link->uri,
+              "title" => "{$work->getTitle()} {$index}",
+              "work_label" => get_part_label($work),
+            ]);
+            $index++;
+          }
+        }
 
-        $variables['work_text_links'] = $work_text_links;
-        $variables['work_podfic_links'] = $work_podfic_links;
-        $variables['streaming_files'] = $streaming_files;
-        $variables['other_files'] = $other_files;
-      } else {
-        $variables["series_length"] = 0;
+        fetch_media_files($work, "mp3", TRUE, $streaming_files);
+        fetch_media_files($work, "other", TRUE, $other_files);
       }
+
+      // Sort into series order
+      sort_by_part_label($work_text_links);
+      sort_by_part_label($work_podfic_links);
+      sort_by_part_label($streaming_files);
+      sort_by_part_label($other_files);
+
+      $variables['work_text_links'] = $work_text_links;
+      $variables['work_podfic_links'] = $work_podfic_links;
+      $variables['streaming_files'] = $streaming_files;
+      $variables['other_files'] = $other_files;
+    } else {
+      $variables["series_length"] = 0;
     }
   }
 }
