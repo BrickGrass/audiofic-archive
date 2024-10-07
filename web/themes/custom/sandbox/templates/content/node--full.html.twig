@@ -75,23 +75,6 @@ set classes = [
 ]
 %}
 
-<noscript>
-  <style>
-    .full-work-player-now-playing,
-    .full-work-player-playlist {
-      display: none !important;
-    }
-
-    .full-work-player-streaming-item.not-playing {
-      display: initial !important;
-    }
-
-    .full-work-player-streaming-item span {
-      display: initial !important;
-    }
-  </style>
-</noscript>
-
 <article{{ attributes.addClass(classes) }}>
 <header>
   {{ title_prefix }}
@@ -186,16 +169,14 @@ set classes = [
         {% set warning_text = "For ratings, tags, warnings, summaries and to leave comments please see the" %}
         {% set warning_text_multiple = "written work(s) and podfic post(s)." %}
 
-        {% if content_type == "work" and
-        node.field_podfic_post.getvalue | length == 1 and
-        node.field_text_post.getvalue | length == 1 %}
+        {% if content_type == "work" and node.field_podfic_post.getvalue | length == 1 and node.field_text_post.getvalue | length == 1 %}
           <p>
             {{ warning_text }}
             <a href="{{ node.field_text_post.value[0].uri }}">written work</a>
             and
             <a href="{{ node.field_podfic_post.value[0].uri }}">podfic post</a>.
           </p>
-        {% else %}
+        {% elseif content_type == "work" or content_type == "playlist" %}
           <p>{{ warning_text }} {{ warning_text_multiple }}</p>
           {% set text_links = content_type == "work" ? node.field_text_post.value : work_text_links %}
           {% set podfic_links = content_type == "work" ? node.field_podfic_post.value : work_podfic_links %}
@@ -217,63 +198,10 @@ set classes = [
           </p>
         {% endif %}
 
-        {% if content_type == "work" or content_type == "playlist" %}
-          <div class="full-work-player d-flex flex-column">
-            {% for file in streaming_files %}
-              <div class="full-work-player-streaming-item {{ not loop.first ? 'not-playing' : '' }}">
-                <span>{{ file.name }}</span>
-                <audio controls preload="metadata" src="{{ file.url }}" />
-              </div>
-            {% endfor %}
-
-            <div class="full-work-player-now-playing d-flex align-items-center justify-content-between p-2 mb-2 mt-2 {{ streaming_files | length < 2 ? 'full-work-player-single-file' : '' }}">
-              <span>Now Playing:</span>
-              <div class="d-flex ms-1">
-                <button class="player-control" id="player-prev" aria-label="Previous Track" disabled>
-                  <i class="bi bi-arrow-left-circle-fill"></i>
-                  <i class="bi bi-arrow-left-circle chrome-only"></i>
-                </button>
-                <button class="player-control" id="player-next" aria-label="Next Track">
-                  <i class="bi bi-arrow-right-circle-fill"></i>
-                  <i class="bi bi-arrow-right-circle chrome-only"></i>
-                </button>
-              </div>
-            </div>
-
-            <div class="full-work-player-playlist {{ streaming_files | length < 2 ? 'full-work-player-single-file' : '' }}">
-              {% for file in streaming_files %}
-                <button class="d-flex justify-content-between p-2">
-                  <span class="full-work-player-playlist-name text-start">{{ file.name }}</span>
-                  <span class="full-work-player-playlist-length ms-2">--:--:--</span>
-                  </button>
-              {% endfor %}
-            </div>
-          </div>
-
-          {% if streaming_files | length > 0 or other_files | length > 0 %}
-            <table class="table table-striped table-bordered mt-3">
-              <thead>
-                <tr>
-                  <th scope="col">Name</th>
-                  <th scope="col">File Type</th>
-                  <th scope="col">File Size</th>
-                  <th scope="col" class="text-center"><i class="bi bi-download" aria-label="Download"></i></th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for arr in [streaming_files, other_files] %}
-                  {% for file in arr %}
-                    <tr>
-                      <td scope="row">{{ file.name }}</th>
-                      <td>{{ file.mime_type }}</td>
-                      <td>{{ file.file_size }}</td>
-                      <td class="table-no-collapse"><a href="{{ file.url }}" download>Download</a></td>
-                    </tr>
-                  {% endfor %}
-                {% endfor %}
-              </tbody>
-            </table>
-          {% endif %}
+        {% if content_type == "work" %}
+          {{ drupal_view("streaming_section", "work") }}
+        {% elseif content_type == "playlist" %}
+          {{ drupal_view("streaming_section", "series") }}
         {% endif %}
       </div>
     </div>

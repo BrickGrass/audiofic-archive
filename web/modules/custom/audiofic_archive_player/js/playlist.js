@@ -121,7 +121,7 @@ function create_playlist_track_events() {
   })
 }
 
-$("document").ready(function() {
+$(document).ready(function() {
   detect_rendering_engine();
   set_playlist_text_overflow();
   collect_playlist_data();

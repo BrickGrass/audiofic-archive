@@ -19,64 +19,6 @@ function bootstrap_barrio_subtheme_preprocess_breadcrumb(&$variables) {
 }
 
 /**
- * Fetches all the tags from a vocabulary and adds them to all_tags.
- */
-function fetch_vocabulary_tags($entity, $vocab_name, &$all_tags) {
-  if ($entity->hasField($vocab_name)) {
-    $tags = $entity->get($vocab_name)->referencedEntities();
-    foreach ($tags as $tag) {
-      array_push($all_tags, $tag);
-    }
-  }
-}
-
-/**
- * Fetches the media files from a node and adds them to $files.
- */
-function fetch_media_files($entity, $media_type, $is_series, &$files) {
-  $field_name = $media_type === "mp3" ? "field_mp3_files" : "field_other_files";
-
-  if ($entity->hasField($field_name)) {
-    foreach ($entity->get($field_name)->referencedEntities() as $file) {
-      $phys_file = NULL;
-      $label = NULL;
-      if ($media_type === "mp3") {
-        $phys_file = \Drupal\file\Entity\File::load($file->field_media_audio_file[0]->target_id);
-        $label = $file->get("field_chapter_label");
-      } else {
-        $phys_file = \Drupal\file\Entity\File::load($file->field_media_file[0]->target_id);
-        $label = $file->get("field_file_label");
-      }
-
-      if (count($label) > 0) {
-        $name = $label[0]->value;
-      } else {
-        $name = "";
-      }
-
-      if ($is_series) {
-        $name = trim(implode(' ', array($entity->getTitle(), $name)), "");
-      } else {
-        $name = $name != "" ? $name : $entity->getTitle();
-      }
-
-      $data = [
-        "name" => $name,
-        "file_size" => make_bytes_readable($phys_file->filesize->value),
-        "mime_type" => get_file_type($phys_file->filemime->value),
-        "url" => $phys_file->createFileUrl(),
-      ];
-
-      if ($is_series) {
-        $data["work_label"] = get_part_label($entity);
-      }
-
-      array_push($files, $data);
-    }
-  }
-}
-
-/**
  * Implements hook_preprocess_fieldset() for the browse works search form.
  */
 function bootstrap_barrio_subtheme_preprocess_fieldset(&$variables) {
@@ -85,74 +27,7 @@ function bootstrap_barrio_subtheme_preprocess_fieldset(&$variables) {
 }
 
 /**
- * Sorts an array of arrays by the column 'work_label'.
- */
-function sort_by_part_label(&$array) {
-  $work_label = array_column($array, 'work_label');
-  array_multisort($work_label, SORT_ASC, $array);
-}
-
-/**
- * Converts bytes to a human readable format.
- *
- * Adapted from: https://gist.github.com/liunian/9338301.
- */
-function make_bytes_readable($bytes) {
-  $i = floor(log($bytes, 1024));
-  return round($bytes / pow(1024, $i), [0, 0, 0, 0, 0][$i]) . ['B', 'kB', 'MB', 'GB', 'TB'][$i];
-}
-
-/**
- * Converts a mime type to a human readable filetype.
- */
-function get_file_type($mime_type) {
-  switch ($mime_type) {
-    case "audio/mpeg":
-      return "MP3";
-
-    case "audio/wav":
-      return "WAV";
-
-    case "audio/webm":
-      return "WEBM Audio";
-
-    case "audio/m4a":
-      return "M4A";
-
-    case "audio/m4b":
-      return "M4B";
-
-    case "application/pdf":
-      return "PDF";
-
-    case "application/zip":
-      return "ZIP";
-
-    case "image/jpeg":
-      return "JPEG";
-
-    case "image/png":
-      return "PNG";
-
-    case "image/webp":
-      return "WEBP";
-
-    case "text/plain":
-      return "TXT";
-  }
-}
-
-/**
- * Function to get the part label of a work, which is used to sort it in a series.
- */
-function get_part_label($work) {
-  $field = $work->get("field_part_label")[0];
-  // Use work title as fallback
-  return $field != NULL ? $field->value : $work->getTitle();
-}
-
-/**
- * Implements hook_preprocess_node() for content teasers.
+ * Implements hook_preprocess_node().
  */
 function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
   $node = $variables["node"];
@@ -174,97 +49,52 @@ function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
 
     $updated_date = $date_formatter->format($node->getChangedTime(), "custom", "j F Y");
     $variables['updated_at'] = $updated_date;
-
-    $streaming_files = [];
-    fetch_media_files($node, "mp3", FALSE, $streaming_files);
-    $variables['streaming_files'] = $streaming_files;
-
-    $other_files = [];
-    fetch_media_files($node, "other", FALSE, $other_files);
-    $variables['other_files'] = $other_files;
   }
 
-  // TODO: This is only for playlists, check display type so that this work
-  // isn't done for cards where it isn't needed
-  if ($node_type == "playlist") {
-    $query = \Drupal::entityQuery('node');
-    $node_type_group = $query
-      ->orConditionGroup()
+  if ($variables["view_mode"] == "full" && $node_type == "playlist") {
+    $results = \Drupal::entityQuery('node')
       ->condition('type', 'work')
-      ->condition('type', 'legacy_work');
-    $query = $query
-      ->condition($node_type_group)
-      ->accessCheck(TRUE);
-
-    $results = NULL;
-
-    $query = $query->condition('field_series.entity:node.nid', $node->id());
-    $results = $query->execute();
+      ->condition('field_series.entity:node.nid', $node->id())
+      ->accessCheck(TRUE)
+      ->execute();
 
     if ($results !== NULL) {
       $variables["series_length"] = count($results);
       $work_text_links = [];
       $work_podfic_links = [];
-      $streaming_files = [];
-      $other_files = [];
 
       foreach ($results as $result) {
         $work = \Drupal::entityTypeManager()->getStorage('node')->load($result);
 
         $links = $work->get("field_text_post");
         if (count($links) == 1) {
-          array_push($work_text_links, [
-            "uri" => $links[0]->uri,
-            "title" => $work->getTitle(),
-            "work_label" => get_part_label($work),
-          ]);
+          add_link($work_text_links, $links[0]->uri, $work);
         } else {
           $index = 1;
           foreach ($links as $link) {
-            array_push($work_text_links, [
-              "uri" => $link->uri,
-              "title" => "{$work->getTitle()} {$index}",
-              "work_label" => get_part_label($work),
-            ]);
+            add_link($work_text_links, $link->uri, $work, $index);
             $index++;
           }
         }
 
         $links = $work->get("field_podfic_post");
         if (count($links) == 1) {
-          array_push($work_podfic_links, [
-            "uri" => $links[0]->uri,
-            "title" => $work->getTitle(),
-            "work_label" => get_part_label($work),
-          ]);
+          add_link($work_podfic_links, $links[0]->uri, $work);
         } else {
           $index = 1;
           foreach ($links as $link) {
-            array_push($work_podfic_links, [
-              "uri" => $link->uri,
-              "title" => "{$work->getTitle()} {$index}",
-              "work_label" => get_part_label($work),
-            ]);
+            add_link($work_podfic_links, $link->uri, $work, $index);
             $index++;
           }
         }
-
-        fetch_media_files($work, "mp3", TRUE, $streaming_files);
-        fetch_media_files($work, "other", TRUE, $other_files);
       }
 
-      // Sort into series order
+      // Sort into series order.
       sort_by_part_label($work_text_links);
       sort_by_part_label($work_podfic_links);
-      sort_by_part_label($streaming_files);
-      sort_by_part_label($other_files);
 
       $variables['work_text_links'] = $work_text_links;
       $variables['work_podfic_links'] = $work_podfic_links;
-      $variables['streaming_files'] = $streaming_files;
-      $variables['other_files'] = $other_files;
-    } else {
-      $variables["series_length"] = 0;
     }
   }
 }
@@ -284,4 +114,45 @@ function bootstrap_barrio_subtheme_preprocess_page(&$variables) {
   if (str_starts_with($path, "/node")) {
     $variables['#attached']['library'][] = 'bootstrap_barrio_subtheme/playlist';
   }
+}
+
+/**
+ * Fetches all the tags from a vocabulary and adds them to all_tags.
+ */
+function fetch_vocabulary_tags($entity, $vocab_name, &$all_tags) {
+  if ($entity->hasField($vocab_name)) {
+    $tags = $entity->get($vocab_name)->referencedEntities();
+    foreach ($tags as $tag) {
+      array_push($all_tags, $tag);
+    }
+  }
+}
+
+/**
+ * Sorts an array of arrays by the column 'work_label'.
+ */
+function sort_by_part_label(&$array) {
+  $work_label = array_column($array, 'work_label');
+  array_multisort($work_label, SORT_ASC, $array);
+}
+
+/**
+ * Function to get the part label of a work, which is used to sort it in a series.
+ */
+function get_part_label($work) {
+  $field = $work->get("field_part_label")[0];
+  // Use work title as fallback
+  return $field != NULL ? $field->value : $work->getTitle();
+}
+
+/**
+ * Function to add a link to an array.
+ */
+function add_link(&$links, $uri, $work, $index = NULL) {
+  $title = $index == NULL ? $work->getTitle() : "{$work->getTitle()} {$index}";
+  array_push($links, [
+    "uri" => $uri,
+    "title" => $title,
+    "work_label" => get_part_label($work),
+  ]);
 }

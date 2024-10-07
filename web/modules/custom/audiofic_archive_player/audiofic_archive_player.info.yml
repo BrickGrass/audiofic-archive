@@ -1,0 +1,7 @@
+name: Audiofic Archive Player
+description: A custom module that creates a playlist using html5 audio tags.
+core_version_requirement: ^10.1 || ^11
+type: module
+package: Views
+dependencies:
+  - core:views

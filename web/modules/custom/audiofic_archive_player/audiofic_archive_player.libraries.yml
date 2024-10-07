@@ -1,0 +1,9 @@
+playlist:
+  version: 1.x
+  css:
+    component:
+      css/style.css: {}
+      https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css: { type: external, minified: true }
+  js:
+    https://code.jquery.com/jquery-3.7.1.min.js: { type: external, minified: true }
+    js/playlist.js: {}

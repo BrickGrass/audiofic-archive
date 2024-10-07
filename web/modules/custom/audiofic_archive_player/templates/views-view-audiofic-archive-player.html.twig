@@ -1,0 +1,96 @@
+{#
+/**
+ * Default theme implementation for Views to output an audiofic archive player.
+ *
+ * Available variables:
+ * - options: View plugin style options:
+ *   - classes: CSS classes.
+ *   - is_series: Boolean, whether the playlist is rendering works in a series.
+ *   - render_downloads: Boolean, whether the downloads section should be rendered.
+ *   - streaming_files: Two-dimensional array containing the streaming file data.
+ *   - other_files: Two-dimensional array containing all other file data.
+ *
+ * @see template_preprocess_views_view_audiofic_archive_player()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    'views-view-audiofic-archive-player',
+    'full-work-player',
+    'd-flex',
+    'flex-column',
+    options.classes
+  ]
+%}
+
+<noscript>
+  <style>
+    .full-work-player-now-playing,
+    .full-work-player-playlist {
+      display: none !important;
+    }
+
+    .full-work-player-streaming-item.not-playing {
+      display: initial !important;
+    }
+
+    .full-work-player-streaming-item span {
+      display: initial !important;
+    }
+  </style>
+</noscript>
+
+<div{{ attributes.addClass(classes) }}>
+  {% for file in options.streaming_files %}
+    <div class="full-work-player-streaming-item {{ not loop.first ? 'not-playing' : '' }}">
+      <span>{{ file.name }}</span>
+      <audio controls preload="metadata" src="{{ file.url }}" />
+    </div>
+  {% endfor %}
+
+  <div class="full-work-player-now-playing p-2 mb-2 mt-2 {{ options.streaming_files | length < 2 ? 'full-work-player-single-file' : '' }}">
+    <span>Now Playing:</span>
+    <div class="d-flex ms-1">
+      <button class="player-control" id="player-prev" aria-label="Previous Track" disabled>
+        <i class="bi bi-arrow-left-circle-fill"></i>
+        <i class="bi bi-arrow-left-circle chrome-only"></i>
+      </button>
+      <button class="player-control" id="player-next" aria-label="Next Track">
+        <i class="bi bi-arrow-right-circle-fill"></i>
+        <i class="bi bi-arrow-right-circle chrome-only"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="full-work-player-playlist {{ options.streaming_files | length < 2 ? 'full-work-player-single-file' : '' }}">
+    {% for file in options.streaming_files %}
+      <button class="d-flex justify-content-between p-2">
+        <span class="full-work-player-playlist-name text-start">{{ file.name }}</span>
+        <span class="full-work-player-playlist-length ms-2">--:--:--</span>
+        </button>
+    {% endfor %}
+  </div>
+</div>
+
+{% if options.render_downloads and (options.streaming_files | length > 0 or options.other_files | length > 0) %}
+  <div class="table-responsive full-work-downloads">
+    <table class="table table-striped table-bordered mt-3">
+      <thead>
+        <tr>
+          <th scope="col">Downloads</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for arr in [options.streaming_files, options.other_files] %}
+          {% for file in arr %}
+            <tr>
+              <td scope="row">{{ file.name }} ({{ file.mime_type }} file, {{ file.file_size }}) <a href="{{ file.url }}" download>[download]</a></th>
+            </tr>
+          {% endfor %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endif %}

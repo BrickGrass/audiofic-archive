@@ -1,0 +1,132 @@
+<?php
+/**
+ * @file
+ * Contains audiofic_archive_player.module.
+ */
+
+use Drupal\file\Entity\File;
+use Drupal\Core\Url;
+
+/**
+ * Converts bytes to a human readable format.
+ *
+ * Adapted from: https://gist.github.com/liunian/9338301.
+ */
+function audiofic_archive_player_make_bytes_readable($bytes) {
+  $i = floor(log($bytes, 1024));
+  return round($bytes / pow(1024, $i), [0, 0, 0, 0, 0][$i]) . ['B', 'kB', 'MB', 'GB', 'TB'][$i];
+}
+
+/**
+ * Converts a mime type to a human readable filetype.
+ */
+function audiofic_archive_player_get_file_type($mime_type) {
+  switch ($mime_type) {
+    case "audio/mpeg":
+      return "MP3";
+
+    case "audio/wav":
+      return "WAV";
+
+    case "audio/webm":
+      return "WEBM Audio";
+
+    case "audio/m4a":
+      return "M4A";
+
+    case "audio/m4b":
+      return "M4B";
+
+    case "application/pdf":
+      return "PDF";
+
+    case "application/zip":
+      return "ZIP";
+
+    case "image/jpeg":
+      return "JPEG";
+
+    case "image/png":
+      return "PNG";
+
+    case "image/webp":
+      return "WEBP";
+
+    case "text/plain":
+      return "TXT";
+  }
+}
+
+/**
+ * Fetches the media files from a node and adds them to $files.
+ */
+function audiofic_archive_player_fetch_media_files($entity, $media_type, $is_series, &$files) {
+  $field_name = $media_type === "mp3" ? "field_mp3_files" : "field_other_files";
+
+  if ($entity->hasField($field_name)) {
+    foreach ($entity->get($field_name)->referencedEntities() as $file) {
+      $phys_file = NULL;
+      $label = NULL;
+      if ($media_type === "mp3") {
+        $phys_file = File::load($file->field_media_audio_file[0]->target_id);
+        $label = $file->get("field_chapter_label");
+      } else {
+        $phys_file = File::load($file->field_media_file[0]->target_id);
+        $label = $file->get("field_file_label");
+      }
+
+      if (count($label) > 0) {
+        $name = $label[0]->value;
+      } else {
+        $name = "";
+      }
+
+      if ($is_series) {
+        $name = trim(implode(' ', [$entity->getTitle(), $name]), "");
+      } else {
+        $name = $name != "" ? $name : $entity->getTitle();
+      }
+
+      $data = [
+        "name" => $name,
+        "file_size" => audiofic_archive_player_make_bytes_readable($phys_file->filesize->value),
+        "mime_type" => audiofic_archive_player_get_file_type($phys_file->filemime->value),
+        "url" => $phys_file->createFileUrl(),
+      ];
+
+      array_push($files, $data);
+    }
+  }
+}
+
+/**
+ * Implements template_preprocess_views_view() for audiofic_archive_player.
+ */
+function audiofic_archive_player_preprocess_views_view_audiofic_archive_player(&$variables) {
+  $options = $variables['view']->style_plugin->options;
+
+  $streaming_files = [];
+  $other_files = [];
+  foreach ($variables['view']->result as $result) {
+    $entity = $result->_entity;
+    audiofic_archive_player_fetch_media_files($entity, "mp3", $options['is_series'], $streaming_files);
+    audiofic_archive_player_fetch_media_files($entity, "other", $options['is_series'], $other_files);
+  }
+
+  $options['streaming_files'] = $streaming_files;
+  $options['other_files'] = $other_files;
+  $variables['options'] = $options;
+  $variables['view']->element['#attached']['library'][] = 'audiofic_archive_player/playlist';
+}
+
+/**
+ * Implements hook_theme() for audiofic_archive_player.
+ */
+function audiofic_archive_player_theme($existing, $type, $theme, $path) {
+  return [
+    'audiofic_archive_player' => [
+      'template' => 'audiofic_archive_player',
+      'path' => $path . '/templates',
+    ],
+  ];
+}
