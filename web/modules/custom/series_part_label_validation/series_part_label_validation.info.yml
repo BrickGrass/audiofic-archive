@@ -1,0 +1,4 @@
+name: Series Part Label Validation
+description: A custom module which ensures that if a work is linked to a series, it must have a part label.
+core_version_requirement: ^10.3 || ^11
+type: module
