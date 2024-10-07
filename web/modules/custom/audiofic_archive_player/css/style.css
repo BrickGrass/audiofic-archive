@@ -55,7 +55,7 @@
 
 .full-work-player-playlist {
 	color: white;
-	max-height: calc(42px * 5);
+	max-height: calc(42px * 5.5);
 	overflow-y: scroll;
 }
 
@@ -90,7 +90,7 @@
 
 /* Playlist - Chrome/Edge Specific */
 .playlist-chrome .full-work-player-playlist {
-	max-height: calc(56px * 5);
+	max-height: calc(56px * 5.5);
 }
 
 .playlist-chrome .full-work-player-now-playing {
