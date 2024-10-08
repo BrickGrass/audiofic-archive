@@ -68,7 +68,8 @@
     type in ['checkbox', 'radio'] ? type|clean_class : 'form-type-' ~ type|clean_class,
     type in ['checkbox', 'radio'] ? wrapperclass,
     checkbox_style == 'form-switch' ? 'form-switch' : '',
-    type in ['checkbox'] ? 'mb-2',
+    type in ['checkbox'] and in_search_form ? 'mb-2',
+    type in ['checkbox'] and not in_search_form ? 'mb-3',
     'js-form-item-' ~ name|clean_class,
     'form-item-' ~ name|clean_class,
     title_display not in ['after', 'before'] ? 'form-no-label',
@@ -132,9 +133,20 @@
     {% endif %}
   </div>
 {% else %}
-  <div{{ attributes.addClass(classes, 'mb-2', 'd-flex', 'align-items-center', float_label ? 'form-floating') }}>
+  {% set more_classes = [
+    not in_search_form ? 'mb-3',
+    float_label ? 'form-floating',
+    in_search_form ? 'mb-2',
+    in_search_form ? 'd-flex',
+    in_search_form ? 'align-items-center',
+  ] %}
+  <div{{ attributes.addClass(classes, more_classes) }}>
     {% if label_display in ['before', 'invisible'] %}
-      <label class="me-2 text-nowrap" for="{{ input_attributes.id }}">{{ input_title | raw }}</label>
+      {% if in_search_form %}
+        <label class="me-2 text-nowrap" for="{{ input_attributes.id }}">{{ input_title | raw }}</label>
+      {% else %}
+        {{ label }}
+      {% endif %}
     {% endif %}
     {% if (prefix is not empty) or (suffix is not empty) %}
       <div class="input-group{{ errors ? ' is-invalid' : '' }}">

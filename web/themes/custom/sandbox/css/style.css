@@ -3,6 +3,7 @@
  * Subtheme specific CSS.
  */
 
+/* Misc */
 .space {
 	margin-bottom: 10px;
 }
@@ -21,6 +22,42 @@
 
 .node__content {
 	margin-top: 0;
+}
+
+/* Tagify tags */
+.tagify {
+	padding: 0 8px 0 0 !important;
+}
+
+.tagify__tag {
+	height: initial;
+	margin-inline: 8px 0;
+}
+
+.tagify__tag > div {
+	padding: 0.2rem 0.3rem;
+}
+
+.tagify__tag > div::before {
+	border-radius: 2rem;
+	box-shadow: 0 0 0 2.5em #e5e5e5 inset;
+}
+
+.tagify__tag:hover:not([readonly]) div::before {
+	border-radius: 2rem;
+}
+
+.tagify__tag:focus div::before, .tagify__tag:hover:not([readonly]) div::before {
+	box-shadow: 0 0 0 2.5em #D3E2E2 inset;
+}
+
+.tagify__tag__removeBtn:hover + div::before {
+	box-shadow: 0 0 0 2.5em rgba(211,148,148,.3) inset !important;
+	transition: box-shadow .2s;
+}
+
+.tagify__tag-text {
+	font-size: 0.875rem;
 }
 
 /* Navbar */

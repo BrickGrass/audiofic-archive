@@ -107,10 +107,17 @@ function bootstrap_barrio_subtheme_preprocess_field(&$variables) {
 }
 
 /**
- * Implements hook_preprocess_page().
+ * Implements hook_preprocess_form_element().
  */
-function bootstrap_barrio_subtheme_preprocess_page(&$variables) {
-  $variables['sidebar_first_attributes']->addClass("col-lg-3");
+function bootstrap_barrio_subtheme_preprocess_form_element(&$variables) {
+  if (in_array($variables['name'], [
+    "search_api_fulltext", "field_fandom2", "field_relationship", "field_author",
+    "field_reader", "field_language", "field_completion_status", "sort_by",
+  ])) {
+    $variables['in_search_form'] = TRUE;
+  } else {
+    $variables['in_search_form'] = FALSE;
+  }
 }
 
 /**
