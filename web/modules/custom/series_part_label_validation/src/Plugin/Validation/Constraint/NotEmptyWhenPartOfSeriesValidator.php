@@ -16,10 +16,11 @@ class NotEmptyWhenPartOfSeriesValidator extends ConstraintValidator {
   public function validate($value, Constraint $constraint) {
     /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
     $entity = $this->context->getRoot()->getValue();
-    if ($entity->hasField("field_series") && $entity->get("field_series")[0] != NULL) {
+    if ($entity->hasField("field_series") && $entity->get("field_series")[0] != NULL && $value->isEmpty()) {
       $this->context->addViolation($constraint->needsValue, [
         '%field' => $value->getFieldDefinition()->getLabel(),
       ]);
     }
   }
+
 }
