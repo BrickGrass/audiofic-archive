@@ -1,0 +1,43 @@
+{#
+/**
+ * @file
+ * Theme override to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ */
+#}
+{% if title %}
+  <h3>{{ title }}</h3>
+{% endif %}
+{% if view.current_display == "search_taxonomy" %}
+  {% set form_target = "block-bootstrap-barrio-subtheme-exposedformsearchsearch-taxonomy" %}
+{% elseif view.current_display == "search" %}
+  {% set form_target = "block-bootstrap-barrio-subtheme-exposedformsearchsearch" %}
+{% elseif view.current_display == "search_collection" %}
+  {% set form_target = "block-bootstrap-barrio-subtheme-exposedformsearchsearch-collection" %}
+{% endif %}
+<div class="mb-2 d-flex justify-content-end">
+  <a class="btn btn-primary" href="#">RSS Feed <i class="bi bi-rss-fill"></i></a>
+  <a class="btn btn-primary d-md-none ms-1" data-bs-toggle="collapse" href="#{{ form_target }}" role="button" aria-expanded="true" aria-controls="{{ form_target }}">
+    Filters
+  </a>
+</div>
+{% for row in rows %}
+  {%
+    set row_classes = [
+    default_row_class ? 'views-row',
+    ]
+  %}
+  <div{{ row.attributes.addClass(row_classes) }}>
+    {{ row.content }}
+  </div>
+{% endfor %}

@@ -7,6 +7,22 @@
 	margin-bottom: 10px;
 }
 
+@media (min-width: 768px) {
+	.collapse.dont-collapse-sm {
+		display: block;
+		height: auto !important;
+		visibility: visible;
+	}
+}
+
+#content {
+	margin-top: 10px;
+}
+
+.node__content {
+	margin-top: 0;
+}
+
 /* Navbar */
 #navbar-main {
 	padding-left: 15px;
