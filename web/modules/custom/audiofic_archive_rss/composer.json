@@ -1,0 +1,8 @@
+{
+  "name": "audiofic_archive/audiofic_archive_rss",
+  "description": "Provides Podcast RSS feeds for the audiofic archive.",
+  "type": "drupal-module",
+  "require": {
+    "james-heinrich/getid3": "^1.9"
+  }
+}

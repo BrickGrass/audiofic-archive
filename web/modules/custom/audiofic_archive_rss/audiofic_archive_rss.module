@@ -1,0 +1,131 @@
+<?php
+
+/**
+ * @file
+ * Contains audiofic_archive_rss.module.
+ */
+
+use Drupal\file\Entity\File;
+use FFMpeg\Exception\ExecutableNotFoundException;
+use FFMpeg\FFProbe;
+
+/**
+ * Implements template_preprocess_views_view() for audiofic_archive_rss.
+ */
+function audiofic_archive_rss_preprocess_views_view_audiofic_archive_rss(&$variables) {
+  $contextual_filters = $variables['view']->argument;
+  if (count($contextual_filters) > 0) {
+    $nid = $contextual_filters["nid"]->argument;
+    $source_node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+    if ($source_node != NULL) {
+      $name = $source_node->getTitle();
+      $authors = audiofic_archive_rss_fetch_tags($source_node, "field_author");
+      $readers = audiofic_archive_rss_fetch_tags($source_node, "field_reader");
+      $cover_field = $source_node->get("field_cover")->referencedEntities();
+      $cover_url = count($cover_field) > 0 ? $cover_field[0]->createFileUrl() : NULL;
+      $rating = $source_node->get("field_rating")->referencedEntities()[0]->name->value;
+
+      $variables['source_node'] = [
+        "title" => $name,
+        "author" => "Read by: $readers | Written by: $authors",
+        "cover_url" => $cover_url,
+        "explicit" => $rating === "Explicit" || $rating === "Mature",
+        "tags" => "all of the tagsss",
+      ];
+    } else {
+      $variables['source_node'] = NULL;
+    }
+  }
+
+  $works = [];
+  foreach ($variables['view']->result as $result) {
+    $entity = $result->_entity;
+
+    $files = [];
+    audiofic_archive_rss_fetch_media_files($entity, $files);
+
+    $rating = $entity->get("field_rating")->referencedEntities()[0]->name->value;
+
+    array_push($works, [
+      "title" => $entity->getTitle(),
+      "explicit" => $rating === "Explicit" || $rating === "Mature",
+      "files" => $files,
+      "tags" => "all of the tag", // TODO: aggregate tag data to a str
+    ]);
+  }
+
+  $options = $variables['view']->style_plugin->options;
+
+  $variables['options'] = $options;
+  $variables['works'] = $works;
+}
+
+/**
+ * Implements hook_theme() for audiofic_archive_rss.
+ */
+function audiofic_archive_rss_theme($existing, $type, $theme, $path) {
+  return [
+    'audiofic_archive_rss' => [
+      'template' => 'audiofic_archive_rss',
+      'path' => $path . '/templates',
+    ],
+  ];
+}
+
+/**
+ * Fetches the media files from a node and adds them to $files.
+ */
+function audiofic_archive_rss_fetch_media_files($entity, &$files) {
+  if ($entity->hasField("field_mp3_files")) {
+    foreach ($entity->get("field_mp3_files")->referencedEntities() as $file) {
+      $phys_file = NULL;
+      $label = NULL;
+      $phys_file = File::load($file->field_media_audio_file[0]->target_id);
+      $label = $file->get("field_chapter_label");
+
+      // TODO: Really I should do this processing at *upload* time & storing it in a field on the media file.
+      // When I do that, I should consider interacting with the library via a service class.
+      // Don't want to keep instantiating FFProbe, should just have one instance attached to a class.
+      try {
+        $ffmpeg = FFProbe::create();
+        $file_path_on_disk = \Drupal::service('file_system')->realpath($phys_file->getFileUri());
+        $duration = $ffmpeg->format($file_path_on_disk)->get('duration');
+      } catch (ExecutableNotFoundException $e) {
+        // TODO: fall back to calculating from filesize?
+        $duration = 0;
+      }
+
+      $data = [
+        "name" => count($label) > 0 ? $label[0]->value : "",
+        "file_size" => $phys_file->filesize->value,
+        "mime_type" => $phys_file->filemime->value,
+        "url" => $phys_file->createFileUrl(),
+        "uuid" => $file->uuid(),
+        "date_created" => $file->getCreatedTime(),
+        "duration" => $duration,
+      ];
+
+      array_push($files, $data);
+    }
+  }
+}
+
+/**
+ * Fetches all tags names from the field of an entity.
+ */
+function audiofic_archive_rss_fetch_tags($entity, $vocab_name) {
+  $all_tags = [];
+  if ($entity->hasField($vocab_name)) {
+    $tags = $entity->get($vocab_name)->referencedEntities();
+    foreach ($tags as $tag) {
+      array_push($all_tags, $tag->name->value);
+    }
+  }
+
+  if (count($all_tags) > 4) {
+    $all_tags = array_slice($all_tags, 0, 4);
+    $all_tags[3] = $all_tags[3] . "...";
+  }
+
+  return implode(', ', $all_tags);
+}

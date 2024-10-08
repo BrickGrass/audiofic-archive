@@ -1,0 +1,7 @@
+name: Audiofic Archive RSS Feeds
+description: A Custom module which generates podcast RSS feeds for the archive.
+core_version_requirement: ^10.1 || ^11
+type: module
+package: Views
+dependencies:
+  - core:views

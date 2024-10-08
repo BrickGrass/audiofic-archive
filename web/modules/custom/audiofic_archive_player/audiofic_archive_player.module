@@ -75,11 +75,7 @@ function audiofic_archive_player_fetch_media_files($entity, $media_type, $is_ser
         $label = $file->get("field_file_label");
       }
 
-      if (count($label) > 0) {
-        $name = $label[0]->value;
-      } else {
-        $name = "";
-      }
+      $name = count($label) > 0 ? $label[0]->value : "";
 
       if ($is_series) {
         $name = trim(implode(' ', [$entity->getTitle(), $name]), "");
