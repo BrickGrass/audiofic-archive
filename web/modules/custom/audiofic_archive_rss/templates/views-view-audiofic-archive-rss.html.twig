@@ -29,14 +29,9 @@
       <!-- TODO: For now assume that all our search feeds are nsfw. -->
       <itunes:explicit>true</itunes:explicit>
     {% endif %}
-
     <link>{{ url('<current>') }}</link>
     <language>en</language>
-    {% if source_node == NULL %}
-      <itunes:explicit>true</itunes:explicit>
-    {% else %}
-      <itunes:explicit>{{ source_node.explicit ? 'true' : 'false' }}</itunes:explicit>
-    {% endif %}
+
     {% for work in works %}
       {% for file in work.files %}
     <item>
