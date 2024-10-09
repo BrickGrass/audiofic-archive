@@ -20,8 +20,11 @@
   <channel>
     {% if options.is_contextual %}
       <title>{{ source_node.title }}</title>
-      <description>{{ options.contextual_description }}</description>
+      <description>{{ source_node.description }}</description>
+      {% if source_node.cover_url != NULL %}
       <itunes:image href="https://dev-audiofic.pantheonsite.io{{ source_node.cover_url }}"/>
+      {% endif %}
+      <!-- TODO: Fallback cover if none is present on contextual work/series? -->
     {% else %}
       <title>{{ options.title }}</title>
       <description>{{ options.description }}</description>
@@ -36,6 +39,7 @@
       {% for file in work.files %}
     <item>
       <itunes:episodeType>full</itunes:episodeType>
+      <title>{{ work.title }} {{ file.name }}</title>
       <itunes:title>{{ work.title }} {{ file.name }}</itunes:title>
       <description></description>
       <enclosure
@@ -43,10 +47,14 @@
         type="{{ file.mime_type }}"
         url="https://dev-audiofic.pantheonsite.io{{ file.url }}"
       />
-      <guid>{{ file.uuid }}</guid>
+      <guid isPermaLink="false">{{ file.uuid }}</guid>
       <pubDate>{{ file.date_created|date("D, j M Y H:m:s T") }}</pubDate>
       <itunes:duration>{{ file.duration }}</itunes:duration>
       <itunes:explicit>{{ work.explicit ? 'true' : 'false' }}</itunes:explicit>
+      <link>https://dev-audiofic.pantheonsite.io{{ work.link }}</link>
+      {% if work.cover_url != NULL %}
+      <itunes:image href="https://dev-audiofic.pantheonsite.io{{ work.cover_url }}" />
+      {% endif %}
     </item>
       {% endfor %}
     {% endfor %}

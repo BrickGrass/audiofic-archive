@@ -45,7 +45,7 @@
         "drupal/upgrade_status": "^4.3",
         "drush/drush": "^13.2",
         "drupal/tagify": "^1.2",
-        "php-ffmpeg/php-ffmpeg": "^1.2"
+        "james-heinrich/getid3": "^1.9"
     },
     "require-dev": {
         "drupal/core-dev": "10.3.6"

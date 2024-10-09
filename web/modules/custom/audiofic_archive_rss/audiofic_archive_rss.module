@@ -5,32 +5,38 @@
  * Contains audiofic_archive_rss.module.
  */
 
+use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\file\Entity\File;
+use Drupal\media\MediaInterface;
 use FFMpeg\Exception\ExecutableNotFoundException;
-use FFMpeg\FFProbe;
 
 /**
  * Implements template_preprocess_views_view() for audiofic_archive_rss.
  */
 function audiofic_archive_rss_preprocess_views_view_audiofic_archive_rss(&$variables) {
+  $options = $variables['view']->style_plugin->options;
+
   $contextual_filters = $variables['view']->argument;
   if (count($contextual_filters) > 0) {
     $nid = $contextual_filters["nid"]->argument;
     $source_node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
     if ($source_node != NULL) {
-      $name = $source_node->getTitle();
-      $authors = audiofic_archive_rss_fetch_tags($source_node, "field_author");
-      $readers = audiofic_archive_rss_fetch_tags($source_node, "field_reader");
-      $cover_field = $source_node->get("field_cover")->referencedEntities();
-      $cover_url = count($cover_field) > 0 ? $cover_field[0]->createFileUrl() : NULL;
-      $rating = $source_node->get("field_rating")->referencedEntities()[0]->name->value;
+      $authors = audiofic_archive_rss_fetch_creators($source_node, "field_author");
+      $readers = audiofic_archive_rss_fetch_creators($source_node, "field_reader");
+
+      $token_service = \Drupal::token();
+      $desc = $token_service->replace(
+        $options['contextual_description'],
+        ['contextual_filter_node' => $source_node],
+        ['clear' => TRUE]
+      );
 
       $variables['source_node'] = [
-        "title" => $name,
+        "title" => $source_node->getTitle(),
         "author" => "Read by: $readers | Written by: $authors",
-        "cover_url" => $cover_url,
-        "explicit" => $rating === "Explicit" || $rating === "Mature",
-        "tags" => "all of the tagsss",
+        "cover_url" => audiofic_archive_rss_fetch_cover($source_node),
+        "explicit" => audiofic_archive_rss_is_explicit($source_node),
+        "description" => $desc,
       ];
     } else {
       $variables['source_node'] = NULL;
@@ -38,23 +44,22 @@ function audiofic_archive_rss_preprocess_views_view_audiofic_archive_rss(&$varia
   }
 
   $works = [];
+  $ratings = [];
   foreach ($variables['view']->result as $result) {
     $entity = $result->_entity;
 
     $files = [];
     audiofic_archive_rss_fetch_media_files($entity, $files);
 
-    $rating = $entity->get("field_rating")->referencedEntities()[0]->name->value;
-
     array_push($works, [
       "title" => $entity->getTitle(),
-      "explicit" => $rating === "Explicit" || $rating === "Mature",
+      "explicit" => audiofic_archive_rss_is_explicit($entity),
       "files" => $files,
       "tags" => "all of the tag", // TODO: aggregate tag data to a str
+      "cover_url" => audiofic_archive_rss_fetch_cover($entity),
+      "link" => $entity->toUrl(),
     ]);
   }
-
-  $options = $variables['view']->style_plugin->options;
 
   $variables['options'] = $options;
   $variables['works'] = $works;
@@ -73,27 +78,78 @@ function audiofic_archive_rss_theme($existing, $type, $theme, $path) {
 }
 
 /**
+ * Implements hook_token_info().
+ */
+function audiofic_archive_rss_token_info() {
+  return [
+    'types' => [
+      'contextual-filter-node' => [
+        'name' => t('Contextual Filter Node'),
+        'description' => t('The node selected by the view contextual filter'),
+        'needs-data' => 'contextual_filter_node',
+      ],
+    ],
+    'tokens' => [
+      'contextual-filter-node' => [
+        'title' => ['name' => t('Title')],
+        'tags' => ['name' => t('Tags')],
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_tokens().
+ */
+function audiofic_archive_rss_tokens($type, $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata) {
+  $replacements = [];
+
+  if ($type === 'contextual-filter-node' && array_key_exists('contextual_filter_node', $data)) {
+    $node = $data['contextual_filter_node'];
+
+    foreach ($tokens as $key => $token) {
+      switch ($key) {
+        case 'title':
+          $replacements[$token] = $node->getTitle();
+          break;
+
+        case 'tags':
+          $replacements[$token] = 'contextual node tags';
+          break;
+      }
+    }
+  }
+
+  return $replacements;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update() for media.
+ */
+function audiofic_archive_rss_media_presave(MediaInterface $entity) {
+  if ($entity->bundle() == 'mp3_file') {
+    if (count($entity->get("field_duration_seconds")) <= 0) {
+      $file = File::load($entity->get("field_media_audio_file")[0]->target_id);
+      $file_path_on_disk = \Drupal::service('file_system')->realpath($file->getFileUri());
+
+      $getID3 = new \getID3();
+      $file_info = $getID3->analyze($file_path_on_disk);
+      $duration = round($file_info['playtime_seconds']);
+
+      $entity->set("field_duration_seconds", $duration);
+    }
+  }
+}
+
+/**
  * Fetches the media files from a node and adds them to $files.
  */
 function audiofic_archive_rss_fetch_media_files($entity, &$files) {
   if ($entity->hasField("field_mp3_files")) {
     foreach ($entity->get("field_mp3_files")->referencedEntities() as $file) {
-      $phys_file = NULL;
-      $label = NULL;
       $phys_file = File::load($file->field_media_audio_file[0]->target_id);
       $label = $file->get("field_chapter_label");
-
-      // TODO: Really I should do this processing at *upload* time & storing it in a field on the media file.
-      // When I do that, I should consider interacting with the library via a service class.
-      // Don't want to keep instantiating FFProbe, should just have one instance attached to a class.
-      try {
-        $ffmpeg = FFProbe::create();
-        $file_path_on_disk = \Drupal::service('file_system')->realpath($phys_file->getFileUri());
-        $duration = $ffmpeg->format($file_path_on_disk)->get('duration');
-      } catch (ExecutableNotFoundException $e) {
-        // TODO: fall back to calculating from filesize?
-        $duration = 0;
-      }
+      $duration = $file->get("field_duration_seconds");
 
       $data = [
         "name" => count($label) > 0 ? $label[0]->value : "",
@@ -102,7 +158,7 @@ function audiofic_archive_rss_fetch_media_files($entity, &$files) {
         "url" => $phys_file->createFileUrl(),
         "uuid" => $file->uuid(),
         "date_created" => $file->getCreatedTime(),
-        "duration" => $duration,
+        "duration" => count($duration) > 0 ? $duration[0]->value : 0,
       ];
 
       array_push($files, $data);
@@ -111,9 +167,9 @@ function audiofic_archive_rss_fetch_media_files($entity, &$files) {
 }
 
 /**
- * Fetches all tags names from the field of an entity.
+ * Fetches the author or reader tag names from an entity.
  */
-function audiofic_archive_rss_fetch_tags($entity, $vocab_name) {
+function audiofic_archive_rss_fetch_creators($entity, $vocab_name) {
   $all_tags = [];
   if ($entity->hasField($vocab_name)) {
     $tags = $entity->get($vocab_name)->referencedEntities();
@@ -128,4 +184,24 @@ function audiofic_archive_rss_fetch_tags($entity, $vocab_name) {
   }
 
   return implode(', ', $all_tags);
+}
+
+/**
+ * Fetches the cover url of a node.
+ */
+function audiofic_archive_rss_fetch_cover($entity) {
+  $cover_field = $entity->get("field_cover")->referencedEntities();
+  return count($cover_field) > 0 ? $cover_field[0]->createFileUrl() : NULL;
+}
+
+/**
+ * Fetches whether or not a node is explicit.
+ *
+ * Explicit works have a rating of 'Explicit', 'Mature', 'Not Rated'
+ * or have a NULL rating.
+ */
+function audiofic_archive_rss_is_explicit($entity) {
+  $rating = $entity->get("field_rating")->referencedEntities();
+  return count($rating) < 1 ||
+         in_array($rating[0]->name->value, ["Explicit", "Mature", "Not Rated"]);
 }

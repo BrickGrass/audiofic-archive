@@ -5,9 +5,6 @@
  * Functions to support theming in the SASS Starterkit subtheme.
  */
 
-use Drupal\file\Entity\File;
-use Drupal\Core\Url;
-
 /**
  * Prepares variables for `breadcrumb.html.twig`.
  */
