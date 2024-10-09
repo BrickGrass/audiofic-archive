@@ -21,8 +21,8 @@ function audiofic_archive_rss_preprocess_views_view_audiofic_archive_rss(&$varia
     $nid = $contextual_filters["nid"]->argument;
     $source_node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
     if ($source_node != NULL) {
-      $authors = audiofic_archive_rss_fetch_creators($source_node, "field_author");
-      $readers = audiofic_archive_rss_fetch_creators($source_node, "field_reader");
+      $authors = audiofic_archive_rss_fetch_tags($source_node, "field_author");
+      $readers = audiofic_archive_rss_fetch_tags($source_node, "field_reader");
 
       $token_service = \Drupal::token();
       $desc = $token_service->replace(
@@ -44,7 +44,6 @@ function audiofic_archive_rss_preprocess_views_view_audiofic_archive_rss(&$varia
   }
 
   $works = [];
-  $ratings = [];
   foreach ($variables['view']->result as $result) {
     $entity = $result->_entity;
 
@@ -55,7 +54,7 @@ function audiofic_archive_rss_preprocess_views_view_audiofic_archive_rss(&$varia
       "title" => $entity->getTitle(),
       "explicit" => audiofic_archive_rss_is_explicit($entity),
       "files" => $files,
-      "tags" => "all of the tag", // TODO: aggregate tag data to a str
+      "tags" => audiofic_archive_rss_get_all_tags($entity),
       "cover_url" => audiofic_archive_rss_fetch_cover($entity),
       "link" => $entity->toUrl(),
     ]);
@@ -114,7 +113,7 @@ function audiofic_archive_rss_tokens($type, $tokens, array $data, array $options
           break;
 
         case 'tags':
-          $replacements[$token] = 'contextual node tags';
+          $replacements[$token] = audiofic_archive_rss_get_all_tags($node);
           break;
       }
     }
@@ -124,7 +123,7 @@ function audiofic_archive_rss_tokens($type, $tokens, array $data, array $options
 }
 
 /**
- * Implements hook_ENTITY_TYPE_update() for media.
+ * Implements hook_ENTITY_TYPE_presave() for media.
  */
 function audiofic_archive_rss_media_presave(MediaInterface $entity) {
   if ($entity->bundle() == 'mp3_file') {
@@ -167,9 +166,9 @@ function audiofic_archive_rss_fetch_media_files($entity, &$files) {
 }
 
 /**
- * Fetches the author or reader tag names from an entity.
+ * Fetches the tag names from an entity and truncates them.
  */
-function audiofic_archive_rss_fetch_creators($entity, $vocab_name) {
+function audiofic_archive_rss_fetch_tags($entity, $vocab_name, ?int $truncate_to = NULL) {
   $all_tags = [];
   if ($entity->hasField($vocab_name)) {
     $tags = $entity->get($vocab_name)->referencedEntities();
@@ -178,9 +177,11 @@ function audiofic_archive_rss_fetch_creators($entity, $vocab_name) {
     }
   }
 
-  if (count($all_tags) > 4) {
-    $all_tags = array_slice($all_tags, 0, 4);
-    $all_tags[3] = $all_tags[3] . "...";
+  if ($truncate_to !== NULL) {
+    if (count($all_tags) > $truncate_to) {
+      $all_tags = array_slice($all_tags, 0, $truncate_to);
+      $all_tags[$truncate_to - 1] = $all_tags[$truncate_to - 1] . "...";
+    }
   }
 
   return implode(', ', $all_tags);
@@ -204,4 +205,26 @@ function audiofic_archive_rss_is_explicit($entity) {
   $rating = $entity->get("field_rating")->referencedEntities();
   return count($rating) < 1 ||
          in_array($rating[0]->name->value, ["Explicit", "Mature", "Not Rated"]);
+}
+
+/**
+ * Fetches and joins all of the tags on a work.
+ */
+function audiofic_archive_rss_get_all_tags($entity) {
+  $tags = [
+    "Warning(s):" => audiofic_archive_rss_fetch_tags($entity, "field_warning"),
+    "Fandom(s):" => audiofic_archive_rss_fetch_tags($entity, "field_fandom2", 10),
+    "Relationship(s):" => audiofic_archive_rss_fetch_tags($entity, "field_relationship", 10),
+    "Category/Categories:" => audiofic_archive_rss_fetch_tags($entity, "field_category"),
+    "Format Info:" => audiofic_archive_rss_fetch_tags($entity, "field_format"),
+  ];
+
+  $text = [];
+  foreach ($tags as $label => $content) {
+    if (!empty($content)) {
+      array_push($text, "$label $content");
+    }
+  }
+
+  return implode('\n\n', $text);
 }

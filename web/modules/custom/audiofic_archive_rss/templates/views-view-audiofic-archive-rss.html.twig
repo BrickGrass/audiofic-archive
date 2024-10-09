@@ -41,7 +41,7 @@
       <itunes:episodeType>full</itunes:episodeType>
       <title>{{ work.title }} {{ file.name }}</title>
       <itunes:title>{{ work.title }} {{ file.name }}</itunes:title>
-      <description></description>
+      <description>{{ work.tags }}</description>
       <enclosure
         length="{{ file.file_size }}"
         type="{{ file.mime_type }}"
