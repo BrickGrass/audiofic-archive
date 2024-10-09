@@ -32,7 +32,7 @@
       <!-- TODO: Create a placeholder image attached to the module which gets loaded for non-contextual feeds? Just our logo maybe? -->
       <!-- TODO: For now assume that all our search feeds are nsfw. -->
       <itunes:explicit>true</itunes:explicit>
-      <link>{{ url('<current>') }}</link>
+      <link>{{ options.link }}</link>
     {% endif %}
     <language>en</language>
     {% for work in works %}

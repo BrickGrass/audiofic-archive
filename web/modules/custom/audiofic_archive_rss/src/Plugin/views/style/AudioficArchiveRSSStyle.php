@@ -54,6 +54,15 @@ class AudioficArchiveRSSStyle extends Rss {
       ],
     ];
 
+    $form['link'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('The link of this RSS feed'),
+      '#default_value' => (isset($this->options['link'])) ? $this->options['link'] : '',
+      '#states' => [
+        'visible' => [':input[name="style_options[is_contextual]"]' => ['checked' => FALSE]],
+      ],
+    ];
+
     $form['is_contextual'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Use contextual filters to fill RSS feed metadata'),
