@@ -8,7 +8,6 @@
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\file\Entity\File;
 use Drupal\media\MediaInterface;
-use FFMpeg\Exception\ExecutableNotFoundException;
 
 /**
  * Implements template_preprocess_views_view() for audiofic_archive_rss.
@@ -37,6 +36,7 @@ function audiofic_archive_rss_preprocess_views_view_audiofic_archive_rss(&$varia
         "cover_url" => audiofic_archive_rss_fetch_cover($source_node),
         "explicit" => audiofic_archive_rss_is_explicit($source_node),
         "description" => $desc,
+        "link" => $source_node->toUrl(),
       ];
     } else {
       $variables['source_node'] = NULL;
@@ -226,5 +226,5 @@ function audiofic_archive_rss_get_all_tags($entity) {
     }
   }
 
-  return implode('\n\n', $text);
+  return implode("\n", $text);
 }
