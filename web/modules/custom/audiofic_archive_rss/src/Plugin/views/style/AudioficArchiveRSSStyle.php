@@ -100,4 +100,14 @@ class AudioficArchiveRSSStyle extends Rss {
     ];
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function render() {
+    $build = parent::render();
+    // Ensure our feed is indexable, or google podcasts won't accept it!
+    $build['#attached']['http_header'][] = ['X-Robots-Tag', 'all'];
+    return $build;
+  }
+
 }
