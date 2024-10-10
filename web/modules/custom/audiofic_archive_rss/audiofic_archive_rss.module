@@ -53,6 +53,8 @@ function audiofic_archive_rss_preprocess_views_view_audiofic_archive_rss(&$varia
     } else {
       $variables['contextual_filter'] = 'none';
     }
+  } else {
+    $variables['contextual_filter'] = 'none';
   }
 
   $token_service = \Drupal::token();
