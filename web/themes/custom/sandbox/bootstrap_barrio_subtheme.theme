@@ -86,6 +86,7 @@ function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
         }
       }
 
+      // TODO: use usort with an anonymous function!!!!!
       // Sort into series order.
       sort_by_part_label($work_text_links);
       sort_by_part_label($work_podfic_links);

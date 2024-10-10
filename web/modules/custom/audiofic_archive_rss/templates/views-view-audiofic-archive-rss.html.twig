@@ -18,14 +18,23 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
   <channel>
-    {% if options.is_contextual %}
-      <title>{{ source_node.title }}</title>
-      <description>{{ source_node.description }}</description>
-      <link>{{ source_node.link }}</link>
-      {% if source_node.cover_url != NULL %}
-      <itunes:image href="https://dev-audiofic.pantheonsite.io{{ source_node.cover_url }}"/>
+    {% if options.is_contextual and contextual_filter != "none" %}
+      {% if contextual_filter == "node" %}
+        <title>{{ source_node.title }}</title>
+        <description>{{ source_node.description }}</description>
+        <link>https://dev-audiofic.pantheonsite.io{{ source_node.link }}</link>
+        {% if source_node.cover_url != NULL %}
+        <itunes:image href="https://dev-audiofic.pantheonsite.io{{ source_node.cover_url }}"/>
+        {% endif %}
+        <itunes:explicit>{{ source_node.explicit ? 'true' : 'false' }}</itunes:explicit>
+        <!-- TODO: Fallback cover if none is present on contextual work/series? -->
+      {% elseif contextual_filter == "term" %}
+        <title>Audiofic Archive - {{ source_term.title }}</title>
+        <description>{{ source_term.description }}</description>
+        <link>https://dev-audiofic.pantheonsite.io{{ source_term.link }}</link>
+        <itunes:explicit>true</itunes:explicit>
+        <!-- TODO: placeholder image -->
       {% endif %}
-      <!-- TODO: Fallback cover if none is present on contextual work/series? -->
     {% else %}
       <title>{{ options.title }}</title>
       <description>{{ options.description }}</description>

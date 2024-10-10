@@ -16,9 +16,25 @@ function audiofic_archive_rss_preprocess_views_view_audiofic_archive_rss(&$varia
   $options = $variables['view']->style_plugin->options;
 
   $contextual_filters = $variables['view']->argument;
+  // dump($contextual_filters);
+
   if (count($contextual_filters) > 0) {
-    $nid = $contextual_filters["nid"]->argument;
-    $source_node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+    $argument = reset($contextual_filters);
+    $argument_type = $argument->options["default_argument_type"];
+
+    $nid = NULL;
+    $tid = NULL;
+
+    if ($argument_type === "node") {
+      $nid = $argument->argument;
+    }
+
+    if ($argument_type === "taxonomy_tid") {
+      $tid = $argument->argument;
+    }
+
+    $source_node = $nid !== NULL ? \Drupal::entityTypeManager()->getStorage('node')->load($nid) : NULL;
+    $source_term = $tid !== NULL ? \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid) : NULL;
     if ($source_node != NULL) {
       $authors = audiofic_archive_rss_fetch_tags($source_node, "field_author");
       $readers = audiofic_archive_rss_fetch_tags($source_node, "field_reader");
@@ -30,6 +46,7 @@ function audiofic_archive_rss_preprocess_views_view_audiofic_archive_rss(&$varia
         ['clear' => TRUE]
       );
 
+      $variables['contextual_filter'] = 'node';
       $variables['source_node'] = [
         "title" => $source_node->getTitle(),
         "author" => "Read by: $readers | Written by: $authors",
@@ -38,17 +55,34 @@ function audiofic_archive_rss_preprocess_views_view_audiofic_archive_rss(&$varia
         "description" => $desc,
         "link" => $source_node->toUrl(),
       ];
+    } elseif ($source_term !== NULL) {
+      $token_service = \Drupal::token();
+      $desc = $token_service->replace(
+        $options['contextual_description'],
+        ['contextual_filter_term' => $source_term],
+        ['clear' => TRUE]
+      );
+
+      $variables['contextual_filter'] = 'term';
+      $variables['source_term'] = [
+        "title" => $source_term->name->value,
+        "description" => $desc,
+        "link" => $source_term->toUrl(),
+      ];
     } else {
-      $variables['source_node'] = NULL;
+      $variables['contextual_filter'] = 'none';
     }
   }
 
   $works = [];
   foreach ($variables['view']->result as $result) {
     $entity = $result->_entity;
+    if ($entity->getType() != "work") {
+      continue;
+    }
 
     $files = [];
-    audiofic_archive_rss_fetch_media_files($entity, $files);
+    audiofic_archive_rss_fetch_media_files($entity, $files, $variables['contextual_filter'] !== 'none');
 
     array_push($works, [
       "title" => $entity->getTitle(),
@@ -143,7 +177,9 @@ function audiofic_archive_rss_media_presave(MediaInterface $entity) {
 /**
  * Fetches the media files from a node and adds them to $files.
  */
-function audiofic_archive_rss_fetch_media_files($entity, &$files) {
+function audiofic_archive_rss_fetch_media_files($entity, &$files, bool $sort_by_chapter) {
+  $work_files = [];
+
   if ($entity->hasField("field_mp3_files")) {
     foreach ($entity->get("field_mp3_files")->referencedEntities() as $file) {
       $phys_file = File::load($file->field_media_audio_file[0]->target_id);
@@ -156,11 +192,29 @@ function audiofic_archive_rss_fetch_media_files($entity, &$files) {
         "mime_type" => $phys_file->filemime->value,
         "url" => $phys_file->createFileUrl(),
         "uuid" => $file->uuid(),
-        "date_created" => $file->getCreatedTime(),
         "duration" => count($duration) > 0 ? $duration[0]->value : 0,
+        "date_created" => $file->getCreatedTime(),
       ];
 
-      array_push($files, $data);
+      array_push($work_files, $data);
+    }
+  }
+
+  if ($sort_by_chapter) {
+    // To have the chapters of a work appear sequentially in any of
+    // our feeds, they need to have sequential publishing dates.
+    // Series may be out of order, but they atleast won't be jumbled.
+    $date_updated = $entity->getCreatedTime();
+    usort($work_files, fn($a, $b) => strcmp($a["name"], $b["name"]));
+    $i = 0;
+    foreach ($work_files as $file_data) {
+      $file_data["date_created"] = $date_updated + $i;
+      $i++;
+      array_push($files, $file_data);
+    }
+  } else {
+    foreach ($work_files as $file_data) {
+      array_push($files, $file_data);
     }
   }
 }
