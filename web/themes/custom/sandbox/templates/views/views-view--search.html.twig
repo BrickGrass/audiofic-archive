@@ -65,11 +65,18 @@
     {% set form_target = "block-bootstrap-barrio-subtheme-exposedformsearchsearch-taxonomy" %}
   {% elseif view.current_display == "search" %}
     {% set form_target = "block-bootstrap-barrio-subtheme-exposedformsearchsearch" %}
+    {% set other_search %}
+      <a class="btn btn-primary" href="/search/collections">Search Collections</a>
+    {% endset %}
   {% elseif view.current_display == "search_collection" %}
     {% set form_target = "block-bootstrap-barrio-subtheme-exposedformsearchsearch-collection" %}
+    {% set other_search %}
+      <a class="btn btn-primary" href="/search/works">Search Works</a>
+    {% endset %}
   {% endif %}
   <div class="mb-2 d-flex justify-content-end">
-    <a class="btn btn-primary" href="{{ rss_feed }}">RSS Feed <i class="bi bi-rss-fill"></i></a>
+    {{ other_search }}
+    <a class="btn btn-primary ms-1" href="{{ rss_feed }}">RSS Feed <i class="bi bi-rss-fill"></i></a>
     <a class="btn btn-primary d-md-none ms-1" data-bs-toggle="collapse" href="#{{ form_target }}" role="button" aria-expanded="true" aria-controls="{{ form_target }}">
       Filters
     </a>
