@@ -18,32 +18,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
   <channel>
-    {% if options.is_contextual and contextual_filter != "none" %}
-      {% if contextual_filter == "node" %}
-        <title>{{ source_node.title }}</title>
-        <description>{{ source_node.description }}</description>
-        <link>https://dev-audiofic.pantheonsite.io{{ source_node.link }}</link>
-        {% if source_node.cover_url != NULL %}
-        <itunes:image href="https://dev-audiofic.pantheonsite.io{{ source_node.cover_url }}"/>
-        {% endif %}
-        <itunes:explicit>{{ source_node.explicit ? 'true' : 'false' }}</itunes:explicit>
-        <!-- TODO: Fallback cover if none is present on contextual work/series? -->
-      {% elseif contextual_filter == "term" %}
-        <title>Audiofic Archive - {{ source_term.title }}</title>
-        <description>{{ source_term.description }}</description>
-        <link>https://dev-audiofic.pantheonsite.io{{ source_term.link }}</link>
-        <itunes:explicit>true</itunes:explicit>
-        <!-- TODO: placeholder image -->
+    <title>{{ options.title|trim }}</title>
+    <link>https://{{ hostname }}/{{ options.link }}</link>
+    <description>{{ options.description|trim }}</description>
+    <language>en</language>
+    {% if options.is_contextual and contextual_filter == "node" %}
+      {% if source_node.cover_url != NULL %}
+      <itunes:image href="https://{{ hostname }}/{{ source_node.cover_url }}"/>
+      {% elseif options.cover_url|trim is not empty %}
+      <itunes:image href="https://{{ hostname }}/{{ options.cover_url }}"/>
       {% endif %}
+      <itunes:explicit>{{ source_node.explicit ? 'true' : 'false' }}</itunes:explicit>
     {% else %}
-      <title>{{ options.title }}</title>
-      <description>{{ options.description }}</description>
-      <!-- TODO: Create a placeholder image attached to the module which gets loaded for non-contextual feeds? Just our logo maybe? -->
+      {% if options.cover_url|trim is not empty %}
+      <itunes:image href="https://{{ hostname }}/{{ options.cover_url }}"/>
+      {% endif %}
       <!-- TODO: For now assume that all our search feeds are nsfw. -->
       <itunes:explicit>true</itunes:explicit>
-      <link>{{ options.link }}</link>
     {% endif %}
-    <language>en</language>
     {% for work in works %}
       {% for file in work.files %}
         <item>
@@ -54,15 +46,15 @@
           <enclosure
             length="{{ file.file_size }}"
             type="{{ file.mime_type }}"
-            url="https://dev-audiofic.pantheonsite.io{{ file.url }}"
+            url="https://{{ hostname }}/{{ file.url }}"
           />
           <guid isPermaLink="false">{{ file.uuid }}</guid>
           <pubDate>{{ file.date_created|date("D, j M Y H:m:s T") }}</pubDate>
           <itunes:duration>{{ file.duration }}</itunes:duration>
           <itunes:explicit>{{ work.explicit ? 'true' : 'false' }}</itunes:explicit>
-          <link>https://dev-audiofic.pantheonsite.io{{ work.link }}</link>
+          <link>https://{{ hostname }}/{{ work.link }}</link>
           {% if work.cover_url != NULL %}
-          <itunes:image href="https://dev-audiofic.pantheonsite.io{{ work.cover_url }}" />
+          <itunes:image href="https://{{ hostname }}/{{ work.cover_url }}" />
           {% endif %}
         </item>
       {% endfor %}

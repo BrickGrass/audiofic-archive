@@ -15,8 +15,8 @@ use Drupal\media\MediaInterface;
 function audiofic_archive_rss_preprocess_views_view_audiofic_archive_rss(&$variables) {
   $options = $variables['view']->style_plugin->options;
 
+  $token_data = ['view' => $variables['view']];
   $contextual_filters = $variables['view']->argument;
-  // dump($contextual_filters);
 
   if (count($contextual_filters) > 0) {
     $argument = reset($contextual_filters);
@@ -25,6 +25,7 @@ function audiofic_archive_rss_preprocess_views_view_audiofic_archive_rss(&$varia
     $nid = NULL;
     $tid = NULL;
 
+    // TODO: Figure out if there are more exceptions I should account for (tid on regular view, nid on search view for collections)
     if ($argument_type === "node") {
       $nid = $argument->argument;
     }
@@ -39,40 +40,25 @@ function audiofic_archive_rss_preprocess_views_view_audiofic_archive_rss(&$varia
       $authors = audiofic_archive_rss_fetch_tags($source_node, "field_author");
       $readers = audiofic_archive_rss_fetch_tags($source_node, "field_reader");
 
-      $token_service = \Drupal::token();
-      $desc = $token_service->replace(
-        $options['contextual_description'],
-        ['contextual_filter_node' => $source_node],
-        ['clear' => TRUE]
-      );
-
+      $token_data['contextual_filter_node'] = $source_node;
       $variables['contextual_filter'] = 'node';
       $variables['source_node'] = [
-        "title" => $source_node->getTitle(),
         "author" => "Read by: $readers | Written by: $authors",
         "cover_url" => audiofic_archive_rss_fetch_cover($source_node),
         "explicit" => audiofic_archive_rss_is_explicit($source_node),
-        "description" => $desc,
-        "link" => $source_node->toUrl(),
       ];
     } elseif ($source_term !== NULL) {
-      $token_service = \Drupal::token();
-      $desc = $token_service->replace(
-        $options['contextual_description'],
-        ['contextual_filter_term' => $source_term],
-        ['clear' => TRUE]
-      );
-
+      $token_data['contextual_filter_term'] = $source_term;
       $variables['contextual_filter'] = 'term';
-      $variables['source_term'] = [
-        "title" => $source_term->name->value,
-        "description" => $desc,
-        "link" => $source_term->toUrl(),
-      ];
     } else {
       $variables['contextual_filter'] = 'none';
     }
   }
+
+  $token_service = \Drupal::token();
+  $options['title'] = $token_service->replace($options['title'], $token_data, ['clear' => TRUE]);
+  $options['description'] = $token_service->replace($options['description'], $token_data, ['clear' => TRUE]);
+  $options['link'] = $token_service->replace($options['link'], $token_data, ['clear' => TRUE]);
 
   $works = [];
   foreach ($variables['view']->result as $result) {
@@ -82,7 +68,8 @@ function audiofic_archive_rss_preprocess_views_view_audiofic_archive_rss(&$varia
     }
 
     $files = [];
-    audiofic_archive_rss_fetch_media_files($entity, $files, $variables['contextual_filter'] !== 'none');
+    $override_media_pubdate = $variables['contextual_filter'] !== 'none' && $options['override_media_pubdate'];
+    audiofic_archive_rss_fetch_media_files($entity, $files, $override_media_pubdate);
 
     array_push($works, [
       "title" => $entity->getTitle(),
@@ -96,6 +83,7 @@ function audiofic_archive_rss_preprocess_views_view_audiofic_archive_rss(&$varia
 
   $variables['options'] = $options;
   $variables['works'] = $works;
+  $variables['hostname'] = \Drupal::request()->getHost();
 }
 
 /**
@@ -121,12 +109,32 @@ function audiofic_archive_rss_token_info() {
         'description' => t('The node selected by the view contextual filter'),
         'needs-data' => 'contextual_filter_node',
       ],
+      'contextual-filter-term' => [
+        'name' => t('Contextual Filter Taxonomy Term'),
+        'description' => t('The Taxonomy Term selected by the contextual filter'),
+        'needs-data' => 'contextual_filter_term',
+      ],
+      'exposed-filters' => [
+        'name' => t('Exposed Filters'),
+        'description' => t('The exposed filters currently applied by the user to this view'),
+        'needs-data' => 'view',
+      ],
     ],
     'tokens' => [
       'contextual-filter-node' => [
         'title' => ['name' => t('Title')],
         'tags' => ['name' => t('Tags')],
+        'link' => ['name' => t('Link')],
       ],
+      'contextual-filter-term' => [
+        'title' => ['name' => t('Title')],
+        'link' => ['name' => t('Link')],
+      ],
+      'exposed-filters' => [
+        'top-4-filters' => ['name' => t('The top 4 most important filters applied')],
+        'filter-summary' => ['name' => t('A formatted summary of all the filters applied')],
+        'spacer' => ['name' => t("Prints a '|' character if any filters are present")],
+      ]
     ],
   ];
 }
@@ -139,7 +147,6 @@ function audiofic_archive_rss_tokens($type, $tokens, array $data, array $options
 
   if ($type === 'contextual-filter-node' && array_key_exists('contextual_filter_node', $data)) {
     $node = $data['contextual_filter_node'];
-
     foreach ($tokens as $key => $token) {
       switch ($key) {
         case 'title':
@@ -148,6 +155,100 @@ function audiofic_archive_rss_tokens($type, $tokens, array $data, array $options
 
         case 'tags':
           $replacements[$token] = audiofic_archive_rss_get_all_tags($node);
+          break;
+
+        case 'link':
+          $replacements[$token] = $node->toUrl()->toString();
+          break;
+      }
+    }
+  }
+
+  if ($type === 'contextual-filter-term' && array_key_exists('contextual_filter_term', $data)) {
+    $term = $data['contextual_filter_term'];
+    foreach ($tokens as $key => $token) {
+      switch ($key) {
+        case 'title':
+          $replacements[$token] = $term->name->value;
+          break;
+
+        case 'link':
+          $replacements[$token] = $term->toUrl()->toString();
+          break;
+      }
+    }
+  }
+
+  if ($type === 'exposed-filters' && array_key_exists('view', $data)) {
+    $filters = $data['view']->filter;
+    $filter_data = [];
+
+    $keys = [
+      'search_api_fulltext', 'field_completion_status', 'field_rating',
+      'field_category', 'field_format', 'field_language', 'field_length',
+      'field_warning', 'field_author', 'field_reader', 'field_fandom2',
+      'field_relationship',
+    ];
+    $labels = [
+      'search_api_fulltext' => "Search Query",
+      'field_completion_status' => "Completion Status",
+      'field_rating' => "Rating",
+      'field_category' => "Category/Categories",
+      'field_format' => "Format Info",
+      'field_language' => "Language(s)",
+      'field_length' => "Length(s)",
+      'field_warning' => "Warning(s)",
+      'field_author' => "Author(s)",
+      'field_reader' => "Reader(s)",
+      'field_fandom2' => "Fandom(s)",
+      'field_relationship' => "Relationship(s)",
+    ];
+    foreach ($keys as $key) {
+      if (array_key_exists($key, $filters)) {
+        if ($key === 'field_completion_status') {
+          // only_complete = On if All is not selected, off if all is selected
+          $filter_data[$key] = $filters[$key]->group_info !== "All";
+        } else {
+          $filter_data[$key] = $filters[$key]->value;
+        }
+      }
+    }
+
+    foreach ($tokens as $key => $token) {
+      switch ($key) {
+        case 'top-4-filters':
+          break;
+
+        case 'filter-summary':
+          $formatted = [];
+          $max = 50;
+          foreach ($filter_data as $key => $value) {
+            $str = "";
+            if ($key == 'search_api_fulltext') {
+              $str = $value;
+            } elseif ($key === 'field_completion_status') {
+              $str = $value ? "Only complete works" : "";
+            } else {
+              $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadMultiple($value);
+              $terms_str = array_map(fn($t) => $t->name->value, $terms);
+              $str = implode(", ", $terms_str);
+            }
+
+            // Truncate to $max characters.
+            $str = strlen($str) > $max + 3 ? substr($str, 0, $max) . "..." : $str;
+
+            if (!empty($str)) {
+              $formatted[] = sprintf("%s: %s", $labels[$key], $str);
+            }
+          }
+
+          $replacements[$token] = implode("\n", $formatted);
+          break;
+
+        case 'spacer':
+          if (!empty(array_filter($filter_data))) {
+            $replacements[$token] = "|";
+          }
           break;
       }
     }
@@ -217,6 +318,13 @@ function audiofic_archive_rss_fetch_media_files($entity, &$files, bool $sort_by_
       array_push($files, $file_data);
     }
   }
+}
+
+/**
+ * Fetches tag names from tag ids.
+ */
+function audiofic_archive_fetch_tags_by_id($tag_ids) {
+
 }
 
 /**

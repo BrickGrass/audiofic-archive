@@ -27,6 +27,7 @@ class AudioficArchiveRSSStyle extends Rss {
     $options = parent::defineOptions();
     $options['is_contextual'] = ['default' => FALSE];
     $options['creator_truncation'] = ['default' => 3];
+    $options['override_media_pubdate'] = ['default' => FALSE];
     return $options;
   }
 
@@ -39,55 +40,33 @@ class AudioficArchiveRSSStyle extends Rss {
     $form['title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('The title of this RSS feed'),
+      '#description' => $this->t('Tokens are available in this field. Hint: this field trims all excess whitespace, so add possibly empty tokens such that only whitespace separates them from the other values.'),
       '#default_value' => (isset($this->options['title'])) ? $this->options['title'] : '',
-      '#states' => [
-        'visible' => [':input[name="style_options[is_contextual]"]' => ['checked' => FALSE]],
-      ],
+      '#weight' => 1,
     ];
 
     $form['description'] = [
-      '#type' => 'textfield',
+      '#type' => 'textarea',
       '#title' => $this->t('The description of this RSS feed'),
+      '#description' => $this->t('Tokens are available in this field Hint: this field trims all excess whitespace, so add possibly empty tokens such that only whitespace separates them from the other values.'),
       '#default_value' => (isset($this->options['description'])) ? $this->options['description'] : '',
-      '#states' => [
-        'visible' => [':input[name="style_options[is_contextual]"]' => ['checked' => FALSE]],
-      ],
+      '#weight' => 2,
     ];
 
     $form['link'] = [
       '#type' => 'textfield',
       '#title' => $this->t('The link of this RSS feed'),
+      '#description' => $this->t('Provide the link in the format "search/works". Tokens are available in this field'),
       '#default_value' => (isset($this->options['link'])) ? $this->options['link'] : '',
-      '#states' => [
-        'visible' => [':input[name="style_options[is_contextual]"]' => ['checked' => FALSE]],
-      ],
+      '#weight' => 3,
     ];
 
-    $form['is_contextual'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Use contextual filters to fill RSS feed metadata'),
-      '#description' => $this->t('The data of the work or collection that is contextually filtered will be used to decide the metadata of the overall RSS feed. Eg: The title, description, cover image, etc.'),
-      '#default_value' => (isset($this->options['is_contextual'])) ? $this->options['is_contextual'] : FALSE,
-    ];
-
-    $form['contextual_description'] = [
-      '#type' => 'textarea',
-      '#title' => $this->t('Description format string for contextual RSS feed'),
-      '#description' => $this->t("The format string to use for the rss feed's description if contextual filters are being used to fill rss feed metadata. Tokens are available in this field."),
-      '#default_value' => (isset($this->options['contextual_description'])) ? $this->options['contextual_description'] : '',
-      '#states' => [
-        'visible' => [':input[name="style_options[is_contextual]"]' => ['checked' => TRUE]],
-      ],
-    ];
-
-    $form['token_tree'] = [
-      '#type' => 'item',
-      '#theme' => 'token_tree_link',
-      '#token_types' => ['contextual-filter-node'],
-      '#show_restricted' => TRUE,
-      '#states' => [
-        'visible' => [':input[name="style_options[is_contextual]"]' => ['checked' => TRUE]],
-      ],
+    $form['cover_url'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('The url of the image to use as a cover'),
+      '#description' => $this->t('Provide the link in the format "sites/default/files/2024-04/image.png". If there is a contextually filtered node provided, it\'s image will replace this one.'),
+      '#default_value' => (isset($this->options['cover_url'])) ? $this->options['cover_url'] : '',
+      '#weight' => 3,
     ];
 
     $form['creator_truncation'] = [
@@ -97,6 +76,35 @@ class AudioficArchiveRSSStyle extends Rss {
       '#step' => 1,
       '#min' => 1,
       '#default_value' => (isset($this->options['creator_truncation'])) ? $this->options['creator_truncation'] : 3,
+      '#weight' => 4,
+    ];
+
+    $form['is_contextual'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Use contextual filters to fill RSS feed metadata'),
+      '#description' => $this->t('The data of the work or collection that is contextually filtered will be used to decide the metadata of the overall RSS feed. Eg: The title, description, cover image, etc.'),
+      '#default_value' => (isset($this->options['is_contextual'])) ? $this->options['is_contextual'] : FALSE,
+      '#weight' => 5,
+    ];
+
+    $form['override_media_pubdate'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t("Override Media Item Publishing Date"),
+      '#description' => $this->t("By default each feed item has the publishing date of the media item it refers to. This setting overrides those dates with dates derived from the publishing date of the work they are attached to, so that it is ensured that they are in correct chapter order."),
+      '#default_value' => (isset($this->options['override_media_pubdate'])) ? $this->options['override_media_pubdate'] : FALSE,
+      '#states' => [
+        'visible' => [':input[name="style_options[is_contextual]"]' => ['checked' => TRUE]],
+      ],
+      '#weight' => 6,
+    ];
+
+    $form['token_tree'] = [
+      '#type' => 'item',
+      '#theme' => 'token_tree_link',
+      '#token_types' => ['contextual-filter-node', 'contextual-filter-term', 'exposed-filters'],
+      '#show_restricted' => TRUE,
+      '#global_types' => FALSE,
+      '#weight' => 7,
     ];
   }
 
