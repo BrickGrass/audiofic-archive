@@ -39,12 +39,38 @@
     dom_id ? 'js-view-dom-id-' ~ dom_id,
   ]
 %}
+{% if view.current_display == "search_taxonomy" %}
+  {% set form_target = "block-bootstrap-barrio-subtheme-exposedformsearchsearch-taxonomy" %}
+  {% set tag_info_btn %}
+    <a class="btn btn-primary ms-1" data-bs-toggle="collapse" href="#tagInfo" role="button" aria-expanded="true" aria-controls="tagInfo">
+      Tag Info
+    </a>
+  {% endset %}
+{% elseif view.current_display == "search" %}
+  {% set form_target = "block-bootstrap-barrio-subtheme-exposedformsearchsearch" %}
+  {% set other_search %}
+    <a class="btn btn-primary ms-1" href="/search/collections">Search Collections</a>
+  {% endset %}
+{% elseif view.current_display == "search_collection" %}
+  {% set form_target = "block-bootstrap-barrio-subtheme-exposedformsearchsearch-collection" %}
+  {% set other_search %}
+    <a class="btn btn-primary ms-1" href="/search/works">Search Works</a>
+  {% endset %}
+{% endif %}
 <div{{ attributes.addClass(classes) }}>
   {{ title_prefix }}
   {% if title %}
     {{ title }}
   {% endif %}
+  {% if view.current_display == "search_taxonomy" and taxonomy_term != NULL %}
+    <h1>Search Works In: {{ taxonomy_term.name.value }}</h1>
+  {% endif %}
   {{ title_suffix }}
+  {% if view.current_display == "search_taxonomy" and taxonomy_term != NULL %}
+    <div id="tagInfo" class="collapse">
+      <p>Tag notes + heirarchy info will go here</p>
+    </div>
+  {% endif %}
   {% if header %}
     <div class="view-header">
       {{ header }}
@@ -61,21 +87,10 @@
     </div>
   {% endif %}
 
-  {% if view.current_display == "search_taxonomy" %}
-    {% set form_target = "block-bootstrap-barrio-subtheme-exposedformsearchsearch-taxonomy" %}
-  {% elseif view.current_display == "search" %}
-    {% set form_target = "block-bootstrap-barrio-subtheme-exposedformsearchsearch" %}
-    {% set other_search %}
-      <a class="btn btn-primary" href="/search/collections">Search Collections</a>
-    {% endset %}
-  {% elseif view.current_display == "search_collection" %}
-    {% set form_target = "block-bootstrap-barrio-subtheme-exposedformsearchsearch-collection" %}
-    {% set other_search %}
-      <a class="btn btn-primary" href="/search/works">Search Works</a>
-    {% endset %}
-  {% endif %}
+  {# Contextual Menu #}
   <div class="mb-2 d-flex justify-content-end">
     {{ other_search }}
+    {{ tag_info_btn }}
     <a class="btn btn-primary ms-1" href="{{ rss_feed }}">RSS Feed <i class="bi bi-rss-fill"></i></a>
     <a class="btn btn-primary d-md-none ms-1" data-bs-toggle="collapse" href="#{{ form_target }}" role="button" aria-expanded="true" aria-controls="{{ form_target }}">
       Filters

@@ -138,9 +138,20 @@ function bootstrap_barrio_subtheme_preprocess_views_view(&$variables) {
     $term = !empty($tid) ? \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid) : NULL;
     if (!empty($term)) {
       $variables['rss_feed'] = "/taxonomy/term/$tid/rss.xml?$url_query";
+      $variables['taxonomy_term'] = $term;
     }
   } elseif (in_array($current_display, ["search", "search_collection"])) {
     $variables['rss_feed'] = "$url_path/rss.xml?$url_query";
+  }
+}
+
+/**
+ * Implements template_preprocess_page_title().
+ */
+function bootstrap_barrio_subtheme_preprocess_page_title(&$variables) {
+  // Remove title on search page so it can be made tag specific in the view template.
+  if ($variables['title']['#markup'] === "Search Taxonomy") {
+    $variables['title'] = NULL;
   }
 }
 
