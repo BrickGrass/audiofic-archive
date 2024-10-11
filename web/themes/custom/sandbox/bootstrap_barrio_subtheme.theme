@@ -151,6 +151,7 @@ function bootstrap_barrio_subtheme_preprocess_views_view(&$variables) {
 function bootstrap_barrio_subtheme_preprocess_page_title(&$variables) {
   // Remove title on search page so it can be made tag specific in the view template.
   if (array_key_exists('title', $variables) and
+      is_array($variables['title']) and
       array_key_exists('#markup', $variables['title']) and
       $variables['title']['#markup'] === "Search Taxonomy"
     ) {
