@@ -129,7 +129,7 @@ function propagate_metadata_set_metadata(NodeInterface $collection, array $works
     if ($rating === NULL or
         $rating_value[$rating->name->value] < $rating_value[$r->name->value]
       ) {
-      $ratings = $r;
+      $rating = $r;
     }
   }
 
