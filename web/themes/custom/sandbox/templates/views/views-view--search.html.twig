@@ -43,7 +43,7 @@
   {% set form_target = "block-bootstrap-barrio-subtheme-exposedformsearchsearch-taxonomy" %}
   {% set tag_info_btn %}
     <a class="btn btn-primary ms-1" data-bs-toggle="collapse" href="#tagInfo" role="button" aria-expanded="true" aria-controls="tagInfo">
-      Tag Info
+      Tag Info <i class="bi bi-info-circle-fill"></i>
     </a>
   {% endset %}
 {% elseif view.current_display == "search" %}
@@ -88,12 +88,12 @@
   {% endif %}
 
   {# Contextual Menu #}
-  <div class="mb-2 d-flex justify-content-end">
+  <div class="mb-2 contextual-menu d-flex justify-content-end">
     {{ other_search }}
     {{ tag_info_btn }}
-    <a class="btn btn-primary ms-1" href="{{ rss_feed }}">RSS Feed <i class="bi bi-rss-fill"></i></a>
+    <a class="btn btn-primary ms-1" href="{{ rss_feed }}">RSS <i class="bi bi-rss-fill"></i></a>
     <a class="btn btn-primary d-md-none ms-1" data-bs-toggle="collapse" href="#{{ form_target }}" role="button" aria-expanded="true" aria-controls="{{ form_target }}">
-      Filters
+      Filters <i class="bi bi-funnel-fill"></i>
     </a>
   </div>
 

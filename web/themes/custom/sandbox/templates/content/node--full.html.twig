@@ -100,8 +100,19 @@ set classes = [
 </header>
 <div{{ content_attributes.addClass('node__content', 'clearfix') }}>
   {% if content_type in ["work", "legacy_work", "playlist"] %}
-    <div class="p-2 full-work">
-      {% set has_image = node.field_cover[0].entity.uri.value != null %}
+    {% set has_image = node.field_cover[0].entity.uri.value != null %}
+    <div class="p-2 full-work {{ has_image ? '' : 'full-work-no-image' }}">
+      <div class="contextual-menu {{ has_image ? '' : 'full-work-no-image' }}">
+        {# TODO: rss feed links #}
+        {% if content_type in ["work", "playlist"] %}
+          <a class="btn btn-primary" href="/node/{{ node.id }}/rss.xml">RSS <i class="bi bi-rss-fill"></i></a>
+        {% endif %}
+        {% if content_type == "playlist" %}
+          <a class="btn btn-primary full-work-jump-btn" href="#full-work-player-downloads">
+            Download or Stream <i class="bi bi-music-note-list"></i>
+          </a>
+        {% endif %}
+      </div>
       {% if has_image %}
         <img
           src="{{ file_url(node.field_cover[0].entity.uri.value) }}"
@@ -153,8 +164,6 @@ set classes = [
         {% endif %}
 
         {% if content_type == "playlist" %}
-          <a class="btn btn-outline-primary full-work-jump-btn" href="#full-work-player-downloads">Jump to streaming and download section</a>
-
           {# All works in this series as teasers #}
           <div class="mt-2">
             {{ drupal_view("works_in_collections", "works_series") }}
