@@ -103,11 +103,11 @@ set classes = [
     {% set has_image = node.field_cover[0].entity.uri.value != null %}
     <div class="p-2 full-work {{ has_image ? '' : 'full-work-no-image' }}">
       <div class="contextual-menu {{ has_image ? '' : 'full-work-no-image' }}">
-        {# TODO: rss feed links #}
-        {% if content_type in ["work", "playlist"] %}
-          <a class="btn btn-primary" href="/node/{{ node.id }}/rss.xml">RSS <i class="bi bi-rss-fill"></i></a>
+        {% if content_type == "work" %}
+          <a class="btn btn-primary" href="/work/{{ node.id }}/rss.xml">RSS <i class="bi bi-rss-fill"></i></a>
         {% endif %}
         {% if content_type == "playlist" %}
+          <a class="btn btn-primary" href="/series/{{ node.id }}/rss.xml">RSS <i class="bi bi-rss-fill"></i></a>
           <a class="btn btn-primary full-work-jump-btn" href="#full-work-player-downloads">
             Download or Stream <i class="bi bi-music-note-list"></i>
           </a>
