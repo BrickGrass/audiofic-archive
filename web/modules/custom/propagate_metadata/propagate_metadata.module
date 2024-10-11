@@ -58,12 +58,14 @@ function propagate_metadata_update_all_collections(NodeInterface $work) {
 
   if (!empty($series)) {
     $series = $series[0];
-    $series_works = propagate_metadata_get_collection_works($series, 'field_series.entity:node.nid');
+    $series_works = propagate_metadata_get_collection_works($series, $work, 'field_series.entity:node.nid');
+    $series_works[] = $work;
     propagate_metadata_set_metadata($series, $series_works);
   }
 
   foreach ($reader_collections as $collection) {
-    $collection_works = propagate_metadata_get_collection_works($collection, 'field_reader_collections.entity:node.nid');
+    $collection_works = propagate_metadata_get_collection_works($collection, $work, 'field_reader_collections.entity:node.nid');
+    $collection_works[] = $work;
     propagate_metadata_set_metadata($collection, $collection_works);
   }
 }
@@ -71,10 +73,11 @@ function propagate_metadata_update_all_collections(NodeInterface $work) {
 /**
  * Fetches all of the works in a collection.
  */
-function propagate_metadata_get_collection_works(EntityInterface $collection, string $field_condition): array {
+function propagate_metadata_get_collection_works(EntityInterface $collection, NodeInterface $work, string $field_condition): array {
   $work_ids = \Drupal::entityQuery('node')
     ->condition('type', 'work')
     ->condition($field_condition, $collection->id())
+    ->condition('nid', [$work->id()], 'NOT IN')
     ->accessCheck(TRUE)
     ->execute();
   return \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($work_ids);
