@@ -94,10 +94,9 @@ function propagate_metadata_set_metadata(NodeInterface $collection, array $works
   $ratings = [];
   $categories = [];
   $format_info = [];
+  $languages = [];
   // TODO: Length! Need to make an int field for it that can be displayed using a
   // duration input. (Can honestly just roll my own here and leave out the module).
-  // Category, Completion status, Format info and Language fields are missing
-  // If I'm populating from underlying works anyways, why?
 
   foreach ($works as $work) {
     $authors = propagate_metadata_remove_duplicate_entities(
@@ -114,6 +113,8 @@ function propagate_metadata_set_metadata(NodeInterface $collection, array $works
       array_merge($categories, $work->get('field_category')->referencedEntities()));
     $format_info = propagate_metadata_remove_duplicate_entities(
       array_merge($format_info, $work->get('field_format')->referencedEntities()));
+    $languages = propagate_metadata_remove_duplicate_entities(
+      array_merge($languages, $work->get('field_language')->referencedEntities()));
   }
 
   $rating_value = [
@@ -140,6 +141,7 @@ function propagate_metadata_set_metadata(NodeInterface $collection, array $works
   $collection->set('field_rating', [$rating]);
   $collection->set('field_category', $categories);
   $collection->set('field_format', $format_info);
+  $collection->set('field_languages', $languages);
   $collection->save();
 }
 

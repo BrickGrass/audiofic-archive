@@ -134,6 +134,7 @@ set classes = [
               <span class="badge bg-primary me-1">Series</span>
             {% endif %}
 
+            {# TODO: if open/closed status on series/collections stays: render it here as a WIP lozenge #}
             {{ content.field_completion_status }}
           </div>
           <div class="d-flex flex-column justify-content-end text-end full-work-dates">
@@ -161,6 +162,15 @@ set classes = [
 
         {% if node.field_language is not empty %}
           <span><b>Language</b> {{ node.field_language[0].entity.name.value }}</span>
+        {% endif %}
+
+        {% if node.field_languages is not empty %}
+          <span>
+            <b>Languages</b>
+            {% for lang in node.field_languages %}
+              {{ lang.entity.name.value }}{{- not loop.last ? ', ' -}}
+            {% endfor %}
+          </span>
         {% endif %}
 
         {% if content_type == "playlist" %}

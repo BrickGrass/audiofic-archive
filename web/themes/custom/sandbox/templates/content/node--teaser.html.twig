@@ -104,6 +104,7 @@
               <span class="badge bg-primary ms-1">Series</span>
             {% endif %}
 
+            {# TODO: if open/closed status on series/collections stays: render it here as a WIP lozenge #}
             {{ content.field_completion_status }}
 
             <span class="ms-1">{% if node.field_length is not empty %}length: {{ node.field_length[0].entity.name.value }}, {% endif %}{% if content_type == "playlist" %}{{ series_length }} part series, {% endif %}{{ created_at }}</span>
