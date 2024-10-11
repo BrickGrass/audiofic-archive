@@ -1,0 +1,150 @@
+<?php
+
+/**
+ * @file
+ * Contains propogate_metadata.module.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\node\NodeInterface;
+use Drupal\user\Entity\User;
+
+/**
+ * Implements hook_ENTITY_TYPE_presave() for nodes.
+ *
+ * Populates the reader/curator field automatically for the various
+ * collection types on creation. If the user creating the collection
+ * has no reader_name, an Exception is thrown.
+ */
+function propagate_metadata_node_presave(NodeInterface $node) {
+  if ($node->isNew()) {
+
+    if (in_array($node->getType(), ["playlist", "reader_collection", "rec_list"])) {
+      $user = User::load(\Drupal::currentUser()->id());
+      $reader_name = $user->get("field_reader_name")->referencedEntities();
+
+      if (count($reader_name) <= 0) {
+        throw new \Exception("A user with no reader name assigned cannot create a series/collection!");
+      }
+
+      if ($node->getType() == "rec_list") {
+        $node->set("field_curator", $reader_name[0]);
+      } else {
+        $node->set("field_reader", $reader_name[0]);
+      }
+    }
+  }
+
+  if ($node->getType() === "work") {
+    propagate_metadata_update_all_collections($node);
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete() for nodes.
+ */
+function propagate_metadata_node_delete(NodeInterface $work) {
+  if ($work->getType() === "work") {
+    propagate_metadata_update_all_collections($work);
+  }
+}
+
+/**
+ * Updates the metadata of all of the series/collections that a work is a member of.
+ */
+function propagate_metadata_update_all_collections(NodeInterface $work) {
+  $series = $work->get('field_series')->referencedEntities();
+  $reader_collections = $work->get('field_reader_collections')->referencedEntities();
+
+  if (!empty($series)) {
+    $series = $series[0];
+    $series_works = propagate_metadata_get_collection_works($series, 'field_series.entity:node.nid');
+    propagate_metadata_set_metadata($series, $series_works);
+  }
+
+  foreach ($reader_collections as $collection) {
+    $collection_works = propagate_metadata_get_collection_works($collection, 'field_reader_collections.entity:node.nid');
+    propagate_metadata_set_metadata($collection, $collection_works);
+  }
+}
+
+/**
+ * Fetches all of the works in a collection.
+ */
+function propagate_metadata_get_collection_works(EntityInterface $collection, string $field_condition): array {
+  $work_ids = \Drupal::entityQuery('node')
+    ->condition('type', 'work')
+    ->condition($field_condition, $collection->id())
+    ->accessCheck(TRUE)
+    ->execute();
+  return \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($work_ids);
+}
+
+/**
+ * Sets the metadata of a series/collection.
+ */
+function propagate_metadata_set_metadata(NodeInterface $collection, array $works) {
+  $authors = [];
+  $readers = [];
+  $fandoms = [];
+  $relationships = [];
+  $ratings = [];
+  $categories = [];
+  $format_info = [];
+  // TODO: Length! Need to make an int field for it that can be displayed using a
+  // duration input. (Can honestly just roll my own here and leave out the module).
+  // Category, Completion status, Format info and Language fields are missing
+  // If I'm populating from underlying works anyways, why?
+
+  foreach ($works as $work) {
+    $authors = propagate_metadata_remove_duplicate_entities(
+      array_merge($authors, $work->get('field_author')->referencedEntities()));
+    $readers = propagate_metadata_remove_duplicate_entities(
+      array_merge($readers, $work->get('field_reader')->referencedEntities()));
+    $fandoms = propagate_metadata_remove_duplicate_entities(
+      array_merge($fandoms, $work->get('field_fandom2')->referencedEntities()));
+    $relationships = propagate_metadata_remove_duplicate_entities(
+      array_merge($relationships, $work->get('field_relationship')->referencedEntities()));
+    $ratings = propagate_metadata_remove_duplicate_entities(
+      array_merge($ratings, $work->get('field_rating')->referencedEntities()));
+    $categories = propagate_metadata_remove_duplicate_entities(
+      array_merge($categories, $work->get('field_category')->referencedEntities()));
+    $format_info = propagate_metadata_remove_duplicate_entities(
+      array_merge($format_info, $work->get('field_format')->referencedEntities()));
+  }
+
+  $rating_value = [
+    "General" => 0,
+    "Teen and up" => 1,
+    "Mature" => 2,
+    "Explicit" => 3,
+    "Not rated" => 4,
+  ];
+
+  $rating = NULL;
+  foreach ($ratings as $r) {
+    if ($rating === NULL or
+        $rating_value[$rating->name->value] < $rating_value[$r->name->value]
+      ) {
+      $ratings = $r;
+    }
+  }
+
+  $collection->set('field_author', $authors);
+  $collection->set('field_reader', $readers);
+  $collection->set('field_fandom2', $fandoms);
+  $collection->set('field_relationship', $relationships);
+  $collection->set('field_rating', [$rating]);
+  $collection->set('field_category', $categories);
+  $collection->set('field_format', $format_info);
+  $collection->save();
+}
+
+/**
+ * Removes duplicates in an array. Uses the id() method to calculate uniqueness.
+ */
+function propagate_metadata_remove_duplicate_entities($entities) {
+  $ids = array_map(fn ($tag) => $tag->id(), $entities);
+  $unique_ids = array_unique($ids);
+  return array_values(array_intersect_key($entities, $unique_ids));
+}

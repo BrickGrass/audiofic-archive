@@ -323,13 +323,6 @@ function audiofic_archive_rss_fetch_media_files($entity, &$files, bool $sort_by_
 }
 
 /**
- * Fetches tag names from tag ids.
- */
-function audiofic_archive_fetch_tags_by_id($tag_ids) {
-
-}
-
-/**
  * Fetches the tag names from an entity and truncates them.
  */
 function audiofic_archive_rss_fetch_tags($entity, $vocab_name, ?int $truncate_to = NULL) {

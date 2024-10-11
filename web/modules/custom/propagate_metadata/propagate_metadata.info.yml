@@ -1,0 +1,4 @@
+name: Propagate Metadata
+description: A custom module for the audiofic archive which propagates metadata from works to the collections they are a part of. It also automatically fills the reader/curator field of collections when they are first created.
+core_version_requirement: ^10.1 || ^11
+type: module

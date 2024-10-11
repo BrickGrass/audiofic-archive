@@ -160,6 +160,7 @@
 .full-work {
 	display: grid;
 	grid-template-columns: 400px 1fr 400px;
+	grid-template-rows: auto 1fr;
 	column-gap: 1rem;
 	margin-top: 0.75rem;
 }
@@ -189,6 +190,7 @@
 	flex-wrap: wrap;
 	gap: 0.25rem;
 	margin-bottom: 0.25rem;
+	height: fit-content;
 }
 
 .full-work-player-downloads {
