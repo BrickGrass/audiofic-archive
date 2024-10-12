@@ -29,7 +29,7 @@ function bootstrap_barrio_subtheme_preprocess_fieldset(&$variables) {
 function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
   $node = $variables["node"];
   $node_type = $node->getType();
-  if (in_array($node_type, ["work", "legacy_work", "playlist"])) {
+  if (in_array($node_type, ["work", "legacy_work", "playlist", "reader_collection", "rec_list"])) {
     $all_tags = [];
 
     fetch_vocabulary_tags($node, "field_fandom2", $all_tags);
@@ -48,15 +48,18 @@ function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
     $variables['updated_at'] = $updated_date;
   }
 
-  if ($variables["view_mode"] == "full" && $node_type == "playlist") {
+  if (in_array($node_type, ["playlist", "reader_collection"])) {
+    $condition = $node_type === "playlist" ? "field_series.entity:node.nid" : "field_reader_collections.entity:node.nid";
     $results = \Drupal::entityQuery('node')
       ->condition('type', 'work')
-      ->condition('field_series.entity:node.nid', $node->id())
+      ->condition($condition, $node->id())
       ->accessCheck(TRUE)
       ->execute();
+    $variables["collection_length"] = count($results);
 
-    if ($results !== NULL) {
-      $variables["series_length"] = count($results);
+    if ($variables["view_mode"] === "full" and $node_type === "playlist" and $results !== NULL) {
+      // TODO: this is the only reason that this can't only run on displaymode full
+      // maybe pull this section out?
       $work_text_links = [];
       $work_podfic_links = [];
 
@@ -149,7 +152,7 @@ function bootstrap_barrio_subtheme_preprocess_views_view(&$variables) {
  * Implements template_preprocess_page_title().
  */
 function bootstrap_barrio_subtheme_preprocess_page_title(&$variables) {
-  // Remove title on search page so it can be made tag specific in the view template.
+  // Remove title on taxonomy search page so it can be made tag specific in the view template.
   if (array_key_exists('title', $variables) and
       is_array($variables['title']) and
       array_key_exists('#markup', $variables['title']) and

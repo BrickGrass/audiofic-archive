@@ -35,7 +35,7 @@ function propagate_metadata_node_presave(NodeInterface $node) {
     }
   }
 
-  if ($node->getType() === "work") {
+  if (in_array($node->getType(), ["work", "legacy_work", "playlist", "reader_collection"])) {
     propagate_metadata_update_all_collections($node);
   }
 }
@@ -43,30 +43,58 @@ function propagate_metadata_node_presave(NodeInterface $node) {
 /**
  * Implements hook_ENTITY_TYPE_delete() for nodes.
  */
-function propagate_metadata_node_delete(NodeInterface $work) {
-  if ($work->getType() === "work") {
-    propagate_metadata_update_all_collections($work);
+function propagate_metadata_node_delete(NodeInterface $node) {
+  if (in_array($node->getType(), ["work", "legacy_work", "playlist", "reader_collection"])) {
+    propagate_metadata_update_all_collections($node);
   }
 }
 
 /**
  * Updates the metadata of all of the series/collections that a work is a member of.
  */
-function propagate_metadata_update_all_collections(NodeInterface $work) {
-  $series = $work->get('field_series')->referencedEntities();
-  $reader_collections = $work->get('field_reader_collections')->referencedEntities();
+function propagate_metadata_update_all_collections(NodeInterface $node) {
+  $series = [];
+  $reader_collections = [];
+  $rec_lists = [];
+
+  if ($node->getType() === "work") {
+    $series = $node->get('field_series')->referencedEntities();
+    $reader_collections = $node->get('field_reader_collections')->referencedEntities();
+  } else {
+    $rec_list_ids = \Drupal::entityQuery('node')
+      ->condition('type', 'rec_list')
+      ->condition('field_works', [$node->id()], 'IN')
+      ->accessCheck(TRUE)
+      ->execute();
+    $rec_lists = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($rec_list_ids);
+  }
 
   if (!empty($series)) {
     $series = $series[0];
-    $series_works = propagate_metadata_get_collection_works($series, $work, 'field_series.entity:node.nid');
-    $series_works[] = $work;
+    $series_works = propagate_metadata_get_collection_works($series, $node, 'field_series.entity:node.nid');
+    $series_works[] = $node;
     propagate_metadata_set_metadata($series, $series_works);
   }
 
   foreach ($reader_collections as $collection) {
-    $collection_works = propagate_metadata_get_collection_works($collection, $work, 'field_reader_collections.entity:node.nid');
-    $collection_works[] = $work;
+    $collection_works = propagate_metadata_get_collection_works($collection, $node, 'field_reader_collections.entity:node.nid');
+    $collection_works[] = $node;
     propagate_metadata_set_metadata($collection, $collection_works);
+  }
+
+  foreach ($rec_lists as $rec_list) {
+    $rec_list_works = $rec_list->get('field_works')->referencedEntities();
+
+    $node_key = NULL;
+    foreach ($rec_list_works as $key => $value) {
+      if ($value->id() == $node->id()) {
+        $node_key = $key;
+        break;
+      }
+    }
+    $rec_list_works[$node_key] = $node;
+
+    propagate_metadata_set_metadata($rec_list, $rec_list_works);
   }
 }
 
@@ -109,12 +137,17 @@ function propagate_metadata_set_metadata(NodeInterface $collection, array $works
       array_merge($relationships, $work->get('field_relationship')->referencedEntities()));
     $ratings = propagate_metadata_remove_duplicate_entities(
       array_merge($ratings, $work->get('field_rating')->referencedEntities()));
-    $categories = propagate_metadata_remove_duplicate_entities(
-      array_merge($categories, $work->get('field_category')->referencedEntities()));
     $format_info = propagate_metadata_remove_duplicate_entities(
       array_merge($format_info, $work->get('field_format')->referencedEntities()));
+
+    if ($work->hasField('field_category')) {
+      $categories = propagate_metadata_remove_duplicate_entities(
+        array_merge($categories, $work->get('field_category')->referencedEntities()));
+    }
+
+    $lang_key = $work->hasField('field_language') ? 'field_language' : 'field_languages';
     $languages = propagate_metadata_remove_duplicate_entities(
-      array_merge($languages, $work->get('field_language')->referencedEntities()));
+      array_merge($languages, $work->get($lang_key)->referencedEntities()));
   }
 
   $rating_value = [

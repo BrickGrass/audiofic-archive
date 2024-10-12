@@ -166,9 +166,27 @@ set classes = [
 
         {% if node.field_languages is not empty %}
           <span>
-            <b>Languages</b>
+            <b>Language(s)</b>
             {% for lang in node.field_languages %}
               {{ lang.entity.name.value }}{{- not loop.last ? ', ' -}}
+            {% endfor %}
+          </span>
+        {% endif %}
+
+        {% if node.field_series is not empty and node.field_part_label is not empty %}
+          {% set series = node.field_series[0].entity %}
+          <span>
+            {{ node.field_part_label[0].value }}
+            of
+            <a href="{{ path('entity.node.canonical', {'node': series.id}) }}">{{ series.title.value }}</a>
+          </span>
+        {% endif %}
+
+        {% if node.field_reader_collections is not empty %}
+          <span>
+            <b>Part of Collection(s)</b>
+            {% for collection in node.field_reader_collections %}
+              <a href="{{ path('entity.node.canonical', {'node': collection.entity.id}) }}">{{ collection.entity.title.value }}</a>
             {% endfor %}
           </span>
         {% endif %}
