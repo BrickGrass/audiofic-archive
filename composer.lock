@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2000e09108799456228a385c592dd6af",
+    "content-hash": "92e17b0e95685806d432fcbbb2183c0b",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2306,65 +2306,6 @@
             }
         },
         {
-            "name": "drupal/datafield",
-            "version": "2.0.6",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/datafield.git",
-                "reference": "2.0.6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/datafield-2.0.6.zip",
-                "reference": "2.0.6",
-                "shasum": "db9c23acd18c01a588e014ab0f3c99241d6ca5cd"
-            },
-            "require": {
-                "drupal/core": "^10.2 || ^11"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "2.0.6",
-                    "datestamp": "1722551517",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "NGUYEN Bao",
-                    "homepage": "https://www.drupal.org/u/lazzyvn",
-                    "email": "n.bao@yahoo.com",
-                    "role": "Maintainer"
-                },
-                {
-                    "name": "lazzyvn",
-                    "homepage": "https://www.drupal.org/user/2896581"
-                }
-            ],
-            "description": "This module allows you create data field with widget table",
-            "homepage": "https://www.drupal.org/project/datafield",
-            "keywords": [
-                "Drupal",
-                "custom",
-                "data",
-                "entity",
-                "field",
-                "table"
-            ],
-            "support": {
-                "source": "https://git.drupalcode.org/project/datafield",
-                "issues": "https://www.drupal.org/project/issues/datafield"
-            }
-        },
-        {
             "name": "drupal/devel",
             "version": "5.3.1",
             "source": {
@@ -4064,6 +4005,73 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/views_autocomplete_filters",
                 "issues": "https://www.drupal.org/project/issues/views_autocomplete_filters"
+            }
+        },
+        {
+            "name": "drupal/weight",
+            "version": "3.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/weight.git",
+                "reference": "8.x-3.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/weight-8.x-3.5.zip",
+                "reference": "8.x-3.5",
+                "shasum": "1ddb29ec5c281cb0f1c6fef5bbce855579c8cfb6"
+            },
+            "require": {
+                "drupal/core": "^9.5 || ^10.2 || ^11.0"
+            },
+            "require-dev": {
+                "drupal/feeds": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-3.5",
+                    "datestamp": "1727156916",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "heddn",
+                    "homepage": "https://www.drupal.org/user/1463982"
+                },
+                {
+                    "name": "kevinquillen",
+                    "homepage": "https://www.drupal.org/user/317279"
+                },
+                {
+                    "name": "NancyDru",
+                    "homepage": "https://www.drupal.org/user/101412"
+                },
+                {
+                    "name": "neslee canil pinto",
+                    "homepage": "https://www.drupal.org/user/3580850"
+                },
+                {
+                    "name": "vladimiraus",
+                    "homepage": "https://www.drupal.org/user/673120"
+                }
+            ],
+            "description": "Allows arbitrary ordering of entities.",
+            "homepage": "https://www.drupal.org/project/weight",
+            "keywords": [
+                "Drupal"
+            ],
+            "support": {
+                "source": "http://cgit.drupalcode.org/weight",
+                "issues": "https://www.drupal.org/project/issues/weight"
             }
         },
         {
@@ -15132,15 +15140,15 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "drupal/flag": 10,
+        "pantheon-upstreams/upstream-configuration": 20,
         "drupal/inline_entity_form": 5,
-        "drupal/ultimate_cron": 15,
-        "pantheon-upstreams/upstream-configuration": 20
+        "drupal/flag": 10,
+        "drupal/ultimate_cron": 15
     },
     "prefer-stable": true,
     "prefer-lowest": false,
-    "platform": {},
-    "platform-dev": {},
+    "platform": [],
+    "platform-dev": [],
     "platform-overrides": {
         "php": "8.2.0"
     },
