@@ -132,7 +132,15 @@ set classes = [
 
             {% if content_type == "playlist" %}
               <span class="badge bg-primary me-1">Series</span>
+            {% elseif content_type == "reader_collection" %}
+              <span class="badge bg-primary me-1">Reader Collection</span>
+            {% elseif content_type == "rec_list" %}
+              <span class="badge bg-primary me-1">Rec List</span>
+            {% elseif content_type == "legacy_work" %}
+              <span class="badge bg-primary me-1">Legacy Work</span>
             {% endif %}
+
+
 
             {# TODO: if open/closed status on series/collections stays: render it here as a WIP lozenge #}
             {{ content.field_completion_status }}

@@ -152,6 +152,10 @@
 	margin-left: calc(125px);
 }
 
+.work-card-lower-info small {
+	text-align: right;
+}
+
 .work-card-no-cover {
 	margin-left: 0px !important;
 }

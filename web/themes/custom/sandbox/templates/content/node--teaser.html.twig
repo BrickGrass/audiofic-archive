@@ -106,20 +106,19 @@
 
             {% if content_type == "playlist" %}
               <span class="badge bg-primary ms-1">Series</span>
-            {% endif %}
-
-            {% if content_type == "reader_collection" %}
+            {% elseif content_type == "reader_collection" %}
               <span class="badge bg-primary ms-1">Collection</span>
-            {% endif %}
-
-            {% if content_type == "rec_list" %}
+            {% elseif content_type == "rec_list" %}
               <span class="badge bg-primary ms-1">Rec List</span>
+            {% elseif content_type == "legacy_work" %}
+              <span class="badge bg-primary ms-1">Legacy Work</span>
             {% endif %}
 
             {# TODO: if open/closed status on series/collections stays: render it here as a WIP lozenge #}
             {{ content.field_completion_status }}
 
             {% set length = node.field_length is not empty ? "length: #{node.field_length[0].entity.name.value}, " : "" %}
+
             {% if content_type == "playlist" %}
               {% set collection_type = "series" %}
             {% elseif content_type == "reader_collection" %}
@@ -128,7 +127,6 @@
               {% set collection_type = "rec list" %}
               {% set collection_length = node.field_works|length %}
             {% endif %}
-
             {% set collection_parts =
               content_type in ["playlist", "reader_collection", "rec_list"] ?
               "#{collection_length} part #{collection_type}, " : ""
