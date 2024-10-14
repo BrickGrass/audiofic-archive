@@ -6,35 +6,62 @@
  */
 
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\node\NodeInterface;
 use Drupal\user\Entity\User;
 
 /**
- * Implements hook_ENTITY_TYPE_presave() for nodes.
- *
- * Populates the reader/curator field automatically for the various
- * collection types on creation. If the user creating the collection
- * has no reader_name, an Exception is thrown.
+ * Implements hook_form_FORM_ID_alter() for node_work_form.
  */
-function propagate_metadata_node_presave(NodeInterface $node) {
-  if ($node->isNew()) {
-
-    if (in_array($node->getType(), ["playlist", "reader_collection", "rec_list"])) {
-      $user = User::load(\Drupal::currentUser()->id());
-      $reader_name = $user->get("field_reader_name")->referencedEntities();
-
-      if (count($reader_name) <= 0) {
-        throw new \Exception("A user with no reader name assigned cannot create a series/collection!");
-      }
-
-      if ($node->getType() == "rec_list") {
-        $node->set("field_curator", $reader_name[0]);
-      } else {
-        $node->set("field_reader", $reader_name[0]);
-      }
-    }
+function propagate_metadata_form_node_work_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $reader_name = propagate_metadata_get_user_reader_name();
+  if ($reader_name === NULL) {
+    return;
   }
 
+  propagate_metadata_fill_default_form_value($form, 'field_reader', $reader_name);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for node_playlist_form.
+ */
+function propagate_metadata_form_node_playlist_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $reader_name = propagate_metadata_get_user_reader_name();
+  if ($reader_name === NULL) {
+    return;
+  }
+
+  propagate_metadata_fill_default_form_value($form, 'field_reader', $reader_name);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for node_reader_collection_form.
+ */
+function propagate_metadata_form_node_reader_collection_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $reader_name = propagate_metadata_get_user_reader_name();
+  if ($reader_name === NULL) {
+    return;
+  }
+
+  propagate_metadata_fill_default_form_value($form, 'field_reader', $reader_name);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for node_rec_list_form.
+ */
+function propagate_metadata_form_node_rec_list_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $reader_name = propagate_metadata_get_user_reader_name();
+  if ($reader_name === NULL) {
+    return;
+  }
+
+  propagate_metadata_fill_default_form_value($form, 'field_curator', $reader_name);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave() for nodes.
+ */
+function propagate_metadata_node_presave(NodeInterface $node) {
   if (in_array($node->getType(), ["work", "legacy_work", "playlist", "reader_collection"])) {
     propagate_metadata_update_all_collections($node);
   }
@@ -46,6 +73,28 @@ function propagate_metadata_node_presave(NodeInterface $node) {
 function propagate_metadata_node_delete(NodeInterface $node) {
   if (in_array($node->getType(), ["work", "legacy_work", "playlist", "reader_collection"])) {
     propagate_metadata_update_all_collections($node);
+  }
+}
+
+/**
+ * Fetches the reader_name of the currently logged in user.
+ */
+function propagate_metadata_get_user_reader_name(): EntityInterface|null {
+  $user = User::load(\Drupal::currentUser()->id());
+  $reader_name = $user->get('field_reader_name')->referencedEntities();
+
+  return count($reader_name) > 0 ? $reader_name[0] : NULL;
+}
+
+/**
+ * Adds a tag to the default values list of a form field.
+ */
+function propagate_metadata_fill_default_form_value(&$form, $fieldname, $tag) {
+  // Handle both default autocomplete and tagify autocomplete.
+  if (array_key_exists('target_id', $form[$fieldname]['widget'])) {
+    $form[$fieldname]['widget']['target_id']['#default_value'][] = $tag;
+  } else {
+    $form[$fieldname]['widget']['#default_value'][] = $tag;
   }
 }
 
