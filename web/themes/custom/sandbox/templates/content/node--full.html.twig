@@ -101,8 +101,13 @@ set classes = [
 <div{{ content_attributes.addClass('node__content', 'clearfix') }}>
   {% if content_type in ["work", "legacy_work", "playlist"] %}
     {% set has_image = node.field_cover[0].entity.uri.value != null %}
-    <div class="p-2 full-work {{ has_image ? '' : 'full-work-no-image' }}">
-      <div class="contextual-menu {{ has_image ? '' : 'full-work-no-image' }}">
+    {% set filters_enabled = content_type in ["playlist", "reader_collection", "rec_list"] %}
+    <div class="p-2 full-work {{ has_image ? '' : 'no-image' }} {{ filters_enabled ? 'filters-enabled' : '' }}">
+      {# TODO: When the filters are placed above the rest of the content and hidden,
+      their row gap is still rendered, so we get a double-height margin at the top of
+      the page. To fix this I'll need to add some js listening to whether the filters
+      are collapsed, and add a negative margin to the .full-work div based on that. #}
+      <div class="contextual-menu">
         {% if content_type == "work" %}
           <a class="btn btn-primary" href="/work/{{ node.id }}/rss.xml">RSS <i class="bi bi-rss-fill"></i></a>
         {% endif %}
@@ -110,6 +115,9 @@ set classes = [
           <a class="btn btn-primary" href="/series/{{ node.id }}/rss.xml">RSS <i class="bi bi-rss-fill"></i></a>
           <a class="btn btn-primary full-work-jump-btn" href="#full-work-player-downloads">
             Download or Stream <i class="bi bi-music-note-list"></i>
+          </a>
+          <a class="btn btn-primary d-md-none" data-bs-toggle="collapse" href="#full-work-filters" role="button" aria-expanded="true" aria-controls="full-work-filters">
+            Filters <i class="bi bi-funnel-fill"></i>
           </a>
         {% endif %}
       </div>
@@ -119,7 +127,22 @@ set classes = [
           alt="{{ node.field_cover[0].entity.alt.value }}"
         >
       {% endif %}
-      <div class="d-flex flex-column w-100 full-work-main-content {{ has_image ? '' : 'full-work-no-image' }}">
+      {% if content_type == "playlist" %}
+        <div id="full-work-filters" class="full-work-filters collapse dont-collapse-sm">
+          {{ drupal_block("views_exposed_filter_block:seriess-works", wrapper=false) }}
+        </div>
+      {% endif %}
+      {% if content_type == "reader_collection" %}
+        <div id="full-work-filters" class="full-work-filters collapse dont-collapse-sm">
+          {{ drupal_block("views_exposed_filter_block:reader-tags-works", wrapper=false) }}
+        </div>
+      {% endif %}
+      {% if content_type == "rec_list" %}
+        <div id="full-work-filters" class="full-work-filters collapse dont-collapse-sm">
+          {{ drupal_block("views_exposed_filter_block:rec-lists-works", wrapper=false) }}
+        </div>
+      {% endif %}
+      <div class="d-flex flex-column w-100 full-work-main-content">
         <h1>{{ label }}</h1>
 
         <div class="d-flex justify-content-between align-items-center">
@@ -140,8 +163,6 @@ set classes = [
               <span class="badge bg-primary me-1">Legacy Work</span>
             {% endif %}
 
-
-
             {# TODO: if open/closed status on series/collections stays: render it here as a WIP lozenge #}
             {{ content.field_completion_status }}
           </div>
@@ -154,6 +175,9 @@ set classes = [
         {{ content.field_author }}
 
         {{ content.field_reader }}
+
+        {# TODO: To fill the space between the main content and the downloads on legacy works,
+        make all of the tags in the following section render on induvidual lines! #}
 
         <div class="mb-1">
           {% for tag in all_tags %}
@@ -199,14 +223,20 @@ set classes = [
           </span>
         {% endif %}
 
-        {% if content_type == "playlist" %}
+        {% if content_type in ["playlist", "reader_collection", "rec_list"] %}
           {# All works in this series as teasers #}
           <div class="mt-2">
-            {{ drupal_view("works_in_collections", "works_series") }}
+            {% if content_type == "playlist" %}
+              {{ drupal_view("seriess", "works") }}
+            {% elseif content_type == "reader_collection" %}
+              {{ drupal_view("reader_tags", "works") }}
+            {% elseif content_type == "rec_list" %}
+              {{ drupal_view("rec_lists", "works") }}
+            {% endif %}
           </div>
         {% endif %}
       </div>
-      <div id="full-work-player-downloads" class="full-work-player-downloads {{ has_image ? '' : 'full-work-no-image' }}">
+      <div id="full-work-player-downloads" class="full-work-player-downloads">
         {% if content_type == "legacy_work" %}
           {{ node.body.value | raw }}
         {% endif %}
@@ -244,9 +274,13 @@ set classes = [
         {% endif %}
 
         {% if content_type == "work" %}
-          {{ drupal_view("streaming_section", "work") }}
+          {{ drupal_view("work", "player") }}
         {% elseif content_type == "playlist" %}
-          {{ drupal_view("streaming_section", "series") }}
+          {{ drupal_view("seriess", "player") }}
+        {% elseif content_type == "reader_collection" %}
+          {{ drupal_view("reader_tags", "player") }}
+        {% elseif content_type == "rec_list" %}
+          {{ drupal_view("rec_lists", "player") }}
         {% endif %}
       </div>
     </div>

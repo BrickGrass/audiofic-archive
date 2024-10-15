@@ -105,6 +105,9 @@ function audiofic_archive_player_preprocess_views_view_audiofic_archive_player(&
   $other_files = [];
   foreach ($variables['view']->result as $result) {
     $entity = $result->_entity;
+    if ($entity->getType() !== "work") {
+      continue;
+    }
     audiofic_archive_player_fetch_media_files($entity, "mp3", $options['is_series'], $streaming_files);
     audiofic_archive_player_fetch_media_files($entity, "other", $options['is_series'], $other_files);
   }

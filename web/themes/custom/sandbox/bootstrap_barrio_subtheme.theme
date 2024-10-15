@@ -58,8 +58,6 @@ function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
     $variables["collection_length"] = count($results);
 
     if ($variables["view_mode"] === "full" and $node_type === "playlist" and $results !== NULL) {
-      // TODO: this is the only reason that this can't only run on displaymode full
-      // maybe pull this section out?
       $work_text_links = [];
       $work_podfic_links = [];
 
