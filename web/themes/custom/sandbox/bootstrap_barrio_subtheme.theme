@@ -48,6 +48,7 @@ function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
     $variables['updated_at'] = $updated_date;
   }
 
+  // TODO: add query for rec_lists so they can be turned on!
   if (in_array($node_type, ["playlist", "reader_collection"])) {
     $condition = $node_type === "playlist" ? "field_series.entity:node.nid" : "field_reader_collections.entity:node.nid";
     $results = \Drupal::entityQuery('node')

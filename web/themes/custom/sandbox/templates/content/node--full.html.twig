@@ -99,7 +99,7 @@ set classes = [
   {% endif %}
 </header>
 <div{{ content_attributes.addClass('node__content', 'clearfix') }}>
-  {% if content_type in ["work", "legacy_work", "playlist"] %}
+  {% if content_type in ["work", "legacy_work", "playlist", "reader_collection"] %}
     {% set has_image = node.field_cover[0].entity.uri.value != null %}
     {% set filters_enabled = content_type in ["playlist", "reader_collection", "rec_list"] %}
     <div class="p-2 full-work {{ has_image ? '' : 'no-image' }} {{ filters_enabled ? 'filters-enabled' : '' }}">
