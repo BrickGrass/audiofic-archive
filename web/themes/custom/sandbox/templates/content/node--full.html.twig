@@ -134,12 +134,12 @@ set classes = [
       {% endif %}
       {% if content_type == "reader_collection" %}
         <div id="full-work-filters" class="full-work-filters collapse dont-collapse-sm">
-          {{ drupal_block("views_exposed_filter_block:reader-tags-works", wrapper=false) }}
+          {{ drupal_block("views_exposed_filter_block:reader_tags-works", wrapper=false) }}
         </div>
       {% endif %}
       {% if content_type == "rec_list" %}
         <div id="full-work-filters" class="full-work-filters collapse dont-collapse-sm">
-          {{ drupal_block("views_exposed_filter_block:rec-lists-works", wrapper=false) }}
+          {{ drupal_block("views_exposed_filter_block:rec_lists-works", wrapper=false) }}
         </div>
       {% endif %}
       <div class="d-flex flex-column w-100 full-work-main-content">
