@@ -117,6 +117,9 @@ set classes = [
             Download or Stream <i class="bi bi-music-note-list"></i>
           </a>
         {% endif %}
+        {% if content_type == "reader_collection" %}
+          <a class="btn btn-primary" href="/collection/{{ node.id }}/rss.xml">RSS <i class="bi bi-rss-fill"></i></a>
+        {% endif %}
         {% if filters_enabled %}
           <a class="btn btn-primary d-md-none" data-bs-toggle="collapse" href="#full-work-filters" role="button" aria-expanded="true" aria-controls="full-work-filters">
             Filters <i class="bi bi-funnel-fill"></i>
