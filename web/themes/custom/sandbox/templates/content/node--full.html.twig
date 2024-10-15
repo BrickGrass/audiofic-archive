@@ -116,6 +116,8 @@ set classes = [
           <a class="btn btn-primary full-work-jump-btn" href="#full-work-player-downloads">
             Download or Stream <i class="bi bi-music-note-list"></i>
           </a>
+        {% endif %}
+        {% if filters_enabled %}
           <a class="btn btn-primary d-md-none" data-bs-toggle="collapse" href="#full-work-filters" role="button" aria-expanded="true" aria-controls="full-work-filters">
             Filters <i class="bi bi-funnel-fill"></i>
           </a>
@@ -127,19 +129,15 @@ set classes = [
           alt="{{ node.field_cover[0].entity.alt.value }}"
         >
       {% endif %}
-      {% if content_type == "playlist" %}
+      {% if content_type in ["playlist", "reader_collection", "rec_list"]%}
         <div id="full-work-filters" class="full-work-filters collapse dont-collapse-sm">
-          {{ drupal_block("views_exposed_filter_block:seriess-works", wrapper=false) }}
-        </div>
-      {% endif %}
-      {% if content_type == "reader_collection" %}
-        <div id="full-work-filters" class="full-work-filters collapse dont-collapse-sm">
-          {{ drupal_block("views_exposed_filter_block:reader_tags-works", wrapper=false) }}
-        </div>
-      {% endif %}
-      {% if content_type == "rec_list" %}
-        <div id="full-work-filters" class="full-work-filters collapse dont-collapse-sm">
-          {{ drupal_block("views_exposed_filter_block:rec_lists-works", wrapper=false) }}
+          {% if content_type == "playlist" %}
+            {{ drupal_block("views_exposed_filter_block:seriess-works", wrapper=false) }}
+          {% elseif content_type == "reader_collection" %}
+            {{ drupal_block("views_exposed_filter_block:reader_tags-works", wrapper=false) }}
+          {% elseif content_type == "rec_list" %}
+            {{ drupal_block("views_exposed_filter_block:rec_lists-works", wrapper=false) }}
+          {% endif %}
         </div>
       {% endif %}
       <div class="d-flex flex-column w-100 full-work-main-content">
