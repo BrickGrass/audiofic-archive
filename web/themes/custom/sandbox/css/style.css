@@ -232,6 +232,10 @@
 	grid-template-rows: auto 1fr;
 }
 
+.full-work.legacy-series .form-item-sort-by {
+	display: none;
+}
+
 .full-work.legacy-series .contextual-menu {
 	grid-column: 1;
 	grid-row: 1;
