@@ -162,6 +162,7 @@ function bootstrap_barrio_subtheme_preprocess_views_view(&$variables) {
         // that are similar, so we can suggest that there's possibly more content there.
         if (!empty($users)) {
           $user = reset($users);
+          $variables['user'] = $user;
           $psudonyms = [];
 
           foreach (["author", "reader", "curator", "cover_artist"] as $bundle) {
