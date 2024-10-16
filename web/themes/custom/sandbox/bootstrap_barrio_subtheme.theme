@@ -124,7 +124,11 @@ function bootstrap_barrio_subtheme_preprocess_form_element(&$variables) {
  * Implements template_preprocess_views_view().
  */
 function bootstrap_barrio_subtheme_preprocess_views_view(&$variables) {
-  $current_display = $variables['view']->current_display;
+  $view = $variables['view'];
+
+  if ($view->id() != 'search') {
+    return;
+  }
 
   $current_uri = \Drupal::request()->getRequestUri();
   $url_sections = explode("?", $current_uri);
@@ -133,7 +137,7 @@ function bootstrap_barrio_subtheme_preprocess_views_view(&$variables) {
   $url_path = substr($url_path, -1) === "/" ? substr($url_path, 0, strlen($url_path) - 1) : $url_path;
   $url_query = implode("?", array_slice($url_sections, 1, count($url_sections)));
 
-  if ($current_display === "search_taxonomy") {
+  if ($view->current_display === "search_taxonomy") {
     $arguments = $variables['view']->argument;
     $tid = reset($arguments)->argument;
 
@@ -141,8 +145,53 @@ function bootstrap_barrio_subtheme_preprocess_views_view(&$variables) {
     if (!empty($term)) {
       $variables['rss_feed'] = "/taxonomy/term/$tid/rss.xml?$url_query";
       $variables['taxonomy_term'] = $term;
+
+      if ($term->bundle() == "series") {
+        // Need to do my own query to get legacy series metadata, because
+        // the view results could be filtered!
+        $series_work_ids = \Drupal::entityQuery('node')
+          ->condition('type', 'legacy_work')
+          ->condition('field_legacy_series.entity:taxonomy_term.tid', $term->id())
+          ->sort('created', 'ASC')
+          ->accessCheck(TRUE)
+          ->execute();
+        $series_works = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($series_work_ids);
+
+        $authors = [];
+        $readers = [];
+        $languages = [];
+        $all_tags = [];
+
+        foreach ($series_works as $work) {
+          fetch_vocabulary_tags($work, "field_author", $authors);
+          fetch_vocabulary_tags($work, "field_reader", $readers);
+          fetch_vocabulary_tags($work, "field_language", $languages);
+
+          fetch_vocabulary_tags($work, "field_fandom2", $all_tags);
+          fetch_vocabulary_tags($work, "field_relationship", $all_tags);
+          fetch_vocabulary_tags($work, "field_warning", $all_tags);
+          fetch_vocabulary_tags($work, "field_category", $all_tags);
+          fetch_vocabulary_tags($work, "field_format", $all_tags);
+        }
+
+        $variables['authors'] = bootstrap_barrio_subtheme_remove_duplicate_entities($authors);
+        $variables['readers'] = bootstrap_barrio_subtheme_remove_duplicate_entities($readers);
+        $variables['languages'] = bootstrap_barrio_subtheme_remove_duplicate_entities($languages);
+        $variables['all_tags'] = bootstrap_barrio_subtheme_remove_duplicate_entities($all_tags);
+
+        $date_formatter = \Drupal::service('date.formatter');
+
+        $first_work = reset($series_works);
+        if (!empty($first_work)) {
+          $created_date = $date_formatter->format($first_work->getCreatedTime(), "custom", "j F Y");
+          $variables['created_at'] = $created_date;
+        }
+
+        $updated_date = $date_formatter->format($term->getChangedTime(), "custom", "j F Y");
+        $variables['updated_at'] = $updated_date;
+      }
     }
-  } elseif (in_array($current_display, ["search", "search_collection"])) {
+  } elseif (in_array($view->current_display, ["search", "search_collection"])) {
     $variables['rss_feed'] = "$url_path/rss.xml?$url_query";
   }
 }
@@ -200,4 +249,13 @@ function add_link(&$links, $uri, $work, $index = NULL) {
     "title" => $title,
     "work_label" => get_part_label($work),
   ]);
+}
+
+/**
+ * Removes duplicates in an array. Uses the id() method to calculate uniqueness.
+ */
+function bootstrap_barrio_subtheme_remove_duplicate_entities($entities) {
+  $ids = array_map(fn ($tag) => $tag->id(), $entities);
+  $unique_ids = array_unique($ids);
+  return array_values(array_intersect_key($entities, $unique_ids));
 }

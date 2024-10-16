@@ -11,51 +11,18 @@ use Drupal\node\NodeInterface;
 use Drupal\user\Entity\User;
 
 /**
- * Implements hook_form_FORM_ID_alter() for node_work_form.
+ * Implements hook_form_alter().
  */
-function propagate_metadata_form_node_work_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+function propagate_metadata_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Prefill reader/curator field on node creation.
   $reader_name = propagate_metadata_get_user_reader_name();
-  if ($reader_name === NULL) {
-    return;
+  if ($reader_name !== NULL) {
+    if (in_array($form_id, ['node_work_form', 'node_playlist_form', 'node_reader_collection_form'])) {
+      propagate_metadata_fill_default_form_value($form, 'field_reader', $reader_name);
+    } elseif ($form_id == 'node_rec_list_form') {
+      propagate_metadata_fill_default_form_value($form, 'field_curator', $reader_name);
+    }
   }
-
-  propagate_metadata_fill_default_form_value($form, 'field_reader', $reader_name);
-}
-
-/**
- * Implements hook_form_FORM_ID_alter() for node_playlist_form.
- */
-function propagate_metadata_form_node_playlist_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  $reader_name = propagate_metadata_get_user_reader_name();
-  if ($reader_name === NULL) {
-    return;
-  }
-
-  propagate_metadata_fill_default_form_value($form, 'field_reader', $reader_name);
-}
-
-/**
- * Implements hook_form_FORM_ID_alter() for node_reader_collection_form.
- */
-function propagate_metadata_form_node_reader_collection_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  $reader_name = propagate_metadata_get_user_reader_name();
-  if ($reader_name === NULL) {
-    return;
-  }
-
-  propagate_metadata_fill_default_form_value($form, 'field_reader', $reader_name);
-}
-
-/**
- * Implements hook_form_FORM_ID_alter() for node_rec_list_form.
- */
-function propagate_metadata_form_node_rec_list_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  $reader_name = propagate_metadata_get_user_reader_name();
-  if ($reader_name === NULL) {
-    return;
-  }
-
-  propagate_metadata_fill_default_form_value($form, 'field_curator', $reader_name);
 }
 
 /**

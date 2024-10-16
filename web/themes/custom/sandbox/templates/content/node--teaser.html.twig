@@ -121,6 +121,8 @@
             <a class="{{ fandom_or_ship }}" href="{{ taxonomy_path }}">{{ tag.name.value }}</a>{{- not loop.last ? ', ' -}}
           {% endfor %}
         </div>
+        {% block tags_end %}
+        {% endblock %}
 
         <div class="d-flex justify-content-end">
           <small class="d-flex flex-wrap justify-content-end">

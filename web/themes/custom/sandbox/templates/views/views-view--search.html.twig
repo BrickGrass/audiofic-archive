@@ -30,102 +30,176 @@
  * @see template_preprocess_views_view()
  */
 #}
-{%
-  set classes = [
-    'view',
-    'view-' ~ id|clean_class,
-    'view-id-' ~ id,
-    'view-display-id-' ~ display_id,
-    dom_id ? 'js-view-dom-id-' ~ dom_id,
-  ]
-%}
-{% if view.current_display == "search_taxonomy" %}
-  {% set form_target = "block-bootstrap-barrio-subtheme-exposedformsearchsearch-taxonomy" %}
-  {% set tag_info_btn %}
-    <a class="btn btn-primary ms-1" data-bs-toggle="collapse" href="#tagInfo" role="button" aria-expanded="true" aria-controls="tagInfo">
-      Tag Info <i class="bi bi-info-circle-fill"></i>
-    </a>
-  {% endset %}
-{% elseif view.current_display == "search" %}
-  {% set form_target = "block-bootstrap-barrio-subtheme-exposedformsearchsearch" %}
-  {% set other_search %}
-    <a class="btn btn-primary ms-1" href="/search/collections">Search Collections</a>
-  {% endset %}
-{% elseif view.current_display == "search_collection" %}
-  {% set form_target = "block-bootstrap-barrio-subtheme-exposedformsearchsearch-collection" %}
-  {% set other_search %}
-    <a class="btn btn-primary ms-1" href="/search/works">Search Works</a>
-  {% endset %}
-{% endif %}
-<div{{ attributes.addClass(classes) }}>
-  {{ title_prefix }}
-  {% if title %}
-    {{ title }}
-  {% endif %}
-  {% if view.current_display == "search_taxonomy" and taxonomy_term != NULL %}
-    <h1>Search Works In: {{ taxonomy_term.name.value }}</h1>
-  {% endif %}
-  {{ title_suffix }}
-  {% if view.current_display == "search_taxonomy" and taxonomy_term != NULL %}
-    <div id="tagInfo" class="collapse">
-      <p>Tag notes + heirarchy info will go here</p>
-    </div>
-  {% endif %}
-  {% if header %}
-    <div class="view-header">
-      {{ header }}
-    </div>
-  {% endif %}
-  {% if exposed %}
-    <div class="view-filters">
-      {{ exposed }}
-    </div>
-  {% endif %}
-  {% if attachment_before %}
-    <div class="attachment attachment-before">
-      {{ attachment_before }}
-    </div>
-  {% endif %}
+{% if view.id == "search" and view.current_display == "search_taxonomy" and taxonomy_term.bundle == "series" %}
+  {# TODO: Render legacy series page! #}
+  <div class="p-2 full-work no-image filters-enabled legacy-series">
+    {# TODO: When the filters are placed above the rest of the content and hidden,
+      their row gap is still rendered, so we get a double-height margin at the top of
+      the page. To fix this I'll need to add some js listening to whether the filters
+      are collapsed, and add a negative margin to the .full-work div based on that. #}
+      <div class="contextual-menu">
+        <a class="btn btn-primary" href="{{ rss_feed }}">RSS <i class="bi bi-rss-fill"></i></a>
+        <a class="btn btn-primary d-md-none" data-bs-toggle="collapse" href="#block-bootstrap-barrio-subtheme-exposedformsearchsearch-taxonomy" role="button" aria-expanded="true" aria-controls="block-bootstrap-barrio-subtheme-exposedformsearchsearch-taxonomy">
+          Filters <i class="bi bi-funnel-fill"></i>
+        </a>
+      </div>
+      <div class="full-work-filters">
+        {{ drupal_entity("block", "bootstrap_barrio_subtheme_exposedformsearchsearch_taxonomy", check_access=false) }}
+      </div>
+      <div class="d-flex flex-column w-100 full-work-main-content">
+        <h1>{{ taxonomy_term.name.value }}</h1>
 
-  {# Contextual Menu #}
-  <div class="mb-2 contextual-menu d-flex justify-content-end">
-    {{ other_search }}
-    {{ tag_info_btn }}
-    <a class="btn btn-primary ms-1" href="{{ rss_feed }}">RSS <i class="bi bi-rss-fill"></i></a>
-    <a class="btn btn-primary d-md-none ms-1" data-bs-toggle="collapse" href="#{{ form_target }}" role="button" aria-expanded="true" aria-controls="{{ form_target }}">
-      Filters <i class="bi bi-funnel-fill"></i>
-    </a>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="d-flex full-work-lozenges">
+            <span class="badge bg-secondary me-1">No Age Rating</span>
+            <span class="badge bg-primary me-1">Legacy Series</span>
+          </div>
+          <div class="d-flex flex-column justify-content-end text-end full-work-dates">
+            {% if created_at is not empty %}
+              <small class="fw-bold">Published: {{ created_at }}</small>
+            {% endif %}
+            <small class="fw-bold">Last Updated: {{ updated_at }}</small>
+          </div>
+        </div>
+
+        <span>
+          <span class="work-field-label">Written by</span>
+          {% for author in authors %}
+            {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': author.id}) %}
+            <a href="{{ taxonomy_path }}">{{ author.name.value }}</a>{{- not loop.last ? ', ' -}}
+          {% endfor %}
+        </span>
+
+        <span>
+          <span class="work-field-label">Read by</span>
+          {% for reader in readers %}
+            {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': reader.id}) %}
+            <a href="{{ taxonomy_path }}">{{ reader.name.value }}</a>{{- not loop.last ? ', ' -}}
+          {% endfor %}
+        </span>
+
+        <div class="mb-1">
+          {% for tag in all_tags %}
+            {% set vocabulary = tag.vid.value[0]["target_id"] %}
+            {% set fandom_or_ship = vocabulary in ["fandom", "relationship"] ? "fw-bolder" : "" %}
+            {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': tag.id}) %}
+            <a class="{{ fandom_or_ship }}" href="{{ taxonomy_path }}">{{ tag.name.value }}</a>{{- not loop.last ? ', ' -}}
+          {% endfor %}
+        </div>
+
+        <span>
+          <b>Language(s)</b>
+          {% for lang in languages %}
+            {{ lang.name.value }}{{- not loop.last ? ', ' -}}
+          {% endfor %}
+        </span>
+
+        {# All works in this series as teaser-full (teaser + body text) #}
+        <div class="mt-2">
+          {{ drupal_view("search", "legacy_series_block") }}
+        </div>
+      </div>
   </div>
+{% else %}
+  {%
+    set classes = [
+      'view',
+      'view-' ~ id|clean_class,
+      'view-id-' ~ id,
+      'view-display-id-' ~ display_id,
+      dom_id ? 'js-view-dom-id-' ~ dom_id,
+    ]
+  %}
+  {% if view.current_display == "search_taxonomy" %}
+    {% set form_target = "block-bootstrap-barrio-subtheme-exposedformsearchsearch-taxonomy" %}
+    {% set tag_info_btn %}
+      <a class="btn btn-primary ms-1" data-bs-toggle="collapse" href="#tagInfo" role="button" aria-expanded="true" aria-controls="tagInfo">
+        Tag Info <i class="bi bi-info-circle-fill"></i>
+      </a>
+    {% endset %}
+  {% elseif view.current_display == "search" %}
+    {% set form_target = "block-bootstrap-barrio-subtheme-exposedformsearchsearch" %}
+    {% set other_search %}
+      <a class="btn btn-primary ms-1" href="/search/collections">Search Collections</a>
+    {% endset %}
+  {% elseif view.current_display == "search_collection" %}
+    {% set form_target = "block-bootstrap-barrio-subtheme-exposedformsearchsearch-collection" %}
+    {% set other_search %}
+      <a class="btn btn-primary ms-1" href="/search/works">Search Works</a>
+    {% endset %}
+  {% endif %}
+  <div{{ attributes.addClass(classes) }}>
+    {{ title_prefix }}
+    {% if title %}
+      {{ title }}
+    {% endif %}
+    {% if view.current_display == "search_taxonomy" and taxonomy_term != NULL %}
+      <h1>Search Works In: {{ taxonomy_term.name.value }}</h1>
+    {% endif %}
+    {{ title_suffix }}
+    {% if view.current_display == "search_taxonomy" and taxonomy_term != NULL %}
+      <div id="tagInfo" class="collapse">
+        <p>Tag notes + heirarchy info will go here</p>
+      </div>
+    {% endif %}
+    {% if header %}
+      <div class="view-header">
+        {{ header }}
+      </div>
+    {% endif %}
+    {% if exposed %}
+      <div class="view-filters">
+        {{ exposed }}
+      </div>
+    {% endif %}
+    {% if attachment_before %}
+      <div class="attachment attachment-before">
+        {{ attachment_before }}
+      </div>
+    {% endif %}
 
-  {% if rows %}
-    <div class="view-content row">
-      {{ rows }}
-    </div>
-  {% elseif empty %}
-    <div class="view-empty">
-      {{ empty }}
-    </div>
-  {% endif %}
+    {# Contextual Menu #}
+    {% if view.id == "search" and view.current_display in ["search", "search_collection", "search_taxonomy"] %}
+      <div class="mb-2 contextual-menu d-flex justify-content-end">
+        {{ other_search }}
+        {{ tag_info_btn }}
+        <a class="btn btn-primary ms-1" href="{{ rss_feed }}">RSS <i class="bi bi-rss-fill"></i></a>
+        <a class="btn btn-primary d-md-none ms-1" data-bs-toggle="collapse" href="#{{ form_target }}" role="button" aria-expanded="true" aria-controls="{{ form_target }}">
+          Filters <i class="bi bi-funnel-fill"></i>
+        </a>
+      </div>
+    {% endif %}
 
-  {% if pager %}
-    {{ pager }}
-  {% endif %}
-  {% if attachment_after %}
-    <div class="attachment attachment-after">
-      {{ attachment_after }}
-    </div>
-  {% endif %}
-  {% if more %}
-    {{ more }}
-  {% endif %}
-  {% if footer %}
-    <div class="view-footer">
-      {{ footer }}
-    </div>
-  {% endif %}
-  {% if feed_icons %}
-    <div class="feed-icons">
-      {{ feed_icons }}
-    </div>
-  {% endif %}
-</div>
+    {% if rows %}
+      <div class="view-content row">
+        {{ rows }}
+      </div>
+    {% elseif empty %}
+      <div class="view-empty">
+        {{ empty }}
+      </div>
+    {% endif %}
+
+    {% if pager %}
+      {{ pager }}
+    {% endif %}
+    {% if attachment_after %}
+      <div class="attachment attachment-after">
+        {{ attachment_after }}
+      </div>
+    {% endif %}
+    {% if more %}
+      {{ more }}
+    {% endif %}
+    {% if footer %}
+      <div class="view-footer">
+        {{ footer }}
+      </div>
+    {% endif %}
+    {% if feed_icons %}
+      <div class="feed-icons">
+        {{ feed_icons }}
+      </div>
+    {% endif %}
+  </div>
+{% endif %}
