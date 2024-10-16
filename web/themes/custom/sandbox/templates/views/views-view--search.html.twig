@@ -31,7 +31,6 @@
  */
 #}
 {% if view.id == "search" and view.current_display == "search_taxonomy" and taxonomy_term.bundle == "series" %}
-  {# TODO: Render legacy series page! #}
   <div class="p-2 full-work no-image filters-enabled legacy-series">
     {# TODO: When the filters are placed above the rest of the content and hidden,
       their row gap is still rendered, so we get a double-height margin at the top of
@@ -132,9 +131,6 @@
     {{ title_prefix }}
     {% if title %}
       {{ title }}
-    {% endif %}
-    {% if view.current_display == "search_taxonomy" and taxonomy_term != NULL %}
-      <h1>Search Works In: {{ taxonomy_term.name.value }}</h1>
     {% endif %}
     {{ title_suffix }}
     {% if view.current_display == "search_taxonomy" and taxonomy_term != NULL %}
