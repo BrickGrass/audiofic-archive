@@ -15,13 +15,16 @@ use Drupal\user\Entity\User;
  */
 function propagate_metadata_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   // Prefill reader/curator field on node creation.
-  $reader_name = propagate_metadata_get_user_reader_name();
-  if ($reader_name !== NULL) {
-    if (in_array($form_id, ['node_work_form', 'node_playlist_form', 'node_reader_collection_form'])) {
-      propagate_metadata_fill_default_form_value($form, 'field_reader', $reader_name);
-    } elseif ($form_id == 'node_rec_list_form') {
-      propagate_metadata_fill_default_form_value($form, 'field_curator', $reader_name);
-    }
+  $reader_name = propagate_metadata_get_user_tag('field_reader_name');
+  if ($reader_name !== NULL and
+      in_array($form_id, ['node_work_form', 'node_playlist_form', 'node_reader_collection_form'])
+    ) {
+    propagate_metadata_fill_default_form_value($form, 'field_reader', $reader_name);
+  }
+
+  $curator_name = propagate_metadata_get_user_tag('field_curator_name');
+  if ($curator_name !== NULL and $form_id == 'node_rec_list_form') {
+    propagate_metadata_fill_default_form_value($form, 'field_curator', $reader_name);
   }
 }
 
@@ -46,11 +49,11 @@ function propagate_metadata_node_delete(NodeInterface $node) {
 /**
  * Fetches the reader_name of the currently logged in user.
  */
-function propagate_metadata_get_user_reader_name(): EntityInterface|null {
+function propagate_metadata_get_user_tag(string $field_name): EntityInterface|null {
   $user = User::load(\Drupal::currentUser()->id());
-  $reader_name = $user->get('field_reader_name')->referencedEntities();
+  $terms = $user->get($field_name)->referencedEntities();
 
-  return count($reader_name) > 0 ? $reader_name[0] : NULL;
+  return count($terms) > 0 ? $terms[0] : NULL;
 }
 
 /**
