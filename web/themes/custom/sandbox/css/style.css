@@ -233,7 +233,7 @@
 }
 
 .full-work.legacy-series .form-item-sort-by {
-	display: none;
+	display: none !important;
 }
 
 .full-work.legacy-series .contextual-menu {
