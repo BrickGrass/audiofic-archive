@@ -157,16 +157,20 @@
         {# TODO: I'm displaying curator name, but the taxonomy search only shows works and legacy works
         so following that link will never give you any results. Should I just not display it? Should I
         just link to a Collections search? #}
-        {% if taxonomy_term.bundle in ["author", "reader", "curator", "cover_artist"] and psudonyms is not empty %}
-          <p>View this user's profile page <a href="/user/{{ user.id }}">here</a>.</p>
+        {% if taxonomy_term.bundle in ["author", "reader", "curator", "cover_artist"] %}
+          {% if user is not empty %}
+            <p>View this user's profile page <a href="/user/{{ user.id }}">here</a>.</p>
+          {% endif %}
 
-          <p>
-            This user also has works archived under the following names:
-            {% for tag in psudonyms %}
-              {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': tag.id}) %}
-              <a href="{{ taxonomy_path }}">{{ tag.name.value }} ({{ tag.bundle|replace({"_": " "})|title }})</a>{{- not loop.last ? ', ' -}}
-            {% endfor %}
-          </p>
+          {% if psudonyms is not empty %}
+            <p>
+              This user also has works archived under the following names:
+              {% for tag in psudonyms %}
+                {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': tag.id}) %}
+                <a href="{{ taxonomy_path }}">{{ tag.name.value }} ({{ tag.bundle|replace({"_": " "})|title }})</a>{{- not loop.last ? ', ' -}}
+              {% endfor %}
+            </p>
+          {% endif %}
         {% endif %}
       </div>
     {% endif %}
