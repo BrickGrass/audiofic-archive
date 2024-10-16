@@ -42,7 +42,7 @@ function propagate_metadata_node_presave(NodeInterface $node) {
  */
 function propagate_metadata_node_delete(NodeInterface $node) {
   if (in_array($node->getType(), ["work", "legacy_work", "playlist", "reader_collection"])) {
-    propagate_metadata_update_all_collections($node);
+    propagate_metadata_update_all_collections($node, TRUE);
   }
 }
 
@@ -71,7 +71,7 @@ function propagate_metadata_fill_default_form_value(&$form, $fieldname, $tag) {
 /**
  * Updates the metadata of all of the series/collections that a work is a member of.
  */
-function propagate_metadata_update_all_collections(NodeInterface $node) {
+function propagate_metadata_update_all_collections(NodeInterface $node, bool $node_deleted = FALSE) {
   $series = [];
   $reader_collections = [];
   $rec_lists = [];
@@ -91,13 +91,17 @@ function propagate_metadata_update_all_collections(NodeInterface $node) {
   if (!empty($series)) {
     $series = $series[0];
     $series_works = propagate_metadata_get_collection_works($series, $node, 'field_series.entity:node.nid');
-    $series_works[] = $node;
+    if (!$node_deleted) {
+      $series_works[] = $node;
+    }
     propagate_metadata_set_metadata($series, $series_works);
   }
 
   foreach ($reader_collections as $collection) {
     $collection_works = propagate_metadata_get_collection_works($collection, $node, 'field_reader_collections.entity:node.nid');
-    $collection_works[] = $node;
+    if (!$node_deleted) {
+      $collection_works[] = $node;
+    }
     propagate_metadata_set_metadata($collection, $collection_works);
   }
 
@@ -111,7 +115,9 @@ function propagate_metadata_update_all_collections(NodeInterface $node) {
         break;
       }
     }
-    $rec_list_works[$node_key] = $node;
+    if (!$node_deleted) {
+      $rec_list_works[$node_key] = $node;
+    }
 
     propagate_metadata_set_metadata($rec_list, $rec_list_works);
   }
