@@ -145,6 +145,39 @@ function bootstrap_barrio_subtheme_preprocess_views_view(&$variables) {
     if (!empty($term)) {
       $variables['rss_feed'] = "/taxonomy/term/$tid/rss.xml?$url_query";
       $variables['taxonomy_term'] = $term;
+      if ($term->parent->target_id !== 0) {
+        $variables['term_parent'] = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($term->parent->target_id);
+      }
+      $variables['term_children'] = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree(
+        $term->bundle(), $term->id(), NULL, TRUE);
+
+      if (in_array($term->bundle(), ["author", "reader", "curator", "cover_artist"])) {
+        $user_ids = \Drupal::entityQuery('user')
+          ->condition("field_{$term->bundle()}_name.entity:taxonomy_term.tid", $term->id())
+          ->accessCheck(TRUE)
+          ->execute();
+        $users = \Drupal::entityTypeManager()->getStorage('user')->loadMultiple($user_ids);
+
+        // TODO: if this tag isn't linked to a user, find all tags in other vocabs
+        // that are similar, so we can suggest that there's possibly more content there.
+        if (!empty($users)) {
+          $user = reset($users);
+          $psudonyms = [];
+
+          foreach (["author", "reader", "curator", "cover_artist"] as $bundle) {
+            if ($term->bundle() === $bundle) {
+              continue;
+            }
+
+            $data = $user->get("field_{$bundle}_name")->referencedEntities();
+            if (!empty($data)) {
+              $psudonyms[] = $data[0];
+            }
+          }
+
+          $variables["psudonyms"] = $psudonyms;
+        }
+      }
 
       if ($term->bundle() == "series") {
         // Need to do my own query to get legacy series metadata, because
@@ -205,17 +238,17 @@ function bootstrap_barrio_subtheme_views_post_render(&$view) {
     $term = $route_match->getParameter("taxonomy_term");
     $term_name = $term->name->value;
 
+    $title = NULL;
     if ($term->bundle() === "series") {
-      // Rewrite title on legacy series pages
-      $view->setTitle($term_name);
-
-      $route = $route_match->getCurrentRouteMatch()->getRouteObject();
-      $route->setDefault("_title", $term_name);
-      $route->setDefault('_title_callback', NULL);
+      $title = $term_name;
+    } elseif (in_array($term->bundle(), ["author", "reader", "curator", "cover_artist"])) {
+      $bundle = ucwords(str_replace("_", " ", $term->bundle()));
+      $title = "Search works in: $term_name ($bundle)";
     } else {
-      // Rewrite for all other taxonomy search pages
       $title = "Search works in: $term_name";
+    }
 
+    if ($title !== NULL) {
       $view->setTitle($title);
 
       $route = $route_match->getCurrentRouteMatch()->getRouteObject();
@@ -229,8 +262,7 @@ function bootstrap_barrio_subtheme_views_post_render(&$view) {
  * Implements template_preprocess_page_title().
  */
 function bootstrap_barrio_subtheme_preprocess_page_title(&$variables) {
-  // TODO: If I'm re-writing it above, don't I only need to do this for legacy-series?
-  // Remove title on taxonomy search page so it can be made tag specific in the view template.
+  // Remove title on legacy series pages
   $route_match = \Drupal::routeMatch();
   if (array_key_exists('title', $variables) and
       is_array($variables['title']) and

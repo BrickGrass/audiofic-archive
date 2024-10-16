@@ -134,7 +134,38 @@
     {{ title_suffix }}
     {% if view.current_display == "search_taxonomy" and taxonomy_term != NULL %}
       <div id="tagInfo" class="collapse">
-        <p>Tag notes + heirarchy info will go here</p>
+        {# TODO: Add type of fandom tag after a comma (This tag is a Fandom tag, in the category Movie & TV Fandoms). #}
+        <p>This tag is a {{ taxonomy_term.bundle|replace({"_": " "})|title }} tag.</p>
+
+        {% if term_parent is not empty %}
+          {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': term_parent.id}) %}
+          <p><b>Parent Tag:</b> <a href="{{ taxonomy_path }}">{{ term_parent.name.value }}</a></p>
+        {% endif %}
+
+        {% if term_children is not empty %}
+          <p>
+            <b>Child Tag(s):</b>
+            {% for child in term_children %}
+              {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': child.id}) %}
+              <a href="{{ taxonomy_path }}">{{ child.name.value }}</a>{{- not loop.last ? ', ' -}}
+            {% endfor %}
+          </p>
+        {% endif %}
+
+        {# TODO: non-canonical siblings if/when we add them #}
+
+        {# TODO: I'm displaying curator name, but the taxonomy search only shows works and legacy works
+        so following that link will never give you any results. Should I just not display it? Should I
+        just link to a Collections search? #}
+        {% if taxonomy_term.bundle in ["author", "reader", "curator", "cover_artist"] and psudonyms is not empty %}
+          <p>
+            This user also has content archived under the following names:
+            {% for tag in psudonyms %}
+              {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': tag.id}) %}
+              <a href="{{ taxonomy_path }}">{{ tag.name.value }} ({{ tag.bundle|replace({"_": " "})|title }})</a>{{- not loop.last ? ', ' -}}
+            {% endfor %}
+          </p>
+        {% endif %}
       </div>
     {% endif %}
     {% if header %}
