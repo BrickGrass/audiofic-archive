@@ -1,0 +1,4 @@
+name: Audiofic Archive NSFW Consent Modal
+description: A custom module which creates a popup for new users, asking them to decide if they are willing to view nsfw content
+core_version_requirement: ^10.3 || ^11
+type: module

@@ -1,0 +1,17 @@
+<div class="modal fade" id="nsfwConsentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="nsfwConsentModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="nsfwConsentModalLabel" class="modal-title">{{ nsfw_modal_title }}</h5>
+      </div>
+      <div class="modal-body">
+        <p>{{ nsfw_modal_body_text }}</p>
+
+        <div class="nsfw-consent-modal-actions d-flex justify-content-center">
+          <button id="nsfwConsentModalShowButton" type="button" class="btn btn-primary" data-bs-dismiss="modal">Show me all content</button>
+          <button id="nsfwConsentModalHideButton" type="button" class="btn btn-primary" data-bs-dismiss="modal">Hide NSFW content</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

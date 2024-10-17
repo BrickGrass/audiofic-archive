@@ -19,6 +19,7 @@ function bootstrap_barrio_subtheme_preprocess_breadcrumb(&$variables) {
  * Implements hook_preprocess_fieldset().
  */
 function bootstrap_barrio_subtheme_preprocess_fieldset(&$variables) {
+  // TODO: errors getting raised from this, check that array keys exist
   $variables["fieldset_name"] = str_replace("_", "-", $variables["element"]["#name"]);
   $variables["selection_made"] = !empty($variables["element"]["#value"]);
 }

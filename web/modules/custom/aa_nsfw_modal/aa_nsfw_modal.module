@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @file
+ * Contains aa_nfsw_modal.module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function aa_nsfw_modal_theme($existing, $type, $theme, $path) {
+  return [
+    'aa_nsfw_modal_block' => [
+      'render element' => 'elements',
+      'template' => 'aa_nsfw_modal',
+      'path' => $path . '/templates',
+      'variables' => [
+        'nsfw_modal_title' => '',
+        'nsfw_modal_body_text' => '',
+      ],
+    ],
+    'aa_nsfw_toggle_block' => [
+      'render element' => 'elements',
+      'template' => 'aa_nsfw_toggle',
+      'path' => $path . '/templates',
+    ],
+  ];
+}

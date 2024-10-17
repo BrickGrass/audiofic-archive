@@ -119,7 +119,7 @@ function audiofic_archive_player_preprocess_views_view_audiofic_archive_player(&
 }
 
 /**
- * Implements hook_theme() for audiofic_archive_player.
+ * Implements hook_theme().
  */
 function audiofic_archive_player_theme($existing, $type, $theme, $path) {
   return [

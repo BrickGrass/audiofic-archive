@@ -160,6 +160,15 @@
 	margin-left: 0px !important;
 }
 
+.work-card-nsfw-text {
+	background-color: #f6f6f2;
+	border-radius: 0.25rem;
+}
+
+.work-card-nsfw-text p {
+	margin-bottom: 0;
+}
+
 /* Full Work */
 .full-work {
 	display: grid;
