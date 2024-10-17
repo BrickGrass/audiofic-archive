@@ -27,6 +27,7 @@ window.addEventListener('load', function () {
 
   document.getElementById("nsfwConsentModalShowButton").onclick = function () {
     Cookies.set("nsfwConsentStatus", "show", { expires: 365, samesite: "strict" });
+    toggle.checked = true;
   };
 
   document.getElementById("nsfwConsentModalHideButton").onclick = function () {
