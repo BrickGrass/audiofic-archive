@@ -271,7 +271,7 @@ set classes = [
             and
             <a href="{{ node.field_podfic_post.value[0].uri }}">podfic post</a>.
           </p>
-        {% elseif content_type == "work" or content_type == "playlist" %}
+        {% elseif content_type in ["work", "playlist", "reader_collection"] %}
           <p>{{ warning_text }} {{ warning_text_multiple }}</p>
           {% set text_links = content_type == "work" ? node.field_text_post.value : work_text_links %}
           {% set podfic_links = content_type == "work" ? node.field_podfic_post.value : work_podfic_links %}
