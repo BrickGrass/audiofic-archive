@@ -71,12 +71,14 @@ function switch_track(new_track, autoplay = true) {
       next = 0;
     }
     now_playing = new_track;
-    switch_track(next);
+    switch_track(next, autoplay);
     return;
   }
 
   // Begin playback
-  playlist[new_track].play();
+  if (autoplay) {
+    playlist[new_track].play();
+  }
   now_playing = new_track;
 }
 
@@ -100,7 +102,9 @@ function skip_hidden_tracks() {
     break;
   }
 
-  switch_track(current, false);
+  if (current !== 0) {
+    switch_track(current, false);
+  }
 }
 
 function collect_playlist_data() {
