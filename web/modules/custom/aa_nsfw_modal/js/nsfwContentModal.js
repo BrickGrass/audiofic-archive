@@ -53,7 +53,6 @@ $( document ).ready(function() {
   // == so that undefined and null are caught
   if (showNsfw == null) {
     showModal();
-    showNsfw = false;
   } else {
     showNsfw = showNsfw === "show";
   }
