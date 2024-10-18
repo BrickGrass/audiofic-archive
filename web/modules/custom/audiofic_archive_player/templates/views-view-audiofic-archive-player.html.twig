@@ -76,7 +76,7 @@
 </div>
 
 {% if options.render_downloads and (options.streaming_files | length > 0 or options.other_files | length > 0) %}
-  <div class="table-responsive full-work-downloads">
+  <div class="table-responsive full-work-downloads {{ options.all_nsfw ? 'full-work-player-all-nsfw' : '' }}">
     <table class="table table-striped table-bordered mt-3">
       <thead>
         <tr>

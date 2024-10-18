@@ -3,15 +3,15 @@ function toggleNsfwContent() {
     $(obj).toggleClass("d-none")
   });
 
-  $('.work-card-nsfw-text').each(function(i, obj) {
-    $(obj).toggleClass("d-none")
-  });
-
   $('.full-work-player-nsfw').each(function(i, obj) {
     $(obj).toggleClass("d-none")
   });
 
   $('.full-work-player-all-nsfw').each(function(i, obj) {
+    $(obj).toggleClass("d-none")
+  });
+
+  $('.nsfw-total').each(function(i, obj) {
     $(obj).toggleClass("d-none")
   });
 }
@@ -53,6 +53,7 @@ $( document ).ready(function() {
   // == so that undefined and null are caught
   if (showNsfw == null) {
     showModal();
+    showNsfw = true;
   } else {
     showNsfw = showNsfw === "show";
   }

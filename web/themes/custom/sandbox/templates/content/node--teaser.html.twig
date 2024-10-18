@@ -90,15 +90,15 @@
   </div>
   </article>
 {% else %}
-  <div class="mb-3 work-card-wrapper">
-    {% if content.field_rating is not empty %}
-      {% if node.field_rating[0].entity.name.value in ["Explicit", "Mature", "Not rated"] %}
-        {% set explicit_rating = true %}
-      {% endif %}
-    {% else %}
+  {% if content.field_rating is not empty %}
+    {% if node.field_rating[0].entity.name.value in ["Explicit", "Mature", "Not rated"] %}
       {% set explicit_rating = true %}
     {% endif %}
-    <div class="work-card p-2 {{ content_type == 'playlist' ? 'position-relative' : '' }} {{ explicit_rating ? 'work-card-nsfw' : '' }}">
+  {% else %}
+    {% set explicit_rating = true %}
+  {% endif %}
+  <div class="mb-3 work-card-wrapper {{ explicit_rating ? 'work-card-nsfw' : '' }}">
+    <div class="work-card p-2 {{ content_type == 'playlist' ? 'position-relative' : '' }}">
       <div class="work-card-upper-info">
         {% set has_image = node.field_cover[0].entity.uri.value != null %}
         {% if has_image %}
@@ -172,10 +172,5 @@
         </div>
       </div>
     </div>
-    {% if explicit_rating %}
-      <div class="work-card-nsfw-text p-2 d-none">
-        <p>Your filtering settings have hidden this work.</p>
-      </div>
-    {% endif %}
   </div>
 {% endif %}

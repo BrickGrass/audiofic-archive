@@ -59,12 +59,20 @@ function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
       ->execute();
     $variables["collection_length"] = count($results);
 
-    if ($variables["view_mode"] === "full" and $node_type === "playlist" and $results !== NULL) {
+    if ($variables["view_mode"] === "full" and in_array($node_type, ["playlist", "reader_collection"]) and $results !== NULL) {
       $work_text_links = [];
       $work_podfic_links = [];
+      $total_nsfw = 0;
 
       foreach ($results as $result) {
         $work = \Drupal::entityTypeManager()->getStorage('node')->load($result);
+
+        foreach ($work->get("field_rating")->referencedEntities() as $rating) {
+          if (!in_array($rating->name->value, ["General", "Teen and up"])) {
+            $total_nsfw++;
+            break;
+          }
+        }
 
         $links = $work->get("field_text_post");
         if (count($links) == 1) {
@@ -96,6 +104,7 @@ function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
 
       $variables['work_text_links'] = $work_text_links;
       $variables['work_podfic_links'] = $work_podfic_links;
+      $variables['total_nsfw'] = $total_nsfw;
     }
   }
 }
@@ -130,6 +139,21 @@ function bootstrap_barrio_subtheme_preprocess_views_view(&$variables) {
   if ($view->id() != 'search') {
     return;
   }
+
+  $total_nsfw = 0;
+
+  foreach ($view->result as $result) {
+    $entity = $result->_entity;
+    if ($entity->hasField("field_rating")) {
+      foreach ($entity->get("field_rating")->referencedEntities() as $rating) {
+        if (!in_array($rating->name->value, ["General", "Teen and up"])) {
+          $total_nsfw++;
+          break;
+        }
+      }
+    }
+  }
+  $variables['total_nsfw'] = $total_nsfw;
 
   $current_uri = \Drupal::request()->getRequestUri();
   $url_sections = explode("?", $current_uri);

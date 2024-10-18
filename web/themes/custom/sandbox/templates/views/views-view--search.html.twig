@@ -94,6 +94,9 @@
 
         {# All works in this series as teaser-full (teaser + body text) #}
         <div class="mt-2">
+          {% if total_nsfw > 0 %}
+            <span class="nsfw-total d-none">({{ total_nsfw }} work{{ total_nsfw > 1 ? 's' : ''}} on this page {{ total_nsfw > 1 ? 'are' : 'is'}} hidden by your filters.)</span>
+          {% endif %}
           {{ drupal_view("search", "legacy_series_block") }}
         </div>
       </div>
@@ -177,6 +180,9 @@
     {% if header %}
       <div class="view-header">
         {{ header }}
+        {% if total_nsfw > 0 %}
+          <span class="nsfw-total d-none">({{ total_nsfw }} work{{ total_nsfw > 1 ? 's' : ''}} on this page {{ total_nsfw > 1 ? 'are' : 'is'}} hidden by your filters.)</span>
+        {% endif %}
       </div>
     {% endif %}
     {% if exposed %}
