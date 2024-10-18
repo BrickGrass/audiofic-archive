@@ -35,7 +35,7 @@ function populate_playlist_ui(audio_element, index) {
   }
 }
 
-function switch_track(new_track) {
+function switch_track(new_track, autoplay = true) {
   let all_streams = $(".full-work-player-streaming-item");
 
   // Ensure all players are paused and reset
@@ -64,12 +64,48 @@ function switch_track(new_track) {
     $("#player-next").prop('disabled', false);
   }
 
+  // Skip if hidden
+  if ($(all_streams[new_track]).hasClass("d-none")) {
+    let next = new_track + 1;
+    if (playlist.length - 1 == next) {
+      next = 0;
+    }
+    now_playing = new_track;
+    switch_track(next);
+    return;
+  }
+
   // Begin playback
   playlist[new_track].play();
   now_playing = new_track;
 }
 
+function skip_hidden_tracks() {
+  let all_streams = $(".full-work-player-streaming-item");
+  let current = now_playing;
+
+  while (true) {
+    // This track has been hidden! skip it
+    if ($(all_streams[current]).hasClass("d-none")) {
+      if (playlist.length - 1 == current + 1) {
+        // None of the tracks are visible, give up
+        return;
+      }
+      // Try the next track
+      current++;
+      continue;
+    }
+
+    // A visible track has been found!
+    break;
+  }
+
+  switch_track(current, false);
+}
+
 function collect_playlist_data() {
+  let files_loaded = 0;
+  let total_files = $(".full-work-player-streaming-item audio").length;
   $(".full-work-player-streaming-item audio").each(function(index, element) {
     audio_element = $(this)[0];
     playlist[index] = audio_element;
@@ -77,6 +113,11 @@ function collect_playlist_data() {
     // if metadata is already loaded, collect it
     if (audio_element.readyState != 0) {
       populate_playlist_ui(audio_element, index);
+    }
+
+    files_loaded++;
+    if (files_loaded === total_files) {
+      skip_hidden_tracks();
     }
 
     $(this).on({

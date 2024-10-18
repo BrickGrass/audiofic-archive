@@ -21,7 +21,8 @@
     'full-work-player',
     'd-flex',
     'flex-column',
-    options.classes
+    options.classes,
+    options.all_nsfw ? 'full-work-player-all-nsfw' : '',
   ]
 %}
 
@@ -44,7 +45,7 @@
 
 <div{{ attributes.addClass(classes) }}>
   {% for file in options.streaming_files %}
-    <div class="full-work-player-streaming-item {{ not loop.first ? 'not-playing' : '' }}">
+    <div class="full-work-player-streaming-item {{ not loop.first ? 'not-playing' : '' }} {{ file.nsfw ? 'full-work-player-nsfw' }}">
       <span>{{ file.name }}</span>
       <audio controls preload="metadata" src="{{ file.url }}" />
     </div>
@@ -66,7 +67,7 @@
 
   <div class="full-work-player-playlist {{ options.streaming_files | length < 2 ? 'full-work-player-single-file' : '' }}">
     {% for file in options.streaming_files %}
-      <button class="d-flex justify-content-between p-2">
+      <button class="d-flex justify-content-between p-2 {{ file.nsfw ? 'full-work-player-nsfw' }}">
         <span class="full-work-player-playlist-name text-start">{{ file.name }}</span>
         <span class="full-work-player-playlist-length ms-2">--:--:--</span>
         </button>
@@ -86,7 +87,7 @@
         {% for arr in [options.streaming_files, options.other_files] %}
           {% for file in arr %}
             <tr>
-              <td scope="row">{{ file.name }} ({{ file.mime_type }} file, {{ file.file_size }}) <a href="{{ file.url }}" download>[download]</a></th>
+              <td scope="row" class="{{ file.nsfw ? 'full-work-player-nsfw' : '' }}">{{ file.name }} ({{ file.mime_type }} file, {{ file.file_size }}) <a href="{{ file.url }}" download>[download]</a></th>
             </tr>
           {% endfor %}
         {% endfor %}

@@ -109,7 +109,7 @@ set classes = [
     {% else %}
       {% set explicit_rating = true %}
     {% endif %}
-    <div class="p-2 full-work {{ has_image ? '' : 'no-image' }} {{ filters_enabled ? 'filters-enabled' : '' }} {{ explicit_rating ? 'full-work-explicit' : '' }}">
+    <div class="p-2 full-work {{ has_image ? '' : 'no-image' }} {{ filters_enabled ? 'filters-enabled' : '' }} {{ explicit_rating ? 'full-work-explicit' : '' }} full-work-{{ content_type|replace({'_': '-'}) }}">
       {# TODO: When the filters are placed above the rest of the content and hidden,
       their row gap is still rendered, so we get a double-height margin at the top of
       the page. To fix this I'll need to add some js listening to whether the filters

@@ -1,4 +1,4 @@
-function toggleNsfwContent(show) {
+function toggleNsfwContent() {
   $('.work-card-nsfw').each(function(i, obj) {
     $(obj).toggleClass("d-none")
   });
@@ -6,43 +6,63 @@ function toggleNsfwContent(show) {
   $('.work-card-nsfw-text').each(function(i, obj) {
     $(obj).toggleClass("d-none")
   });
+
+  $('.full-work-player-nsfw').each(function(i, obj) {
+    $(obj).toggleClass("d-none")
+  });
+
+  $('.full-work-player-all-nsfw').each(function(i, obj) {
+    $(obj).toggleClass("d-none")
+  });
+}
+
+function isWorkOrLegacyWork() {
+  return $(".full-work-work").length > 0 || $(".full-work-legacy-work").length > 0;
 }
 
 function redirectIfNecessary() {
-  if ($(".full-work-explicit").length > 0) {
+  if ($(".full-work-explicit").length > 0 && isWorkOrLegacyWork()) {
     window.location.href = `${location.protocol}//${location.host}`;
   }
 }
 
-window.addEventListener('load', function () {
-  let nsfwConsentStatus = Cookies.get("nsfwConsentStatus");
+function setToggleToShow() {
+  let toggle = document.getElementById("nsfwConsentToggle");
+  toggle.checked = true;
+}
 
-  if (nsfwConsentStatus == null) {
-    const nsfwConsentModal = new bootstrap.Modal("#nsfwConsentModal");
-    nsfwConsentModal.show();
-    nsfwConsentStatus = false;
-  } else {
-    nsfwConsentStatus = nsfwConsentStatus === "show";
-  }
+function showModal() {
+  const nsfwConsentModal = new bootstrap.Modal("#nsfwConsentModal");
+  nsfwConsentModal.show();
 
-  document.getElementById("nsfwConsentModalShowButton").onclick = function () {
+  $("#nsfwConsentModalShowButton").on("click", function() {
     Cookies.set("nsfwConsentStatus", "show", { expires: 365, samesite: "strict" });
-    toggle.checked = true;
-  };
+    setToggleToShow();
+  })
 
-  document.getElementById("nsfwConsentModalHideButton").onclick = function () {
+  $("#nsfwConsentModalHideButton").on("click", function() {
     Cookies.set("nsfwConsentStatus", "hide", { expires: 365, samesite: "strict" });
     toggleNsfwContent();
     redirectIfNecessary();
-  };
+  })
+}
 
-  let toggle = document.getElementById("nsfwConsentToggle");
-  toggle.checked = nsfwConsentStatus;
+$( document ).ready(function() {
+  showNsfw = Cookies.get("nsfwConsentStatus");
 
-  if (!nsfwConsentStatus) {
+  if (showNsfw === null) {
+    showModal();
+  }
+
+  showNsfw = showNsfw !== null && showNsfw === "show";
+
+  if (!showNsfw) {
     toggleNsfwContent();
     redirectIfNecessary();
   }
+
+  let toggle = document.getElementById("nsfwConsentToggle");
+  toggle.checked = showNsfw;
 
   toggle.onchange = function () {
     let value = toggle.checked ? "show" : "hide";
@@ -53,4 +73,4 @@ window.addEventListener('load', function () {
       redirectIfNecessary();
     }
   }
-})
+});
