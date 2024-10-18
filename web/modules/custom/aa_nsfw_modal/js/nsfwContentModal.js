@@ -48,13 +48,15 @@ function showModal() {
 }
 
 $( document ).ready(function() {
-  showNsfw = Cookies.get("nsfwConsentStatus");
+  let showNsfw = Cookies.get("nsfwConsentStatus");
 
-  if (showNsfw === null) {
+  // == so that undefined and null are caught
+  if (showNsfw == null) {
     showModal();
+    showNsfw = false;
+  } else {
+    showNsfw = showNsfw === "show";
   }
-
-  showNsfw = showNsfw !== null && showNsfw === "show";
 
   if (!showNsfw) {
     toggleNsfwContent();
