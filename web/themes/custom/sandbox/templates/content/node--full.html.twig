@@ -115,8 +115,8 @@ set classes = [
       the page. To fix this I'll need to add some js listening to whether the filters
       are collapsed, and add a negative margin to the .full-work div based on that. #}
       <div class="contextual-menu">
-        {% if content_type in ["work", "playlist", "reader_collection"] %}
-          {% set url_prefix = {"work": "work", "playlist": "series", "reader_collection": "collection"} %}
+        {% if content_type in ["work", "playlist", "reader_collection", "rec_list"] %}
+          {% set url_prefix = {"work": "work", "playlist": "series", "reader_collection": "collection", "rec_list": "rec-list"} %}
           <a class="btn btn-primary" href="/{{ url_prefix[content_type] }}/{{ node.id }}/rss.xml">RSS <i class="bi bi-rss-fill"></i></a>
         {% endif %}
         {% if filters_enabled %}
@@ -248,6 +248,12 @@ set classes = [
               <a href="{{ path('entity.node.canonical', {'node': rec_list.id}) }}">{{ rec_list.title.value }}</a>
             {% endfor %}
           </span>
+        {% endif %}
+
+        {% if node.field_summary is not empty %}
+          <div class="mt-3 mb-3">
+            {{ content.field_summary }}
+          </div>
         {% endif %}
 
         {% if content_type in ["playlist", "reader_collection", "rec_list"] %}
