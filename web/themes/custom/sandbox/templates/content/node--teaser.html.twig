@@ -90,7 +90,7 @@
   </div>
   </article>
 {% else %}
-  {% if content.field_rating is not empty %}
+  {% if node.field_rating is not empty %}
     {% if node.field_rating[0].entity.name.value not in ["General", "Teen and up"] %}
       {% set explicit_rating = true %}
     {% endif %}
@@ -133,7 +133,7 @@
 
         <div class="d-flex justify-content-end">
           <small class="d-flex flex-wrap justify-content-end">
-            {% if content.field_rating is not empty %}
+            {% if node.field_rating is not empty %}
               {{ content.field_rating }}
             {% else %}
               <span class="badge bg-secondary ms-1">No Age Rating</span>

@@ -102,7 +102,7 @@ set classes = [
   {% if content_type in ["work", "legacy_work", "playlist", "reader_collection", "rec_list"] %}
     {% set has_image = node.field_cover[0].entity.uri.value != null %}
     {% set filters_enabled = content_type in ["playlist", "reader_collection", "rec_list"] %}
-    {% if content.field_rating is not empty %}
+    {% if node.field_rating is not empty %}
       {% if node.field_rating[0].entity.name.value not in ["General", "Teen and up"] %}
         {% set explicit_rating = true %}
       {% endif %}
@@ -150,7 +150,7 @@ set classes = [
 
         <div class="d-flex justify-content-between align-items-center">
           <div class="d-flex full-work-lozenges">
-            {% if content.field_rating is not empty %}
+            {% if node.field_rating is not empty %}
               {{ content.field_rating }}
             {% else %}
               <span class="badge bg-secondary me-1">No Age Rating</span>
