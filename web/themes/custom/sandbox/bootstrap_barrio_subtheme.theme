@@ -79,8 +79,12 @@ function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
       // TODO: not collecting attribution links because we're unsure if we're displaying them.
       // Will be easy to add them if we do decide to.
       $total_nsfw = 0;
+      $legacy_works = FALSE;
 
       foreach ($rec_list_works as $rec_list_work) {
+        if ($rec_list_work->getType() === "legacy_work") {
+          $legacy_works = TRUE;
+        }
         foreach ($rec_list_work->get("field_rating")->referencedEntities() as $rating) {
           if (!in_array($rating->name->value, ["General", "Teen and up"])) {
             $total_nsfw++;
@@ -90,6 +94,7 @@ function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
       }
 
       $variables['total_nsfw'] = $total_nsfw;
+      $variables['legacy_works'] = $legacy_works;
     }
 
     if ($variables["view_mode"] === "full" and in_array($node_type, ["playlist", "reader_collection"]) and $results !== NULL) {

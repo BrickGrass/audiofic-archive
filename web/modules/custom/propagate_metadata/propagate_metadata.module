@@ -175,6 +175,8 @@ function propagate_metadata_set_metadata(NodeInterface $collection, array $works
       array_merge($languages, $work->get($lang_key)->referencedEntities()));
   }
 
+  // TODO: Rec lists can have works with a rating of NULL. Will need to decide if that
+  // has priority
   $rating_value = [
     "General" => 0,
     "Teen and up" => 1,

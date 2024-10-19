@@ -153,7 +153,7 @@ set classes = [
             {% if node.field_rating is not empty %}
               {{ content.field_rating }}
             {% else %}
-              <span class="badge bg-secondary me-1">No Age Rating</span>
+              <span class="badge bg-secondary me-1">Age Rating Unknown</span>
             {% endif %}
 
             {% if content_type == "playlist" %}
@@ -175,11 +175,11 @@ set classes = [
           </div>
         </div>
 
+        {{ content.field_curator }}
+
         {{ content.field_author }}
 
         {{ content.field_reader }}
-
-        {{ content.field_curator }}
 
         {# TODO: To fill the space between the main content and the downloads on legacy works,
         make all of the tags in the following section render on induvidual lines! #}
@@ -312,6 +312,13 @@ set classes = [
         {% elseif content_type == "reader_collection" %}
           {{ drupal_view("reader_tags", "player") }}
         {% elseif content_type == "rec_list" %}
+          {% if legacy_works %}
+            <div class="alert alert-primary" role="alert">
+              This rec list contains legacy works which will not appear below in the playlist
+              or downloads section. To stream or download these works, please navigate to their
+              induvidual page via the complete list of works.
+            </div>
+          {% endif %}
           {{ drupal_view("rec_lists", "player") }}
         {% endif %}
       </div>
