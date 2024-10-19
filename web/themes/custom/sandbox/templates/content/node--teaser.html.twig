@@ -91,7 +91,7 @@
   </article>
 {% else %}
   {% if content.field_rating is not empty %}
-    {% if node.field_rating[0].entity.name.value in ["Explicit", "Mature", "Not rated"] %}
+    {% if node.field_rating[0].entity.name.value not in ["General", "Teen and up"] %}
       {% set explicit_rating = true %}
     {% endif %}
   {% else %}

@@ -99,7 +99,7 @@ set classes = [
   {% endif %}
 </header>
 <div{{ content_attributes.addClass('node__content', 'clearfix') }}>
-  {% if content_type in ["work", "legacy_work", "playlist", "reader_collection"] %}
+  {% if content_type in ["work", "legacy_work", "playlist", "reader_collection", "rec_list"] %}
     {% set has_image = node.field_cover[0].entity.uri.value != null %}
     {% set filters_enabled = content_type in ["playlist", "reader_collection", "rec_list"] %}
     {% if content.field_rating is not empty %}
@@ -115,19 +115,14 @@ set classes = [
       the page. To fix this I'll need to add some js listening to whether the filters
       are collapsed, and add a negative margin to the .full-work div based on that. #}
       <div class="contextual-menu">
-        {% if content_type == "work" %}
-          <a class="btn btn-primary" href="/work/{{ node.id }}/rss.xml">RSS <i class="bi bi-rss-fill"></i></a>
+        {% if content_type in ["work", "playlist", "reader_collection"] %}
+          {% set url_prefix = {"work": "work", "playlist": "series", "reader_collection": "collection"} %}
+          <a class="btn btn-primary" href="/{{ url_prefix[content_type] }}/{{ node.id }}/rss.xml">RSS <i class="bi bi-rss-fill"></i></a>
         {% endif %}
-        {% if content_type == "playlist" %}
-          <a class="btn btn-primary" href="/series/{{ node.id }}/rss.xml">RSS <i class="bi bi-rss-fill"></i></a>
+        {% if filters_enabled %}
           <a class="btn btn-primary full-work-jump-btn" href="#full-work-player-downloads">
             Download or Stream <i class="bi bi-music-note-list"></i>
           </a>
-        {% endif %}
-        {% if content_type == "reader_collection" %}
-          <a class="btn btn-primary" href="/collection/{{ node.id }}/rss.xml">RSS <i class="bi bi-rss-fill"></i></a>
-        {% endif %}
-        {% if filters_enabled %}
           <a class="btn btn-primary d-md-none" data-bs-toggle="collapse" href="#full-work-filters" role="button" aria-expanded="true" aria-controls="full-work-filters">
             Filters <i class="bi bi-funnel-fill"></i>
           </a>
@@ -139,7 +134,7 @@ set classes = [
           alt="{{ node.field_cover[0].entity.alt.value }}"
         >
       {% endif %}
-      {% if content_type in ["playlist", "reader_collection", "rec_list"]%}
+      {% if filters_enabled %}
         <div id="full-work-filters" class="full-work-filters collapse dont-collapse-sm">
           {% if content_type == "playlist" %}
             {{ drupal_block("views_exposed_filter_block:seriess-works", wrapper=false) }}
@@ -183,6 +178,8 @@ set classes = [
         {{ content.field_author }}
 
         {{ content.field_reader }}
+
+        {{ content.field_curator }}
 
         {# TODO: To fill the space between the main content and the downloads on legacy works,
         make all of the tags in the following section render on induvidual lines! #}
@@ -240,6 +237,19 @@ set classes = [
           </span>
         {% endif %}
 
+        {# TODO: is this desireable? The work/collection creator has no way of
+        deciding if this should appear. Should there instead be a reciprocal
+        relationship, where if the reader can authorise the rec lists they want
+        to display? #}
+        {% if rec_lists is not empty %}
+          <span>
+            <b>Part of Rec List(s)</b>
+            {% for rec_list in rec_lists %}
+              <a href="{{ path('entity.node.canonical', {'node': rec_list.id}) }}">{{ rec_list.title.value }}</a>
+            {% endfor %}
+          </span>
+        {% endif %}
+
         {% if content_type in ["playlist", "reader_collection", "rec_list"] %}
           {# All works in this series as teasers #}
           <div class="mt-2">
@@ -261,6 +271,8 @@ set classes = [
           {{ node.body.value | raw }}
         {% endif %}
 
+        {# TODO: not displaying attribution links for rec lists. Would need to edit this if we do decide
+        we want to display them. #}
         {% set warning_text = "For ratings, tags, warnings, summaries and to leave comments please see the" %}
         {% set warning_text_multiple = "written work(s) and podfic post(s)." %}
 
