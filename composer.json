@@ -51,7 +51,8 @@
         "drupal/eck": "^2.0",
         "drupal/weight": "^3.5",
         "drupal/views_bulk_edit": "^3.0",
-        "drupal/views_bulk_operations": "^4.2"
+        "drupal/views_bulk_operations": "^4.2",
+        "drupal/views_contextual_filters_or": "^1.4"
     },
     "require-dev": {
         "drupal/core-dev": "10.3.6"
