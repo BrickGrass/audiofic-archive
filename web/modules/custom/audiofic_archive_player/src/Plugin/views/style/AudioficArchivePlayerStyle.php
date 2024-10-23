@@ -26,7 +26,7 @@ class AudioficArchivePlayerStyle extends StylePluginBase {
   protected function defineOptions() {
     $options = parent::defineOptions();
     $options['is_series'] = ['default' => FALSE];
-    $options['render_downloads'] = ['default' => TRUE];
+    $options['render_mode'] = ['default' => 0];
     return $options;
   }
 
@@ -43,11 +43,16 @@ class AudioficArchivePlayerStyle extends StylePluginBase {
       '#description' => $this->t('Playlist entries prefixed with the work title in order to differentiate them.'),
     ];
 
-    $form['render_downloads'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Render Download Section'),
-      '#default_value' => (isset($this->options['render_downloads'])) ? $this->options['render_downloads'] : TRUE,
-      '#description' => $this->t('When ticked, renders a list of download links + other file data. Non-streaming files attached to works are displayed here.'),
+    $form['render_mode'] = [
+      '#type' => 'radios',
+      '#title' => $this->t("Render Mode"),
+      '#default_value' => (isset($this->options['render_mode'])) ? $this->options['render_mode'] : 0,
+      '#description' => $this->t("By default both a playlist + downloads below it are rendered. You can only render one or the other of these sections using this option."),
+      '#options' => [
+        0 => $this->t('Render Both'),
+        1 => $this->t('Render Only Playlist'),
+        2 => $this->t('Render Only Downloads'),
+      ],
     ];
   }
 

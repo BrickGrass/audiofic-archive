@@ -1,4 +1,8 @@
 /* Playlist */
+.full-work-player {
+	font-size: 0.8em;
+}
+
 .full-work-player-single-file {
 	display: none !important;
 }
@@ -55,13 +59,13 @@
 
 .full-work-player-playlist {
 	color: white;
-	max-height: calc(42px * 5.5);
+	max-height: calc(37px * 5.5);
 	overflow-y: scroll;
 }
 
 .full-work-player-playlist > button {
 	background-color: #484848;
-	height: 42px;
+	height: 37px;
 	overflow: hidden;
 	width: 100%;
 	border: none;
@@ -77,7 +81,7 @@
 }
 
 .full-work-player-playlist-name {
-	height: 26px;
+	height: 21px;
 	overflow: hidden;
 }
 
@@ -90,7 +94,7 @@
 
 /* Playlist - Chrome/Edge Specific */
 .playlist-chrome .full-work-player-playlist {
-	max-height: calc(56px * 5.5);
+	max-height: calc(51px * 5.5);
 }
 
 .playlist-chrome .full-work-player-now-playing {
@@ -101,7 +105,7 @@
 }
 
 .playlist-chrome .player-control {
-	padding: 5px calc(5px + 2.3985px);
+	padding: 4px calc(4px + 2.3985px);
 	border-radius: 50%;
 }
 
@@ -138,7 +142,7 @@
 .playlist-chrome .full-work-player-playlist > button {
 	background-color: #f1f3f4;
 	padding: 15px 23px !important;
-	height: 56px;
+	height: 51px;
 	color: black;
 }
 

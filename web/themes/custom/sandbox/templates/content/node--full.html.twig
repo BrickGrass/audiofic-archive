@@ -120,9 +120,6 @@ set classes = [
           <a class="btn btn-primary" href="/{{ url_prefix[content_type] }}/{{ node.id }}/rss.xml">RSS <i class="bi bi-rss-fill"></i></a>
         {% endif %}
         {% if filters_enabled %}
-          <a class="btn btn-primary full-work-jump-btn" href="#full-work-player-downloads">
-            Download or Stream <i class="bi bi-music-note-list"></i>
-          </a>
           <a class="btn btn-primary d-md-none" data-bs-toggle="collapse" href="#full-work-filters" role="button" aria-expanded="true" aria-controls="full-work-filters">
             Filters <i class="bi bi-funnel-fill"></i>
           </a>
@@ -256,6 +253,16 @@ set classes = [
           </div>
         {% endif %}
 
+        {% if content_type == "work" %}
+          {{ drupal_view("work", "player") }}
+        {% elseif content_type == "playlist" %}
+          {{ drupal_view("seriess", "player") }}
+        {% elseif content_type == "reader_collection" %}
+          {{ drupal_view("reader_tags", "player") }}
+        {% elseif content_type == "rec_list" %}
+          {{ drupal_view("rec_lists", "player") }}
+        {% endif %}
+
         {% if content_type in ["playlist", "reader_collection", "rec_list"] %}
           {# All works in this series as teasers #}
           <div class="mt-2">
@@ -272,7 +279,7 @@ set classes = [
           </div>
         {% endif %}
       </div>
-      <div id="full-work-player-downloads" class="full-work-player-downloads">
+      <div class="full-work-links-downloads">
         {% if content_type == "legacy_work" %}
           {{ node.body.value | raw }}
         {% endif %}
@@ -312,20 +319,20 @@ set classes = [
         {% endif %}
 
         {% if content_type == "work" %}
-          {{ drupal_view("work", "player") }}
+          {{ drupal_view("work", "downloads") }}
         {% elseif content_type == "playlist" %}
-          {{ drupal_view("seriess", "player") }}
+          {{ drupal_view("seriess", "downloads") }}
         {% elseif content_type == "reader_collection" %}
-          {{ drupal_view("reader_tags", "player") }}
+          {{ drupal_view("reader_tags", "downloads") }}
         {% elseif content_type == "rec_list" %}
           {% if legacy_works %}
-            <div class="alert alert-primary" role="alert">
-              This rec list contains legacy works which will not appear below in the playlist
-              or downloads section. To stream or download these works, please navigate to their
+            <div class="alert alert-primary mb-0" role="alert">
+              This rec list contains legacy works which will not appear in the playlist
+              or download sections. To stream or download these works, please navigate to their
               induvidual page via the complete list of works.
             </div>
           {% endif %}
-          {{ drupal_view("rec_lists", "player") }}
+          {{ drupal_view("rec_lists", "downloads") }}
         {% endif %}
       </div>
     </div>
