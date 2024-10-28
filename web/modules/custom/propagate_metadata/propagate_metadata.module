@@ -140,6 +140,9 @@ function propagate_metadata_get_collection_works(EntityInterface $collection, No
  * Sets the metadata of a series/collection.
  */
 function propagate_metadata_set_metadata(NodeInterface $collection, array $works) {
+  /** @var \Drupal\aa_utils\Service\AudioficUtils $utils */
+  $utils = \Drupal::service('aa_utils.utils');
+
   $authors = [];
   $readers = [];
   $fandoms = [];
@@ -152,28 +155,29 @@ function propagate_metadata_set_metadata(NodeInterface $collection, array $works
   // duration input. (Can honestly just roll my own here and leave out the module).
 
   foreach ($works as $work) {
-    $authors = propagate_metadata_remove_duplicate_entities(
-      array_merge($authors, $work->get('field_author')->referencedEntities()));
-    $readers = propagate_metadata_remove_duplicate_entities(
-      array_merge($readers, $work->get('field_reader')->referencedEntities()));
-    $fandoms = propagate_metadata_remove_duplicate_entities(
-      array_merge($fandoms, $work->get('field_fandom2')->referencedEntities()));
-    $relationships = propagate_metadata_remove_duplicate_entities(
-      array_merge($relationships, $work->get('field_relationship')->referencedEntities()));
-    $ratings = propagate_metadata_remove_duplicate_entities(
-      array_merge($ratings, $work->get('field_rating')->referencedEntities()));
-    $format_info = propagate_metadata_remove_duplicate_entities(
-      array_merge($format_info, $work->get('field_format')->referencedEntities()));
+    $authors = array_merge($authors, $work->get('field_author')->referencedEntities());
+    $readers = array_merge($readers, $work->get('field_reader')->referencedEntities());
+    $fandoms = array_merge($fandoms, $work->get('field_fandom2')->referencedEntities());
+    $relationships = array_merge($relationships, $work->get('field_relationship')->referencedEntities());
+    $ratings = array_merge($ratings, $work->get('field_rating')->referencedEntities());
+    $format_info = array_merge($format_info, $work->get('field_format')->referencedEntities());
 
     if ($work->hasField('field_category')) {
-      $categories = propagate_metadata_remove_duplicate_entities(
-        array_merge($categories, $work->get('field_category')->referencedEntities()));
+      $categories = array_merge($categories, $work->get('field_category')->referencedEntities());
     }
 
     $lang_key = $work->hasField('field_language') ? 'field_language' : 'field_languages';
-    $languages = propagate_metadata_remove_duplicate_entities(
-      array_merge($languages, $work->get($lang_key)->referencedEntities()));
+    $languages = array_merge($languages, $work->get($lang_key)->referencedEntities());
   }
+
+  $authors = $utils->removeDuplicateEntities($authors);
+  $readers = $utils->removeDuplicateEntities($readers);
+  $fandoms = $utils->removeDuplicateEntities($fandoms);
+  $relationships = $utils->removeDuplicateEntities($relationships);
+  $ratings = $utils->removeDuplicateEntities($ratings);
+  $format_info = $utils->removeDuplicateEntities($format_info);
+  $categories = $utils->removeDuplicateEntities($categories);
+  $languages = $utils->removeDuplicateEntities($languages);
 
   // TODO: Rec lists can have works with a rating of NULL. Will need to decide if that
   // has priority
@@ -203,13 +207,4 @@ function propagate_metadata_set_metadata(NodeInterface $collection, array $works
   $collection->set('field_format', $format_info);
   $collection->set('field_languages', $languages);
   $collection->save();
-}
-
-/**
- * Removes duplicates in an array. Uses the id() method to calculate uniqueness.
- */
-function propagate_metadata_remove_duplicate_entities($entities) {
-  $ids = array_map(fn ($tag) => $tag->id(), $entities);
-  $unique_ids = array_unique($ids);
-  return array_values(array_intersect_key($entities, $unique_ids));
 }

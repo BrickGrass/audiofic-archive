@@ -5,3 +5,4 @@ type: module
 package: Views
 dependencies:
   - core:views
+  - aa_utils:aa_utils

@@ -5,7 +5,6 @@
  */
 
 use Drupal\file\Entity\File;
-use Drupal\Core\Url;
 
 /**
  * Converts bytes to a human readable format.
@@ -58,26 +57,11 @@ function audiofic_archive_player_get_file_type($mime_type) {
 }
 
 /**
- * Whether or not a node is rated nsfw (no rating or null is nsfw).
- */
-function audiofic_archive_player_is_nsfw($entity) {
-  if ($entity->hasField("field_rating")) {
-    foreach ($entity->get("field_rating")->referencedEntities() as $rating) {
-      $name = $rating->name->value;
-
-      if (in_array($name, ["General", "Teen and up"])) {
-        return FALSE;
-      }
-    }
-  }
-
-  return TRUE;
-}
-
-/**
  * Fetches the media files from a node and adds them to $files.
  */
 function audiofic_archive_player_fetch_media_files($entity, $media_type, $is_series, &$files) {
+  /** @var \Drupal\aa_utils\Service\AudioficUtils $utils */
+  $utils = \Drupal::service('aa_utils.utils');
   $field_name = $media_type === "mp3" ? "field_mp3_files" : "field_other_files";
 
   if ($entity->hasField($field_name)) {
@@ -105,7 +89,7 @@ function audiofic_archive_player_fetch_media_files($entity, $media_type, $is_ser
         "file_size" => audiofic_archive_player_make_bytes_readable($phys_file->filesize->value),
         "mime_type" => audiofic_archive_player_get_file_type($phys_file->filemime->value),
         "url" => $phys_file->createFileUrl(),
-        "nsfw" => audiofic_archive_player_is_nsfw($entity),
+        "nsfw" => $utils->isNsfw($entity),
       ];
 
       array_push($files, $data);

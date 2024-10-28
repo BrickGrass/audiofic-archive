@@ -1,0 +1,4 @@
+name: Audiofic Archive Utils
+description: A custom module that provides functions and constants that are used in multiple modules and themes
+core_version_requirement: ^10.1 || ^11
+type: module

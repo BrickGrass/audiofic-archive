@@ -13,6 +13,9 @@ use Drupal\media\MediaInterface;
  * Implements template_preprocess_views_view() for audiofic_archive_rss.
  */
 function audiofic_archive_rss_preprocess_views_view_audiofic_archive_rss(&$variables) {
+  /** @var \Drupal\aa_utils\Service\AudioficUtils $utils */
+  $utils = \Drupal::service('aa_utils.utils');
+
   $options = $variables['view']->style_plugin->options;
 
   $token_data = ['view' => $variables['view']];
@@ -34,6 +37,7 @@ function audiofic_archive_rss_preprocess_views_view_audiofic_archive_rss(&$varia
       $tid = $argument->argument;
     }
 
+    /** @var \Drupal\node\NodeInterface $source_node */
     $source_node = $nid !== NULL ? \Drupal::entityTypeManager()->getStorage('node')->load($nid) : NULL;
     $source_term = $tid !== NULL ? \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid) : NULL;
     if ($source_node != NULL) {
@@ -45,7 +49,7 @@ function audiofic_archive_rss_preprocess_views_view_audiofic_archive_rss(&$varia
       $variables['source_node'] = [
         "author" => "Read by: $readers | Written by: $authors",
         "cover_url" => audiofic_archive_rss_fetch_cover($source_node),
-        "explicit" => audiofic_archive_rss_is_explicit($source_node),
+        "explicit" => $utils->isNsfw($source_node),
       ];
     } elseif ($source_term !== NULL) {
       $token_data['contextual_filter_term'] = $source_term;
@@ -75,7 +79,7 @@ function audiofic_archive_rss_preprocess_views_view_audiofic_archive_rss(&$varia
 
     array_push($works, [
       "title" => $entity->getTitle(),
-      "explicit" => audiofic_archive_rss_is_explicit($entity),
+      "explicit" => $utils->isNsfw($entity),
       "files" => $files,
       "tags" => audiofic_archive_rss_get_all_tags($entity),
       "cover_url" => audiofic_archive_rss_fetch_cover($entity),
@@ -299,7 +303,7 @@ function audiofic_archive_rss_fetch_media_files($entity, &$files, bool $sort_by_
         "date_created" => $file->getCreatedTime(),
       ];
 
-      array_push($work_files, $data);
+      $work_files[] = $data;
     }
   }
 
@@ -313,11 +317,11 @@ function audiofic_archive_rss_fetch_media_files($entity, &$files, bool $sort_by_
     foreach ($work_files as $file_data) {
       $file_data["date_created"] = $date_updated + $i;
       $i++;
-      array_push($files, $file_data);
+      $files[] = $file_data;
     }
   } else {
     foreach ($work_files as $file_data) {
-      array_push($files, $file_data);
+      $files[] = $file_data;
     }
   }
 }
@@ -326,13 +330,12 @@ function audiofic_archive_rss_fetch_media_files($entity, &$files, bool $sort_by_
  * Fetches the tag names from an entity and truncates them.
  */
 function audiofic_archive_rss_fetch_tags($entity, $vocab_name, ?int $truncate_to = NULL) {
+  /** @var \Drupal\aa_utils\Service\AudioficUtils $utils */
+  $utils = \Drupal::service('aa_utils.utils');
+
   $all_tags = [];
-  if ($entity->hasField($vocab_name)) {
-    $tags = $entity->get($vocab_name)->referencedEntities();
-    foreach ($tags as $tag) {
-      array_push($all_tags, $tag->name->value);
-    }
-  }
+  $utils->fetchVocabTerms($entity, $vocab_name, $all_tags);
+  $all_tags = array_map(fn ($term) => $term->name->value, $all_tags);
 
   if ($truncate_to !== NULL) {
     if (count($all_tags) > $truncate_to) {
@@ -350,18 +353,6 @@ function audiofic_archive_rss_fetch_tags($entity, $vocab_name, ?int $truncate_to
 function audiofic_archive_rss_fetch_cover($entity) {
   $cover_field = $entity->get("field_cover")->referencedEntities();
   return count($cover_field) > 0 ? $cover_field[0]->createFileUrl() : NULL;
-}
-
-/**
- * Fetches whether or not a node is explicit.
- *
- * Explicit works have a rating of 'Explicit', 'Mature', 'Not Rated'
- * or have a NULL rating.
- */
-function audiofic_archive_rss_is_explicit($entity) {
-  $rating = $entity->get("field_rating")->referencedEntities();
-  return count($rating) < 1 ||
-         in_array($rating[0]->name->value, ["Explicit", "Mature", "Not Rated"]);
 }
 
 /**
