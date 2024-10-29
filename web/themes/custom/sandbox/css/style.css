@@ -566,7 +566,7 @@ label[for=edit-sort-by--2] {
 	width: 100%;
 }
 
-label[for="edit-field-duration-seconds--2"],
-label[for="edit-field-duration-seconds-1--2"] {
+label[for="edit-duration-from--2"],
+label[for="edit-duration-to--2"] {
 	min-width: 32px;
 }
