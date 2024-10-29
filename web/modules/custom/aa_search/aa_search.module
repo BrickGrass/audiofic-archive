@@ -69,8 +69,8 @@ function aa_search_preprocess_page_title(&$variables) {
 function aa_search_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   if (str_starts_with($form['#id'], 'views-exposed-form-search')) {
     foreach ([
-      'search_api_fulltext', 'field_fandom2', 'fandom-exclude', 'field_relationship',
-      'relationship-exclude', 'field_reader', 'reader-exclude', 'field_author', 'author-exclude',
+      'search_api_fulltext', 'fandom', 'fandom-exclude', 'relationship',
+      'relationship-exclude', 'reader', 'reader-exclude', 'author', 'author-exclude',
       'duration-from', 'duration-to',
     ] as $key) {
       $form[$key]['#attributes']['data_twig_suggestion'] = 'search';
