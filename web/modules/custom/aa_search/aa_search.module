@@ -106,7 +106,7 @@ function aa_search_preprocess_fieldset(&$variables) {
   }
   $variables["selection_made"] = !empty($variables["element"]["#value"]);
 
-  if ($variables['fieldset_name'] === 'filter-duration-fieldset') {
+  if (isset($variables["fieldset_name"]) && $variables['fieldset_name'] === 'filter-duration-fieldset') {
     if (!empty($variables['element']['field_duration_seconds']['#value']) ||
         !empty($variables['element']['field_duration_seconds_1']['#value'])
     ) {
