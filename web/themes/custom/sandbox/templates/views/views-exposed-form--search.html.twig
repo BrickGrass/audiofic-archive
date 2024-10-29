@@ -27,31 +27,60 @@
 <div class="d-flex flex-column">
   <h5>Include</h5>
   <div>
-    {{ form.field_category }}
+    {{ form.category }}
   </div>
   <div>
-    {{ form.field_rating }}
+    {{ form.rating }}
   </div>
   <div>
-    {{ form.field_warning }}
+    {{ form.warning }}
   </div>
   <div>
-    {{ form.field_language }}
+    {{ form.language }}
   </div>
   <div>
-    {{ form.field_fandom2 }}
+    {{ form.fandom }}
   </div>
   <div>
-    {{ form.field_relationship }}
+    {{ form.relationship }}
   </div>
   <div>
-    {{ form.field_format }}
+    {{ form.format }}
   </div>
   <div>
-    {{ form.field_reader }}
+    {{ form.reader }}
   </div>
   <div>
-    {{ form.field_author }}
+    {{ form.author }}
+  </div>
+
+  <h5>Exclude</h5>
+  <div>
+    {{ form["category-exclude"] }}
+  </div>
+  <div>
+    {{ form["rating-exclude"] }}
+  </div>
+  <div>
+    {{ form["warning-exclude"] }}
+  </div>
+  <div>
+    {{ form["language-exclude"] }}
+  </div>
+  <div>
+    {{ form["fandom-exclude"] }}
+  </div>
+  <div>
+    {{ form["relationship-exclude"] }}
+  </div>
+  <div>
+    {{ form["format-exclude"] }}
+  </div>
+  <div>
+    {{ form["reader-exclude"] }}
+  </div>
+  <div>
+    {{ form["author-exclude"] }}
   </div>
 
   <h5>Additional Options</h5>
@@ -62,7 +91,7 @@
     {{ form.duration_fieldset }}
   </div>
   <div>
-    {{ form.field_completion_status }}
+    {{ form.completion }}
   </div>
   <div>
     {{ form.sort_by }}

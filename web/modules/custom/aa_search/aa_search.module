@@ -69,9 +69,9 @@ function aa_search_preprocess_page_title(&$variables) {
 function aa_search_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   if (str_starts_with($form['#id'], 'views-exposed-form-search')) {
     foreach ([
-      'search_api_fulltext', 'field_fandom2', 'field_relationship',
-      'field_reader', 'field_author', 'field_duration_seconds',
-      'field_duration_seconds_1',
+      'search_api_fulltext', 'fandom', 'fandom-exclude', 'relationship',
+      'relationship-exclude', 'reader', 'reader-exclude', 'author', 'author-exclude',
+      'duration-from', 'duration-to',
     ] as $key) {
       $form[$key]['#attributes']['data_twig_suggestion'] = 'search';
     }
@@ -83,12 +83,12 @@ function aa_search_form_alter(&$form, FormStateInterface $form_state, $form_id) 
       '#type' => 'fieldset',
       '#name' => 'filter_duration_fieldset',
       '#title' => t('Filter Duration'),
-      'field_duration_seconds' => $form['field_duration_seconds'],
-      'field_duration_seconds_1' => $form['field_duration_seconds_1'],
+      'duration-from' => $form['duration-from'],
+      'duration-to' => $form['duration-to'],
     ];
 
-    unset($form['field_duration_seconds']);
-    unset($form['field_duration_seconds_1']);
+    unset($form['duration-from']);
+    unset($form['duration-to']);
 
     $form['#attached']['library'][] = 'aa_search/duration';
   }
@@ -107,8 +107,8 @@ function aa_search_preprocess_fieldset(&$variables) {
   $variables["selection_made"] = !empty($variables["element"]["#value"]);
 
   if (isset($variables["fieldset_name"]) && $variables['fieldset_name'] === 'filter-duration-fieldset') {
-    if (!empty($variables['element']['field_duration_seconds']['#value']) ||
-        !empty($variables['element']['field_duration_seconds_1']['#value'])
+    if (!empty($variables['element']['duration-from']['#value']) ||
+        !empty($variables['element']['duration-to']['#value'])
     ) {
       $variables["selection_made"] = TRUE;
     }
@@ -136,7 +136,7 @@ function aa_search_theme_suggestions_input_alter(&$suggestions, array $variables
  */
 function aa_search_preprocess_input(&$variables) {
   if (isset($variables['element']['#id'])) {
-    if (in_array($variables['element']['#id'], ['edit-field-duration-seconds--2', 'edit-field-duration-seconds-1--2'])) {
+    if (in_array($variables['element']['#id'], ['edit-duration-from--2', 'edit-duration-to--2'])) {
       $total_seconds = $variables['element']['#value'];
       if ($total_seconds !== "") {
         $total_seconds = (int) $total_seconds;
