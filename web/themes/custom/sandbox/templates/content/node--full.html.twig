@@ -178,9 +178,6 @@ set classes = [
 
         {{ content.field_reader }}
 
-        {# TODO: To fill the space between the main content and the downloads on legacy works,
-        make all of the tags in the following section render on induvidual lines! #}
-
         <div class="mb-1">
           {% for tag in all_tags %}
             {% set vocabulary = tag.vid.value[0]["target_id"] %}

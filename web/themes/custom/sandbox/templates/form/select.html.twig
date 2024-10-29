@@ -13,7 +13,7 @@
 {%
   set classes = [
     'form-select',
-    'form-select-sm',
+    element['#attributes']['data_twig_suggestion'] is not empty ? 'form-select-sm' : '',
   ]
 %}
 

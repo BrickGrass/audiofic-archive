@@ -23,9 +23,7 @@
 {{ form.form_id }}
 
 <div class="d-flex flex-column">
-  <div>
-    {{ form.search_api_fulltext }}
-  </div>
+  <h5>Include</h5>
   <div>
     {{ form.field_category }}
   </div>
@@ -34,6 +32,9 @@
   </div>
   <div>
     {{ form.field_warning }}
+  </div>
+  <div>
+    {{ form.field_language }}
   </div>
   <div>
     {{ form.field_fandom2 }}
@@ -45,16 +46,18 @@
     {{ form.field_format }}
   </div>
   <div>
-    {{ form.field_length }}
+    {{ form.field_reader }}
   </div>
   <div>
     {{ form.field_author }}
   </div>
+
+  <h5>Additional Options</h5>
   <div>
-    {{ form.field_reader }}
+    {{ form.search_api_fulltext }}
   </div>
   <div>
-    {{ form.field_language }}
+    {{ form.duration_fieldset }}
   </div>
   <div>
     {{ form.field_completion_status }}

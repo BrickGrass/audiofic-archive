@@ -1,8 +1,10 @@
 modal:
   js:
-    //cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js: { type: external, minified: true }
-    //code.jquery.com/jquery-3.7.1.min.js: { type: external, minified: true }
+    https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js: { type: external, minified: true }
+    https://code.jquery.com/jquery-3.7.1.min.js: { type: external, minified: true }
     js/nsfwContentModal.js: {}
   css:
     component:
       css/modal.css: {}
+  dependencies:
+    - aa_utils/jquery

@@ -47,7 +47,7 @@ function showModal() {
   })
 }
 
-$( document ).ready(function() {
+$(document).ready(function() {
   let showNsfw = Cookies.get("nsfwConsentStatus");
 
   // == so that undefined and null are caught

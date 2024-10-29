@@ -4,5 +4,6 @@ playlist:
     component:
       css/style.css: {}
   js:
-    https://code.jquery.com/jquery-3.7.1.min.js: { type: external, minified: true }
     js/playlist.js: {}
+  dependencies:
+    - aa_utils/jquery

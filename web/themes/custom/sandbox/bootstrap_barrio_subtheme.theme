@@ -16,28 +16,20 @@ function bootstrap_barrio_subtheme_preprocess_breadcrumb(&$variables) {
 }
 
 /**
- * Implements hook_preprocess_fieldset().
- */
-function bootstrap_barrio_subtheme_preprocess_fieldset(&$variables) {
-  // TODO: errors getting raised from this, check that array keys exist
-  $variables["fieldset_name"] = str_replace("_", "-", $variables["element"]["#name"]);
-  $variables["selection_made"] = !empty($variables["element"]["#value"]);
-}
-
-/**
  * Implements hook_preprocess_node().
  */
 function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
   $node = $variables["node"];
   $node_type = $node->getType();
+  /** @var \Drupal\aa_utils\Service\AudioficUtils $utils */
+  $utils = \Drupal::service('aa_utils.utils');
+
   if (in_array($node_type, ["work", "legacy_work", "playlist", "reader_collection", "rec_list"])) {
     $all_tags = [];
 
-    fetch_vocabulary_tags($node, "field_fandom2", $all_tags);
-    fetch_vocabulary_tags($node, "field_relationship", $all_tags);
-    fetch_vocabulary_tags($node, "field_warning", $all_tags);
-    fetch_vocabulary_tags($node, "field_category", $all_tags);
-    fetch_vocabulary_tags($node, "field_format", $all_tags);
+    foreach (['field_fandom2', 'field_relationship', 'field_warning', 'field_category', 'field_format'] as $key) {
+      $utils->fetchVocabTerms($node, $key, $all_tags);
+    }
 
     $variables["all_tags"] = $all_tags;
 
@@ -78,40 +70,25 @@ function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
 
       // TODO: not collecting attribution links because we're unsure if we're displaying them.
       // Will be easy to add them if we do decide to.
-      $total_nsfw = 0;
       $legacy_works = FALSE;
-
       foreach ($rec_list_works as $rec_list_work) {
         if ($rec_list_work->getType() === "legacy_work") {
           $legacy_works = TRUE;
         }
-        foreach ($rec_list_work->get("field_rating")->referencedEntities() as $rating) {
-          if (!in_array($rating->name->value, ["General", "Teen and up"])) {
-            $total_nsfw++;
-            break;
-          }
-        }
       }
 
-      $variables['total_nsfw'] = $total_nsfw;
+      $variables['total_nsfw'] = $utils->getTotalNsfw($rec_list_works);
       $variables['legacy_works'] = $legacy_works;
     }
 
     if ($variables["view_mode"] === "full" and in_array($node_type, ["playlist", "reader_collection"]) and $results !== NULL) {
+      $works = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($results);
+
       $work_text_links = [];
       $work_podfic_links = [];
-      $total_nsfw = 0;
+      $total_nsfw = $utils->getTotalNsfw($works);
 
-      foreach ($results as $result) {
-        $work = \Drupal::entityTypeManager()->getStorage('node')->load($result);
-
-        foreach ($work->get("field_rating")->referencedEntities() as $rating) {
-          if (!in_array($rating->name->value, ["General", "Teen and up"])) {
-            $total_nsfw++;
-            break;
-          }
-        }
-
+      foreach ($works as $work) {
         $links = $work->get("field_text_post");
         if (count($links) == 1) {
           add_link($work_text_links, $links[0]->uri, $work);
@@ -135,11 +112,6 @@ function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
         }
       }
 
-      // TODO: use usort with an anonymous function!!!!!
-      // Sort into series order.
-      sort_by_part_label($work_text_links);
-      sort_by_part_label($work_podfic_links);
-
       $variables['work_text_links'] = $work_text_links;
       $variables['work_podfic_links'] = $work_podfic_links;
       $variables['total_nsfw'] = $total_nsfw;
@@ -155,222 +127,6 @@ function bootstrap_barrio_subtheme_preprocess_field(&$variables) {
 }
 
 /**
- * Implements hook_preprocess_form_element().
- */
-function bootstrap_barrio_subtheme_preprocess_form_element(&$variables) {
-  if (array_key_exists('name', $variables) and in_array($variables['name'], [
-    "search_api_fulltext", "field_fandom2", "field_relationship", "field_author",
-    "field_reader", "field_language", "field_completion_status", "sort_by",
-  ])) {
-    $variables['in_search_form'] = TRUE;
-  } else {
-    $variables['in_search_form'] = FALSE;
-  }
-}
-
-/**
- * Implements template_preprocess_views_view().
- */
-function bootstrap_barrio_subtheme_preprocess_views_view(&$variables) {
-  $view = $variables['view'];
-
-  if ($view->id() != 'search') {
-    return;
-  }
-
-  $total_nsfw = 0;
-
-  foreach ($view->result as $result) {
-    $entity = $result->_entity;
-    if ($entity->hasField("field_rating")) {
-      foreach ($entity->get("field_rating")->referencedEntities() as $rating) {
-        if (!in_array($rating->name->value, ["General", "Teen and up"])) {
-          $total_nsfw++;
-          break;
-        }
-      }
-    }
-  }
-  $variables['total_nsfw'] = $total_nsfw;
-
-  $current_uri = \Drupal::request()->getRequestUri();
-  $url_sections = explode("?", $current_uri);
-  $url_path = $url_sections[0];
-  // Remove trailing forwards slash, if present.
-  $url_path = substr($url_path, -1) === "/" ? substr($url_path, 0, strlen($url_path) - 1) : $url_path;
-  $url_query = implode("?", array_slice($url_sections, 1, count($url_sections)));
-
-  if ($view->current_display === "search_taxonomy") {
-    $arguments = $variables['view']->argument;
-    $tid = reset($arguments)->argument;
-
-    $term = !empty($tid) ? \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid) : NULL;
-    if (!empty($term)) {
-      $variables['rss_feed'] = "/taxonomy/term/$tid/rss.xml?$url_query";
-      $variables['taxonomy_term'] = $term;
-      if ($term->parent->target_id !== 0) {
-        $variables['term_parent'] = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($term->parent->target_id);
-      }
-      $variables['term_children'] = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree(
-        $term->bundle(), $term->id(), NULL, TRUE);
-
-      if (in_array($term->bundle(), ["author", "reader", "curator", "cover_artist"])) {
-        $user_ids = \Drupal::entityQuery('user')
-          ->condition("field_{$term->bundle()}_name.entity:taxonomy_term.tid", $term->id())
-          ->accessCheck(TRUE)
-          ->execute();
-        $users = \Drupal::entityTypeManager()->getStorage('user')->loadMultiple($user_ids);
-
-        // TODO: if this tag isn't linked to a user, find all tags in other vocabs
-        // that are similar, so we can suggest that there's possibly more content there.
-        if (!empty($users)) {
-          $user = reset($users);
-          $variables['user'] = $user;
-          $psudonyms = [];
-
-          foreach (["author", "reader", "curator", "cover_artist"] as $bundle) {
-            if ($term->bundle() === $bundle) {
-              continue;
-            }
-
-            $data = $user->get("field_{$bundle}_name")->referencedEntities();
-            if (!empty($data)) {
-              $psudonyms[] = $data[0];
-            }
-          }
-
-          $variables["psudonyms"] = $psudonyms;
-        }
-      }
-
-      if ($term->bundle() == "series") {
-        // Need to do my own query to get legacy series metadata, because
-        // the view results could be filtered!
-        $series_work_ids = \Drupal::entityQuery('node')
-          ->condition('type', 'legacy_work')
-          ->condition('field_legacy_series.entity:taxonomy_term.tid', $term->id())
-          ->sort('created', 'ASC')
-          ->accessCheck(TRUE)
-          ->execute();
-        $series_works = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($series_work_ids);
-
-        $authors = [];
-        $readers = [];
-        $languages = [];
-        $all_tags = [];
-
-        foreach ($series_works as $work) {
-          fetch_vocabulary_tags($work, "field_author", $authors);
-          fetch_vocabulary_tags($work, "field_reader", $readers);
-          fetch_vocabulary_tags($work, "field_language", $languages);
-
-          fetch_vocabulary_tags($work, "field_fandom2", $all_tags);
-          fetch_vocabulary_tags($work, "field_relationship", $all_tags);
-          fetch_vocabulary_tags($work, "field_warning", $all_tags);
-          fetch_vocabulary_tags($work, "field_category", $all_tags);
-          fetch_vocabulary_tags($work, "field_format", $all_tags);
-        }
-
-        $variables['authors'] = bootstrap_barrio_subtheme_remove_duplicate_entities($authors);
-        $variables['readers'] = bootstrap_barrio_subtheme_remove_duplicate_entities($readers);
-        $variables['languages'] = bootstrap_barrio_subtheme_remove_duplicate_entities($languages);
-        $variables['all_tags'] = bootstrap_barrio_subtheme_remove_duplicate_entities($all_tags);
-
-        $date_formatter = \Drupal::service('date.formatter');
-
-        $first_work = reset($series_works);
-        if (!empty($first_work)) {
-          $created_date = $date_formatter->format($first_work->getCreatedTime(), "custom", "j F Y");
-          $variables['created_at'] = $created_date;
-        }
-
-        $updated_date = $date_formatter->format($term->getChangedTime(), "custom", "j F Y");
-        $variables['updated_at'] = $updated_date;
-      }
-    }
-  } elseif (in_array($view->current_display, ["search", "search_collection"])) {
-    $variables['rss_feed'] = "$url_path/rss.xml?$url_query";
-  }
-}
-
-/**
- * Implements hook_views_post_render().
- */
-function bootstrap_barrio_subtheme_views_post_render(&$view) {
-  $route_match = \Drupal::routeMatch();
-  if ($route_match->getRouteName() === "entity.taxonomy_term.canonical") {
-    $term = $route_match->getParameter("taxonomy_term");
-    $term_name = $term->name->value;
-
-    $title = NULL;
-    if ($term->bundle() === "series") {
-      $title = $term_name;
-    } elseif (in_array($term->bundle(), ["author", "reader", "curator", "cover_artist"])) {
-      $bundle = ucwords(str_replace("_", " ", $term->bundle()));
-      $title = "Search works in: $term_name ($bundle)";
-    } else {
-      $title = "Search works in: $term_name";
-    }
-
-    if ($title !== NULL) {
-      $view->setTitle($title);
-
-      $route = $route_match->getCurrentRouteMatch()->getRouteObject();
-      $route->setDefault("_title", $title);
-      $route->setDefault('_title_callback', NULL);
-    }
-  }
-}
-
-/**
- * Implements template_preprocess_page_title().
- */
-function bootstrap_barrio_subtheme_preprocess_page_title(&$variables) {
-  // Remove title on legacy series pages
-  $route_match = \Drupal::routeMatch();
-  if (array_key_exists('title', $variables) and
-      is_array($variables['title']) and
-      array_key_exists('#markup', $variables['title']) and
-      $route_match->getRouteName() === "entity.taxonomy_term.canonical"
-    ) {
-    $term = $route_match->getParameter("taxonomy_term");
-
-    if ($term->bundle() == "series") {
-      $variables['title'] = NULL;
-    }
-  }
-}
-
-/**
- * Fetches all the tags from a vocabulary and adds them to all_tags.
- */
-function fetch_vocabulary_tags($entity, $vocab_name, &$all_tags) {
-  if ($entity->hasField($vocab_name)) {
-    $tags = $entity->get($vocab_name)->referencedEntities();
-    foreach ($tags as $tag) {
-      array_push($all_tags, $tag);
-    }
-  }
-}
-
-/**
- * Sorts an array of arrays by the column 'work_label'.
- */
-function sort_by_part_label(&$array) {
-  $work_label = array_column($array, 'work_label');
-  array_multisort($work_label, SORT_ASC, $array);
-}
-
-/**
- * Function to get the part label of a work, which is used to sort it in a series.
- */
-function get_part_label($work) {
-  $field = $work->get("field_part_label")[0];
-  // Use work title as fallback
-  return $field != NULL ? $field->value : $work->getTitle();
-}
-
-/**
  * Function to add a link to an array.
  */
 function add_link(&$links, $uri, $work, $index = NULL) {
@@ -378,15 +134,5 @@ function add_link(&$links, $uri, $work, $index = NULL) {
   array_push($links, [
     "uri" => $uri,
     "title" => $title,
-    "work_label" => get_part_label($work),
   ]);
-}
-
-/**
- * Removes duplicates in an array. Uses the id() method to calculate uniqueness.
- */
-function bootstrap_barrio_subtheme_remove_duplicate_entities($entities) {
-  $ids = array_map(fn ($tag) => $tag->id(), $entities);
-  $unique_ids = array_unique($ids);
-  return array_values(array_intersect_key($entities, $unique_ids));
 }

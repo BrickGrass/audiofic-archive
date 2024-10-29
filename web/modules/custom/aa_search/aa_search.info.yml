@@ -1,0 +1,6 @@
+name: Audiofic Archive Search
+description: A Custom module that alters search forms & pages, provides custom widgets for their forms
+core_version_requirement: ^10.3 || ^11
+type: module
+dependencies:
+  - aa_utils:aa_utils

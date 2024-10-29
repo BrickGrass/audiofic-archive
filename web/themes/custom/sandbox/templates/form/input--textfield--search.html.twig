@@ -10,4 +10,4 @@
  * @see template_preprocess_input()
  */
 #}
-<input{{ attributes.addClass("form-control").addClass("form-control-sm").removeClass("form-text") }} />{{ children }}
+<input {{ attributes.addClass("form-control", "form-control-sm").removeClass("form-text") }}>{{ children }}

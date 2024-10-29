@@ -525,6 +525,11 @@
 	margin-bottom: 0 !important;
 }
 
+label[for=edit-sort-by--2] {
+	white-space: nowrap;
+	margin-right: 0.5rem;
+}
+
 #views-exposed-form-testing-search-api-search {
 	margin-bottom: 0;
 }
@@ -555,4 +560,13 @@
 	header #simple-search-api-form {
 		padding: 8px 0;
 	}
+}
+
+.aa-duration-wrapper {
+	width: 100%;
+}
+
+label[for="edit-field-duration-seconds--2"],
+label[for="edit-field-duration-seconds-1--2"] {
+	min-width: 32px;
 }
