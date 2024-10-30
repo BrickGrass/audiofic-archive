@@ -61,7 +61,7 @@ function propagate_metadata_get_user_tag(string $field_name): EntityInterface|nu
  */
 function propagate_metadata_fill_default_form_value(&$form, $fieldname, $tag) {
   // Handle both default autocomplete and tagify autocomplete.
-  if (array_key_exists('target_id', $form[$fieldname]['widget'])) {
+  if (isset($form[$fieldname]['widget']['target_id'])) {
     $form[$fieldname]['widget']['target_id']['#default_value'][] = $tag;
   } else {
     $form[$fieldname]['widget']['#default_value'][] = $tag;
