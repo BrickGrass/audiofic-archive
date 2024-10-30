@@ -91,6 +91,21 @@ function aa_search_form_alter(&$form, FormStateInterface $form_state, $form_id) 
     unset($form['duration-to']);
 
     $form['#attached']['library'][] = 'aa_search/duration';
+    $form['#attached']['library'][] = 'aa_search/search-sidebar';
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_input_alter().
+ *
+ * Alter twig suggestions for specific input widgets, to allow for form
+ * specific templates.
+ */
+function aa_search_theme_suggestions_input_alter(&$suggestions, array $variables) {
+  $element = $variables['element'];
+
+  if (isset($element['#attributes']['data_twig_suggestion'])) {
+    $suggestions[] = 'input__' . $element['#type'] . '__' . $element['#attributes']['data_twig_suggestion'];
   }
 }
 
@@ -112,20 +127,6 @@ function aa_search_preprocess_fieldset(&$variables) {
     ) {
       $variables["selection_made"] = TRUE;
     }
-  }
-}
-
-/**
- * Implements hook_theme_suggestions_input_alter().
- *
- * Alter twig suggestions for specific input widgets, to allow for form
- * specific templates.
- */
-function aa_search_theme_suggestions_input_alter(&$suggestions, array $variables) {
-  $element = $variables['element'];
-
-  if (isset($element['#attributes']['data_twig_suggestion'])) {
-    $suggestions[] = 'input__' . $element['#type'] . '__' . $element['#attributes']['data_twig_suggestion'];
   }
 }
 

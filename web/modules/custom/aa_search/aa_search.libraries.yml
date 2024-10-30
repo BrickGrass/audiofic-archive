@@ -3,3 +3,8 @@ duration:
     js/duration.js: {}
   dependencies:
     - aa_utils/jquery
+
+search-sidebar:
+  css:
+    component:
+      css/search_sidebar.css: {}

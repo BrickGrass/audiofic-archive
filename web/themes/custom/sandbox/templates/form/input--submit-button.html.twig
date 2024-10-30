@@ -10,4 +10,8 @@
  * @see template_preprocess_input()
  */
 #}
-<button{{ attributes.addClass("btn-sm") }}>{{ safe_value_label | raw }}</button>{{ children }}
+{% if element["#attributes"]["data_twig_suggestion"] is not empty %}
+  {% set attributes = attributes.addClass("btn-sm", "w-100") %}
+{% endif %}
+
+<button{{ attributes }}>{{ safe_value_label | raw }}</button>{{ children }}

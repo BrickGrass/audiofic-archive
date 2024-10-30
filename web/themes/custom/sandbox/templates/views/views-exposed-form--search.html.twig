@@ -23,6 +23,17 @@
 {{ form.form_id }}
 
 <div class="d-flex flex-column">
+  <div class="mb-2">
+    {{ form.actions }}
+  </div>
+
+  <div>
+    {{ form.search_api_fulltext }}
+  </div>
+  <div>
+    {{ form.sort_by }}
+  </div>
+
   <h5>Include</h5>
   <div>
     {{ form.category }}
@@ -83,16 +94,10 @@
 
   <h5>Additional Options</h5>
   <div>
-    {{ form.search_api_fulltext }}
-  </div>
-  <div>
     {{ form.duration_fieldset }}
   </div>
   <div>
     {{ form.completion }}
-  </div>
-  <div>
-    {{ form.sort_by }}
   </div>
   <div>
     {{ form.actions }}
