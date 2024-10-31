@@ -32,6 +32,13 @@
   </div>
   <div>
     {{ form.sort_by }}
+    {{ form.sort_bef_combine }}
+  </div>
+  <div>
+    {{ form.duration_fieldset }}
+  </div>
+  <div>
+    {{ form.completion }}
   </div>
 
   <h5>Include</h5>
@@ -92,13 +99,6 @@
     {{ form["author-exclude"] }}
   </div>
 
-  <h5>Additional Options</h5>
-  <div>
-    {{ form.duration_fieldset }}
-  </div>
-  <div>
-    {{ form.completion }}
-  </div>
   <div>
     {{ form.actions }}
   </div>

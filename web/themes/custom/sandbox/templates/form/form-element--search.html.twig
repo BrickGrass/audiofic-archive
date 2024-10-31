@@ -132,13 +132,20 @@
     {% endif %}
   </div>
 {% else %}
+  {# Make select display with floating label #}
+  {% set floating = element['#attributes']['id'] == 'edit-sort-bef-combine--2' ? 'form-floating' : '' %}
+  {% if floating is not empty %}
+    {% set label_display = 'after' %}
+  {% endif %}
+
   {% set more_classes = [
     float_label ? 'form-floating',
     'mb-2',
-    'd-flex',
-    'align-items-center',
+    floating is empty ? 'd-flex' : '',
+    floating is empty ? 'align-items-center' : '',
   ] %}
-  <div{{ attributes.addClass(classes, more_classes) }}>
+
+  <div{{ attributes.addClass(classes, more_classes, floating) }}>
     {% if label_display in ['before', 'invisible'] %}
       {{ label }}
     {% endif %}

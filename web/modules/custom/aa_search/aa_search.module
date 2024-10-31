@@ -78,6 +78,7 @@ function aa_search_form_alter(&$form, FormStateInterface $form_state, $form_id) 
 
     $form['actions']['submit']['#attributes']['data_twig_suggestion'] = 'search';
     $form['sort_by']['#attributes']['data_twig_suggestion'] = 'search';
+    $form['sort_bef_combine']['#attributes']['data_twig_suggestion'] = 'search';
 
     $form['duration_fieldset'] = [
       '#type' => 'fieldset',
