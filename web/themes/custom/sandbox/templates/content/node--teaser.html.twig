@@ -152,7 +152,17 @@
             {# TODO: if open/closed status on series/collections stays: render it here as a WIP lozenge #}
             {{ content.field_completion_status }}
 
-            {% set length = node.field_length is not empty ? "length: #{node.field_length[0].entity.name.value}, " : "" %}
+            {% set duration_value %}
+              {{ content.field_duration }}
+            {% endset %}
+
+            {% set duration %}
+              {% if node.field_duration is not empty and content_type != "legacy_work" %}
+                {{ "duration: " }}{{ duration_value|striptags|trim }}{{ ", " }}
+              {% elseif node.field_length is not empty and content_type == "legacy_work" %}
+                {{ "length: " }}{{ node.field_length[0].entity.name.value }}{{ ", " }}
+              {% endif %}
+            {% endset %}
 
             {% if content_type == "playlist" %}
               {% set collection_type = "series" %}
@@ -167,7 +177,7 @@
               "#{collection_length} part #{collection_type}, " : ""
             %}
 
-            <span class="ms-1">{{ length }}{{ collection_parts }}{{ created_at }}</span>
+            <span class="ms-1">{{ duration }}{{ collection_parts }}published: {{ created_at }}</span>
           </small>
         </div>
       </div>

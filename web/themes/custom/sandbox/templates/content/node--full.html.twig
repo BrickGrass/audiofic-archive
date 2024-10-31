@@ -187,8 +187,16 @@ set classes = [
           {% endfor %}
         </div>
 
-        {% if node.field_length is not empty %}
+        {% if node.field_length is not empty and content_type == "legacy_work" %}
           <span><b>Length</b> {{ node.field_length[0].entity.name.value }}</span>
+        {% endif %}
+
+        {% set duration %}
+          {{ content.field_duration }}
+        {% endset %}
+
+        {% if node.field_duration is not empty and content_type != "legacy_work" %}
+          <span><b>Duration</b> {{ duration|striptags|trim }}</span>
         {% endif %}
 
         {% if node.field_language is not empty %}
