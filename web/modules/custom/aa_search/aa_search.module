@@ -71,7 +71,7 @@ function aa_search_form_alter(&$form, FormStateInterface $form_state, $form_id) 
     foreach ([
       'search_api_fulltext', 'fandom', 'fandom-exclude', 'relationship',
       'relationship-exclude', 'reader', 'reader-exclude', 'author', 'author-exclude',
-      'duration-from', 'duration-to',
+      'duration-from', 'duration-to', 'title',
     ] as $key) {
       $form[$key]['#attributes']['data_twig_suggestion'] = 'search';
     }
