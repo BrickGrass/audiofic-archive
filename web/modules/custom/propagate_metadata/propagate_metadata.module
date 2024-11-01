@@ -79,14 +79,14 @@ function propagate_metadata_update_all_collections(NodeInterface $node, bool $no
   if ($node->getType() === "work") {
     $series = $node->get('field_series')->referencedEntities();
     $reader_collections = $node->get('field_reader_collections')->referencedEntities();
-  } else {
-    $rec_list_ids = \Drupal::entityQuery('node')
-      ->condition('type', 'rec_list')
-      ->condition('field_works', [$node->id()], 'IN')
-      ->accessCheck(TRUE)
-      ->execute();
-    $rec_lists = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($rec_list_ids);
   }
+
+  $rec_list_ids = \Drupal::entityQuery('node')
+    ->condition('type', 'rec_list')
+    ->condition('field_works', [$node->id()], 'IN')
+    ->accessCheck(TRUE)
+    ->execute();
+  $rec_lists = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($rec_list_ids);
 
   if (!empty($series)) {
     $series = $series[0];
@@ -119,6 +119,7 @@ function propagate_metadata_update_all_collections(NodeInterface $node, bool $no
       $rec_list_works[$node_key] = $node;
     }
 
+    \Drupal::logger('propagate_metadata')->debug("propogating to a rec list");
     propagate_metadata_set_metadata($rec_list, $rec_list_works);
   }
 }
@@ -151,8 +152,7 @@ function propagate_metadata_set_metadata(NodeInterface $collection, array $works
   $categories = [];
   $format_info = [];
   $languages = [];
-  // TODO: Length! Need to make an int field for it that can be displayed using a
-  // duration input. (Can honestly just roll my own here and leave out the module).
+  $duration = 0;
 
   foreach ($works as $work) {
     $authors = array_merge($authors, $work->get('field_author')->referencedEntities());
@@ -168,6 +168,27 @@ function propagate_metadata_set_metadata(NodeInterface $collection, array $works
 
     $lang_key = $work->hasField('field_language') ? 'field_language' : 'field_languages';
     $languages = array_merge($languages, $work->get($lang_key)->referencedEntities());
+
+    if ($work->hasField('field_duration')) {
+      $found = FALSE;
+      foreach ($work->get('field_duration') as $duration_field) {
+        $duration += $duration_field->seconds;
+        $found = TRUE;
+        break;
+      }
+
+      // If a legacy work does not have a duration set, calculate it from
+      // the length tag.
+      if (!$found && $work->getType() == 'legacy_work') {
+        foreach ($work->get('field_length')->referencedEntities() as $length_tag) {
+          $work_duration = $utils->convertLengthRangeToDuration($length_tag);
+          if (!empty($work_duration)) {
+            $duration += $work_duration;
+            break;
+          }
+        }
+      }
+    }
   }
 
   $authors = $utils->removeDuplicateEntities($authors);
@@ -206,5 +227,7 @@ function propagate_metadata_set_metadata(NodeInterface $collection, array $works
   $collection->set('field_category', $categories);
   $collection->set('field_format', $format_info);
   $collection->set('field_languages', $languages);
+  $duration_interval = $utils->secondsToDateInterval($duration);
+  $collection->field_duration = ['duration' => $duration_interval, 'seconds' => $duration];
   $collection->save();
 }
