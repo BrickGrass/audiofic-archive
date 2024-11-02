@@ -119,7 +119,6 @@ function propagate_metadata_update_all_collections(NodeInterface $node, bool $no
       $rec_list_works[$node_key] = $node;
     }
 
-    \Drupal::logger('propagate_metadata')->debug("propogating to a rec list");
     propagate_metadata_set_metadata($rec_list, $rec_list_works);
   }
 }

@@ -2,7 +2,7 @@ duration:
   js:
     js/duration.js: {}
   dependencies:
-    - aa_utils/jquery
+    - core/jquery
 
 search-sidebar:
   css:

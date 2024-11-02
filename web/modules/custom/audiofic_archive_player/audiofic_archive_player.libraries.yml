@@ -6,4 +6,4 @@ playlist:
   js:
     js/playlist.js: {}
   dependencies:
-    - aa_utils/jquery
+    - core/jquery
