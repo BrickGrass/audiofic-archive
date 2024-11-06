@@ -53,7 +53,9 @@
         "drupal/views_bulk_edit": "^3.0",
         "drupal/views_bulk_operations": "^4.2",
         "drupal/views_contextual_filters_or": "^1.4",
-        "drupal/cer": "^5.0@beta"
+        "drupal/cer": "^5.0@beta",
+        "drupal/gin_toolbar": "^1.0@rc",
+        "drupal/gin": "^3.0@rc"
     },
     "require-dev": {
         "drupal/core-dev": "10.3.6"
