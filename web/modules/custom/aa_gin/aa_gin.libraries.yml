@@ -1,0 +1,8 @@
+content-form:
+  js:
+    js/content-form.js: {}
+  css:
+    component:
+      css/content-form.css: {}
+  dependencies:
+    - core/jquery

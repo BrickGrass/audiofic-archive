@@ -1,0 +1,4 @@
+name: Audiofic Archive Gin Admin Theme Custom Behaviour
+description: A custom module that customises the gin admin theme for the audiofic archive
+core_version_requirement: ^10.3 || ^11
+type: module

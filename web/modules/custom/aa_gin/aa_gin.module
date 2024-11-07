@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ * Contains aa_gin.module.
+ */
+
+/**
+ * Implements hook_page_attachments().
+ */
+function aa_gin_page_attachments(array &$attachments) {
+  $route = \Drupal::routeMatch()->getRouteName();
+  if (in_array($route, ["node.add", "node.add_page", "entity.node.edit_form", "entity.node.delete_form"])) {
+    $attachments['#attached']['library'][] = 'aa_gin/content-form';
+  }
+}

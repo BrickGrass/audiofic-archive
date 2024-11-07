@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * Contains aa_utils.module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function aa_utils_theme($existing, $type, $theme, $path) {
+  return [
+    'node-contextual-menu' => [
+      'template' => 'node-contextual-menu',
+      'path' => $path . '/templates',
+      'variables' => [
+        'has_edit_access' => '',
+        'nid' => '',
+      ],
+    ],
+  ];
+}

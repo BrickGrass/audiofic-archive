@@ -1,0 +1,14 @@
+/* Custom Gin Admin Theme Styles */
+
+.gin-secondary-toolbar {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.form-item__description, .fieldset__description {
+    max-width: initial !important;
+}
+
+.expand-help-hide {
+    display: none;
+}

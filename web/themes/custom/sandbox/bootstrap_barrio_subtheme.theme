@@ -41,8 +41,8 @@ function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
     $variables['updated_at'] = $updated_date;
   }
 
-  // Find out if this node is on any rec lists
   if ($variables['view_mode'] === 'full') {
+    // Find out if this node is on any rec lists
     $rec_list_ids = \Drupal::entityQuery('node')
       ->condition('type', 'rec_list')
       ->condition('field_works.entity:node.nid', $node->id())
