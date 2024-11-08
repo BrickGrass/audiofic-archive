@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\search_api_blocks\Form;
+namespace Drupal\aa_search\Form;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\FormBase;
@@ -10,9 +10,9 @@ use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Builds the search form for a simple search block.
+ * Builds the search form for a complex search block.
  */
-class SimpleSearchApiForm extends FormBase {
+class ComplexSearchApiForm extends FormBase {
 
   /**
    * The config factory.
@@ -29,7 +29,7 @@ class SimpleSearchApiForm extends FormBase {
   protected $renderer;
 
   /**
-   * Constructs a new SimpleSearchApiForm.
+   * Constructs a new ComplexSearchApiForm.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config factory.
@@ -55,14 +55,13 @@ class SimpleSearchApiForm extends FormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'simple_search_api_form';
+    return 'complex_search_api_form';
   }
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, $action_url = NULL, $input_name = 'keys') {
-
     if (!$action_url) {
       $form['message'] = [
         '#markup' => $this->t("Search is currently disabled"),
@@ -70,18 +69,60 @@ class SimpleSearchApiForm extends FormBase {
       return $form;
     }
 
-    $form['#action'] = Url::fromUri('internal:' . $action_url)->toString();
+    $form['#action'] = Url::fromUri("internal:{$action_url}")->toString();
     $form['#method'] = 'get';
 
     $form[$input_name] = [
       '#type' => 'search',
-      '#title' => $this->t('Search'),
-      '#title_display' => 'invisible',
+      '#title' => $this->t('Keyword Search'),
       '#size' => 15,
       '#default_value' => '',
-      '#placeholder' => '',
       '#attributes' => ['title' => $this->t('Enter the terms you wish to search for.')],
       '#search_api_blocks' => TRUE,
+    ];
+
+    $form['sort_bef_combine'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Sort by'),
+      '#default_value' => 'revision_timestamp_DESC',
+      '#options' => [
+        'revision_timestamp_DESC' => $this->t('Date Updated (New to Old)'),
+        'revision_timestamp_ASC' => $this->t('Date Updated (Old to New)'),
+        'created_DESC' => $this->t('Date Posted (New to Old)'),
+        'created_ASC' => $this->t('Date Posted (Old to New)'),
+        'title_DESC' => $this->t('Title (Z to A)'),
+        'title_ASC' => $this->t('Title (Z to A)'),
+        'field_duration_seconds_DESC' => $this->t('Duration (Long to Short)'),
+        'field_duration_seconds_ASC' => $this->t('Duration (Short to Long)'),
+        'field_reader_name_DESC' => $this->t('Reader (Z to A)'),
+        'field_reader_name_ASC' => $this->t('Reader (A to Z)'),
+        'field_author_name_DESC' => $this->t('Author (Z to A)'),
+        'field_author_name_ASC' => $this->t('Author (A to Z)'),
+        'search_api_relevance_DESC' => $this->t('Relevance'),
+        'random_DESC' => $this->t('Random'),
+      ],
+    ];
+
+    $form['fandom'] = [
+      '#type' => 'entity_autocomplete',
+      '#title' => $this->t('Fandom'),
+      '#target_type' => 'taxonomy_term',
+      // Allow multiple selection.
+      '#tags' => TRUE,
+      '#selection_settings' => [
+        'target_bundles' => ['fandom'],
+      ],
+    ];
+
+    $form['relationship'] = [
+      '#type' => 'entity_autocomplete',
+      '#title' => $this->t('Relationship'),
+      '#target_type' => 'taxonomy_term',
+      // Allow multiple selection.
+      '#tags' => TRUE,
+      '#selection_settings' => [
+        'target_bundles' => ['relationship'],
+      ],
     ];
 
     $form['actions'] = ['#type' => 'actions'];
@@ -92,6 +133,8 @@ class SimpleSearchApiForm extends FormBase {
       '#name' => '',
       '#search_api_blocks' => TRUE,
     ];
+
+    $form['#attached']['library'][] = 'aa_search/homepage-search-sidebar';
 
     return $form;
   }

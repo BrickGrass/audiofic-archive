@@ -8,3 +8,8 @@ search-sidebar:
   css:
     component:
       css/search_sidebar.css: {}
+
+homepage-search-sidebar:
+  css:
+    component:
+      css/homepage_search_sidebar.css: {}

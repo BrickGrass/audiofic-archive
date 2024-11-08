@@ -1,6 +1,0 @@
-name: Search API Blocks
-description: A custom module which creates two blocks linked to a search view.
-core_version_requirement: ^10.3 || ^11
-type: module
-dependencies:
-  - search_api:search_api

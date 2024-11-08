@@ -1,0 +1,18 @@
+#sidebar_second {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+@media (min-width: 350px) {
+    #sidebar_second {
+        min-width: 300px;
+    }
+}
+
+#block-bootstrap-barrio-subtheme-complexsearchblock .js-form-item {
+	margin-bottom: 0.5rem !important;
+}
+
+#block-bootstrap-barrio-subtheme-complexsearchblock .form-actions {
+	margin-bottom: 0 !important;
+}

@@ -1,28 +1,26 @@
 <?php
 
-namespace Drupal\search_api_blocks\Plugin\Block;
+namespace Drupal\aa_search\Plugin\Block;
 
-use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\Attribute\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\search_api_blocks\Form\SimpleSearchApiForm;
+use Drupal\aa_search\Form\ComplexSearchApiForm;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides a simple search Block with a fulltext searchbox.
+ * Provides a complex search block with keyword search + additional filters.
  */
 #[Block(
-  id: "simple_search_block",
-  admin_label: new TranslatableMarkup("Simple Search Block"),
+  id: "complex_search_block",
+  admin_label: new TranslatableMarkup("Complex Search Block"),
   category: new TranslatableMarkup("Forms")
 )]
 
-class SimpleSearchApiBlock extends BlockBase implements ContainerFactoryPluginInterface {
+class ComplexSearchApiBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
    * The form builder.
@@ -68,19 +66,12 @@ class SimpleSearchApiBlock extends BlockBase implements ContainerFactoryPluginIn
   /**
    * {@inheritdoc}
    */
-  protected function blockAccess(AccountInterface $account) {
-    return AccessResult::allowed();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function build() {
     $url = $this->configuration['action_url'] ?? NULL;
     $input_name = $this->configuration['input_name'] ?? '';
 
     return $this->formBuilder->getForm(
-      SimpleSearchApiForm::class,
+      ComplexSearchApiForm::class,
       $url,
       $input_name
     );
@@ -100,7 +91,6 @@ class SimpleSearchApiBlock extends BlockBase implements ContainerFactoryPluginIn
    * {@inheritdoc}
    */
   public function blockForm($form, FormStateInterface $form_state) {
-
     $form['action_url'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Search page'),

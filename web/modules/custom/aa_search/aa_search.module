@@ -8,6 +8,28 @@
 use Drupal\Core\Form\FormStateInterface;
 
 /**
+ * Implements hook_form_FORM_ID_alter() for simple_search_api_form.
+ *
+ * Removes the parameters 'form_build_id' and 'form_id' from the url.
+ */
+function aa_search_form_simple_search_api_form_alter(&$form, FormStateInterface $form_state) {
+  $form['form_build_id']['#access'] = FALSE;
+  $form['form_token']['#access'] = FALSE;
+  $form['form_id']['#access'] = FALSE;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for complex_search_api_form.
+ *
+ * Removes the parameters 'form_build_id' and 'form_id' from the url.
+ */
+function aa_search_form_complex_search_api_form_alter(&$form, FormStateInterface $form_state) {
+  $form['form_build_id']['#access'] = FALSE;
+  $form['form_token']['#access'] = FALSE;
+  $form['form_id']['#access'] = FALSE;
+}
+
+/**
  * Implements hook_views_post_render().
  *
  * Rewrites the page title of taxonomy term search pages.
