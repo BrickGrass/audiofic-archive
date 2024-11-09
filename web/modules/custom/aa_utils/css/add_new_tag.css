@@ -1,0 +1,22 @@
+.autocomplete-with-add-link {
+    display: flex;
+    align-items: center;
+}
+
+.add-entity-link-margin-left {
+    margin-left: 1.5rem;
+}
+
+.add-entity-link {
+    background-color: #0550e6;
+    color: white;
+    text-decoration: none;
+    padding: calc(0.75rem - 2px) 1rem;
+    border-radius: 0.5rem;
+    font-size: 1.25em;
+}
+
+.add-entity-link:hover {
+    color: white;
+    background-color: #0444c4;
+}

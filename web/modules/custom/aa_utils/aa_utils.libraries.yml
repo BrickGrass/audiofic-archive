@@ -1,0 +1,8 @@
+add-new-tag:
+  css:
+    component:
+      css/add_new_tag.css: {}
+  js:
+    js/add_new_tag.js: {}
+  dependencies:
+    - core/jquery
