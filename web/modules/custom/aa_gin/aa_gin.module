@@ -31,6 +31,7 @@ function aa_gin_form_alter(&$form, FormStateInterface $form_state, $form_id) {
     'taxonomy_term_relationship_form',
     'taxonomy_term_author_form',
     'taxonomy_term_reader_form',
+    'taxonomy_term_language_form',
   ])) {
     $user = \Drupal::entityTypeManager()->getStorage('user')->load(\Drupal::currentUser()->id());
 
