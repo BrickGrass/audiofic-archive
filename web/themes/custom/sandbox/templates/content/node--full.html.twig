@@ -147,21 +147,21 @@ set classes = [
         <h1>{{ label }}</h1>
 
         <div class="d-flex justify-content-between align-items-center mb-2">
-          <div class="d-flex full-work-lozenges">
+          <div class="d-flex flex-wrap gap-1 full-work-lozenges">
             {% if node.field_rating is not empty %}
               {{ content.field_rating }}
             {% else %}
-              <span class="badge bg-secondary me-1">Age Rating Unknown</span>
+              <span class="badge bg-secondary">Age Rating Unknown</span>
             {% endif %}
 
             {% if content_type == "playlist" %}
-              <span class="badge bg-primary me-1">Series</span>
+              <span class="badge bg-primary">Series</span>
             {% elseif content_type == "reader_collection" %}
-              <span class="badge bg-primary me-1">Reader Collection</span>
+              <span class="badge bg-primary">Reader Collection</span>
             {% elseif content_type == "rec_list" %}
-              <span class="badge bg-primary me-1">Rec List</span>
+              <span class="badge bg-primary">Rec List</span>
             {% elseif content_type == "legacy_work" %}
-              <span class="badge bg-primary me-1">Legacy Work</span>
+              <span class="badge bg-primary">Legacy Work</span>
             {% endif %}
 
             {# TODO: if open/closed status on series/collections stays: render it here as a WIP lozenge #}
@@ -186,7 +186,6 @@ set classes = [
         </div>
 
         <div class="alert alert-aa-metadata d-flex flex-column" role="alert">
-
           {{ content.field_curator }}
 
           {{ content.field_author }}
@@ -197,8 +196,9 @@ set classes = [
             {% for tag in all_tags %}
               {% set vocabulary = tag.vid.value[0]["target_id"] %}
               {% set fandom_or_ship = vocabulary in ["fandom", "relationship"] ? "fw-bolder" : "" %}
+              {% set warning = vocabulary == "warning" ? "fst-italic" : "" %}
               {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': tag.id}) %}
-              <a class="{{ fandom_or_ship }}" href="{{ taxonomy_path }}">{{ tag.name.value }}</a>{{- not loop.last ? ', ' -}}
+              <a class="{{ fandom_or_ship }} {{ warning }}" href="{{ taxonomy_path }}">{{ tag.name.value }}</a>{{- not loop.last ? ', ' -}}
             {% endfor %}
           </div>
 
@@ -301,15 +301,15 @@ set classes = [
             {% endif %}
           </div>
         {% endif %}
-      </div>
-      <div class="full-work-links-downloads">
+
         {% if content_type == "legacy_work" %}
           <div class="alert alert-aa-info" role="alert">
             Not all legacy works have all metadata (ratings, tags, warnings & summaries) please see the attribution links below before you listen.
           </div>
           {{ node.body.value | raw }}
         {% endif %}
-
+      </div>
+      <div class="full-work-links-downloads">
         {# TODO: not displaying attribution links for rec lists. Would need to edit this if we do decide
         we want to display them. #}
         {% set warning_text = "To leave feedback please see the" %}

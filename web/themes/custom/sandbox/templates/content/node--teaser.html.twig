@@ -186,7 +186,11 @@
               "#{collection_length} part #{collection_type}, " : ""
             %}
 
-            <span class="ms-1">{{ duration }}{{ collection_parts }}published: {{ created_at }}</span>
+            {% set language %}
+              {{ "language: " }}{{ node.field_language[0].entity.name.value }}{{ ", " }}
+            {% endset %}
+
+            <span class="ms-1">{{ duration }}{{ collection_parts }}{{ language }}published: {{ created_at }}</span>
           </small>
         </div>
       </div>
