@@ -5,6 +5,8 @@
  * Contains aa_gin.module.
  */
 
+use Drupal\Core\Form\FormStateInterface;
+
 /**
  * Implements hook_page_attachments().
  */
@@ -12,5 +14,31 @@ function aa_gin_page_attachments(array &$attachments) {
   $route = \Drupal::routeMatch()->getRouteName();
   if (in_array($route, ["node.add", "node.add_page", "entity.node.edit_form", "entity.node.delete_form"])) {
     $attachments['#attached']['library'][] = 'aa_gin/content-form';
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function aa_gin_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if (in_array($form_id, ['node_work_form', 'node_work_edit_form'])) {
+    $form['#attached']['library'][] = 'aa_gin/add-new-tag';
+    return;
+  }
+
+  if (in_array($form_id, [
+    'taxonomy_term_fandom_form',
+    'taxonomy_term_relationship_form',
+    'taxonomy_term_author_form',
+    'taxonomy_term_reader_form',
+  ])) {
+    $user = \Drupal::entityTypeManager()->getStorage('user')->load(\Drupal::currentUser()->id());
+
+    // If user is not admin, remove additional taxonomy term form widgets.
+    if (!$user->hasRole('administrator')) {
+      $form['relations']['#access'] = FALSE;
+      $form['revision_information']['#access'] = FALSE;
+    }
+    return;
   }
 }

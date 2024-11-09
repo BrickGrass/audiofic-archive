@@ -1,7 +1,5 @@
 <?php
 
-use Drupal\Core\Form\FormStateInterface;
-
 /**
  * @file
  * Contains aa_utils.module.
@@ -21,15 +19,4 @@ function aa_utils_theme($existing, $type, $theme, $path) {
       ],
     ],
   ];
-}
-
-/**
- * Implements hook_form_alter().
- */
-function aa_utils_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  if (!in_array($form_id, ['node_work_form', 'node_work_edit_form'])) {
-    return;
-  }
-
-  $form['#attached']['library'][] = 'aa_utils/add-new-tag';
 }
