@@ -100,17 +100,22 @@
   <div class="mb-3 work-card-wrapper {{ explicit_rating ? 'work-card-nsfw' : '' }}">
     <div class="work-card p-2 {{ content_type == 'playlist' ? 'position-relative' : '' }}">
       <div class="work-card-upper-info">
-        {% set has_image = node.field_cover[0].entity.uri.value != null %}
-        {% if has_image %}
+        {% if node.field_cover[0].entity.uri.value != null %}
           <img
             src="{{ file_url(node.field_cover[0].entity.uri.value) }}"
             alt="{{ node.field_cover[0].entity.alt.value }}"
             class="float-start"
           >
+        {% else %}
+          <img
+            src="{{ file_url("public://2024-11/no-cover-art.jpeg") }}"
+            alt="TODO: fixme"
+            class="float-start"
+          >
         {% endif %}
         <h6 class="mb-1 me-1"><a href="{{ url }}">{{ label }}</a></h6>
 
-        <div class="d-flex flex-column flex-wrap mb-2">
+        <div class="d-flex flex-row column-gap-2 flex-wrap mb-2">
           {% if content_type in ["work", "legacy_work", "playlist", "reader_collection"] %}
             {{ content.field_author }}
             {{ content.field_reader }}
@@ -119,14 +124,18 @@
           {% endif %}
         </div>
       </div>
-      <div class="work-card-lower-info {{ has_image ? '' : 'work-card-no-cover' }}">
-        <div class="mb-1">
+      <div class="work-card-lower-info">
+        <div class="mb-2">
           {% for tag in all_tags %}
             {% set vocabulary = tag.vid.value[0]["target_id"] %}
             {% set fandom_or_ship = vocabulary in ["fandom", "relationship"] ? "fw-bolder" : "" %}
+            {% set warning = vocabulary == "warning" ? "fst-italic" : "" %}
             {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': tag.id}) %}
-            <a class="{{ fandom_or_ship }}" href="{{ taxonomy_path }}">{{ tag.name.value }}</a>{{- not loop.last ? ', ' -}}
+            <a class="{{ fandom_or_ship }} {{ warning }}" href="{{ taxonomy_path }}">{{ tag.name.value }}</a>{{- not loop.last ? ', ' -}}
           {% endfor %}
+        </div>
+        <div class="mb-2">
+          {{ content.field_summary }}
         </div>
         {% block tags_end %}
         {% endblock %}

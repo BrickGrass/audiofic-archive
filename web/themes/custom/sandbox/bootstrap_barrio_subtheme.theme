@@ -27,7 +27,7 @@ function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
   if (in_array($node_type, ["work", "legacy_work", "playlist", "reader_collection", "rec_list"])) {
     $all_tags = [];
 
-    foreach (['field_fandom2', 'field_relationship', 'field_warning', 'field_category', 'field_format'] as $key) {
+    foreach (['field_warning', 'field_fandom2', 'field_relationship', 'field_category', 'field_format'] as $key) {
       $utils->fetchVocabTerms($node, $key, $all_tags);
     }
 
