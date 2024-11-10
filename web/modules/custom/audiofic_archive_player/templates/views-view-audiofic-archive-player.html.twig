@@ -52,7 +52,7 @@
       </div>
     {% endfor %}
 
-    <div class="full-work-player-now-playing p-2 mb-2 mt-2 {{ options.streaming_files | length < 2 ? 'full-work-player-single-file' : '' }}">
+    <div class="full-work-player-now-playing p-2 mt-2 {{ options.streaming_files | length < 2 ? 'full-work-player-single-file' : '' }}">
       <span>Now Playing:</span>
       <div class="d-flex ms-1">
         <button class="player-control" id="player-prev" aria-label="Previous Track" disabled>
@@ -63,10 +63,16 @@
           <i class="bi bi-arrow-right-circle-fill"></i>
           <i class="bi bi-arrow-right-circle chrome-only"></i>
         </button>
+        {% if options.streaming_files | length > 1 %}
+          <button class="player-control" id="player-expand" aria-label="Show/Hide Tracklist">
+            <i class="bi bi-music-note-list"></i>
+            <i class="bi bi-music-note-list chrome-only"></i>
+          </button>
+        {% endif %}
       </div>
     </div>
 
-    <div class="full-work-player-playlist {{ options.streaming_files | length < 2 ? 'full-work-player-single-file' : '' }}">
+    <div class="full-work-player-playlist mt-2 d-none {{ options.streaming_files | length < 2 ? 'full-work-player-single-file' : '' }}">
       {% for file in options.streaming_files %}
         <button class="d-flex justify-content-between p-2 {{ file.nsfw ? 'full-work-player-nsfw' }}">
           <span class="full-work-player-playlist-name text-start">{{ file.name }}</span>

@@ -53,7 +53,7 @@
 	display: none;
 }
 
-.player-control:first-child {
+.player-control:not(:last-child) {
 	margin-right: 5px;
 }
 
