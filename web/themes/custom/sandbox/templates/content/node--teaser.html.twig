@@ -100,16 +100,11 @@
   <div class="mb-3 work-card-wrapper {{ explicit_rating ? 'work-card-nsfw' : '' }}">
     <div class="work-card p-2 {{ content_type == 'playlist' ? 'position-relative' : '' }}">
       <div class="work-card-upper-info">
-        {% if node.field_cover[0].entity.uri.value != null %}
+        {% set no_cover = node.field_cover[0].entity.uri.value != null %}
+        {% if no_cover %}
           <img
             src="{{ file_url(node.field_cover[0].entity.uri.value) }}"
             alt="{{ node.field_cover[0].entity.alt.value }}"
-            class="float-start"
-          >
-        {% else %}
-          <img
-            src="{{ file_url("public://2024-11/no-cover-art.jpeg") }}"
-            alt="TODO: fixme"
             class="float-start"
           >
         {% endif %}
@@ -124,7 +119,7 @@
           {% endif %}
         </div>
       </div>
-      <div class="work-card-lower-info">
+      <div class="work-card-lower-info {{ no_cover ? "no-cover" : "" }}">
         <div class="mb-2">
           {% for tag in all_tags %}
             {% set vocabulary = tag.vid.value[0]["target_id"] %}
