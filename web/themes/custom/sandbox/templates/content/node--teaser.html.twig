@@ -105,8 +105,11 @@
           <img
             src="{{ file_url(node.field_cover[0].entity.uri.value) }}"
             alt="{{ node.field_cover[0].entity.alt.value }}"
-            class="float-start"
           >
+        {% else %}
+          <div class="cover-placeholder d-flex align-items-center justify-content-center">
+            <i class="bi bi-image"></i>
+          </div>
         {% endif %}
         <h6 class="mb-1 me-1"><a href="{{ url }}">{{ label }}</a></h6>
 

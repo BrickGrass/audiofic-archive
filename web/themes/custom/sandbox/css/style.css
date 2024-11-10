@@ -105,11 +105,15 @@
 /* Work card */
 .work-card {
 	min-height: 125px;
-	background-color: #f2f2f2;
 	line-height: 20px;
 	border-radius: 0.25rem;
-	border: 1px solid #dee2e5;
 	margin-left: calc(125px + 0.5rem);
+}
+
+.work-card,
+.work-card .cover-placeholder {
+	background-color: #f2f2f2;
+	border: 1px solid #dee2e5;
 }
 
 .work-card a {
@@ -120,6 +124,7 @@
 	text-decoration: underline;
 }
 
+.work-card .cover-placeholder,
 .work-card img {
 	object-fit: cover;
 	width: 125px;
@@ -129,6 +134,12 @@
 	margin-bottom: 0.5rem;
 	margin-left: calc(-125px - 1rem);
 	border-radius: 0.25rem;
+	float: left;
+}
+
+.work-card .cover-placeholder i {
+	color: #a8a8a8;
+	font-size: 40px;
 }
 
 .work-card h6 {
@@ -146,6 +157,7 @@
 		font-size: 1.1669rem;
 	}
 
+	.work-card .cover-placeholder,
 	.work-card img {
 		width: 100px;
 		height: 100px;
@@ -163,6 +175,10 @@
 		width: 75px;
 		height: 75px;
 		margin-left: -0.5rem;
+	}
+
+	.work-card .cover-placeholder {
+		display: none !important;
 	}
 
 	.work-card-lower-info {
