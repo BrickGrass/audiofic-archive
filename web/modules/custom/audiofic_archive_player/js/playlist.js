@@ -194,8 +194,4 @@
 
     switch_track(now_playing + 1);
   });
-
-  $("#player-expand").on("click", function() {
-    $(".full-work-player-playlist").first().toggleClass("d-none");
-  })
 })(jQuery);
