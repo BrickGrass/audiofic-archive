@@ -184,9 +184,18 @@
               "#{collection_length} part #{collection_type}, " : ""
             %}
 
-            {% set language %}
-              {{ "language: " }}{{ node.field_language[0].entity.name.value }}{{ ", " }}
-            {% endset %}
+            {% if content_type in ["work", "legacy_work"] %}
+              {% set language %}
+                {{ "language: " }}{{ node.field_language[0].entity.name.value }}{{ ", " }}
+              {% endset %}
+            {% elseif node.field_languages|length > 0 %}
+              {% set language %}
+                {{ "language(s): " }}
+                {% for lang in node.field_languages %}
+                  {{ lang.entity.name.value }}{{- not loop.last ? ' ' : ', ' -}}
+                {% endfor %}
+              {% endset %}
+            {% endif %}
 
             <span class="ms-1">{{ duration }}{{ collection_parts }}{{ language }}published: {{ created_at }}</span>
           </small>

@@ -51,6 +51,10 @@
 	column-gap: 0.5rem;
 }
 
+.block-page-title-block {
+	margin-top: 0.5rem;
+}
+
 /* Tagify tags */
 .tagify {
 	padding: 0 8px 0 0 !important;
