@@ -28,6 +28,11 @@
 	margin-top: 0;
 }
 
+.sidebar .block {
+	background-color: #f2f2f2;
+	border: none;
+}
+
 .alert-aa-metadata {
 	background-color: #f2f2f2;
 	border-color: #dee2e5;
@@ -100,9 +105,10 @@
 /* Work card */
 .work-card {
 	min-height: 125px;
-	background-color: #f6f6f2;
+	background-color: #f2f2f2;
 	line-height: 20px;
 	border-radius: 0.25rem;
+	border: 1px solid #dee2e5;
 	margin-left: calc(125px + 0.5rem);
 }
 
