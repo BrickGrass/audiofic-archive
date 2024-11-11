@@ -41,6 +41,23 @@ function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
     $variables['updated_at'] = $updated_date;
   }
 
+  if ($variables['view_mode'] === 'full' && $node_type === 'work') {
+    $series_positions = [];
+
+    foreach ($node->get('field_series')->referencedEntities() as $series) {
+      $i = 1;
+      foreach ($series->get('field_works_series')->referencedEntities() as $series_work) {
+        if ($node->id() === $series_work->id()) {
+          $series_positions[] = ['series' => $series, 'position' => $i];
+          break;
+        }
+        $i++;
+      }
+    }
+
+    $variables['series_positions'] = $series_positions;
+  }
+
   if ($variables['view_mode'] === 'full') {
     // Find out if this node is on any rec lists
     $rec_list_ids = \Drupal::entityQuery('node')

@@ -236,14 +236,13 @@ set classes = [
             </span>
           {% endif %}
 
-          {% if node.field_series is not empty and node.field_part_label is not empty %}
-            {% set series = node.field_series[0].entity %}
+          {% for series_pos in series_positions %}
+            {% set series = series_pos['series'] %}
             <span>
-              {{ node.field_part_label[0].value }}
-              of
+              part {{ series_pos['position'] }} of
               <a href="{{ path('entity.node.canonical', {'node': series.id}) }}">{{ series.title.value }}</a>
             </span>
-          {% endif %}
+          {% endfor %}
 
           {% if node.field_reader_collections is not empty %}
             <span>
