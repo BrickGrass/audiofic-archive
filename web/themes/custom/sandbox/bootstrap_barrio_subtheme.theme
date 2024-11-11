@@ -131,8 +131,5 @@ function bootstrap_barrio_subtheme_preprocess_field(&$variables) {
  */
 function add_link(&$links, $uri, $work, $index = NULL) {
   $title = $index == NULL ? $work->getTitle() : "{$work->getTitle()} {$index}";
-  array_push($links, [
-    "uri" => $uri,
-    "title" => $title,
-  ]);
+  $links[] = ["uri" => $uri, "title" => $title];
 }

@@ -3,9 +3,9 @@
     padding-right: 0px;
 }
 
-@media (min-width: 350px) {
+@media (min-width: 400px) {
     #sidebar_second {
-        min-width: 300px;
+        min-width: 350px;
     }
 }
 

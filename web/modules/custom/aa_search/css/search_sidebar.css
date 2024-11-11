@@ -3,8 +3,8 @@
     padding-right: 0px;
 }
 
-@media (min-width: 350px) {
+@media (min-width: 400px) {
     #sidebar_first {
-        min-width: 300px;
+        min-width: 350px;
     }
 }

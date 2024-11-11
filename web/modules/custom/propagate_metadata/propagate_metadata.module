@@ -72,6 +72,9 @@ function propagate_metadata_fill_default_form_value(&$form, $fieldname, $tag) {
  * Updates the metadata of all of the series/collections that a work is a member of.
  */
 function propagate_metadata_update_all_collections(NodeInterface $node, bool $node_deleted = FALSE) {
+  /** @var \Drupal\aa_utils\Service\AudioficUtils $utils */
+  $utils = \Drupal::service('aa_utils.utils');
+
   $series = [];
   $reader_collections = [];
   $rec_lists = [];
@@ -94,7 +97,7 @@ function propagate_metadata_update_all_collections(NodeInterface $node, bool $no
     if (!$node_deleted) {
       $series_works[] = $node;
     }
-    propagate_metadata_set_metadata($series, $series_works);
+    $utils->setCollectionMetadata($series, $series_works);
   }
 
   foreach ($reader_collections as $collection) {
@@ -102,7 +105,7 @@ function propagate_metadata_update_all_collections(NodeInterface $node, bool $no
     if (!$node_deleted) {
       $collection_works[] = $node;
     }
-    propagate_metadata_set_metadata($collection, $collection_works);
+    $utils->setCollectionMetadata($collection, $collection_works);
   }
 
   foreach ($rec_lists as $rec_list) {
@@ -119,7 +122,7 @@ function propagate_metadata_update_all_collections(NodeInterface $node, bool $no
       $rec_list_works[$node_key] = $node;
     }
 
-    propagate_metadata_set_metadata($rec_list, $rec_list_works);
+    $utils->setCollectionMetadata($rec_list, $rec_list_works);
   }
 }
 
@@ -134,99 +137,4 @@ function propagate_metadata_get_collection_works(EntityInterface $collection, No
     ->accessCheck(TRUE)
     ->execute();
   return \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($work_ids);
-}
-
-/**
- * Sets the metadata of a series/collection.
- */
-function propagate_metadata_set_metadata(NodeInterface $collection, array $works) {
-  /** @var \Drupal\aa_utils\Service\AudioficUtils $utils */
-  $utils = \Drupal::service('aa_utils.utils');
-
-  $authors = [];
-  $readers = [];
-  $fandoms = [];
-  $relationships = [];
-  $ratings = [];
-  $categories = [];
-  $format_info = [];
-  $languages = [];
-  $duration = 0;
-
-  foreach ($works as $work) {
-    $authors = array_merge($authors, $work->get('field_author')->referencedEntities());
-    $readers = array_merge($readers, $work->get('field_reader')->referencedEntities());
-    $fandoms = array_merge($fandoms, $work->get('field_fandom2')->referencedEntities());
-    $relationships = array_merge($relationships, $work->get('field_relationship')->referencedEntities());
-    $ratings = array_merge($ratings, $work->get('field_rating')->referencedEntities());
-    $format_info = array_merge($format_info, $work->get('field_format')->referencedEntities());
-
-    if ($work->hasField('field_category')) {
-      $categories = array_merge($categories, $work->get('field_category')->referencedEntities());
-    }
-
-    $lang_key = $work->hasField('field_language') ? 'field_language' : 'field_languages';
-    $languages = array_merge($languages, $work->get($lang_key)->referencedEntities());
-
-    if ($work->hasField('field_duration')) {
-      $found = FALSE;
-      foreach ($work->get('field_duration') as $duration_field) {
-        $duration += $duration_field->seconds;
-        $found = TRUE;
-        break;
-      }
-
-      // If a legacy work does not have a duration set, calculate it from
-      // the length tag.
-      if (!$found && $work->getType() == 'legacy_work') {
-        foreach ($work->get('field_length')->referencedEntities() as $length_tag) {
-          $work_duration = $utils->convertLengthRangeToDuration($length_tag);
-          if (!empty($work_duration)) {
-            $duration += $work_duration;
-            break;
-          }
-        }
-      }
-    }
-  }
-
-  $authors = $utils->removeDuplicateEntities($authors);
-  $readers = $utils->removeDuplicateEntities($readers);
-  $fandoms = $utils->removeDuplicateEntities($fandoms);
-  $relationships = $utils->removeDuplicateEntities($relationships);
-  $ratings = $utils->removeDuplicateEntities($ratings);
-  $format_info = $utils->removeDuplicateEntities($format_info);
-  $categories = $utils->removeDuplicateEntities($categories);
-  $languages = $utils->removeDuplicateEntities($languages);
-
-  // TODO: Rec lists can have works with a rating of NULL. Will need to decide if that
-  // has priority
-  $rating_value = [
-    "General" => 0,
-    "Teen and up" => 1,
-    "Mature" => 2,
-    "Explicit" => 3,
-    "Not rated" => 4,
-  ];
-
-  $rating = NULL;
-  foreach ($ratings as $r) {
-    if ($rating === NULL or
-        $rating_value[$rating->name->value] < $rating_value[$r->name->value]
-      ) {
-      $rating = $r;
-    }
-  }
-
-  $collection->set('field_author', $authors);
-  $collection->set('field_reader', $readers);
-  $collection->set('field_fandom2', $fandoms);
-  $collection->set('field_relationship', $relationships);
-  $collection->set('field_rating', [$rating]);
-  $collection->set('field_category', $categories);
-  $collection->set('field_format', $format_info);
-  $collection->set('field_languages', $languages);
-  $duration_interval = $utils->secondsToDateInterval($duration);
-  $collection->field_duration = ['duration' => $duration_interval, 'seconds' => $duration];
-  $collection->save();
 }

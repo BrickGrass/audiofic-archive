@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\Entity\Node;
 
 /**
  * Implements hook_page_attachments().
@@ -18,10 +19,44 @@ function aa_gin_page_attachments(array &$attachments) {
 }
 
 /**
+ * Implements hook_field_group_form_process_alter().
+ */
+function aa_gin_field_group_form_process_alter(array &$element, &$group, &$rendering_object) {
+  if (in_array($rendering_object['#form_id'], ['node_work_form', 'node_work_edit_form'])) {
+    $rendering_object['field_festival']['#weight'] = 28;
+  }
+}
+
+/**
  * Implements hook_form_alter().
  */
 function aa_gin_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   if (in_array($form_id, ['node_work_form', 'node_work_edit_form'])) {
+    // Insert series creation fields.
+    $form['create_series'] = [
+      '#type' => 'checkbox',
+      '#title' => 'Create new series',
+      '#weight' => 26,
+      '#group' => 'group_series_and_collections',
+    ];
+
+    $form['new_series_name'] = [
+      '#type' => 'textfield',
+      '#title' => 'New series name',
+      '#weight' => 27,
+      '#group' => 'group_series_and_collections',
+      '#states' => [
+        'visible' => [':input[name="create_series"]' => ['checked' => TRUE]],
+      ],
+    ];
+
+    // Add custom submit handler.
+    foreach (array_keys($form['actions']) as $action) {
+      if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
+        $form['actions'][$action]['#submit'][] = 'aa_gin_form_submit';
+      }
+    }
+
     $form['#attached']['library'][] = 'aa_gin/add-new-tag';
     return;
   }
@@ -42,4 +77,28 @@ function aa_gin_form_alter(&$form, FormStateInterface $form_state, $form_id) {
     }
     return;
   }
+}
+
+/**
+ * Custom submit handler for node work forms.
+ */
+function aa_gin_form_submit(array $form, FormStateInterface $form_state) {
+  $series_title = $form['new_series_name']['#value'];
+  if (!$form['create_series']['#checked'] || empty($series_title)) {
+    return;
+  }
+
+  $nid = $form_state->getformObject()->getEntity()->id();
+  $series = Node::create([
+    'type' => 'playlist',
+    'title' => $series_title,
+    'field_works_series' => $nid,
+  ]);
+  $series->save();
+
+  /** @var \Drupal\aa_utils\Service\AudioficUtils $utils */
+  $utils = \Drupal::service('aa_utils.utils');
+  $work = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+
+  $utils->setCollectionMetadata($series, [$work]);
 }

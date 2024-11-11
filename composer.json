@@ -100,6 +100,9 @@
             },
             "drupal/core": {
                 "Fixes bug in views where if exposed filters are in a block the contextual filters are ignored": "patches/views-fix-exposed-contextual-filter-conflict.patch"
+            },
+            "drupal/cer": {
+                "Cer, fix accessing undefined index": "patches//prevent-undefined-index-3254663-6.patch"
             }
         },
         "enable-patching": true
