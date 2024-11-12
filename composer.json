@@ -103,6 +103,9 @@
             },
             "drupal/cer": {
                 "Cer, fix accessing undefined index": "patches//prevent-undefined-index-3254663-6.patch"
+            },
+            "drupal/gin": {
+                "Patches sidebar bugs on wide touchscreen devices. Remove once https://www.drupal.org/project/gin/issues/3463177 is merged.": "patches/gin-sidebar-resize-overlap-15791901-2.patch"
             }
         },
         "enable-patching": true

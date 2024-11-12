@@ -23,7 +23,9 @@ function aa_gin_page_attachments(array &$attachments) {
  */
 function aa_gin_field_group_form_process_alter(array &$element, &$group, &$rendering_object) {
   if (in_array($rendering_object['#form_id'], ['node_work_form', 'node_work_edit_form'])) {
-    $rendering_object['field_festival']['#weight'] = 28;
+    $series_weight = $rendering_object['field_series']['#weight'];
+
+    $rendering_object['field_festival']['#weight'] = $series_weight + 3;
   }
 }
 
@@ -33,17 +35,19 @@ function aa_gin_field_group_form_process_alter(array &$element, &$group, &$rende
 function aa_gin_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   if (in_array($form_id, ['node_work_form', 'node_work_edit_form'])) {
     // Insert series creation fields.
+    $series_weight = $form['field_series']['#weight'];
+
     $form['create_series'] = [
       '#type' => 'checkbox',
       '#title' => 'Create new series',
-      '#weight' => 26,
+      '#weight' => $series_weight + 1,
       '#group' => 'group_series_and_collections',
     ];
 
     $form['new_series_name'] = [
       '#type' => 'textfield',
       '#title' => 'New series name',
-      '#weight' => 27,
+      '#weight' => $series_weight + 2,
       '#group' => 'group_series_and_collections',
       '#states' => [
         'visible' => [':input[name="create_series"]' => ['checked' => TRUE]],

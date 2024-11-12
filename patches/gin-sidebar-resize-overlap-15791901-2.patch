@@ -1,0 +1,48 @@
+diff --git a/dist/js/sidebar.js b/dist/js/sidebar.js
+index ce3f49e..af33a51 100644
+--- a/dist/js/sidebar.js
++++ b/dist/js/sidebar.js
+@@ -57,7 +57,7 @@
+           document.addEventListener("touchmove", this.resizeWidth), document.addEventListener("touchend", this.resizeEnd);
+         },
+         resizeStart: e => {
+-          e.preventDefault(), isResizing = !0, startX = e.clientX, startWidth = parseInt(document.defaultView.getComputedStyle(resizable).width, 10);
++          isResizing = !0, startX = e.touches[0].clientX, startWidth = parseInt(window.getComputedStyle(resizable).width, 10);
+         },
+         resizeEnd: () => {
+           isResizing = !1;
+@@ -67,7 +67,7 @@
+         },
+         resizeWidth: e => {
+           if (isResizing) {
+-            let sidebarWidth = startWidth - (e.clientX - startX);
++            let sidebarWidth = startWidth - (e.touches[0].clientX - startX);
+             sidebarWidth <= 240 ? sidebarWidth = 240 : sidebarWidth >= 560 && (sidebarWidth = 560), 
+             sidebarWidth = `${sidebarWidth}px`, document.documentElement.style.setProperty("--gin-sidebar-width", sidebarWidth);
+           }
+diff --git a/js/sidebar.js b/js/sidebar.js
+index 9fd9411..3574d7a 100644
+--- a/js/sidebar.js
++++ b/js/sidebar.js
+@@ -169,10 +169,9 @@
+     },
+ 
+     resizeStart: (e) => {
+-      e.preventDefault();
+       isResizing = true;
+-      startX = e.clientX;
+-      startWidth = parseInt(document.defaultView.getComputedStyle(resizable).width, 10);
++      startX = e.touches[0].clientX;
++      startWidth = parseInt(window.getComputedStyle(resizable).width, 10);
+     },
+ 
+     resizeEnd: () => {
+@@ -186,7 +185,7 @@
+ 
+     resizeWidth: (e) => {
+       if (isResizing) {
+-        let sidebarWidth = startWidth - (e.clientX - startX);
++        let sidebarWidth = startWidth - (e.touches[0].clientX - startX);
+ 
+         if (sidebarWidth <= 240) {
+           sidebarWidth = 240;
