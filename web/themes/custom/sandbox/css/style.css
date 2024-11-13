@@ -116,7 +116,7 @@
 	font-weight: normal;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 850px) {
 	.work-card {
 		min-height: 100px;
 		margin-left: calc(100px + 0.5rem);
@@ -143,7 +143,7 @@
 	.work-card img {
 		width: 75px;
 		height: 75px;
-		margin-left: -0.5rem;
+		margin-left: calc(-1px - 0.5rem);
 	}
 
 	.work-card .cover-placeholder {
