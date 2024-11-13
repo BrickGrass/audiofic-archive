@@ -85,11 +85,11 @@
 	border: 1px solid #dee2e5;
 }
 
-.work-card a {
+.work-card h6 a {
 	text-decoration: none;
 }
 
-.work-card a:hover {
+.work-card h6 a:hover {
 	text-decoration: underline;
 }
 
@@ -288,6 +288,10 @@
 
 .full-work.full-work-legacy-work.no-image .full-work-main-content {
 	grid-column: 1 / span 3;
+}
+
+.full-work .views-row:last-child .work-card-wrapper {
+	margin-bottom: 0 !important;
 }
 
 @media (max-width: 1600px) {

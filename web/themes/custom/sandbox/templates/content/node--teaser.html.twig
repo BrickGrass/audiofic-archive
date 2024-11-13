@@ -97,7 +97,7 @@
   {% else %}
     {% set explicit_rating = true %}
   {% endif %}
-  <div class="mb-3 work-card-wrapper {{ explicit_rating ? 'work-card-nsfw' : '' }}">
+  <div class="mb-2 work-card-wrapper {{ explicit_rating ? 'work-card-nsfw' : '' }}">
     <div class="work-card p-2 {{ content_type == 'playlist' ? 'position-relative' : '' }}">
       <div class="work-card-upper-info">
         {% set no_cover = node.field_cover[0].entity.uri.value != null %}

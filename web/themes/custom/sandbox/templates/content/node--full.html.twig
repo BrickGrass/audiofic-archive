@@ -287,7 +287,7 @@ set classes = [
 
         {% if content_type in ["playlist", "reader_collection", "rec_list"] %}
           {# All works in this series as teasers #}
-          <div class="mt-2">
+          <div>
             {% if explicit_rating and total_nsfw is not empty %}
               <span class="nsfw-total d-none">({{ total_nsfw }} work{{ total_nsfw > 1 ? 's' : ''}} on this page {{ total_nsfw > 1 ? 'are' : 'is'}} hidden by your filters.)</span>
             {% endif %}
