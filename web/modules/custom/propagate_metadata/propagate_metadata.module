@@ -32,6 +32,10 @@ function propagate_metadata_form_alter(&$form, FormStateInterface $form_state, $
  * Implements hook_ENTITY_TYPE_presave() for nodes.
  */
 function propagate_metadata_node_presave(NodeInterface $node) {
+  if ($node->getType() === "work") {
+    propagate_metadata_set_duration($node);
+  }
+
   if (in_array($node->getType(), ["work", "legacy_work", "playlist", "reader_collection"])) {
     propagate_metadata_update_all_collections($node);
   }
@@ -137,4 +141,33 @@ function propagate_metadata_get_collection_works(EntityInterface $collection, No
     ->accessCheck(TRUE)
     ->execute();
   return \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($work_ids);
+}
+
+/**
+ * Calculates the duration of a work from the files attached to it.
+ */
+function propagate_metadata_set_duration(NodeInterface $work) {
+  $duration = 0;
+
+  foreach ($work->get("field_mp3_files")->referencedEntities() as $media) {
+    $use_for_duration = $media->get("field_use_for_duration")[0] ?? NULL;
+    if (empty($use_for_duration)) {
+      continue;
+    }
+    $use_for_duration = $use_for_duration->value === "1";
+    if (!$use_for_duration) {
+      continue;
+    }
+
+    $media_duration = $media->get("field_duration_seconds")[0] ?? NULL;
+    if (!empty($media_duration)) {
+      $duration += $media_duration->value;
+    }
+  }
+
+  /** @var \Drupal\aa_utils\Service\AudioficUtils $utils */
+  $utils = \Drupal::service('aa_utils.utils');
+
+  $duration_interval = $utils->secondsToDateInterval($duration);
+  $work->field_duration = ['duration' => $duration_interval, 'seconds' => $duration];
 }
