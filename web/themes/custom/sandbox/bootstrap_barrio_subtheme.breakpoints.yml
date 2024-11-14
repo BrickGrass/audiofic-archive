@@ -1,0 +1,18 @@
+bootstrap_barrio_subtheme.small:
+  label: small
+  mediaQuery: 'all and (max-width: 475px)'
+  weight: 0
+  multipliers:
+    - 1x
+bootstrap_barrio_subtheme.medium:
+  label: medium
+  mediaQuery: 'all and (min-width: 475px) and (max-width: 850px)'
+  weight: 1
+  multipliers:
+    - 1x
+bootstrap_barrio_subtheme.large:
+  label: large
+  mediaQuery: 'all and (min-width: 851px)'
+  weight: 2
+  multipliers:
+    - 1x

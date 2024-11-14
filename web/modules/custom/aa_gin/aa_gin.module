@@ -106,3 +106,46 @@ function aa_gin_form_submit(array $form, FormStateInterface $form_state) {
 
   $utils->setCollectionMetadata($series, [$work]);
 }
+
+/**
+ * Implements hook_inline_entity_form_table_fields_alter().
+ */
+function aa_gin_inline_entity_form_table_fields_alter(&$fields, $context) {
+  if ($context['field_name'] === 'field_mp3_files') {
+    unset($fields['label']);
+
+    $fields['field_media_audio_file'] = [
+      'type' => 'field',
+      'label' => t('File'),
+      'weight' => 1,
+    ];
+
+    $fields['field_chapter_label'] = [
+      'type' => 'field',
+      'label' => t('Chapter label'),
+      'weight' => 2,
+    ];
+
+    $fields['field_use_for_duration'] = [
+      'type' => 'field',
+      'label' => t('Use for duration?'),
+      'weight' => 3,
+    ];
+  }
+
+  if ($context['field_name'] === 'field_other_files') {
+    unset($fields['label']);
+
+    $fields['field_media_file'] = [
+      'type' => 'field',
+      'label' => t('File'),
+      'weight' => 0,
+    ];
+
+    $fields['field_file_label'] = [
+      'type' => 'field',
+      'label' => t('File label'),
+      'weight' => 1,
+    ];
+  }
+}

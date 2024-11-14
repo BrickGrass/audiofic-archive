@@ -100,12 +100,8 @@
   <div class="mb-2 work-card-wrapper {{ explicit_rating ? 'work-card-nsfw' : '' }}">
     <div class="work-card p-2 {{ content_type == 'playlist' ? 'position-relative' : '' }}">
       <div class="work-card-upper-info">
-        {% set no_cover = node.field_cover[0].entity.uri.value != null %}
-        {% if no_cover %}
-          <img
-            src="{{ file_url(node.field_cover[0].entity.uri.value) }}"
-            alt="{{ node.field_cover[0].entity.alt.value }}"
-          >
+        {% if node.field_cover[0].entity.uri.value != null %}
+          {{ content.field_cover }}
         {% else %}
           <div class="cover-placeholder d-flex align-items-center justify-content-center">
             <i class="bi bi-mic"></i>
@@ -122,7 +118,7 @@
           {% endif %}
         </div>
       </div>
-      <div class="work-card-lower-info {{ no_cover ? "no-cover" : "" }}">
+      <div class="work-card-lower-info">
         <div class="mb-2">
           {% for tag in all_tags %}
             {% set vocabulary = tag.vid.value[0]["target_id"] %}
