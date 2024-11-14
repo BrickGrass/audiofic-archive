@@ -127,10 +127,7 @@ set classes = [
         {% endif %}
       </div>
       {% if has_image %}
-        <img
-          src="{{ file_url(node.field_cover[0].entity.uri.value) }}"
-          alt="{{ node.field_cover[0].entity.alt.value }}"
-        >
+        {{ content.field_cover }}
       {% endif %}
       {% if filters_enabled %}
         <div id="full-work-filters" class="full-work-filters collapse dont-collapse-sm">

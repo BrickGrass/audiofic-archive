@@ -1,18 +1,30 @@
 bootstrap_barrio_subtheme.small:
   label: small
-  mediaQuery: 'all and (max-width: 475px)'
+  mediaQuery: 'all and (max-width: 500px)'
   weight: 0
   multipliers:
     - 1x
 bootstrap_barrio_subtheme.medium:
   label: medium
-  mediaQuery: 'all and (min-width: 475px) and (max-width: 850px)'
+  mediaQuery: 'all and (min-width: 501px) and (max-width: 850px)'
   weight: 1
   multipliers:
     - 1x
 bootstrap_barrio_subtheme.large:
   label: large
-  mediaQuery: 'all and (min-width: 851px)'
+  mediaQuery: 'all and (min-width: 851px) and (max-width: 1080px)'
+  weight: 2
+  multipliers:
+    - 1x
+bootstrap_barrio_subtheme.xlarge:
+  label: xlarge
+  mediaQuery: 'all and (min-width: 1081px) and (max-width: 1600px)'
+  weight: 2
+  multipliers:
+    - 1x
+bootstrap_barrio_subtheme.xxlarge:
+  label: xxlarge
+  mediaQuery: 'all and (min-width: 1601px)'
   weight: 2
   multipliers:
     - 1x
