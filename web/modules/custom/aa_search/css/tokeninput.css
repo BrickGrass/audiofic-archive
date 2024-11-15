@@ -1,0 +1,72 @@
+.token-input-list {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding-left: 0;
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.token-input-token {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: lightgrey;
+    border-radius: 1em;
+    padding: 7px;
+    /* order: 2; */
+}
+
+.token-input-token p {
+    margin: 0;
+}
+
+.token-input-input-token {
+    order: 1;
+}
+
+.token-input-input-token,
+.token-input-input-token input {
+    width: 100% !important;
+}
+
+.token-input-input-token input {
+    min-height: calc(1.5em + .5rem + 2px);
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    border-radius: .25rem;
+    color: #212529;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.token-input-delete-token {
+    cursor: pointer;
+}
+
+.token-input-delete-token:hover {
+    color: red;
+}
+
+.token-input-dropdown {
+    background-color: white;
+    border: 1px solid lightgrey;
+    padding: 0.5rem;
+}
+
+.token-input-dropdown ul,
+.token-input-dropdown p {
+    margin-bottom: 0;
+}
+
+.token-input-dropdown ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.token-input-selected-dropdown-item {
+    background-color: lightgrey;
+}

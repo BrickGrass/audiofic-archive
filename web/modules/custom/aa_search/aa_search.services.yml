@@ -1,0 +1,5 @@
+services:
+  aa_search.autocomplete_matcher:
+    class: Drupal\aa_search\AudioficEntityAutocompleteMatcher
+    arguments:
+      - '@plugin.manager.entity_reference_selection'

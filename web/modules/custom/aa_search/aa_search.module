@@ -119,16 +119,30 @@ function aa_search_form_alter(&$form, FormStateInterface $form_state, $form_id) 
 }
 
 /**
- * Implements hook_theme_suggestions_input_alter().
+ * Implements hook_theme_suggestions_HOOK_alter() for input.
  *
  * Alter twig suggestions for specific input widgets, to allow for form
  * specific templates.
  */
-function aa_search_theme_suggestions_input_alter(&$suggestions, array $variables) {
+function aa_search_theme_suggestions_input_alter(&$suggestions, array $variables, $hook) {
   $element = $variables['element'];
 
   if (isset($element['#attributes']['data_twig_suggestion'])) {
-    $suggestions[] = 'input__' . $element['#type'] . '__' . $element['#attributes']['data_twig_suggestion'];
+    $suggestions[] = $hook . '__' . $element['#type'] . '__' . $element['#attributes']['data_twig_suggestion'];
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter() for form_element.
+ *
+ * Alter twig suggestions for specific form elements, to allow for form
+ * specific templates.
+ */
+function aa_search_theme_suggestions_form_element_alter(array &$suggestions, array $variables, $hook) {
+  $element = $variables['element'];
+
+  if (isset($element['#attributes']['data_twig_suggestion'])) {
+    $suggestions[] = $hook . '__' . $element['#attributes']['data_twig_suggestion'];
   }
 }
 

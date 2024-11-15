@@ -13,3 +13,13 @@ homepage-search-sidebar:
   css:
     component:
       css/homepage_search_sidebar.css: {}
+
+autocomplete-token-input:
+  css:
+    component:
+      css/tokeninput.css: {}
+  js:
+    js/jquery.tokeninput.js: {}
+    js/attach_tokeninput.js: {}
+  dependencies:
+    - core/jquery

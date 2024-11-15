@@ -1,0 +1,7 @@
+aa_search.entity_autocomplete:
+  path: '/aa_autocomplete/{target_type}/{selection_handler}/{selection_settings_key}'
+  defaults:
+    _controller: '\Drupal\aa_search\Controller\AudioficEntityAutocompleteController::handleAutocomplete'
+  requirements:
+    # Every user have access to the route.
+    _access: 'TRUE'

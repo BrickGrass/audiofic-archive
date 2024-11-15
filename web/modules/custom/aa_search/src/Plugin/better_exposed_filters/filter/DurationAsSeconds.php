@@ -2,8 +2,8 @@
 
 namespace Drupal\aa_search\Plugin\better_exposed_filters\filter;
 
-use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
 
 /**
  * Duration filter for BEF.
