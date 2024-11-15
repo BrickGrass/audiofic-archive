@@ -19,6 +19,7 @@
     contentType: "json",
     excludeCurrent: false,
     excludeCurrentParameter: "x",
+    selector: "",
 
     // Prepopulation settings
     prePopulate: null,
@@ -253,6 +254,11 @@
               outline: "none"
           })
           .attr("id", $(input).data("settings").idPrefix + input.id)
+          .attr("role", "combobox")
+          .attr("aria-controls", $(input).data("settings").idPrefix + "dropdown-" + input.id)
+          .attr("aria-autocomplete", "list")
+          .attr("aria-expanded", "false")
+          .attr("aria-label", "This is the " + $(input).data("settings").placeholder + " tag entry. Enter a search term, then use the arrow keys to navigate through the results. Press enter on an option to select it.")
           .focus(function () {
               if ($(input).data("settings").disabled) {
                   return false;
@@ -446,6 +452,7 @@
       // The list to store the dropdown items in
       var dropdown = $("<div/>")
           .addClass($(input).data("settings").classes.dropdown)
+          .attr("id", $(input).data("settings").idPrefix + "dropdown-" + input.id)
           .appendTo("body")
           .hide();
 
@@ -609,6 +616,9 @@
           if(!readonly) {
             $("<span>" + $(input).data("settings").deleteText + "</span>")
                 .addClass($(input).data("settings").classes.tokenDelete)
+                .attr("tabindex", "0")
+                .attr("role", "button")
+                .attr("aria-label", "Remove tag " + item.name)
                 .appendTo($this_token)
                 .click(function () {
                     if (!$(input).data("settings").disabled) {
@@ -792,6 +802,8 @@
       function hide_dropdown () {
           dropdown.hide().empty();
           selected_dropdown_item = null;
+          input_box.attr("aria-expanded", "false")
+          input_box.removeAttr("aria-activedescendant");
       }
 
       function show_dropdown() {
@@ -922,6 +934,8 @@
                   show_dropdown();
               }
           }
+
+          input_box.attr("aria-expanded", "true");
       }
 
       // Highlight an item in the results dropdown
@@ -933,6 +947,9 @@
 
               item.addClass($(input).data("settings").classes.selectedDropdownItem);
               selected_dropdown_item = item.get(0);
+              if (selected_dropdown_item) {
+                input_box.attr("aria-activedescendant", selected_dropdown_item.id);
+              }
           }
       }
 
@@ -940,6 +957,7 @@
       function deselect_dropdown_item (item) {
           item.removeClass($(input).data("settings").classes.selectedDropdownItem);
           selected_dropdown_item = null;
+          input_box.removeAttr("aria-activedescendant");
       }
 
       // Do a search and show the "searching" dropdown if the input is longer
