@@ -19,6 +19,9 @@
         placeholder: placeholder,
         prePopulate: prePopulate,
         selector: selector,
+        deleteText: "<i class=\"bi bi-x-lg\"></i>",
+        excludeCurrent: true,
+        excludeCurrentParameter: "selected",
         resultsFormatter: function(item) {
           var string = item.name;
           return "<li id=\"" + id + "-" + item.id + "\">" + string + "</li>";

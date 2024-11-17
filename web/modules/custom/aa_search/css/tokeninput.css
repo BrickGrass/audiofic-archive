@@ -6,6 +6,15 @@
     padding-left: 0;
     margin-bottom: 0;
     width: 100%;
+    background-color: white;
+    border-radius: 0.25rem;
+}
+
+.token-input-list.token-selected {
+    border: 1px solid #ced4da;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .token-input-token {
@@ -15,7 +24,6 @@
     background: lightgrey;
     border-radius: 1em;
     padding: 7px;
-    /* order: 2; */
 }
 
 .token-input-token p {
@@ -41,6 +49,15 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+}
+
+.token-selected .token-input-input-token input {
+    border: 0;
+    border-top: 1px solid #ced4da;
+    border-radius: 0;
+    background-color: transparent;
+    width: calc(100% + 10px) !important;
+    margin-left: -5px;
 }
 
 .token-input-delete-token {

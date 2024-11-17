@@ -484,6 +484,8 @@
               insert_token(value);
               checkTokenLimit();
           });
+          // Update token selected class on token-input-list
+          token_list.addClass("token-selected");
       }
 
       // Check if widget should initialize as disabled
@@ -690,6 +692,9 @@
           // Don't show the help dropdown, they've got the idea
           hide_dropdown();
 
+          // Update token selected class on token-input-list
+          token_list.addClass("token-selected");
+
           // Execute the onAdd callback if defined
           if($.isFunction(callback)) {
               callback.call(hiddenInput,item);
@@ -778,6 +783,13 @@
                   .show()
                   .val("");
               focusWithTimeout(input_box);
+          }
+
+          // Update token selected class on token-input-list
+          if (token_count === 0) {
+            token_list.removeClass("token-selected");
+          } else {
+            token_list.addClass("token-selected");
           }
 
           // Execute the onDelete callback if defined
