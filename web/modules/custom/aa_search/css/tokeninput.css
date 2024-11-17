@@ -51,6 +51,11 @@
     appearance: none;
 }
 
+.token-input-input-token input:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
+}
+
 .token-selected .token-input-input-token input {
     border: 0;
     border-top: 1px solid #ced4da;
