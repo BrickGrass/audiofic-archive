@@ -42,13 +42,13 @@
 {% set margin = view_mode == 'full' ? 'me-1' : 'ms-1' %}
 
 {% if rating == "Explicit" %}
-  <span class="badge bg-danger {{ margin }}">E</span>
+  <span class="badge bg-danger {{ margin }}" title="Rating: Explicit" aria-label="Rating: Explicit">E</span>
 {% elseif rating == "Mature" %}
-  <span class="badge rating-mature {{ margin }}">M</span>
+  <span class="badge rating-mature {{ margin }}" title="Rating: Mature" aria-label="Rating: Mature">M</span>
 {% elseif rating == "Teen and up" %}
-  <span class="badge bg-warning {{ margin }}">T</span>
+  <span class="badge bg-warning {{ margin }}" title="Rating: Teen and up" aria-label="Rating: Teen and up">T</span>
 {% elseif rating == "General" %}
-  <span class="badge bg-success {{ margin }}">G</span>
+  <span class="badge bg-success {{ margin }}" title="Rating: General" aria-label="Rating: General">G</span>
 {% else %}
   <span class="badge bg-secondary {{ margin }}">No Age Rating</span>
 {% endif %}
