@@ -23,3 +23,9 @@ autocomplete-token-input:
     js/attach_tokeninput.js: {}
   dependencies:
     - core/jquery
+
+jump-to-filters:
+  js:
+    js/jump_to_filters.js: {}
+  dependencies:
+    - core/jquery

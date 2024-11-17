@@ -115,6 +115,7 @@ function aa_search_form_alter(&$form, FormStateInterface $form_state, $form_id) 
 
     $form['#attached']['library'][] = 'aa_search/duration';
     $form['#attached']['library'][] = 'aa_search/search-sidebar';
+    $form['#attached']['library'][] = 'aa_search/jump-to-filters';
   }
 }
 
