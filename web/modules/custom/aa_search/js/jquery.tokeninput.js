@@ -628,6 +628,13 @@
                         hiddenInput.change();
                         return false;
                     }
+                })
+                .keydown(function (e) {
+                    if (!$(input).data("settings").disabled && ["Space", "Enter"].includes(e.code)) {
+                        delete_token($(this).parent());
+                        hiddenInput.change();
+                        return false;
+                    }
                 });
           }
 
