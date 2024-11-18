@@ -104,10 +104,10 @@
     {{ form.title }}
   </div>
 
-  <div>
+  <div class="{{ form.actions.reset['#access'] ? 'mb-2' : '' }}">
     {{ form.actions.reset }}
   </div>
-  <div class="mt-2">
+  <div>
     {{ form.actions.submit }}
   </div>
 </div>
