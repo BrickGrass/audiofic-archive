@@ -24,7 +24,7 @@
 
 <div class="d-flex flex-column">
   <div class="mb-2">
-    {{ form.actions }}
+    {{ form.actions.submit }}
   </div>
 
   <div>
@@ -105,6 +105,9 @@
   </div>
 
   <div>
-    {{ form.actions }}
+    {{ form.actions.reset }}
+  </div>
+  <div class="mt-2">
+    {{ form.actions.submit }}
   </div>
 </div>

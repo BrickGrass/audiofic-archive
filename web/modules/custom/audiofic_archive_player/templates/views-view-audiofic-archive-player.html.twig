@@ -55,16 +55,16 @@
     <div class="full-work-player-now-playing p-2 mt-2 {{ options.streaming_files | length < 2 ? 'full-work-player-single-file' : '' }}">
       <span>Now Playing:</span>
       <div class="d-flex ms-1">
-        <button class="player-control" id="player-prev" aria-label="Previous Track" disabled>
+        <button class="player-control" id="player-prev" aria-label="Previous Track" title="Previous Track" disabled>
           <i class="bi bi-arrow-left-circle-fill"></i>
           <i class="bi bi-arrow-left-circle chrome-only"></i>
         </button>
-        <button class="player-control" id="player-next" aria-label="Next Track">
+        <button class="player-control" id="player-next" aria-label="Next Track" title="Next Track">
           <i class="bi bi-arrow-right-circle-fill"></i>
           <i class="bi bi-arrow-right-circle chrome-only"></i>
         </button>
         {% if options.streaming_files | length > 1 %}
-          <button class="player-control" data-bs-toggle="collapse" data-bs-target="#full-work-player-playlist" aria-expanded="false" aria-controls="full-work-player-playlist" id="player-expand" aria-label="Show/Hide Tracklist">
+          <button class="player-control" data-bs-toggle="collapse" data-bs-target="#full-work-player-playlist" aria-expanded="false" aria-controls="full-work-player-playlist" id="player-expand" aria-label="Show/Hide Tracklist" title="Show/Hide Tracklist">
             <i class="bi bi-music-note-list"></i>
             <i class="bi bi-music-note-list chrome-only"></i>
           </button>
