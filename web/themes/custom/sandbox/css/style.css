@@ -8,6 +8,10 @@
 	margin-bottom: 10px;
 }
 
+small {
+	font-size: 0.85rem;
+}
+
 @media (min-width: 768px) {
 	.collapse.dont-collapse-sm {
 		display: block;
@@ -17,6 +21,14 @@
 }
 
 @media (max-width: 768px) {
+	body {
+		font-size: 14px;
+	}
+
+	small {
+		font-size: 1em;
+	}
+
 	.contextual-menu .btn {
 		padding: 0.25rem 0.5rem;
 		font-size: 0.875rem;
@@ -235,7 +247,7 @@ button.nav-link {
 }
 
 .full-work-dates small {
-	font-size: 0.75em !important;
+	font-size: 0.85rem !important;
 }
 
 .full-work .work-field-label {
