@@ -57,7 +57,9 @@
         "drupal/gin_toolbar": "^1.0@rc",
         "drupal/gin": "^3.0@rc",
         "drupal/search_api_saved_searches": "^1.0",
-        "drupal/metatag": "^2.1"
+        "drupal/metatag": "^2.1",
+        "drupal/eca": "^2.0",
+        "drupal/rules": "^4.0"
     },
     "require-dev": {
         "drupal/core-dev": "10.3.6"
