@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d463bb4efa7e554e3572b58f1de6f5e9",
+    "content-hash": "288e5c3c416556c96968f19e52bedfd1",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1927,6 +1927,58 @@
             }
         },
         {
+            "name": "drupal/bpmn_io",
+            "version": "2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/bpmn_io.git",
+                "reference": "2.0.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/bpmn_io-2.0.2.zip",
+                "reference": "2.0.2",
+                "shasum": "d6481121f39a03d154e1872f2af236a1eb9a11c2"
+            },
+            "require": {
+                "drupal/core": "^10.3 || ^11",
+                "drupal/eca": "^2.0",
+                "drupal/eca_modeller_bpmn": "^2",
+                "php": ">=8.1"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.2",
+                    "datestamp": "1732117749",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "boromino",
+                    "homepage": "https://www.drupal.org/user/859722"
+                },
+                {
+                    "name": "jurgenhaas",
+                    "homepage": "https://www.drupal.org/user/168924"
+                }
+            ],
+            "description": "BPMN modeller for ECA, integrated into Drupal's admin UI.",
+            "homepage": "https://www.drupal.org/project/bpmn_io",
+            "support": {
+                "source": "https://drupal.org/project/bpmn_io",
+                "issues": "https://drupal.org/project/issues/bpmn_io"
+            }
+        },
+        {
             "name": "drupal/cer",
             "version": "5.0.0-beta3",
             "source": {
@@ -2632,6 +2684,91 @@
             "support": {
                 "source": "https://drupal.org/project/eca",
                 "issues": "https://drupal.org/project/issues/eca"
+            }
+        },
+        {
+            "name": "drupal/eca_modeller_bpmn",
+            "version": "2.0.8",
+            "require": {
+                "drupal/core": "^10.3 || ^11",
+                "drupal/eca": "^2",
+                "drupal/eca_ui": "*"
+            },
+            "type": "metapackage",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.8",
+                    "datestamp": "1732206288",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "boromino",
+                    "homepage": "https://www.drupal.org/user/859722"
+                },
+                {
+                    "name": "danielspeicher",
+                    "homepage": "https://www.drupal.org/user/3621778"
+                },
+                {
+                    "name": "jurgenhaas",
+                    "homepage": "https://www.drupal.org/user/168924"
+                }
+            ],
+            "description": "Common functionality for all BPMN based modeller implementations.",
+            "homepage": "https://www.drupal.org/project/eca",
+            "support": {
+                "source": "https://git.drupalcode.org/project/eca"
+            }
+        },
+        {
+            "name": "drupal/eca_ui",
+            "version": "2.0.8",
+            "require": {
+                "drupal/core": "^10.3 || ^11",
+                "drupal/eca": "*"
+            },
+            "type": "metapackage",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.8",
+                    "datestamp": "1732206288",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "boromino",
+                    "homepage": "https://www.drupal.org/user/859722"
+                },
+                {
+                    "name": "danielspeicher",
+                    "homepage": "https://www.drupal.org/user/3621778"
+                },
+                {
+                    "name": "jurgenhaas",
+                    "homepage": "https://www.drupal.org/user/168924"
+                }
+            ],
+            "description": "Provides a user interface for managing ECA models.",
+            "homepage": "https://www.drupal.org/project/eca",
+            "support": {
+                "source": "https://git.drupalcode.org/project/eca"
             }
         },
         {
