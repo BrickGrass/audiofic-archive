@@ -5,6 +5,7 @@ This project intends to:
 - Ensure that the audiofic archive lives many more years to come, by modernising it with Drupal 10
 - Reduce the work that archivists have to do by allowing podficcers to upload & manage their own works
 - Enhance browsing the site with a fully custom theme
+- Ensure accessibility at all levels
 - And more...
 
 This work is done by volunteers in our spare time, so as much as we would love to promise a set date that the new archive will be up and running, this simply isn't feasible. We are currently still in alpha and cannot accept input/suggestions from outside of the people who already volunteer on the audiofic archive. We are currently aiming to get the project in such a state where we can begin beta testing and accept feedback from everyone, and we will make a lot of noise when that time comes!
