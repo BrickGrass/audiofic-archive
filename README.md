@@ -13,3 +13,6 @@ This work is done by volunteers in our spare time, so as much as we would love t
 If you have any spare time and any level of ability with web development/html+css theming/UI design etc, we would love to have your help. George (BrickGrass) is very willing to spend time teaching anyone the ropes so that they can gain enough confidence to help out. There are tasks at every level that could use doing and everyone has to start somewhere :)
 
 You can contact us via: jinjurlymods@squidge.org
+
+## A sneak peek:
+<img width="1835" height="934" alt="Screenshot 2026-03-11 at 8 51 50 pm" src="https://github.com/user-attachments/assets/312d420f-debf-4698-8036-cc72273916ce" />
