@@ -16,3 +16,5 @@ You can contact us via: jinjurlymods@squidge.org
 
 ## A sneak peek:
 <img width="1835" height="934" alt="Screenshot 2026-03-11 at 8 51 50 pm" src="https://github.com/user-attachments/assets/312d420f-debf-4698-8036-cc72273916ce" />
+<img width="1836" height="933" alt="Screenshot 2026-03-11 at 8 53 47 pm" src="https://github.com/user-attachments/assets/a4d1a596-f9da-4583-abf6-93543d7b1fc9" />
+<img width="1836" height="936" alt="Screenshot 2026-03-11 at 8 55 26 pm" src="https://github.com/user-attachments/assets/b5eacec9-09b0-4acb-9a66-5206f9fbdbd8" />
