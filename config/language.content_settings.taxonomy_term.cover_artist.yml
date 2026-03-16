@@ -1,0 +1,11 @@
+uuid: 3abcb9c9-c5ce-4f78-af9d-c39e305643ca
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.cover_artist
+id: taxonomy_term.cover_artist
+target_entity_type_id: taxonomy_term
+target_bundle: cover_artist
+default_langcode: site_default
+language_alterable: true

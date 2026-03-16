@@ -1,0 +1,23 @@
+uuid: 6de04927-fa30-4a0f-b758-7cc05637868a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_use_for_duration
+    - media.type.mp3_file
+id: media.mp3_file.field_use_for_duration
+field_name: field_use_for_duration
+entity_type: media
+bundle: mp3_file
+label: 'Use for duration?'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

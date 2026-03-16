@@ -61,8 +61,7 @@
         "drupal/eca": "^2.1",
         "drupal/rules": "^4.0",
         "drupal/bpmn_io": "^2.0",
-        "drupal/profile": "^1.11",
-        "drupal-eca-recipe/eca_lib_0023": "dev-main"
+        "drupal/profile": "^1.11"
     },
     "require-dev": {
         "drupal/core-dev": "10.3.6"
@@ -106,9 +105,6 @@
             },
             "drupal/core": {
                 "Fixes bug in views where if exposed filters are in a block the contextual filters are ignored": "patches/views-fix-exposed-contextual-filter-conflict.patch"
-            },
-            "drupal/cer": {
-                "Cer, fix accessing undefined index": "patches//prevent-undefined-index-3254663-6.patch"
             },
             "drupal/gin": {
                 "Patches sidebar bugs on wide touchscreen devices. Remove once https://www.drupal.org/project/gin/issues/3463177 is merged.": "patches/gin-sidebar-resize-overlap-15791901-2.patch"

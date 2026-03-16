@@ -1,0 +1,25 @@
+uuid: 6e409f34-d73e-4110-99ff-dfd985cc4dd1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_festival
+    - node.type.work
+id: node.work.field_festival
+field_name: field_festival
+entity_type: node
+bundle: work
+label: Festivals
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: views
+  handler_settings:
+    view:
+      view_name: festivals_open
+      display_name: entity_reference_1
+      arguments: {  }
+field_type: entity_reference

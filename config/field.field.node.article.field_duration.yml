@@ -1,0 +1,23 @@
+uuid: f3b459f9-517a-4e81-a47d-f4f016a661af
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_duration
+    - node.type.article
+  module:
+    - duration_field
+id: node.article.field_duration
+field_name: field_duration
+entity_type: node
+bundle: article
+label: Duration
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  granularity: 'h:i'
+  include_weeks: false
+field_type: duration

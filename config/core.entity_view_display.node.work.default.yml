@@ -1,0 +1,204 @@
+uuid: 8028b825-cae7-4d08-96a3-c6fece6d593f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.work.body
+    - field.field.node.work.field_author
+    - field.field.node.work.field_category
+    - field.field.node.work.field_completion_status
+    - field.field.node.work.field_cover
+    - field.field.node.work.field_cover_artist
+    - field.field.node.work.field_duration
+    - field.field.node.work.field_fandom2
+    - field.field.node.work.field_festival
+    - field.field.node.work.field_format
+    - field.field.node.work.field_language
+    - field.field.node.work.field_length
+    - field.field.node.work.field_mp3_files
+    - field.field.node.work.field_notes
+    - field.field.node.work.field_orders
+    - field.field.node.work.field_other_files
+    - field.field.node.work.field_owner
+    - field.field.node.work.field_part_label
+    - field.field.node.work.field_podfic_post
+    - field.field.node.work.field_rating
+    - field.field.node.work.field_reader
+    - field.field.node.work.field_reader_collections
+    - field.field.node.work.field_relationship
+    - field.field.node.work.field_series
+    - field.field.node.work.field_series_links
+    - field.field.node.work.field_streaming_format
+    - field.field.node.work.field_summary
+    - field.field.node.work.field_temp
+    - field.field.node.work.field_text_post
+    - field.field.node.work.field_warning
+    - node.type.work
+  module:
+    - duration_field
+    - options
+    - text
+    - user
+id: node.work.default
+targetEntityType: node
+bundle: work
+mode: default
+content:
+  field_category:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_completion_status:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_cover_artist:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 119
+    region: content
+  field_duration:
+    type: duration_human_display
+    label: above
+    settings:
+      text_length: full
+      separator: space
+    third_party_settings: {  }
+    weight: 111
+    region: content
+  field_festival:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 114
+    region: content
+  field_format:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_language:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_notes:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 117
+    region: content
+  field_orders:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 113
+    region: content
+  field_other_files:
+    type: entity_reference_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_owner:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 120
+    region: content
+  field_reader:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_reader_collections:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_series_links:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 115
+    region: content
+  field_streaming_format:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_summary:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 116
+    region: content
+  field_temp:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 121
+    region: content
+  flag_bookmark:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  body: true
+  field_author: true
+  field_cover: true
+  field_fandom2: true
+  field_length: true
+  field_mp3_files: true
+  field_part_label: true
+  field_podfic_post: true
+  field_rating: true
+  field_relationship: true
+  field_series: true
+  field_text_post: true
+  field_warning: true
+  flag_to_listen: true
+  langcode: true
+  links: true
+  search_api_excerpt: true

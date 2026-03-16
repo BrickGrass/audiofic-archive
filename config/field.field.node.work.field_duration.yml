@@ -1,0 +1,23 @@
+uuid: cf2b0c0a-242f-4781-bf9b-ae00e3828181
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_duration
+    - node.type.work
+  module:
+    - duration_field
+id: node.work.field_duration
+field_name: field_duration
+entity_type: node
+bundle: work
+label: Duration
+description: 'Put the total duration of the work here (don''t count the same files twice, i.e. don''t add in both "sfx" & "no sfx" versions).<br />You can use this <a href="https://datetimecalculator.net/add-time-calculator" target="_blank" rel="noopener noreferrer">calculator</a> to add up the lengths of several chapters or parts. Also, a compilation file will give you the total length.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  granularity: 'h:i:s'
+  include_weeks: false
+field_type: duration

@@ -1,0 +1,33 @@
+uuid: 5d50a9af-809a-4b4c-bd40-eba715040066
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_language
+    - node.type.work
+    - taxonomy.vocabulary.language
+  content:
+    - 'taxonomy_term:language:57e07385-1a6b-4ada-b21c-3557b89ff724'
+id: node.work.field_language
+field_name: field_language
+entity_type: node
+bundle: work
+label: Language
+description: "<br />This specifies the main language of your recording: <span id=\"lang\" class=\"expand-help-hide\">\r\n<p>\r\nThe default value is English - delete the default text to locate a different language. When searching for the language you want, enter a few characters and drop-down options will appear. You can enter English versions of language names or the original language, including non-English characters. e.g. entering \"ko\" will bring up Korean, as will entering 한 . </p><p>To add a new language, use the \"+\" button at right. Before you decide that the language you want isn't in the Archive, search for the English version of its name, just to be sure.</p>  </span><a href=\"#\" role=\"button\" aria-label=\"Expand/Collapse help text\" class=\"expand-help-button\" data-for=\"lang\">Read More</a>\r\n"
+required: true
+translatable: false
+default_value:
+  -
+    target_uuid: 57e07385-1a6b-4ada-b21c-3557b89ff724
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      language: language
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,49 @@
+uuid: f33f5230-d82f-40f9-b835-5bd7944f8089
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.fandom
+  module:
+    - field_group
+third_party_settings:
+  field_group:
+    group_new_fandom:
+      children:
+        - name
+      label: 'New fandom'
+      region: content
+      parent_name: ''
+      weight: 0
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        description: "Put the full name of the new fandom here.<br /><br />For consistency when adding new fandoms, copy the fandom name from AO3 and paste it in. You can use non-English characters &/or the Romanized original language plus an English version of the fandom if that exists, separated by \"|\"  e.g. doragon bōru | dragon ball, 陈情令 | The Untamed (tv). Wikipedia is a source for the most common Romanizations. \r\n<br /><br />\r\nPlease avoid meta-tags for fandoms if at all possible, as these make searching difficult. e.g. use captain america (movies), &/or captain america (comics) rather than captain america (all media types). For a new fandom where only one media type exists, it helps to add the media type in parentheses in case there are later adaptations in different media. e.g. Vespertine (book) allows for the possibility that a movie or tv show might later be made, so searches can be more accurate."
+        required_fields: true
+id: taxonomy_term.fandom.default
+targetEntityType: taxonomy_term
+bundle: fandom
+mode: default
+content:
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  name:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  description: true
+  path: true
+  status: true

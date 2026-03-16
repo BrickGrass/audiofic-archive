@@ -1,0 +1,29 @@
+uuid: 233f6df7-d0c8-437b-868c-69ce56c0a21c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_fandom2
+    - node.type.rec_list
+    - taxonomy.vocabulary.fandom
+id: node.rec_list.field_fandom2
+field_name: field_fandom2
+entity_type: node
+bundle: rec_list
+label: Fandom
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      fandom: fandom
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,15 @@
+uuid: 04f7f06f-3142-4c2e-915a-6625bcfddcfb
+langcode: en
+status: true
+dependencies:
+  module:
+    - taxonomy_unique
+third_party_settings:
+  taxonomy_unique:
+    enabled: true
+    message: 'Term %term already exists in vocabulary %vocabulary.'
+name: Podficcer
+vid: reader
+description: null
+weight: 0
+new_revision: false

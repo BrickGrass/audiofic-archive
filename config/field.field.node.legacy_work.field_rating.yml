@@ -1,0 +1,29 @@
+uuid: f45e6971-a9a4-4359-88e5-ac497e2913be
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_rating
+    - node.type.legacy_work
+    - taxonomy.vocabulary.rating
+id: node.legacy_work.field_rating
+field_name: field_rating
+entity_type: node
+bundle: legacy_work
+label: Rating
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      rating: rating
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

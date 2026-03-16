@@ -1,0 +1,14 @@
+uuid: a6e46d7c-9c90-4a10-939c-db618f18eb7e
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: vymHlgJy26BuI5GGj9-IXjwR3dRC5C0tij4BpWJnoqw
+id: feedback
+label: 'Website feedback'
+recipients:
+  - admin@wampserver.invalid
+reply: ''
+weight: 0
+message: 'Your message has been sent.'
+redirect: ''

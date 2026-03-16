@@ -1,0 +1,33 @@
+uuid: ebe95d3d-71c2-46e4-89f7-64b1d814d8e1
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.fandom
+  module:
+    - facets
+    - taxonomy
+  theme:
+    - bootstrap_barrio_subtheme
+id: bootstrap_barrio_subtheme_fandom
+theme: bootstrap_barrio_subtheme
+region: content
+weight: -10
+provider: null
+plugin: 'facet_block:fandom'
+settings:
+  id: 'facet_block:fandom'
+  label: Fandom
+  label_display: '0'
+  provider: facets
+  context_mapping: {  }
+  block_id: bootstrap_barrio_subtheme_fandom
+visibility:
+  'entity_bundle:taxonomy_term':
+    id: 'entity_bundle:taxonomy_term'
+    negate: false
+    context_mapping:
+      taxonomy_term: '@taxonomy_term.taxonomy_term_route_context:taxonomy_term'
+    bundles:
+      author: author
+      reader: reader

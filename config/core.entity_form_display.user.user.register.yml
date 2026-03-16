@@ -1,0 +1,105 @@
+uuid: 6ae62854-af9e-4ec0-998c-bf2d9685c588
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.user.register
+    - field.field.user.user.field_author_name
+    - field.field.user.user.field_cover_artist_name
+    - field.field.user.user.field_curator_name
+    - field.field.user.user.field_profile
+    - field.field.user.user.field_reader_name
+  module:
+    - field_group
+    - profile
+    - user
+third_party_settings:
+  field_group:
+    group_podficcer_author_and_cover:
+      children:
+        - field_reader_name
+      label: '<h1>Reader name</h1> (required before you can post podfic)'
+      region: hidden
+      parent_name: ''
+      weight: 9
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: true
+        description: ''
+        required_fields: true
+    group_profile:
+      children:
+        - field_profile
+      label: '<h1>Public profile</h1>'
+      region: hidden
+      parent_name: ''
+      weight: 7
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: true
+        description: ''
+        required_fields: true
+    group_be_recognized_as_an_author:
+      children:
+        - field_author_name
+        - field_cover_artist_name
+      label: '<h1>Author and Cover Artist names</h1>Add your author and cover artist names'
+      region: hidden
+      parent_name: ''
+      weight: 8
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: true
+        description: ''
+        required_fields: true
+_core:
+  default_config_hash: FaQ9Ptcpxpg30AtiqRDtl_8zbJArHP1LPfug_s59TOA
+id: user.user.register
+targetEntityType: user
+bundle: user
+mode: register
+content:
+  account:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  contact:
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  language:
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  pseuds_profiles:
+    type: profile_form
+    weight: 90
+    region: content
+    settings:
+      form_mode: default
+    third_party_settings: {  }
+  timezone:
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_author_name: true
+  field_cover_artist_name: true
+  field_curator_name: true
+  field_profile: true
+  field_reader_name: true
+  langcode: true
+  path: true

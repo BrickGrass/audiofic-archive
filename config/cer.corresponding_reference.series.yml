@@ -1,0 +1,14 @@
+uuid: cb0e4766-6027-42ea-b2d7-9e6d3de3bcd5
+langcode: en
+status: true
+dependencies: {  }
+id: series
+label: Series
+enabled: true
+first_field: field_series
+second_field: field_works_series
+add_direction: append
+bundles:
+  node:
+    - playlist
+    - work

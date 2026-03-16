@@ -1,0 +1,15 @@
+uuid: 35269387-df23-4d71-9915-4ec71ff8d7bc
+langcode: en
+status: true
+dependencies:
+  module:
+    - taxonomy_unique
+third_party_settings:
+  taxonomy_unique:
+    enabled: true
+    message: 'Term %term already exists in vocabulary %vocabulary.'
+name: 'Series (legacy)'
+vid: series
+description: null
+weight: 0
+new_revision: false

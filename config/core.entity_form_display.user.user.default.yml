@@ -1,0 +1,188 @@
+uuid: 913919c2-afc6-459f-8f3d-ee085525ad65
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.user.user.field_author_name
+    - field.field.user.user.field_cover_artist_name
+    - field.field.user.user.field_curator_name
+    - field.field.user.user.field_profile
+    - field.field.user.user.field_reader_name
+  module:
+    - field_group
+    - inline_entity_form
+    - text
+    - user
+third_party_settings:
+  field_group:
+    group_user_name_and_password:
+      children:
+        - account
+      label: '<h1>User name and password</h1>'
+      region: content
+      parent_name: ''
+      weight: 0
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: true
+        description: ''
+        required_fields: false
+    group_podficcer_author_and_cover:
+      children:
+        - field_reader_name
+      label: '<h1>Reader name</h1> (required before you can post podfic)'
+      region: content
+      parent_name: ''
+      weight: 3
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: true
+        description: ''
+        required_fields: true
+    group_profile:
+      children:
+        - field_profile
+      label: '<h1>Public profile</h1>'
+      region: content
+      parent_name: ''
+      weight: 2
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: true
+        description: ''
+        required_fields: true
+    group_preferences:
+      children:
+        - contact
+        - language
+        - timezone
+      label: '<h1>Preferences</h1>'
+      region: content
+      parent_name: ''
+      weight: 1
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: true
+        description: ''
+        required_fields: false
+    group_be_recognized_as_an_author:
+      children:
+        - field_author_name
+        - field_cover_artist_name
+      label: '<h1>Author and Cover Artist names</h1>Add your author and cover artist names'
+      region: content
+      parent_name: ''
+      weight: 5
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: true
+        description: ''
+        required_fields: true
+_core:
+  default_config_hash: FaQ9Ptcpxpg30AtiqRDtl_8zbJArHP1LPfug_s59TOA
+id: user.user.default
+targetEntityType: user
+bundle: user
+mode: default
+content:
+  account:
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  contact:
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_author_name:
+    type: inline_entity_form_complex
+    weight: 15
+    region: content
+    settings:
+      form_mode: default
+      override_labels: true
+      label_singular: 'author name'
+      label_plural: 'author names'
+      allow_new: true
+      allow_existing: true
+      match_operator: CONTAINS
+      allow_duplicate: false
+      collapsible: false
+      collapsed: false
+      revision: false
+      removed_reference: keep
+    third_party_settings: {  }
+  field_cover_artist_name:
+    type: inline_entity_form_complex
+    weight: 17
+    region: content
+    settings:
+      form_mode: default
+      override_labels: true
+      label_singular: 'Cover artist'
+      label_plural: 'Cover artists'
+      allow_new: true
+      allow_existing: true
+      match_operator: CONTAINS
+      allow_duplicate: false
+      collapsible: false
+      collapsed: false
+      revision: false
+      removed_reference: keep
+    third_party_settings: {  }
+  field_profile:
+    type: text_textarea
+    weight: 16
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_reader_name:
+    type: inline_entity_form_complex
+    weight: 14
+    region: content
+    settings:
+      form_mode: default
+      override_labels: true
+      label_singular: 'Reader name'
+      label_plural: 'Reader names'
+      allow_new: true
+      allow_existing: true
+      match_operator: CONTAINS
+      allow_duplicate: false
+      collapsible: false
+      collapsed: false
+      revision: false
+      removed_reference: keep
+    third_party_settings: {  }
+  language:
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  timezone:
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_curator_name: true
+  langcode: true
+  path: true

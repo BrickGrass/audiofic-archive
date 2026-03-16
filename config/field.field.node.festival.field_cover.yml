@@ -1,0 +1,38 @@
+uuid: 82170058-0fa3-4de8-bc37-8501ad89e89a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_cover
+    - node.type.festival
+  module:
+    - image
+id: node.festival.field_cover
+field_name: field_cover
+entity_type: node
+bundle: festival
+label: Cover
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'png gif jpg jpeg'
+  max_filesize: ''
+  max_resolution: ''
+  min_resolution: ''
+  alt_field: true
+  alt_field_required: true
+  title_field: false
+  title_field_required: false
+  default_image:
+    uuid: ''
+    alt: ''
+    title: ''
+    width: 500
+    height: 500
+field_type: image

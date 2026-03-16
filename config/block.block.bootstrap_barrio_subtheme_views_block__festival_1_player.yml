@@ -1,0 +1,38 @@
+uuid: 92b4f6dc-4755-4f80-b4d7-d739cd3bae2a
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.festival_1
+  module:
+    - node
+    - system
+    - views
+  theme:
+    - bootstrap_barrio_subtheme
+id: bootstrap_barrio_subtheme_views_block__festival_1_player
+theme: bootstrap_barrio_subtheme
+region: content
+weight: -4
+provider: null
+plugin: 'views_block:festival_1-player'
+settings:
+  id: 'views_block:festival_1-player'
+  label: ''
+  label_display: '0'
+  provider: views
+  context_mapping: {  }
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '/node/*'
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      festival: festival

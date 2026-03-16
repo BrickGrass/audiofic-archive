@@ -1,0 +1,336 @@
+uuid: 50f8dbf0-a7b2-4b3a-8403-c7c45096b7a6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.festival.field_reader
+    - field.field.node.legacy_work.field_reader
+    - field.field.node.playlist.field_reader
+    - field.field.node.rec_list.field_reader
+    - field.field.node.work.field_reader
+    - field.storage.node.field_reader
+  module:
+    - eca_access
+    - eca_base
+    - eca_content
+    - eca_endpoint
+    - eca_user
+id: process_avwltzs
+modeller: bpmn_io
+label: 'Remove the user reader name from the list of readers'
+version: ''
+weight: 0
+events:
+  Event_136z8iz:
+    plugin: 'eca_base:eca_custom'
+    label: 'referer custom event'
+    configuration:
+      event_id: referer
+    successors:
+      -
+        id: Activity_10lrnp4
+        condition: ''
+  Event_0af9uxe:
+    plugin: 'eca_endpoint:access'
+    label: Access
+    configuration:
+      first_path_argument: removereader
+      second_path_argument: ''
+    successors:
+      -
+        id: Activity_0c0nxnb
+        condition: Flow_1fwrptd
+      -
+        id: Activity_0hygi2k
+        condition: Flow_0mwnyxp
+  Event_0xlpnyr:
+    plugin: 'eca_endpoint:response'
+    label: Response
+    configuration:
+      first_path_argument: removereader
+      second_path_argument: ''
+    successors:
+      -
+        id: Activity_0bpy2n8
+        condition: ''
+conditions:
+  Flow_1p7sx0n:
+    plugin: eca_entity_field_value_empty
+    configuration:
+      field_name: field_reader
+      negate: true
+      entity: work
+  Flow_12dtppp:
+    plugin: eca_entity_field_value_empty
+    configuration:
+      negate: false
+      field_name: field_reader
+      entity: work
+  Flow_07ftxpq:
+    plugin: eca_entity_type_bundle
+    configuration:
+      negate: false
+      type: 'node work'
+      entity: work
+  Flow_14ragn0:
+    plugin: eca_entity_exists
+    configuration:
+      unchanged: false
+      latest_revision: false
+      from: id
+      entity_type: node
+      entity_id: '[entityid]'
+      revision_id: ''
+      properties: ''
+      langcode: _interface
+      negate: true
+      entity: ''
+  Flow_1hbjdlr:
+    plugin: eca_entity_exists
+    configuration:
+      negate: false
+      unchanged: false
+      latest_revision: false
+      from: id
+      entity_type: node
+      entity_id: '[entityid]'
+      revision_id: ''
+      properties: ''
+      langcode: _interface
+      entity: ''
+  Flow_038k5ot:
+    plugin: eca_entity_type_bundle
+    configuration:
+      type: 'node work'
+      negate: true
+      entity: work
+  Flow_1fwrptd:
+    plugin: eca_user_role
+    configuration:
+      account: '[session_user]'
+      role: administrator
+      negate: true
+  Flow_1hyw7wa:
+    plugin: eca_user_role
+    configuration:
+      account: '[session_user]'
+      role: content_editor
+      negate: true
+  Flow_0m8rxzw:
+    plugin: eca_user_role
+    configuration:
+      negate: false
+      account: '[session_user]'
+      role: content_editor
+  Flow_0mwnyxp:
+    plugin: eca_user_role
+    configuration:
+      negate: false
+      account: '[session_user]'
+      role: administrator
+gateways:
+  Gateway_0mbot4g:
+    type: 0
+    successors:
+      -
+        id: Activity_1t8naal
+        condition: ''
+actions:
+  Activity_1t8naal:
+    plugin: eca_set_field_value
+    label: 'Remove readername'
+    configuration:
+      field_name: field_reader
+      field_value: '[session_user:field_reader_name]'
+      method: remove
+      strip_tags: false
+      trim: false
+      save_entity: false
+      object: work
+    successors:
+      -
+        id: Activity_1avv21s
+        condition: Flow_1p7sx0n
+      -
+        id: Activity_0y98a0y
+        condition: Flow_12dtppp
+  Activity_0jczk5q:
+    plugin: eca_save_entity
+    label: Save
+    configuration:
+      object: work
+    successors:
+      -
+        id: Activity_0k304x8
+        condition: ''
+  Activity_1wqw1oi:
+    plugin: action_message_action
+    label: 'Display message'
+    configuration:
+      message: '[message]'
+      replace_tokens: true
+    successors: {  }
+  Activity_10lrnp4:
+    plugin: eca_endpoint_get_request_header
+    label: 'Get referer'
+    configuration:
+      name: referer
+      token_name: referer
+    successors:
+      -
+        id: Activity_07mpuuq
+        condition: ''
+  Activity_07mpuuq:
+    plugin: action_goto_action
+    label: Redirect
+    configuration:
+      url: '[referer]'
+      replace_tokens: true
+    successors:
+      -
+        id: Activity_1wqw1oi
+        condition: ''
+  Activity_0y98a0y:
+    plugin: eca_set_field_value
+    label: 'Add the anonymous reader'
+    configuration:
+      field_name: field_reader
+      field_value: '51'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: false
+      object: ''
+    successors:
+      -
+        id: Activity_0l950aa
+        condition: ''
+  Activity_1avv21s:
+    plugin: eca_token_set_value
+    label: 'Set message'
+    configuration:
+      token_name: message
+      token_value: 'Reader [session_user:field_reader_name] has been removed from work <a href=[work:url]>[work:title]</a>'
+      use_yaml: false
+      validate_yaml: false
+    successors:
+      -
+        id: Activity_0jczk5q
+        condition: ''
+  Activity_0k304x8:
+    plugin: eca_trigger_custom_event
+    label: 'Call referer'
+    configuration:
+      event_id: referer
+      tokens: message
+    successors: {  }
+  Activity_0l950aa:
+    plugin: eca_token_set_value
+    label: 'Set message'
+    configuration:
+      token_name: message
+      token_value: 'Reader [session_user:field_reader_name] was the only one listed in the work <a href=[work:url]>[work:title]</a>. It has been replaced with the "anonymous" user.'
+      use_yaml: false
+      validate_yaml: false
+    successors:
+      -
+        id: Activity_0jczk5q
+        condition: ''
+  Activity_1wvllkr:
+    plugin: eca_access_set_result
+    label: Forbidden
+    configuration:
+      access_result: forbidden
+    successors:
+      -
+        id: Activity_0ks8x78
+        condition: ''
+  Activity_148wmil:
+    plugin: eca_trigger_custom_event
+    label: 'Call referer'
+    configuration:
+      event_id: referer
+      tokens: message
+    successors: {  }
+  Activity_0ks8x78:
+    plugin: eca_token_set_value
+    label: 'Set message'
+    configuration:
+      token_name: message
+      token_value: 'You must be logged in to perform this action.'
+      use_yaml: false
+      validate_yaml: false
+    successors:
+      -
+        id: Activity_148wmil
+        condition: ''
+  Activity_0hygi2k:
+    plugin: eca_access_set_result
+    label: Allowed
+    configuration:
+      access_result: allowed
+    successors: {  }
+  Activity_0bpy2n8:
+    plugin: eca_endpoint_get_path_argument
+    label: 'Get entity id'
+    configuration:
+      index: '2'
+      token_name: entityid
+    successors:
+      -
+        id: Activity_1cfjzyg
+        condition: Flow_14ragn0
+      -
+        id: Activity_1ubgapv
+        condition: Flow_1hbjdlr
+  Activity_1ubgapv:
+    plugin: eca_token_load_entity
+    label: 'Load the entity'
+    configuration:
+      token_name: work
+      from: id
+      entity_type: node
+      entity_id: '[entityid]'
+      revision_id: ''
+      properties: ''
+      langcode: _interface
+      latest_revision: false
+      unchanged: false
+      object: ''
+    successors:
+      -
+        id: Gateway_0mbot4g
+        condition: Flow_07ftxpq
+      -
+        id: Activity_1cfjzyg
+        condition: Flow_038k5ot
+  Activity_1cfjzyg:
+    plugin: eca_token_set_value
+    label: 'Set message'
+    configuration:
+      token_name: message
+      token_value: 'Work does not exist'
+      use_yaml: false
+      validate_yaml: false
+    successors:
+      -
+        id: Activity_1tv0dsu
+        condition: ''
+  Activity_1tv0dsu:
+    plugin: eca_trigger_custom_event
+    label: 'Call referer'
+    configuration:
+      event_id: referer
+      tokens: message
+    successors: {  }
+  Activity_0c0nxnb:
+    plugin: eca_void_and_condition
+    label: AND
+    configuration: {  }
+    successors:
+      -
+        id: Activity_1wvllkr
+        condition: Flow_1hyw7wa
+      -
+        id: Activity_0hygi2k
+        condition: Flow_0m8rxzw

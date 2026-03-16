@@ -1,0 +1,52 @@
+uuid: 3a5e47de-2db6-4465-8416-d0d7bfd1ab32
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.media.other_file.field_file_label
+    - field.field.media.other_file.field_filename
+    - field.field.media.other_file.field_media_file
+    - media.type.other_file
+  module:
+    - file
+id: media.other_file.default
+targetEntityType: media
+bundle: other_file
+mode: default
+content:
+  field_file_label:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_media_file:
+    type: file_generic
+    weight: 1
+    region: content
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: 'Add a label, eg "zipped folder of all mp3 files" or "m4a"'
+    third_party_settings: {  }
+hidden:
+  created: true
+  field_filename: true
+  path: true
+  status: true
+  uid: true

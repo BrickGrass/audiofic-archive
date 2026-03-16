@@ -1,0 +1,59 @@
+uuid: e46503a1-9520-4c76-9e08-2aebaf73e2fb
+langcode: en
+status: true
+dependencies:
+  config:
+    - eca.eca.process_uxpipks
+id: process_uxpipks
+label: 'Login redirect to home'
+tags:
+  - untagged
+documentation: ''
+filename: ''
+modeldata: |
+  <?xml version="1.0" encoding="UTF-8"?>
+  <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:qa="http://some-company/schema/bpmn/qa" id="sample-diagram" targetNamespace="http://bpmn.io/schema/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+    <bpmn2:process id="Process_uXpipKs" name="Login redirect to home" isExecutable="true">
+      <bpmn2:startEvent id="Event_0q0jteu" name="User login" camunda:modelerTemplate="org.drupal.event.user:login">
+        <bpmn2:extensionElements>
+          <camunda:properties>
+            <camunda:property name="pluginid" value="user:login" />
+          </camunda:properties>
+        </bpmn2:extensionElements>
+        <bpmn2:outgoing>Flow_0xs6w6n</bpmn2:outgoing>
+      </bpmn2:startEvent>
+      <bpmn2:task id="Activity_0gdqj7x" name="Redirect to home page" camunda:modelerTemplate="org.drupal.action.action_goto_action">
+        <bpmn2:extensionElements>
+          <camunda:properties>
+            <camunda:property name="pluginid" value="action_goto_action" />
+          </camunda:properties>
+          <camunda:field name="url">
+            <camunda:string>/home</camunda:string>
+          </camunda:field>
+          <camunda:field name="replace_tokens">
+            <camunda:string>no</camunda:string>
+          </camunda:field>
+        </bpmn2:extensionElements>
+        <bpmn2:incoming>Flow_0xs6w6n</bpmn2:incoming>
+      </bpmn2:task>
+      <bpmn2:sequenceFlow id="Flow_0xs6w6n" sourceRef="Event_0q0jteu" targetRef="Activity_0gdqj7x" />
+    </bpmn2:process>
+    <bpmndi:BPMNDiagram id="sid-ce6cf2b9-a67a-4cdb-82b9-f74eadfd6b74">
+      <bpmndi:BPMNPlane id="sid-cdb70668-8ff4-44ab-9a44-cf96cfa4ba50" bpmnElement="Process_uXpipKs">
+        <bpmndi:BPMNShape id="Event_0q0jteu_di" bpmnElement="Event_0q0jteu">
+          <dc:Bounds x="212" y="102" width="36" height="36" />
+          <bpmndi:BPMNLabel>
+            <dc:Bounds x="206" y="145" width="50" height="14" />
+          </bpmndi:BPMNLabel>
+        </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="Activity_0gdqj7x_di" bpmnElement="Activity_0gdqj7x">
+          <dc:Bounds x="340" y="80" width="100" height="80" />
+          <bpmndi:BPMNLabel />
+        </bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="Flow_0xs6w6n_di" bpmnElement="Flow_0xs6w6n">
+          <di:waypoint x="248" y="120" />
+          <di:waypoint x="340" y="120" />
+        </bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+  </bpmn2:definitions>

@@ -1,0 +1,13 @@
+uuid: 01f50375-a93a-4de0-93dc-13aa4176d005
+langcode: en
+status: true
+dependencies: {  }
+id: claim_account_or_name
+label: 'Claim account or name'
+recipients:
+  - jinjurlymods@squidge.org
+  - itstartedwithalex@gmail.com
+reply: 'The mods will be in touch about your request.'
+weight: 0
+message: ''
+redirect: ''

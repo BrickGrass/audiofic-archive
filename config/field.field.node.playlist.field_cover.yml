@@ -1,0 +1,38 @@
+uuid: cfda5507-2e8f-4515-b95f-e6cf20702d8a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_cover
+    - node.type.playlist
+  module:
+    - image
+id: node.playlist.field_cover
+field_name: field_cover
+entity_type: node
+bundle: playlist
+label: Cover
+description: "Having a cover for a series or collection is entirely optional. Ideally, use a square image. The system will crop images that aren't square so if your text runs right across a rectangular file, parts will be cropped off. However, this is as our display style for images is square - your image is stored in its original shape, so you can still use the link to display it in full elsewhere.<br />"
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'png gif jpg jpeg'
+  max_filesize: '20 MB'
+  max_resolution: 600x600
+  min_resolution: 300x300
+  alt_field: true
+  alt_field_required: true
+  title_field: false
+  title_field_required: false
+  default_image:
+    uuid: ''
+    alt: ''
+    title: ''
+    width: 500
+    height: 500
+field_type: image

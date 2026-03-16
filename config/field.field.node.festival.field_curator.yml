@@ -1,0 +1,29 @@
+uuid: 6f67cb3d-e42f-4b4b-a4c1-b6624723197a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_curator
+    - node.type.festival
+    - taxonomy.vocabulary.curator
+id: node.festival.field_curator
+field_name: field_curator
+entity_type: node
+bundle: festival
+label: Curator
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      curator: curator
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: curator
+field_type: entity_reference

@@ -1,0 +1,47 @@
+uuid: 034cb70a-d5cb-425b-adae-183bf2bfa8ef
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+    - taxonomy.vocabulary.author
+    - taxonomy.vocabulary.cover_artist
+    - taxonomy.vocabulary.reader
+  module:
+    - contact
+    - contextual
+    - file_download
+    - filter
+    - flag
+    - media
+    - profile
+    - shortcut
+    - system
+    - taxonomy
+id: authenticated
+label: Authenticated
+weight: -9
+is_admin: null
+permissions:
+  - 'access content'
+  - 'access contextual links'
+  - 'access file download'
+  - 'access shortcuts'
+  - 'access site-wide contact form'
+  - 'access user contact forms'
+  - 'access user profiles'
+  - 'create pseuds profile'
+  - 'create terms in author'
+  - 'create terms in cover_artist'
+  - 'create terms in reader'
+  - 'flag queue_flag'
+  - 'unflag queue_flag'
+  - 'update own pseuds profile'
+  - 'use text format basic_html'
+  - 'view any profile'
+  - 'view any pseuds profile'
+  - 'view media'
+  - 'view own profile'
+  - 'view own pseuds profile'
+  - 'view the administration theme'
+  - 'view vocabulary labels'

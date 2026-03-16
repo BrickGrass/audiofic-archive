@@ -1,0 +1,23 @@
+uuid: a06095b7-604e-46e0-91e6-6e16d6ac2fb4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.flagging.queue_flag.field_description
+    - flag.flag.queue_flag
+  module:
+    - text
+id: flagging.queue_flag.default
+targetEntityType: flagging
+bundle: queue_flag
+mode: default
+content:
+  field_description:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  search_api_excerpt: true

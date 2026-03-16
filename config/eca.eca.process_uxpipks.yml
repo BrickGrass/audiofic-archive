@@ -1,0 +1,30 @@
+uuid: 5924dac5-05c1-439a-a9eb-5f5df6482113
+langcode: en
+status: true
+dependencies:
+  module:
+    - eca_user
+id: process_uxpipks
+modeller: bpmn_io
+label: 'Login redirect to home'
+version: ''
+weight: 0
+events:
+  Event_0q0jteu:
+    plugin: 'user:login'
+    label: 'User login'
+    configuration: {  }
+    successors:
+      -
+        id: Activity_0gdqj7x
+        condition: ''
+conditions: {  }
+gateways: {  }
+actions:
+  Activity_0gdqj7x:
+    plugin: action_goto_action
+    label: 'Redirect to home page'
+    configuration:
+      replace_tokens: false
+      url: /home
+    successors: {  }

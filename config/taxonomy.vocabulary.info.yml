@@ -1,0 +1,15 @@
+uuid: f3521cad-ff61-4947-8413-3c8e3a40f23b
+langcode: en
+status: true
+dependencies:
+  module:
+    - taxonomy_unique
+third_party_settings:
+  taxonomy_unique:
+    enabled: true
+    message: 'Term %term already exists in vocabulary %vocabulary.'
+name: Info
+vid: info
+description: null
+weight: 0
+new_revision: false

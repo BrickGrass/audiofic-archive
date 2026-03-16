@@ -1,0 +1,123 @@
+uuid: 6613a28c-5399-400a-a82b-be938a24bc8e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.rec_list.body
+    - field.field.node.rec_list.field_author
+    - field.field.node.rec_list.field_category
+    - field.field.node.rec_list.field_cover
+    - field.field.node.rec_list.field_curator
+    - field.field.node.rec_list.field_duration
+    - field.field.node.rec_list.field_fandom2
+    - field.field.node.rec_list.field_format
+    - field.field.node.rec_list.field_languages
+    - field.field.node.rec_list.field_length
+    - field.field.node.rec_list.field_rating
+    - field.field.node.rec_list.field_reader
+    - field.field.node.rec_list.field_relationship
+    - field.field.node.rec_list.field_summary
+    - field.field.node.rec_list.field_warning
+    - field.field.node.rec_list.field_works
+    - image.style.thumbnail
+    - node.type.rec_list
+  module:
+    - field_group
+    - image
+    - text
+third_party_settings:
+  field_group:
+    group_information_about_the_rec:
+      children:
+        - title
+        - field_curator
+        - field_summary
+        - field_cover
+      label: 'Information about the rec list'
+      region: content
+      parent_name: ''
+      weight: 0
+      format_type: details
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        open: false
+        description: ''
+        required_fields: true
+id: node.rec_list.default
+targetEntityType: node
+bundle: rec_list
+mode: default
+content:
+  field_cover:
+    type: image_image
+    weight: 4
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+  field_curator:
+    type: entity_reference_autocomplete_tags
+    weight: 2
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_summary:
+    type: text_textarea
+    weight: 3
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_works:
+    type: entity_reference_autocomplete
+    weight: 1
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 2
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  body: true
+  created: true
+  field_author: true
+  field_category: true
+  field_duration: true
+  field_fandom2: true
+  field_format: true
+  field_languages: true
+  field_length: true
+  field_rating: true
+  field_reader: true
+  field_relationship: true
+  field_warning: true
+  langcode: true
+  path: true
+  promote: true
+  sticky: true
+  uid: true

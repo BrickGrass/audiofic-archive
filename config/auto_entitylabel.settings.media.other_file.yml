@@ -1,0 +1,10 @@
+status: 1
+pattern: '[media:field_filename] [media:field_file_label]'
+escape: true
+preserve_titles: false
+save: false
+chunk: 50
+dependencies:
+  config:
+    - media.type.other_file
+new_content_behavior: 0

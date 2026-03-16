@@ -1,0 +1,123 @@
+uuid: e6817fc4-425d-45c3-a815-271a7fda371b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.festival.body
+    - field.field.node.festival.field_author
+    - field.field.node.festival.field_cover
+    - field.field.node.festival.field_curator
+    - field.field.node.festival.field_duration
+    - field.field.node.festival.field_fandom2
+    - field.field.node.festival.field_festival_ends
+    - field.field.node.festival.field_reader
+    - field.field.node.festival.field_relationship
+    - field.field.node.festival.field_summary
+    - field.field.node.festival.field_works_fest
+    - image.style.medium_square
+    - node.type.festival
+  module:
+    - datetime
+    - duration_field
+    - image
+    - text
+    - user
+id: node.festival.default
+targetEntityType: node
+bundle: festival
+mode: default
+content:
+  field_author:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_cover:
+    type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: medium_square
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_curator:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_duration:
+    type: duration_human_display
+    label: above
+    settings:
+      text_length: full
+      separator: space
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_fandom2:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_festival_ends:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_reader:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_relationship:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_summary:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 116
+    region: content
+  field_works_fest:
+    type: entity_reference_entity_view
+    label: above
+    settings:
+      view_mode: teaser
+      link: false
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 9
+    region: content
+hidden:
+  body: true
+  langcode: true
+  search_api_excerpt: true

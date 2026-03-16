@@ -1,0 +1,14 @@
+uuid: 6b88bac6-4ae4-4028-9d34-da2dcab3e0a9
+langcode: en
+status: true
+dependencies: {  }
+id: mp3_file
+label: 'Streaming files'
+description: ''
+source: audio_file
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  source_field: field_media_audio_file
+field_map:
+  name: field_filename

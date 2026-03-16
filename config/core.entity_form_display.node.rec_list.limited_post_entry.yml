@@ -1,0 +1,132 @@
+uuid: d860566a-19ff-4382-9d1a-85f1554ae275
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.node.limited_post_entry
+    - field.field.node.rec_list.body
+    - field.field.node.rec_list.field_author
+    - field.field.node.rec_list.field_category
+    - field.field.node.rec_list.field_cover
+    - field.field.node.rec_list.field_curator
+    - field.field.node.rec_list.field_duration
+    - field.field.node.rec_list.field_fandom2
+    - field.field.node.rec_list.field_format
+    - field.field.node.rec_list.field_languages
+    - field.field.node.rec_list.field_length
+    - field.field.node.rec_list.field_rating
+    - field.field.node.rec_list.field_reader
+    - field.field.node.rec_list.field_relationship
+    - field.field.node.rec_list.field_summary
+    - field.field.node.rec_list.field_warning
+    - field.field.node.rec_list.field_works
+    - image.style.thumbnail
+    - node.type.rec_list
+  module:
+    - image
+    - path
+id: node.rec_list.limited_post_entry
+targetEntityType: node
+bundle: rec_list
+mode: limited_post_entry
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_author:
+    type: entity_reference_autocomplete
+    weight: 3
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_cover:
+    type: image_image
+    weight: 8
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+  field_reader:
+    type: entity_reference_autocomplete
+    weight: 2
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    weight: 15
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 120
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    weight: 16
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  body: true
+  field_category: true
+  field_curator: true
+  field_duration: true
+  field_fandom2: true
+  field_format: true
+  field_languages: true
+  field_length: true
+  field_rating: true
+  field_relationship: true
+  field_summary: true
+  field_warning: true
+  field_works: true

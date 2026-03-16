@@ -1,0 +1,34 @@
+uuid: edb249eb-8ee9-4e42-9062-1a2754fe8eba
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.saved_search.body
+    - field.field.node.saved_search.field_link
+    - node.type.saved_search
+  module:
+    - text
+    - user
+id: node.saved_search.teaser
+targetEntityType: node
+bundle: saved_search
+mode: teaser
+content:
+  body:
+    type: text_summary_or_trimmed
+    label: hidden
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_link: true
+  langcode: true
+  search_api_excerpt: true

@@ -1,0 +1,29 @@
+uuid: 2ee59d83-f9f3-42ea-8dc1-8b45dc112179
+langcode: en
+status: true
+dependencies:
+  config:
+    - image.style.medium
+    - image.style.thumbnail
+  theme:
+    - bootstrap_barrio_subtheme
+id: teaser_cover
+label: 'Teaser Cover'
+image_style_mappings:
+  -
+    image_mapping_type: image_style
+    image_mapping: medium
+    breakpoint_id: bootstrap_barrio_subtheme.large
+    multiplier: 1x
+  -
+    image_mapping_type: image_style
+    image_mapping: medium
+    breakpoint_id: bootstrap_barrio_subtheme.medium
+    multiplier: 1x
+  -
+    image_mapping_type: image_style
+    image_mapping: thumbnail
+    breakpoint_id: bootstrap_barrio_subtheme.small
+    multiplier: 1x
+breakpoint_group: bootstrap_barrio_subtheme
+fallback_image_style: medium

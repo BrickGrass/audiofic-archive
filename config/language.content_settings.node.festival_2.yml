@@ -1,0 +1,11 @@
+uuid: 247f99ca-004c-4e38-b1db-70a5bb385b4a
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.festival_2
+id: node.festival_2
+target_entity_type_id: node
+target_bundle: festival_2
+default_langcode: site_default
+language_alterable: false

@@ -1,0 +1,99 @@
+uuid: a7fc4134-460b-4959-91bb-83741794ae74
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.festival.body
+    - field.field.node.festival.field_author
+    - field.field.node.festival.field_cover
+    - field.field.node.festival.field_curator
+    - field.field.node.festival.field_duration
+    - field.field.node.festival.field_fandom2
+    - field.field.node.festival.field_festival_ends
+    - field.field.node.festival.field_reader
+    - field.field.node.festival.field_relationship
+    - field.field.node.festival.field_summary
+    - field.field.node.festival.field_works_fest
+    - image.style.thumbnail
+    - node.type.festival
+  module:
+    - image
+    - text
+    - user
+id: node.festival.teaser
+targetEntityType: node
+bundle: festival
+mode: teaser
+content:
+  body:
+    type: text_summary_or_trimmed
+    label: hidden
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_author:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_cover:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: thumbnail
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_curator:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_fandom2:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_reader:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_relationship:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_duration: true
+  field_festival_ends: true
+  field_summary: true
+  field_works_fest: true
+  langcode: true
+  search_api_excerpt: true

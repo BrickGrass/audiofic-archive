@@ -1,0 +1,100 @@
+uuid: 22a678b8-c195-4c9e-b8cd-def41a56cc75
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.festival_2.body
+    - field.field.node.festival_2.field_cover
+    - field.field.node.festival_2.field_curator
+    - field.field.node.festival_2.field_festival_ends
+    - field.field.node.festival_2.field_summary
+    - field.field.node.festival_2.field_works_fest
+    - image.style.thumbnail
+    - node.type.festival_2
+  module:
+    - datetime
+    - field_group
+    - image
+    - text
+third_party_settings:
+  field_group:
+    group_festival_information:
+      children:
+        - title
+        - field_curator
+        - field_festival_ends
+        - field_summary
+        - field_cover
+      label: 'Festival information'
+      region: content
+      parent_name: ''
+      weight: 0
+      format_type: details
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        open: false
+        description: ''
+        required_fields: true
+id: node.festival_2.default
+targetEntityType: node
+bundle: festival_2
+mode: default
+content:
+  field_cover:
+    type: image_image
+    weight: 5
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+  field_curator:
+    type: entity_reference_autocomplete_tags
+    weight: 2
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_festival_ends:
+    type: datetime_default
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_summary:
+    type: text_textarea
+    weight: 4
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_works_fest:
+    type: options_buttons
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  body: true
+  created: true
+  langcode: true
+  path: true
+  promote: true
+  status: true
+  sticky: true
+  uid: true

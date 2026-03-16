@@ -1,0 +1,23 @@
+uuid: 1950153a-c808-4010-8da2-52b34fc05480
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_completion_status
+    - node.type.work
+  module:
+    - options
+id: node.work.field_completion_status
+field_name: field_completion_status
+entity_type: node
+bundle: work
+label: 'Completion status'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: complete
+default_value_callback: ''
+settings: {  }
+field_type: list_string

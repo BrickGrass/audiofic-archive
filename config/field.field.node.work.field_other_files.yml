@@ -1,0 +1,29 @@
+uuid: ee9e5001-0eb8-4bfa-9f01-2afc72cd3ec3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_other_files
+    - media.type.other_file
+    - node.type.work
+id: node.work.field_other_files
+field_name: field_other_files
+entity_type: node
+bundle: work
+label: 'Other files'
+description: "This is for m4b, m4a, wav, aac, txt, doc, docx, pdf, or zip files.<br /><br />\r\nOnce uploaded, clicking 'create media item' saves the file. If you have several, e.g. m4bs and a zip file, continue adding them here and save each one using 'create media item'. More fields to add details about your work are below this before the work itself is published."
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      other_file: other_file
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

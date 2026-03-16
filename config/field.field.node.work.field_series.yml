@@ -1,0 +1,25 @@
+uuid: c857fbb6-6102-474e-a9d7-f2230ec863c2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_series
+    - node.type.work
+id: node.work.field_series
+field_name: field_series
+entity_type: node
+bundle: work
+label: Series
+description: "<br /><b>Add the work to an existing series, or create a new series below.</b>\r\n\r\n"
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: views
+  handler_settings:
+    view:
+      view_name: series_filter_nodes_
+      display_name: entity_reference_1
+      arguments: {  }
+field_type: entity_reference

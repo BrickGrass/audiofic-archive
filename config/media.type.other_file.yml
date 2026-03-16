@@ -1,0 +1,14 @@
+uuid: e28fabcb-06fe-4d90-81f0-c2d9cc78a7ce
+langcode: en
+status: true
+dependencies: {  }
+id: other_file
+label: 'Other file'
+description: ''
+source: file
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  source_field: field_media_file
+field_map:
+  name: field_filename

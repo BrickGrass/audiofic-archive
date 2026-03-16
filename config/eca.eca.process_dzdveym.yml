@@ -1,0 +1,138 @@
+uuid: 92b9a183-4b9d-46a5-bddc-1ba2cbcca571
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.saved_search.field_link
+    - field.storage.node.field_link
+    - node.type.saved_search
+  module:
+    - eca_access
+    - eca_base
+    - eca_content
+    - eca_endpoint
+    - eca_user
+    - node
+id: process_dzdveym
+modeller: bpmn_io
+label: 'Create a saved search'
+version: ''
+weight: 0
+events:
+  Event_018vlc0:
+    plugin: 'eca_endpoint:access'
+    label: Access
+    configuration:
+      first_path_argument: savedsearch
+      second_path_argument: ''
+    successors:
+      -
+        id: Activity_0yodiot
+        condition: Flow_0fc6ug6
+      -
+        id: Activity_16rbs98
+        condition: Flow_0d4zdrj
+  Event_1n71rgj:
+    plugin: 'eca_endpoint:response'
+    label: Response
+    configuration:
+      first_path_argument: savedsearch
+      second_path_argument: ''
+    successors:
+      -
+        id: Activity_1v87cu8
+        condition: ''
+conditions:
+  Flow_0fc6ug6:
+    plugin: eca_user_role
+    configuration:
+      account: '[session_user]'
+      role: anonymous
+      negate: true
+  Flow_0d4zdrj:
+    plugin: eca_user_role
+    configuration:
+      negate: false
+      account: '[session_user]'
+      role: anonymous
+gateways: {  }
+actions:
+  Activity_0yodiot:
+    plugin: eca_access_set_result
+    label: 'Grant access'
+    configuration:
+      access_result: allowed
+    successors: {  }
+  Activity_1v87cu8:
+    plugin: eca_endpoint_get_request_header
+    label: 'Get referer'
+    configuration:
+      name: referer
+      token_name: referer
+    successors:
+      -
+        id: Activity_011mptw
+        condition: ''
+  Activity_011mptw:
+    plugin: eca_new_entity
+    label: 'Create saved search entity'
+    configuration:
+      token_name: newentity
+      type: 'node saved_search'
+      langcode: ''
+      label: 'Temp label'
+      published: false
+      owner: '[user:uid]'
+    successors:
+      -
+        id: Activity_0lrg523
+        condition: ''
+  Activity_0lrg523:
+    plugin: eca_set_field_value
+    label: 'Set link field'
+    configuration:
+      field_name: field_link
+      field_value: '[referer]'
+      method: 'set:clear'
+      strip_tags: false
+      trim: false
+      save_entity: true
+      object: newentity
+    successors:
+      -
+        id: Activity_0pn5mkx
+        condition: ''
+  Activity_1wenpxt:
+    plugin: eca_token_set_value
+    label: 'Get entity url'
+    configuration:
+      token_name: newentityurl
+      token_value: '[newentity:url]'
+      use_yaml: false
+      validate_yaml: false
+    successors:
+      -
+        id: Activity_05p16yw
+        condition: ''
+  Activity_05p16yw:
+    plugin: action_goto_action
+    label: 'Redirect to the edit form'
+    configuration:
+      url: '[newentityurl]/edit?destination=/my-links'
+      replace_tokens: true
+    successors: {  }
+  Activity_0pn5mkx:
+    plugin: 'entity:publish_action:node'
+    label: Publish
+    configuration:
+      object: newentity
+    successors:
+      -
+        id: Activity_1wenpxt
+        condition: ''
+  Activity_16rbs98:
+    plugin: eca_access_set_result
+    label: 'Deny access'
+    configuration:
+      access_result: forbidden
+    successors: {  }

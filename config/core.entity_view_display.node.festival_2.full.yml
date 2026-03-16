@@ -1,0 +1,61 @@
+uuid: b1c231e4-a057-4000-a7bf-b4780db61a08
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.full
+    - field.field.node.festival_2.body
+    - field.field.node.festival_2.field_cover
+    - field.field.node.festival_2.field_curator
+    - field.field.node.festival_2.field_festival_ends
+    - field.field.node.festival_2.field_summary
+    - field.field.node.festival_2.field_works_fest
+    - image.style.medium_square
+    - node.type.festival_2
+  module:
+    - image
+    - user
+id: node.festival_2.full
+targetEntityType: node
+bundle: festival_2
+mode: full
+content:
+  field_cover:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: medium_square
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_curator:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_works_fest:
+    type: entity_reference_entity_view
+    label: above
+    settings:
+      view_mode: teaser
+      link: false
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  body: true
+  field_festival_ends: true
+  field_summary: true
+  langcode: true
+  search_api_excerpt: true
