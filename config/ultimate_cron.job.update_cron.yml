@@ -1,0 +1,29 @@
+uuid: 8cd9d09b-9d49-4a1f-a492-c27ced2c3094
+langcode: en
+status: true
+dependencies:
+  module:
+    - update
+title: 'Check for updates'
+id: update_cron
+weight: 0
+module: update
+callback: 'update#cron'
+scheduler:
+  id: simple
+  configuration:
+    rules:
+      - '0+@ 0 * * *'
+launcher:
+  id: serial
+  configuration:
+    timeouts:
+      lock_timeout: 3600
+    launcher:
+      thread: 0
+logger:
+  id: database
+  configuration:
+    method: '3'
+    expire: 1209600
+    retain: 1000

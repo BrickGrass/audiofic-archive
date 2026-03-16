@@ -1,0 +1,50 @@
+uuid: bbfbd90d-b91e-4cd5-917c-d25f99e362a5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.for_later.body
+    - field.field.node.for_later.field_work_or_collection
+    - node.type.for_later
+  module:
+    - text
+id: node.for_later.default
+targetEntityType: node
+bundle: for_later
+mode: default
+content:
+  body:
+    type: text_textarea_with_summary
+    weight: 1
+    region: content
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+      show_summary: false
+    third_party_settings: {  }
+  field_work_or_collection:
+    type: entity_reference_autocomplete
+    weight: 0
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+hidden:
+  created: true
+  path: true
+  promote: true
+  status: true
+  sticky: true
+  title: true
+  uid: true

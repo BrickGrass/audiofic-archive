@@ -1,0 +1,39 @@
+uuid: 035a473e-6801-48fc-9352-c17a8f32f844
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: queue_flag
+label: 'Queue flag'
+bundles:
+  - work
+entity_type: node
+global: false
+flag_short: 'Add to my queue'
+flag_long: 'Add to my queue'
+flag_message: 'Added to your "For later" queue'
+unflag_short: 'Remove from my queue'
+unflag_long: 'Removed from your "For later" queue'
+unflag_message: ''
+unflag_denied_text: ''
+weight: 0
+flag_type: 'entity:node'
+link_type: field_entry
+flagTypeConfig:
+  show_in_links:
+    full: full
+    teaser: teaser
+  show_as_field: false
+  show_on_form: false
+  show_contextual_link: true
+  extra_permissions:
+    owner: '0'
+linkTypeConfig:
+  flag_confirmation: 'Enter flagging details'
+  edit_flagging: 'Edit flagging details'
+  unflag_confirmation: 'Unflag this content?'
+  flag_create_button: 'Create flagging'
+  flag_delete_button: 'Delete flagging'
+  flag_update_button: 'Update flagging'
+  form_behavior: default

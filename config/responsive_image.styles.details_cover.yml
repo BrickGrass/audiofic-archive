@@ -1,0 +1,41 @@
+uuid: 55c3ec3a-3e6e-42c6-8f8c-0dc613fd9460
+langcode: en
+status: true
+dependencies:
+  config:
+    - image.style.extra_large_800x800
+    - image.style.large
+    - image.style.medium
+    - image.style.original_aspect_ratio_mobile
+  theme:
+    - bootstrap_barrio_subtheme
+id: details_cover
+label: 'Details Cover'
+image_style_mappings:
+  -
+    image_mapping_type: image_style
+    image_mapping: extra_large_800x800
+    breakpoint_id: bootstrap_barrio_subtheme.xxlarge
+    multiplier: 1x
+  -
+    image_mapping_type: image_style
+    image_mapping: large
+    breakpoint_id: bootstrap_barrio_subtheme.xlarge
+    multiplier: 1x
+  -
+    image_mapping_type: image_style
+    image_mapping: large
+    breakpoint_id: bootstrap_barrio_subtheme.large
+    multiplier: 1x
+  -
+    image_mapping_type: image_style
+    image_mapping: medium
+    breakpoint_id: bootstrap_barrio_subtheme.medium
+    multiplier: 1x
+  -
+    image_mapping_type: image_style
+    image_mapping: original_aspect_ratio_mobile
+    breakpoint_id: bootstrap_barrio_subtheme.small
+    multiplier: 1x
+breakpoint_group: bootstrap_barrio_subtheme
+fallback_image_style: '_original image_'

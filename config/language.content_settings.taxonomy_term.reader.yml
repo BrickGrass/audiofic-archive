@@ -1,0 +1,11 @@
+uuid: 59a1f486-c901-4dbe-a0a9-48ee9e54ccf0
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.reader
+id: taxonomy_term.reader
+target_entity_type_id: taxonomy_term
+target_bundle: reader
+default_langcode: site_default
+language_alterable: false

@@ -1,0 +1,29 @@
+uuid: 03ae5ad3-6a51-4c7e-a19b-2d36cbdd398b
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+title: 'Updates search rankings for nodes'
+id: node_cron
+weight: 0
+module: node
+callback: 'node#cron'
+scheduler:
+  id: simple
+  configuration:
+    rules:
+      - '0+@ 0 * * *'
+launcher:
+  id: serial
+  configuration:
+    timeouts:
+      lock_timeout: 3600
+    launcher:
+      thread: 0
+logger:
+  id: database
+  configuration:
+    method: '3'
+    expire: 1209600
+    retain: 1000

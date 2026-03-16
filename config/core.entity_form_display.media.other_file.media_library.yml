@@ -1,0 +1,38 @@
+uuid: 8ed451c1-c6d6-410c-9c09-dba687fb407f
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.media.media_library
+    - field.field.media.other_file.field_file_label
+    - field.field.media.other_file.field_filename
+    - field.field.media.other_file.field_media_file
+    - media.type.other_file
+id: media.other_file.media_library
+targetEntityType: media
+bundle: other_file
+mode: media_library
+content:
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  field_file_label: true
+  field_filename: true
+  field_media_file: true
+  path: true
+  status: true
+  uid: true

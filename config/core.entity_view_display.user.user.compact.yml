@@ -1,0 +1,57 @@
+uuid: f0114296-5c48-4239-8d56-7f7fee29099f
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.user.compact
+    - field.field.user.user.field_author_name
+    - field.field.user.user.field_cover_artist_name
+    - field.field.user.user.field_curator_name
+    - field.field.user.user.field_profile
+    - field.field.user.user.field_reader_name
+  module:
+    - text
+    - user
+_core:
+  default_config_hash: 00zr_RBdTjPjBGITD3h4c1ESQZimjdVCcHGt1trLqIY
+id: user.user.compact
+targetEntityType: user
+bundle: user
+mode: compact
+content:
+  field_author_name:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_cover_artist_name:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_profile:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_reader_name:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  field_curator_name: true
+  langcode: true
+  member_for: true
+  search_api_excerpt: true

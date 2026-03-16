@@ -1,0 +1,29 @@
+uuid: 85f4bacf-61f4-4291-ab0c-3b0a0646d9d6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_relationship
+    - node.type.festival
+    - taxonomy.vocabulary.relationship
+id: node.festival.field_relationship
+field_name: field_relationship
+entity_type: node
+bundle: festival
+label: Ship
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      relationship: relationship
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

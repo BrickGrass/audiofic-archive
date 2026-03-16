@@ -1,0 +1,10 @@
+status: 1
+pattern: 'Language - [node:field_language]'
+escape: false
+preserve_titles: false
+save: false
+chunk: 50
+dependencies:
+  config:
+    - node.type.new_language
+new_content_behavior: 0

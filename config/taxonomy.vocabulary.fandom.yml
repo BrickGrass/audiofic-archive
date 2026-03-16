@@ -1,0 +1,15 @@
+uuid: 951f2e5e-af2b-46bb-8ac0-b90d1ac60c07
+langcode: en
+status: true
+dependencies:
+  module:
+    - taxonomy_unique
+third_party_settings:
+  taxonomy_unique:
+    enabled: true
+    message: 'Term %term already exists in vocabulary %vocabulary.'
+name: Fandom
+vid: fandom
+description: null
+weight: 0
+new_revision: true

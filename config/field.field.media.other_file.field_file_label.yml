@@ -1,0 +1,19 @@
+uuid: 51ae1d19-e31f-4550-85c5-716f49f7f7d2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_file_label
+    - media.type.other_file
+id: media.other_file.field_file_label
+field_name: field_file_label
+entity_type: media
+bundle: other_file
+label: 'File label'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

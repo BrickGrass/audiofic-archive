@@ -1,0 +1,29 @@
+uuid: 556bb689-6be1-4960-a87f-4db3c9652ce2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_category
+    - node.type.work
+    - taxonomy.vocabulary.category
+id: node.work.field_category
+field_name: field_category
+entity_type: node
+bundle: work
+label: Category
+description: "<br />More details about the categories:  <span id=\"category\" class=\"expand-help-hide\">\r\n<p><b>gen:</b> Used for works that have no relationship focus at all, or where the primary focus is a relationship that is not romantic or sexual. A non-romantic/sexual relationship could be a friendship, a familial bond or some queerplatonic relationships</p>\r\n<p><b>f/f:</b> Female-female romantic and/or sexual relationship</p>\r\n<p><b>f/m:</b> Female-male romantic and/or sexual relationship</p>\r\n<p><b>m/m:</b> Male-male romantic and/or sexual relationship</p>\r\n<p><b>nb/any:</b> Romantic and/or sexual relationship between a nonbinary character (all identities under the nonbinary umbrella, and adjacent) and another character of any gender</p>\r\n<p><b>poly:</b> Polyamorous romantic and/or sexual relationship (<a href=\"https://en.wikipedia.org/wiki/Polyamory\">info here</a>)</p>\r\n<p><b>other:</b> Can be used if the romantic and/or sexual relationship is in a different category to those above. A few examples are: with a non-human alien, a monster, or for inanimate object crackfics</p>\r\n</span>\r\n<a href=\"#\" role=\"button\" aria-label=\"Expand/Collapse help text\" class=\"expand-help-button\" data-for=\"category\">Read More</a>"
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      category: category
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

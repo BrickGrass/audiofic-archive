@@ -1,0 +1,24 @@
+uuid: 00c00015-dd63-4354-9bdf-d5ba8821339e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_summary
+    - filter.format.basic_html
+    - node.type.work
+  module:
+    - text
+id: node.work.field_summary
+field_name: field_summary
+entity_type: node
+bundle: work
+label: Summary
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

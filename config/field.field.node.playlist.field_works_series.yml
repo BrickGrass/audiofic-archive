@@ -1,0 +1,29 @@
+uuid: 1527ebf8-06ee-42ed-9fef-27d85209d352
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_works_series
+    - node.type.playlist
+    - node.type.work
+id: node.playlist.field_works_series
+field_name: field_works_series
+entity_type: node
+bundle: playlist
+label: Works
+description: "Click and hold (or in mobile press on) the up-down arrow symbol at left to change the order of works in a series. The one you've moved will be highlighted with color and an asterisk - that means the change needs to be saved. <br /><br />"
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      work: work
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

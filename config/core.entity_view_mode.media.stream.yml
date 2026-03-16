@@ -1,0 +1,11 @@
+uuid: f2321289-cec0-48fb-bcda-af881736696b
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.stream
+label: Stream
+description: ''
+targetEntityType: media
+cache: true

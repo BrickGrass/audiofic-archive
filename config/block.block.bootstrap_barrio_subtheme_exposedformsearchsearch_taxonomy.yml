@@ -1,0 +1,46 @@
+uuid: a40be3b9-55fb-4d8c-9ac2-b17ba0c5835c
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.search
+  module:
+    - system
+    - taxonomy
+    - views
+  theme:
+    - bootstrap_barrio_subtheme
+id: bootstrap_barrio_subtheme_exposedformsearchsearch_taxonomy
+theme: bootstrap_barrio_subtheme
+region: sidebar_first
+weight: -7
+provider: null
+plugin: 'views_exposed_filter_block:search-search_taxonomy'
+settings:
+  id: 'views_exposed_filter_block:search-search_taxonomy'
+  label: ''
+  label_display: '0'
+  provider: views
+  views_label: ''
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '/taxonomy/term/*'
+  'entity_bundle:taxonomy_term':
+    id: 'entity_bundle:taxonomy_term'
+    negate: false
+    context_mapping:
+      taxonomy_term: '@taxonomy_term.taxonomy_term_route_context:taxonomy_term'
+    bundles:
+      author: author
+      category: category
+      curator: curator
+      fandom: fandom
+      info: info
+      language: language
+      length: length
+      rating: rating
+      reader: reader
+      relationship: relationship
+      warning: warning

@@ -1,0 +1,44 @@
+uuid: c90ee9a4-4e51-4713-98ae-7099a78d5764
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.saved_search.body
+    - field.field.node.saved_search.field_link
+    - node.type.saved_search
+  module:
+    - link
+    - text
+    - user
+id: node.saved_search.default
+targetEntityType: node
+bundle: saved_search
+mode: default
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_link:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden:
+  langcode: true
+  search_api_excerpt: true

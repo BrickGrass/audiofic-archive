@@ -1,0 +1,137 @@
+uuid: 78d96aa6-41b6-4f36-8da9-2415037311cf
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.work.body
+    - field.field.node.work.field_author
+    - field.field.node.work.field_category
+    - field.field.node.work.field_completion_status
+    - field.field.node.work.field_cover
+    - field.field.node.work.field_cover_artist
+    - field.field.node.work.field_duration
+    - field.field.node.work.field_fandom2
+    - field.field.node.work.field_festival
+    - field.field.node.work.field_format
+    - field.field.node.work.field_language
+    - field.field.node.work.field_length
+    - field.field.node.work.field_mp3_files
+    - field.field.node.work.field_notes
+    - field.field.node.work.field_orders
+    - field.field.node.work.field_other_files
+    - field.field.node.work.field_owner
+    - field.field.node.work.field_part_label
+    - field.field.node.work.field_podfic_post
+    - field.field.node.work.field_rating
+    - field.field.node.work.field_reader
+    - field.field.node.work.field_reader_collections
+    - field.field.node.work.field_relationship
+    - field.field.node.work.field_series
+    - field.field.node.work.field_series_links
+    - field.field.node.work.field_streaming_format
+    - field.field.node.work.field_summary
+    - field.field.node.work.field_temp
+    - field.field.node.work.field_text_post
+    - field.field.node.work.field_warning
+    - node.type.work
+    - responsive_image.styles.teaser_cover
+  module:
+    - duration_field
+    - responsive_image
+    - text
+    - user
+id: node.work.teaser
+targetEntityType: node
+bundle: work
+mode: teaser
+content:
+  field_author:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_cover:
+    type: responsive_image
+    label: hidden
+    settings:
+      responsive_image_style: teaser_cover
+      image_link: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_duration:
+    type: duration_time_display
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_fandom2:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_rating:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_reader:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_summary:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  flag_bookmark:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
+hidden:
+  body: true
+  field_category: true
+  field_completion_status: true
+  field_cover_artist: true
+  field_festival: true
+  field_format: true
+  field_language: true
+  field_length: true
+  field_mp3_files: true
+  field_notes: true
+  field_orders: true
+  field_other_files: true
+  field_owner: true
+  field_part_label: true
+  field_podfic_post: true
+  field_reader_collections: true
+  field_relationship: true
+  field_series: true
+  field_series_links: true
+  field_streaming_format: true
+  field_temp: true
+  field_text_post: true
+  field_warning: true
+  langcode: true
+  links: true
+  search_api_excerpt: true

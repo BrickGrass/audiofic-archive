@@ -1,0 +1,25 @@
+uuid: 7861c8b0-8ad6-4158-9e22-61e393acf238
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_reader_collections
+    - node.type.work
+id: node.work.field_reader_collections
+field_name: field_reader_collections
+entity_type: node
+bundle: work
+label: 'Reader tags'
+description: "You can group your works together in reader collections. Each work can be in multiple collections.<br /><br /><b>Create the collection first, before adding a work to it</b> by going to 'post' on the main menu.<br /><br />The works in a reader collection will be listed according to how recently you added them. Where you have a compilation, like an anthology of several podfics in one mp3, that will be at the top as long as you tag that file with 'compilation'. The separate works making up the compilation will then be listed below. e.g. this may be useful for festival anthologies."
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: views
+  handler_settings:
+    view:
+      view_name: my_reader_collections
+      display_name: entity_reference_1
+      arguments: {  }
+field_type: entity_reference

@@ -1,0 +1,15 @@
+uuid: d036174e-09ac-47c0-8ddd-48e7afc3faec
+langcode: en
+status: true
+dependencies:
+  module:
+    - taxonomy_unique
+third_party_settings:
+  taxonomy_unique:
+    enabled: true
+    message: 'Term "%term" already exists in vocabulary "%vocabulary".'
+name: Warning
+vid: warning
+description: null
+weight: 0
+new_revision: false

@@ -1,0 +1,28 @@
+uuid: e1760676-194a-4b57-a489-6728bc061a69
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.search_tags
+  module:
+    - system
+    - views
+  theme:
+    - bootstrap_barrio_subtheme
+id: bootstrap_barrio_subtheme_exposedformsearch_tagspage_1
+theme: bootstrap_barrio_subtheme
+region: sidebar_first
+weight: 0
+provider: null
+plugin: 'views_exposed_filter_block:search_tags-page_1'
+settings:
+  id: 'views_exposed_filter_block:search_tags-page_1'
+  label: ''
+  label_display: '0'
+  provider: views
+  views_label: ''
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: /search-tags

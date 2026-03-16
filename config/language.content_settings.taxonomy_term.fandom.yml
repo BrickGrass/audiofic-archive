@@ -1,0 +1,11 @@
+uuid: 802d290a-cfed-43fa-b14d-168f0eaf91c5
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.fandom
+id: taxonomy_term.fandom
+target_entity_type_id: taxonomy_term
+target_bundle: fandom
+default_langcode: site_default
+language_alterable: false

@@ -1,0 +1,11 @@
+uuid: f6be04c8-9dc9-41e0-8e24-3a6f0d962081
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.limited_post_entry
+label: 'Limited post entry'
+description: ''
+targetEntityType: node
+cache: true

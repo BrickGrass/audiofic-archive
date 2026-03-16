@@ -1,0 +1,20 @@
+uuid: 6c038991-f5c6-43da-86fa-7d88ae284359
+langcode: en
+status: true
+dependencies:
+  module:
+    - aa_nsfw_modal
+  theme:
+    - bootstrap_barrio_subtheme
+id: bootstrap_barrio_subtheme_nsfwcontenttoggleswitchblock
+theme: bootstrap_barrio_subtheme
+region: footer_first
+weight: 0
+provider: null
+plugin: aa_nsfw_toggle_block
+settings:
+  id: aa_nsfw_toggle_block
+  label: 'NSFW Content Toggle Switch Block'
+  label_display: '0'
+  provider: aa_nsfw_modal
+visibility: {  }

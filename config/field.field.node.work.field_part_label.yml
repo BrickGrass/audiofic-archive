@@ -1,0 +1,19 @@
+uuid: 0a98be4f-b128-45ff-8581-37f4d0ed107a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_part_label
+    - node.type.work
+id: node.work.field_part_label
+field_name: field_part_label
+entity_type: node
+bundle: work
+label: Label
+description: "Add a label to identify where in the series this work comes, e.g. 'part 1' or 'chapter 1'. Works in a series will be listed alphabetically using the label."
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

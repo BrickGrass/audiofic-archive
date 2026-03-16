@@ -1,0 +1,48 @@
+uuid: 6a0c1d73-76de-4f68-869c-af1134441bfa
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.stream
+    - field.field.media.mp3_file.field_chapter_label
+    - field.field.media.mp3_file.field_duration_seconds
+    - field.field.media.mp3_file.field_filename
+    - field.field.media.mp3_file.field_media_audio_file
+    - field.field.media.mp3_file.field_use_for_duration
+    - media.type.mp3_file
+  module:
+    - file
+id: media.mp3_file.stream
+targetEntityType: media
+bundle: mp3_file
+mode: stream
+content:
+  field_chapter_label:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_media_audio_file:
+    type: file_audio
+    label: hidden
+    settings:
+      controls: true
+      autoplay: false
+      loop: false
+      multiple_file_display_type: tags
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  created: true
+  field_duration_seconds: true
+  field_filename: true
+  field_use_for_duration: true
+  langcode: true
+  name: true
+  search_api_excerpt: true
+  thumbnail: true
+  uid: true

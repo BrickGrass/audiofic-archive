@@ -1,0 +1,29 @@
+uuid: b9569d0f-185a-4ace-939b-e96608fd8757
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_relationship
+    - node.type.work
+    - taxonomy.vocabulary.relationship
+id: node.work.field_relationship
+field_name: field_relationship
+entity_type: node
+bundle: work
+label: 'Main Relationship(s)'
+description: "Always use the drop-down version if it's already in the archive to avoid creating duplicates. \r\n<span id=\"rships\" class=\"expand-help-hide\">\r\n<p>\r\nThis is primarily for romantic and/or sexual relationships but important \"&\" relationships can be added if they're a focus of the work (e.g. close friends, close family). If only \"&\" relationships are listed, also tick the Gen category. For sexual and/or romantic relationships between family members use a slash, e.g. dean winchester/sam winchester. </p>\r\n<p>\r\nAdd the main relationships only - don't add background or canon relationships that aren't the principal focus of the work. </p>\r\n<p>\r\nWrite relationship names alphabetically, e.g. james kirk/spock, or angel/buffy summers/spike, not buffy summers/angel/spike. Separate the pairings or poly relationship clusters with commas. </p>\r\n<p>\r\nAlternate names: insert brief nicknames in single quotes e.g. james ‘bucky’ barnes. For more formal or longer alt names, separate alternatives with a vertical line e.g. wèi wúxiàn | wèi yīng. Note the spaces around the \"|\" symbol. You can paste in AO3 tags as a guide, making them alphabetical if need be.</p>\r\n<p>\r\nFor characters with names in non-English alphabets, the original characters plus a Romanized version of the name are usual, sometimes with an English nickname as well - again, use AO3 as a guide, and Wikipedia is also a source for Romanizations. e.g.  蓝景仪 | Lan Jingyi, and 박지민 | Park Jimin. For characters from countries writing names in the opposite order to English, leave the name order unaltered. e.g. uzumaki (surname) naruto (first name) is written uzumaki naruto.</p>\r\n</span>\r\n<a href=\"#\" role=\"button\" aria-label=\"Expand/Collapse help text\" class=\"expand-help-button\" data-for=\"rships\">Read More</a>   "
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      relationship: relationship
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

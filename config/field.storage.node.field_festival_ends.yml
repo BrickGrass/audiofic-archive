@@ -1,0 +1,20 @@
+uuid: 33a6ed90-7c92-482e-8138-a59291a14d7b
+langcode: en
+status: true
+dependencies:
+  module:
+    - datetime
+    - node
+id: node.field_festival_ends
+field_name: field_festival_ends
+entity_type: node
+type: datetime
+settings:
+  datetime_type: date
+module: datetime
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

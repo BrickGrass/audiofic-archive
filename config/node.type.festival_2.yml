@@ -1,0 +1,18 @@
+uuid: 73210fd5-08f9-47c4-b12f-cd1082b2905d
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: 'Festival 2'
+type: festival_2
+description: null
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: false

@@ -1,0 +1,27 @@
+uuid: e368b725-0936-40f2-bebc-0ebef23a9499
+langcode: en
+status: true
+dependencies:
+  module:
+    - aa_search
+    - system
+  theme:
+    - bootstrap_barrio_subtheme
+id: bootstrap_barrio_subtheme_complexsearchblock
+theme: bootstrap_barrio_subtheme
+region: sidebar_second
+weight: -11
+provider: null
+plugin: complex_search_block
+settings:
+  id: complex_search_block
+  label: 'Search Works'
+  label_display: visible
+  provider: aa_search
+  action_url: /search/works
+  input_name: search_api_fulltext
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'

@@ -1,0 +1,299 @@
+uuid: 6e5d12fb-4d83-4e4c-847d-ed73d8fd1fcf
+langcode: en
+status: true
+dependencies:
+  config:
+    - eca.eca.process_dzdveym
+id: process_dzdveym
+label: 'Create a saved search'
+tags:
+  - untagged
+documentation: ''
+filename: ''
+modeldata: |
+  <?xml version="1.0" encoding="UTF-8"?>
+  <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:qa="http://some-company/schema/bpmn/qa" id="sample-diagram" targetNamespace="http://bpmn.io/schema/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+    <bpmn2:process id="Process_dzdveYm" name="Create a saved search" isExecutable="true">
+      <bpmn2:startEvent id="Event_018vlc0" name="Access" camunda:modelerTemplate="org.drupal.event.eca_endpoint:access">
+        <bpmn2:extensionElements>
+          <camunda:properties>
+            <camunda:property name="pluginid" value="eca_endpoint:access"/>
+          </camunda:properties>
+          <camunda:field name="first_path_argument">
+            <camunda:string>savedsearch</camunda:string>
+          </camunda:field>
+          <camunda:field name="second_path_argument">
+            <camunda:string/>
+          </camunda:field>
+        </bpmn2:extensionElements>
+        <bpmn2:outgoing>Flow_0fc6ug6</bpmn2:outgoing>
+        <bpmn2:outgoing>Flow_0d4zdrj</bpmn2:outgoing>
+      </bpmn2:startEvent>
+      <bpmn2:task id="Activity_0yodiot" name="Grant access" camunda:modelerTemplate="org.drupal.action.eca_access_set_result">
+        <bpmn2:extensionElements>
+          <camunda:properties>
+            <camunda:property name="pluginid" value="eca_access_set_result"/>
+          </camunda:properties>
+          <camunda:field name="access_result">
+            <camunda:string>allowed</camunda:string>
+          </camunda:field>
+        </bpmn2:extensionElements>
+        <bpmn2:incoming>Flow_0fc6ug6</bpmn2:incoming>
+      </bpmn2:task>
+      <bpmn2:sequenceFlow id="Flow_0fc6ug6" name="User is not a guest" camunda:modelerTemplate="org.drupal.condition.eca_user_role" sourceRef="Event_018vlc0" targetRef="Activity_0yodiot">
+        <bpmn2:extensionElements>
+          <camunda:properties>
+            <camunda:property name="pluginid" value="eca_user_role"/>
+          </camunda:properties>
+          <camunda:field name="account">
+            <camunda:string>[session_user]</camunda:string>
+          </camunda:field>
+          <camunda:field name="role">
+            <camunda:string>anonymous</camunda:string>
+          </camunda:field>
+          <camunda:field name="negate">
+            <camunda:string>yes</camunda:string>
+          </camunda:field>
+        </bpmn2:extensionElements>
+      </bpmn2:sequenceFlow>
+      <bpmn2:startEvent id="Event_1n71rgj" name="Response" camunda:modelerTemplate="org.drupal.event.eca_endpoint:response">
+        <bpmn2:extensionElements>
+          <camunda:properties>
+            <camunda:property name="pluginid" value="eca_endpoint:response"/>
+          </camunda:properties>
+          <camunda:field name="first_path_argument">
+            <camunda:string>savedsearch</camunda:string>
+          </camunda:field>
+          <camunda:field name="second_path_argument">
+            <camunda:string/>
+          </camunda:field>
+        </bpmn2:extensionElements>
+        <bpmn2:outgoing>Flow_0dvj5df</bpmn2:outgoing>
+      </bpmn2:startEvent>
+      <bpmn2:task id="Activity_1v87cu8" name="Get referer" camunda:modelerTemplate="org.drupal.action.eca_endpoint_get_request_header">
+        <bpmn2:extensionElements>
+          <camunda:properties>
+            <camunda:property name="pluginid" value="eca_endpoint_get_request_header"/>
+          </camunda:properties>
+          <camunda:field name="token_name">
+            <camunda:string>referer</camunda:string>
+          </camunda:field>
+          <camunda:field name="name">
+            <camunda:string>referer</camunda:string>
+          </camunda:field>
+        </bpmn2:extensionElements>
+        <bpmn2:incoming>Flow_0dvj5df</bpmn2:incoming>
+        <bpmn2:outgoing>Flow_1nsejv3</bpmn2:outgoing>
+      </bpmn2:task>
+      <bpmn2:sequenceFlow id="Flow_0dvj5df" sourceRef="Event_1n71rgj" targetRef="Activity_1v87cu8"/>
+      <bpmn2:task id="Activity_011mptw" name="Create saved search entity" camunda:modelerTemplate="org.drupal.action.eca_new_entity">
+        <bpmn2:extensionElements>
+          <camunda:properties>
+            <camunda:property name="pluginid" value="eca_new_entity"/>
+          </camunda:properties>
+          <camunda:field name="token_name">
+            <camunda:string>newentity</camunda:string>
+          </camunda:field>
+          <camunda:field name="type">
+            <camunda:string>node saved_search</camunda:string>
+          </camunda:field>
+          <camunda:field name="langcode">
+            <camunda:string/>
+          </camunda:field>
+          <camunda:field name="label">
+            <camunda:string>Temp label</camunda:string>
+          </camunda:field>
+          <camunda:field name="published">
+            <camunda:string>no</camunda:string>
+          </camunda:field>
+          <camunda:field name="owner">
+            <camunda:string>[user:uid]</camunda:string>
+          </camunda:field>
+        </bpmn2:extensionElements>
+        <bpmn2:incoming>Flow_1nsejv3</bpmn2:incoming>
+        <bpmn2:outgoing>Flow_1ee49i3</bpmn2:outgoing>
+      </bpmn2:task>
+      <bpmn2:task id="Activity_0lrg523" name="Set link field" camunda:modelerTemplate="org.drupal.action.eca_set_field_value">
+        <bpmn2:extensionElements>
+          <camunda:properties>
+            <camunda:property name="pluginid" value="eca_set_field_value"/>
+          </camunda:properties>
+          <camunda:field name="method">
+            <camunda:string>set:clear</camunda:string>
+          </camunda:field>
+          <camunda:field name="strip_tags">
+            <camunda:string>no</camunda:string>
+          </camunda:field>
+          <camunda:field name="field_name">
+            <camunda:string>field_link</camunda:string>
+          </camunda:field>
+          <camunda:field name="trim">
+            <camunda:string>no</camunda:string>
+          </camunda:field>
+          <camunda:field name="field_value">
+            <camunda:string>[referer]</camunda:string>
+          </camunda:field>
+          <camunda:field name="save_entity">
+            <camunda:string>yes</camunda:string>
+          </camunda:field>
+          <camunda:field name="object">
+            <camunda:string>newentity</camunda:string>
+          </camunda:field>
+        </bpmn2:extensionElements>
+        <bpmn2:incoming>Flow_1ee49i3</bpmn2:incoming>
+        <bpmn2:outgoing>Flow_1wjfloa</bpmn2:outgoing>
+      </bpmn2:task>
+      <bpmn2:sequenceFlow id="Flow_1ee49i3" sourceRef="Activity_011mptw" targetRef="Activity_0lrg523"/>
+      <bpmn2:task id="Activity_1wenpxt" name="Get entity url" camunda:modelerTemplate="org.drupal.action.eca_token_set_value">
+        <bpmn2:extensionElements>
+          <camunda:properties>
+            <camunda:property name="pluginid" value="eca_token_set_value"/>
+          </camunda:properties>
+          <camunda:field name="token_name">
+            <camunda:string>newentityurl</camunda:string>
+          </camunda:field>
+          <camunda:field name="token_value">
+            <camunda:string>[newentity:url]</camunda:string>
+          </camunda:field>
+          <camunda:field name="use_yaml">
+            <camunda:string>no</camunda:string>
+          </camunda:field>
+        <camunda:field name="validate_yaml"><camunda:string>no</camunda:string></camunda:field></bpmn2:extensionElements>
+        <bpmn2:incoming>Flow_0yjysg4</bpmn2:incoming>
+        <bpmn2:outgoing>Flow_1v0adat</bpmn2:outgoing>
+      </bpmn2:task>
+      <bpmn2:task id="Activity_05p16yw" name="Redirect to the edit form" camunda:modelerTemplate="org.drupal.action.action_goto_action">
+        <bpmn2:extensionElements>
+          <camunda:properties>
+            <camunda:property name="pluginid" value="action_goto_action"/>
+          </camunda:properties>
+          <camunda:field name="url">
+            <camunda:string>[newentityurl]/edit?destination=/my-links</camunda:string>
+          </camunda:field>
+          <camunda:field name="replace_tokens">
+            <camunda:string>yes</camunda:string>
+          </camunda:field>
+        </bpmn2:extensionElements>
+        <bpmn2:incoming>Flow_1v0adat</bpmn2:incoming>
+      </bpmn2:task>
+      <bpmn2:sequenceFlow id="Flow_1v0adat" sourceRef="Activity_1wenpxt" targetRef="Activity_05p16yw"/>
+      <bpmn2:task id="Activity_0pn5mkx" name="Publish" camunda:modelerTemplate="org.drupal.action.entity:publish_action:node">
+        <bpmn2:extensionElements>
+          <camunda:properties>
+            <camunda:property name="pluginid" value="entity:publish_action:node"/>
+          </camunda:properties>
+          <camunda:field name="object">
+            <camunda:string>newentity</camunda:string>
+          </camunda:field>
+        </bpmn2:extensionElements>
+        <bpmn2:incoming>Flow_1wjfloa</bpmn2:incoming>
+        <bpmn2:outgoing>Flow_0yjysg4</bpmn2:outgoing>
+      </bpmn2:task>
+      <bpmn2:sequenceFlow id="Flow_0yjysg4" sourceRef="Activity_0pn5mkx" targetRef="Activity_1wenpxt"/>
+      <bpmn2:task id="Activity_16rbs98" name="Deny access" camunda:modelerTemplate="org.drupal.action.eca_access_set_result">
+        <bpmn2:extensionElements>
+          <camunda:field name="access_result">
+            <camunda:string>forbidden</camunda:string>
+          </camunda:field>
+          <camunda:properties>
+            <camunda:property name="pluginid" value="eca_access_set_result"/>
+          </camunda:properties>
+        </bpmn2:extensionElements>
+        <bpmn2:incoming>Flow_0d4zdrj</bpmn2:incoming>
+      </bpmn2:task>
+      <bpmn2:sequenceFlow id="Flow_0d4zdrj" name="User is a guest" camunda:modelerTemplate="org.drupal.condition.eca_user_role" sourceRef="Event_018vlc0" targetRef="Activity_16rbs98">
+        <bpmn2:extensionElements>
+          <camunda:properties>
+            <camunda:property name="pluginid" value="eca_user_role"/>
+          </camunda:properties>
+          <camunda:field name="account">
+            <camunda:string>[session_user]</camunda:string>
+          </camunda:field>
+          <camunda:field name="role">
+            <camunda:string>anonymous</camunda:string>
+          </camunda:field>
+          <camunda:field name="negate">
+            <camunda:string>no</camunda:string>
+          </camunda:field>
+        </bpmn2:extensionElements>
+      </bpmn2:sequenceFlow>
+      <bpmn2:sequenceFlow id="Flow_1nsejv3" sourceRef="Activity_1v87cu8" targetRef="Activity_011mptw"/>
+      <bpmn2:sequenceFlow id="Flow_1wjfloa" sourceRef="Activity_0lrg523" targetRef="Activity_0pn5mkx"/>
+    </bpmn2:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_Process_dzdveYm">
+      <bpmndi:BPMNPlane id="BPMNPlane_Process_dzdveYm" bpmnElement="Process_dzdveYm">
+        <bpmndi:BPMNShape id="Event_018vlc0_di" bpmnElement="Event_018vlc0">
+          <dc:Bounds x="57" y="-177" width="36" height="36"/>
+          <bpmndi:BPMNLabel>
+            <dc:Bounds x="57" y="-201" width="35" height="14"/>
+          </bpmndi:BPMNLabel>
+        </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="Activity_0yodiot_di" bpmnElement="Activity_0yodiot">
+          <dc:Bounds x="175" y="-199" width="100" height="80"/>
+        </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="Event_1n71rgj_di" bpmnElement="Event_1n71rgj">
+          <dc:Bounds x="57" y="192" width="36" height="36"/>
+        </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="Activity_1v87cu8_di" bpmnElement="Activity_1v87cu8">
+          <dc:Bounds x="175" y="170" width="100" height="80"/>
+        </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="Activity_011mptw_di" bpmnElement="Activity_011mptw">
+          <dc:Bounds x="325" y="170" width="100" height="80"/>
+        </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="Activity_0lrg523_di" bpmnElement="Activity_0lrg523">
+          <dc:Bounds x="475" y="170" width="100" height="80"/>
+        </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="Activity_1wenpxt_di" bpmnElement="Activity_1wenpxt">
+          <dc:Bounds x="775" y="170" width="100" height="80"/>
+        </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="Activity_05p16yw_di" bpmnElement="Activity_05p16yw">
+          <dc:Bounds x="925" y="170" width="100" height="80"/>
+        </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="Activity_0pn5mkx_di" bpmnElement="Activity_0pn5mkx">
+          <dc:Bounds x="625" y="170" width="100" height="80"/>
+        </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="Activity_16rbs98_di" bpmnElement="Activity_16rbs98">
+          <dc:Bounds x="175" y="-59" width="100" height="80"/>
+        </bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="Flow_0fc6ug6_di" bpmnElement="Flow_0fc6ug6">
+          <di:waypoint x="93" y="-159"/>
+          <di:waypoint x="175" y="-159"/>
+          <bpmndi:BPMNLabel>
+            <dc:Bounds x="103" y="-184" width="62" height="27"/>
+          </bpmndi:BPMNLabel>
+        </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="Flow_0dvj5df_di" bpmnElement="Flow_0dvj5df">
+          <di:waypoint x="93" y="210"/>
+          <di:waypoint x="175" y="210"/>
+        </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="Flow_1ee49i3_di" bpmnElement="Flow_1ee49i3">
+          <di:waypoint x="425" y="210"/>
+          <di:waypoint x="475" y="210"/>
+        </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="Flow_1v0adat_di" bpmnElement="Flow_1v0adat">
+          <di:waypoint x="875" y="210"/>
+          <di:waypoint x="925" y="210"/>
+        </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="Flow_0yjysg4_di" bpmnElement="Flow_0yjysg4">
+          <di:waypoint x="725" y="210"/>
+          <di:waypoint x="775" y="210"/>
+        </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="Flow_0d4zdrj_di" bpmnElement="Flow_0d4zdrj">
+          <di:waypoint x="75" y="-141"/>
+          <di:waypoint x="75" y="-19"/>
+          <di:waypoint x="175" y="-19"/>
+          <bpmndi:BPMNLabel>
+            <dc:Bounds x="53" y="-90" width="75" height="14"/>
+          </bpmndi:BPMNLabel>
+        </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="Flow_1nsejv3_di" bpmnElement="Flow_1nsejv3">
+          <di:waypoint x="275" y="210"/>
+          <di:waypoint x="325" y="210"/>
+        </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="Flow_1wjfloa_di" bpmnElement="Flow_1wjfloa">
+          <di:waypoint x="575" y="210"/>
+          <di:waypoint x="625" y="210"/>
+        </bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+  </bpmn2:definitions>

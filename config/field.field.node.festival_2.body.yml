@@ -1,0 +1,26 @@
+uuid: 11482ed4-837e-4ff2-8dd2-bd257741fd6a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - filter.format.restricted_html
+    - node.type.festival_2
+  module:
+    - text
+id: node.festival_2.body
+field_name: body
+entity_type: node
+bundle: festival_2
+label: Body
+description: 'Information for potential contributors'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: false
+  required_summary: false
+  allowed_formats:
+    - restricted_html
+field_type: text_with_summary

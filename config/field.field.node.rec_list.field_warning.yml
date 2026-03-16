@@ -1,0 +1,29 @@
+uuid: e135a078-0be3-4260-abdc-d94d8341a82e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_warning
+    - node.type.rec_list
+    - taxonomy.vocabulary.warning
+id: node.rec_list.field_warning
+field_name: field_warning
+entity_type: node
+bundle: rec_list
+label: Warning
+description: "<br /><b>No Archive Warnings Apply:</b>\r\nThis is used if none of the the Archive warnings below apply to your content.\r\n<br /><br />\r\n<b>Graphic Depictions Of Violence:</b>\r\nThis is for gory, graphic, explicitly described violence. Exactly where to draw the line is your call.\r\n<br /><br />\r\n<b>Major Character Death:</b>\r\nThis is used when a major character in the work dies irreversibly. Use your best judgment about who counts as a major character. The warning is not needed for temporary or mistaken situations where the supposed death of a major character turns out not to have occurred or is somehow reversed. \r\n<br /><br />\r\n<b>Rape or Non-Con:</b>\r\nThis is for content containing non-consensual sexual activity. It should be used for all types and degrees of non-consensual sexual activity including verbal and tactile. Additionally, it is strongly encouraged that any work tagged with rape and/or non-consensual themes be locked to the Archive, so only available to logged-in Archive users. \r\n<br /><br />\r\n<b>Underage:</b>\r\nThis is for content depicting any type of sexual activity involving any character under age 18. Use your judgement - it doesn't include dating activity like kissing, or vague references with no actual depiction. This warning generally applies to humans; if your work is about aliens who only live for a month or 1000 year old vampires with 12 year old bodies, use your best judgment - you can  explain nuances in the Notes field. Additionally, it is strongly encouraged that any work tagged with underage themes be locked to the Archive, so only available to logged-in Archive users. \r\n<br /><br />\r\n<b>Creator chooses not to warn, so any or all warnings may apply:</b>\r\nThis is used if you don't want to warn for anything. You might choose this option if you don't like warning for certain topics or dislike warnings in general, if you want to avoid spoilers, or if you aren't sure if one of the major warnings applies. However, if the work does contain disturbing elements such as rape/non-con or underage themes and you use this tag, it is strongly encouraged that the work be locked to the Archive, so only available to logged-in Archive users. "
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      warning: warning
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

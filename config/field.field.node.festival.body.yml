@@ -1,0 +1,26 @@
+uuid: efa906c8-0fc4-4645-8a27-583c9a867c5e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - filter.format.basic_html
+    - node.type.festival
+  module:
+    - text
+id: node.festival.body
+field_name: body
+entity_type: node
+bundle: festival
+label: Body
+description: 'Information for listeners about the festival'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: false
+  required_summary: false
+  allowed_formats:
+    - basic_html
+field_type: text_with_summary

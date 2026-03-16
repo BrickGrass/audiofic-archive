@@ -1,0 +1,151 @@
+uuid: bcd52493-4a70-4ba3-97ed-8ae4cf7fe659
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.playlist.body
+    - field.field.node.playlist.field_author
+    - field.field.node.playlist.field_category
+    - field.field.node.playlist.field_cover
+    - field.field.node.playlist.field_duration
+    - field.field.node.playlist.field_fandom2
+    - field.field.node.playlist.field_format
+    - field.field.node.playlist.field_languages
+    - field.field.node.playlist.field_length
+    - field.field.node.playlist.field_rating
+    - field.field.node.playlist.field_reader
+    - field.field.node.playlist.field_relationship
+    - field.field.node.playlist.field_summary
+    - field.field.node.playlist.field_warning
+    - field.field.node.playlist.field_works_series
+    - image.style.medium
+    - node.type.playlist
+  module:
+    - duration_field
+    - image
+    - text
+    - user
+id: node.playlist.default
+targetEntityType: node
+bundle: playlist
+mode: default
+content:
+  field_author:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_category:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_cover:
+    type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: medium
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_duration:
+    type: duration_human_display
+    label: above
+    settings:
+      text_length: full
+      separator: space
+    third_party_settings: {  }
+    weight: 111
+    region: content
+  field_fandom2:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_format:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_languages:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 11
+    region: content
+  field_length:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_reader:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_relationship:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_summary:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 116
+    region: content
+  field_warning:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_works_series:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 13
+    region: content
+  flag_bookmark:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  body: true
+  field_rating: true
+  flag_to_listen: true
+  langcode: true
+  links: true
+  search_api_excerpt: true

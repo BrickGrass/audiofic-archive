@@ -1,0 +1,15 @@
+uuid: 793e001e-3893-4189-9f1d-6960273e606f
+langcode: en
+status: true
+dependencies:
+  module:
+    - taxonomy_unique
+third_party_settings:
+  taxonomy_unique:
+    enabled: false
+    message: 'Term "%term" already exists in vocabulary "%vocabulary".'
+name: Curator
+vid: curator
+description: null
+weight: 0
+new_revision: true

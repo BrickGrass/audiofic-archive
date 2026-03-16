@@ -1,0 +1,15 @@
+uuid: 5bd58233-71a5-472b-a382-cb8296c51871
+langcode: en
+status: true
+dependencies:
+  module:
+    - taxonomy_unique
+third_party_settings:
+  taxonomy_unique:
+    enabled: true
+    message: 'Term %term already exists in vocabulary %vocabulary.'
+name: Length
+vid: length
+description: null
+weight: 0
+new_revision: false

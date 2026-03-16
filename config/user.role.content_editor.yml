@@ -1,0 +1,104 @@
+uuid: 82201cd4-abcf-4ebd-b468-e17cd446c2db
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+    - media.type.mp3_file
+    - media.type.other_file
+    - node.type.festival
+    - node.type.festival_2
+    - node.type.for_later
+    - node.type.legacy_work
+    - node.type.playlist
+    - node.type.rec_list
+    - node.type.work
+    - taxonomy.vocabulary.author
+    - taxonomy.vocabulary.cover_artist
+    - taxonomy.vocabulary.curator
+    - taxonomy.vocabulary.fandom
+    - taxonomy.vocabulary.language
+    - taxonomy.vocabulary.reader
+    - taxonomy.vocabulary.relationship
+  module:
+    - access_by_ref
+    - contextual
+    - file
+    - file_download
+    - filter
+    - flag
+    - media
+    - node
+    - system
+    - taxonomy
+_core:
+  default_config_hash: NtMgnXp0miNtJhag07NSjwdCm4zpJwhlDFs1HgyL4wI
+id: content_editor
+label: Podficcer
+weight: -8
+is_admin: false
+permissions:
+  - 'access contextual links'
+  - 'access file download'
+  - 'access node by reference'
+  - 'cancel account'
+  - 'create festival content'
+  - 'create festival_2 content'
+  - 'create for_later content'
+  - 'create legacy_work content'
+  - 'create mp3_file media'
+  - 'create other_file media'
+  - 'create playlist content'
+  - 'create rec_list content'
+  - 'create terms in author'
+  - 'create terms in cover_artist'
+  - 'create terms in curator'
+  - 'create terms in fandom'
+  - 'create terms in language'
+  - 'create terms in reader'
+  - 'create terms in relationship'
+  - 'create work content'
+  - 'delete media'
+  - 'delete own festival content'
+  - 'delete own festival_2 content'
+  - 'delete own files'
+  - 'delete own for_later content'
+  - 'delete own legacy_work content'
+  - 'delete own mp3_file media'
+  - 'delete own other_file media'
+  - 'delete own playlist content'
+  - 'delete own rec_list content'
+  - 'delete own work content'
+  - 'edit own festival content'
+  - 'edit own festival_2 content'
+  - 'edit own for_later content'
+  - 'edit own legacy_work content'
+  - 'edit own mp3_file media'
+  - 'edit own other_file media'
+  - 'edit own playlist content'
+  - 'edit own rec_list content'
+  - 'edit own work content'
+  - 'flag queue_flag'
+  - 'revert all revisions'
+  - 'revert any mp3_file media revisions'
+  - 'revert any other_file media revisions'
+  - 'revert festival revisions'
+  - 'revert festival_2 revisions'
+  - 'revert for_later revisions'
+  - 'revert legacy_work revisions'
+  - 'revert playlist revisions'
+  - 'revert rec_list revisions'
+  - 'revert work revisions'
+  - 'unflag queue_flag'
+  - 'update media'
+  - 'use text format basic_html'
+  - 'view festival revisions'
+  - 'view festival_2 revisions'
+  - 'view for_later revisions'
+  - 'view legacy_work revisions'
+  - 'view own unpublished content'
+  - 'view own unpublished media'
+  - 'view playlist revisions'
+  - 'view rec_list revisions'
+  - 'view the administration theme'
+  - 'view work revisions'
