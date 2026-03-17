@@ -61,7 +61,8 @@
         "drupal/eca": "^2.1",
         "drupal/rules": "^4.0",
         "drupal/bpmn_io": "^2.0",
-        "drupal/profile": "^1.11"
+        "drupal/profile": "^1.11",
+        "drupal/structure_sync": "^2.0"
     },
     "require-dev": {
         "drupal/core-dev": "10.3.6"
