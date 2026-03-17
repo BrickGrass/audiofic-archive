@@ -101,11 +101,11 @@ module:
   eca_form: 1
   pathauto: 1
   views: 10
-  standard: 1000
+  minimal: 1000
 theme:
   olivero: 0
   claro: 0
   bootstrap_barrio: 0
   bootstrap_barrio_subtheme: 0
   gin: 0
-profile: standard
+profile: minimal
