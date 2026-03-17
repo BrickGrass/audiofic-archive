@@ -79,6 +79,7 @@ module:
   search_api_solr_admin: 0
   series_part_label_validation: 0
   shortcut: 0
+  structure_sync: 0
   system: 0
   tagify: 0
   taxonomy: 0
