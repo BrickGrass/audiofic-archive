@@ -1,6 +1,6 @@
 uuid: 91d2f10b-6b1e-4f3c-805a-acb4b5cc3474
 langcode: en
-status: false
+status: true
 dependencies:
   config:
     - field.storage.node.body
@@ -17,6 +17,7 @@ dependencies:
     - field.storage.node.field_relationship
     - field.storage.node.field_series
     - field.storage.node.field_warning
+    - search_api.server.audiofic_solr
   module:
     - node
     - search_api_solr
@@ -343,7 +344,6 @@ datasource_settings:
       selected:
         - legacy_work
         - playlist
-        - reader_collection
         - rec_list
         - work
     languages:
@@ -387,11 +387,11 @@ processor_settings:
     title: true
     alt: true
     tags:
-      b: 2
-      h1: 5
-      h2: 3
-      h3: 2
-      strong: 2
+      b: 2.0
+      h1: 5.0
+      h2: 3.0
+      h3: 2.0
+      strong: 2.0
   language_with_fallback: {  }
   rendered_item: {  }
   solr_date_range:
@@ -405,4 +405,4 @@ options:
   delete_on_fail: true
   index_directly: false
   track_changes_in_references: true
-server: null
+server: audiofic_solr

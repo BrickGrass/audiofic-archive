@@ -1,11 +1,12 @@
 uuid: 1e7871e0-bf3d-4224-afa3-16ec702c2c6a
 langcode: en
-status: false
+status: true
 dependencies:
   config:
     - field.storage.node.body
     - field.storage.node.field_fandom2
     - field.storage.node.field_work_or_collection
+    - search_api.server.audiofic_solr
   module:
     - node
     - search_api_solr
@@ -152,13 +153,13 @@ processor_settings:
     title: true
     alt: true
     tags:
-      b: 2
-      em: 1
-      h1: 5
-      h2: 3
-      h3: 2
-      strong: 2
-      u: 1
+      b: 2.0
+      em: 1.0
+      h1: 5.0
+      h2: 3.0
+      h3: 2.0
+      strong: 2.0
+      u: 1.0
   language_with_fallback: {  }
   rendered_item: {  }
   solr_date_range:
@@ -172,4 +173,4 @@ options:
   delete_on_fail: true
   index_directly: true
   track_changes_in_references: true
-server: null
+server: audiofic_solr
