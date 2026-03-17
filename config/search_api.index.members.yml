@@ -1,12 +1,13 @@
 uuid: 12a31ba2-b564-4a6e-8676-ac6eaa016fad
 langcode: en
-status: false
+status: true
 dependencies:
   config:
     - field.storage.user.field_author_name
     - field.storage.user.field_cover_artist_name
     - field.storage.user.field_profile
     - field.storage.user.field_reader_name
+    - search_api.server.audiofic_solr
   module:
     - search_api_solr
     - user
@@ -140,4 +141,4 @@ options:
   delete_on_fail: true
   index_directly: true
   track_changes_in_references: true
-server: null
+server: audiofic_solr
