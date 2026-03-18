@@ -1,0 +1,15 @@
+uuid: bf20c031-9735-48a5-b044-f258cb9186d1
+langcode: en
+status: true
+dependencies:
+  module:
+    - taxonomy_unique
+third_party_settings:
+  taxonomy_unique:
+    enabled: true
+    message: 'Term %term already exists in vocabulary %vocabulary.'
+name: Rating
+vid: rating
+description: null
+weight: 0
+new_revision: false

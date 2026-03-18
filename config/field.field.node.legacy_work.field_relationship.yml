@@ -1,0 +1,29 @@
+uuid: f5ecf5a7-b19a-4b97-9a8e-a2c64429bb95
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_relationship
+    - node.type.legacy_work
+    - taxonomy.vocabulary.relationship
+id: node.legacy_work.field_relationship
+field_name: field_relationship
+entity_type: node
+bundle: legacy_work
+label: Ship
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      relationship: relationship
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

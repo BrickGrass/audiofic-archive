@@ -1,0 +1,24 @@
+uuid: 8d0b475e-b458-44f7-b219-6e65821a9ef3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.legacy_work
+  module:
+    - text
+id: node.legacy_work.body
+field_name: body
+entity_type: node
+bundle: legacy_work
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+  required_summary: false
+  allowed_formats: {  }
+field_type: text_with_summary

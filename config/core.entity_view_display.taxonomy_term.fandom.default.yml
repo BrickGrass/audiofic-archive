@@ -1,0 +1,23 @@
+uuid: 64ec667f-01a5-4795-9af6-0be635d0b82a
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.fandom
+  module:
+    - text
+id: taxonomy_term.fandom.default
+targetEntityType: taxonomy_term
+bundle: fandom
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  langcode: true
+  search_api_excerpt: true

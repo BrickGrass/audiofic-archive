@@ -1,0 +1,19 @@
+uuid: 64a3da6f-2e9f-4096-82df-2dea0dce87cc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_filename
+    - media.type.mp3_file
+id: media.mp3_file.field_filename
+field_name: field_filename
+entity_type: media
+bundle: mp3_file
+label: Filename
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,1057 @@
+menus:
+  -
+    menu_name: main
+    title: 'Add work'
+    parent: 'menu_link_content:ed87f397-7b1d-4433-9088-5197f0d0e9ab'
+    uri: 'internal:/node/add/work'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: -50
+    langcode: en
+    uuid: 12513358-12d4-4e19-92bf-f6347c0a02e0
+    options: {  }
+  -
+    menu_name: main
+    title: 'Add series or collection'
+    parent: 'menu_link_content:ed87f397-7b1d-4433-9088-5197f0d0e9ab'
+    uri: 'internal:/node/add/playlist'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: -48
+    langcode: en
+    uuid: 0c42075d-f625-4de8-9cf8-b5975804c885
+    options: {  }
+  -
+    menu_name: main
+    title: Post
+    parent: null
+    uri: 'route:<button>'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: -49
+    langcode: en
+    uuid: ed87f397-7b1d-4433-9088-5197f0d0e9ab
+    options: {  }
+  -
+    menu_name: main
+    title: Search
+    parent: null
+    uri: 'route:<button>'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: -50
+    langcode: en
+    uuid: d3dc94a9-d87f-4628-9baa-6adda3da2923
+    options: {  }
+  -
+    menu_name: main
+    title: 'Tagging guide'
+    parent: 'menu_link_content:4854f30c-75f0-4bb0-944c-a920651bbeb2'
+    uri: 'internal:/tagging-guide'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: -50
+    langcode: en
+    uuid: 76a9970f-5027-490d-9e31-fb4c45fa0fd6
+    options: {  }
+  -
+    menu_name: account
+    title: Register
+    parent: null
+    uri: 'https://dev-audiofic.pantheonsite.io/user/register'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: -47
+    langcode: en
+    uuid: 8a4d1d10-ddd0-4d19-8d77-6007ddf74d35
+    options: {  }
+  -
+    menu_name: account
+    title: 'Claim existing account'
+    parent: null
+    uri: 'https://dev-audiofic.pantheonsite.io/contact/claim_account_or_name'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: -46
+    langcode: en
+    uuid: f67fd239-7fa9-4674-89cd-9f8de0c65ee5
+    options: {  }
+  -
+    menu_name: main
+    title: About
+    parent: null
+    uri: 'route:<button>'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: -48
+    langcode: en
+    uuid: 4854f30c-75f0-4bb0-944c-a920651bbeb2
+    options: {  }
+taxonomies:
+  category:
+    -
+      vid: category
+      tid: '197'
+      langcode: en
+      name: f/f
+      description__value: null
+      description__format: null
+      weight: '1'
+      parent: '0'
+      uuid: 11ffe832-50be-43fa-b50a-0db03368ee3e
+    -
+      vid: category
+      tid: '198'
+      langcode: en
+      name: f/m
+      description__value: null
+      description__format: null
+      weight: '2'
+      parent: '0'
+      uuid: 99482cef-ba98-4d56-8665-f8dd0c74dd29
+    -
+      vid: category
+      tid: '195'
+      langcode: en
+      name: gen
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: a2c3fec4-6cc3-4fb8-a8b7-d91eb81e0b07
+    -
+      vid: category
+      tid: '196'
+      langcode: en
+      name: m/m
+      description__value: null
+      description__format: null
+      weight: '3'
+      parent: '0'
+      uuid: 690d4a92-caf5-4cdb-b0ca-c58b4fff87b8
+    -
+      vid: category
+      tid: '349'
+      langcode: en
+      name: nb/any
+      description__value: null
+      description__format: null
+      weight: '4'
+      parent: '0'
+      uuid: 966fbd16-9e97-4789-a143-39a19befa9f7
+    -
+      vid: category
+      tid: '201'
+      langcode: en
+      name: other
+      description__value: null
+      description__format: null
+      weight: '6'
+      parent: '0'
+      uuid: e6da55f1-6867-4b15-a188-c53b0f53af72
+    -
+      vid: category
+      tid: '199'
+      langcode: en
+      name: poly
+      description__value: null
+      description__format: null
+      weight: '5'
+      parent: '0'
+      uuid: 3963763d-c0ed-4c31-8a0b-0fc853226951
+  info:
+    -
+      vid: info
+      tid: '215'
+      langcode: en
+      name: commentary
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: fa6df194-6a5b-4de8-b7b2-81d474476dfd
+    -
+      vid: info
+      tid: '211'
+      langcode: en
+      name: compilation
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 3f9d3c91-12d6-4dc6-bfa6-682576a35b2d
+    -
+      vid: info
+      tid: '216'
+      langcode: en
+      name: filk
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: bd08a2b1-4c2e-48e0-8380-4f7b456ff59e
+    -
+      vid: info
+      tid: '213'
+      langcode: en
+      name: improvisation
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 4517b923-0440-428c-95bc-6e4534f1ff29
+    -
+      vid: info
+      tid: '214'
+      langcode: en
+      name: meta
+      description__value: '<p>meta</p>'
+      description__format: basic_html
+      weight: '0'
+      parent: '0'
+      uuid: 2bc18e13-1f38-43bc-8eae-134bf729d107
+    -
+      vid: info
+      tid: '212'
+      langcode: en
+      name: multivoice
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 385afdba-b1ef-47d8-b479-81c24c07a315
+    -
+      vid: info
+      tid: '221'
+      langcode: en
+      name: 'other collaboration'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 1a8c0fd1-476f-4b8c-8a24-0799fc2ea0e9
+    -
+      vid: info
+      tid: '217'
+      langcode: en
+      name: poetry
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 83666acd-4e7f-4ee7-bd12-b5d4d7f11f46
+    -
+      vid: info
+      tid: '218'
+      langcode: en
+      name: vid
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: f3367db9-0614-4600-ad73-9d8f4577bfc9
+  language:
+    -
+      vid: language
+      tid: '302'
+      langcode: en
+      name: 'Bahasa Indonesia | Indonesian'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 2d3c2ad0-e3ed-4b23-a511-c5ae79cf446e
+      field_notes: {  }
+    -
+      vid: language
+      tid: '290'
+      langcode: en
+      name: 'Cymraeg | Welsh'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 5dff501a-d39e-4d5d-be7b-cfb96ca33418
+      field_notes: {  }
+    -
+      vid: language
+      tid: '286'
+      langcode: en
+      name: 'Dansk | Danish'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: b6e3733c-6836-460a-ac43-16a8d26c8fdf
+      field_notes: {  }
+    -
+      vid: language
+      tid: '273'
+      langcode: en
+      name: 'Deutsch | German'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: b41793aa-ca42-435a-8f32-84b6db06a3f7
+      field_notes: {  }
+    -
+      vid: language
+      tid: '220'
+      langcode: en
+      name: English
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 57e07385-1a6b-4ada-b21c-3557b89ff724
+      field_notes: {  }
+    -
+      vid: language
+      tid: '274'
+      langcode: en
+      name: 'Español | Spanish'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 5dbe0658-f769-414f-82e8-4ae5da1fb7ce
+      field_notes: {  }
+    -
+      vid: language
+      tid: '277'
+      langcode: en
+      name: 'Français | French'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: e3222c32-982d-4d5d-8410-5dae2ed23280
+      field_notes: {  }
+    -
+      vid: language
+      tid: '293'
+      langcode: en
+      name: 'Français Canadien | Canadian French'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: f17a75ba-ce7e-4188-9a3a-13df3d0e5572
+      field_notes: {  }
+    -
+      vid: language
+      tid: '278'
+      langcode: en
+      name: 'Gaeilc | Irish Gaelic'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 8176196d-375d-4d13-9c45-f3c17c7ff01f
+      field_notes: {  }
+    -
+      vid: language
+      tid: '279'
+      langcode: en
+      name: 'Gàidhlig | Scots Gaelic'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 7c8fa6ed-4f35-473b-ae98-069c3e3d6e0b
+      field_notes: {  }
+    -
+      vid: language
+      tid: '305'
+      langcode: en
+      name: 'Hausa | a Nigerian language'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: f7d9dbb4-d677-41ec-b860-36bf101b57c4
+      field_notes: {  }
+    -
+      vid: language
+      tid: '304'
+      langcode: en
+      name: 'Igbo | a Nigerian language'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: c262d62f-01b7-4c3e-913b-60cbe98e6980
+      field_notes: {  }
+    -
+      vid: language
+      tid: '280'
+      langcode: en
+      name: 'Italiano | Italian'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 879e7c4a-ffc3-4aa8-9fbc-d86152b307fe
+      field_notes: {  }
+    -
+      vid: language
+      tid: '330'
+      langcode: en
+      name: 'Khuzdul | Dwarvish language (Tolkien)'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: de51b72c-a693-490f-b1d6-c85360bfd2ae
+      field_notes: {  }
+    -
+      vid: language
+      tid: '310'
+      langcode: en
+      name: 'Klingon | (Star Trek)'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 5fe06e6f-ad76-44cf-b981-4a9548d179c7
+      field_notes: {  }
+    -
+      vid: language
+      tid: '282'
+      langcode: en
+      name: 'Lingua Latīna | Classical Latin'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 0e2df332-ba58-4f05-833a-66f49d7602a8
+      field_notes: {  }
+    -
+      vid: language
+      tid: '276'
+      langcode: en
+      name: 'Nederlands | Dutch'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 0b561152-edb8-4410-956f-1c4cca148fd5
+      field_notes: {  }
+    -
+      vid: language
+      tid: '283'
+      langcode: en
+      name: 'Norsk | Norwegian'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: a1971e26-61e8-4918-9586-86b759cf745e
+      field_notes: {  }
+    -
+      vid: language
+      tid: '298'
+      langcode: en
+      name: 'Ōlelo Hawaiʻi | Hawaiian'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 8e147fb6-e1eb-4a1a-a5b4-f0c27777c9a8
+      field_notes: {  }
+    -
+      vid: language
+      tid: '292'
+      langcode: en
+      name: 'Português | Portuguese'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 8c755e31-05b2-4caf-99f4-0fe01890a7cb
+      field_notes: {  }
+    -
+      vid: language
+      tid: '291'
+      langcode: en
+      name: 'Português Brasileiro | Brazilian Portuguese'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 22de35e7-9a5f-40c6-b592-d83f0de1de0c
+      field_notes: {  }
+    -
+      vid: language
+      tid: '287'
+      langcode: en
+      name: 'Quenya | Elvish language (Tolkien)'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: e2afc262-4c05-44d1-b7d5-cc288a14107a
+      field_notes: {  }
+    -
+      vid: language
+      tid: '288'
+      langcode: en
+      name: 'Română | Romanian'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 3e954d23-e6d1-4667-9281-60b2ffa93656
+      field_notes: {  }
+    -
+      vid: language
+      tid: '329'
+      langcode: en
+      name: 'Sindarin | Elvish language (Tolkien)'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 9472b98c-83b8-4688-8718-d659e997517d
+      field_notes: {  }
+    -
+      vid: language
+      tid: '285'
+      langcode: en
+      name: 'Suomi | Finnish'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 75400d97-8995-4773-909c-4e751a9a9005
+      field_notes: {  }
+    -
+      vid: language
+      tid: '284'
+      langcode: en
+      name: 'Svenska | Swedish'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: dbc87848-529a-42c2-bb6e-08c16f27ca78
+      field_notes: {  }
+    -
+      vid: language
+      tid: '281'
+      langcode: en
+      name: 'Te Reo Māori | Māori'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 9042c6da-554e-4eb8-a3a4-068d5258c5ab
+      field_notes: {  }
+    -
+      vid: language
+      tid: '309'
+      langcode: en
+      name: 'Vulcan | (Star Trek)'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 8907c44e-7e71-486f-9274-321850376e5d
+      field_notes: {  }
+    -
+      vid: language
+      tid: '307'
+      langcode: en
+      name: 'Xhosa | a South African language'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 39c2150f-aadc-454d-af0b-aa3b8a640644
+      field_notes: {  }
+    -
+      vid: language
+      tid: '303'
+      langcode: en
+      name: 'Yoruba | a Nigerian language'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 1c71ef0d-727c-4b8d-97e7-ef8b0c352c69
+      field_notes: {  }
+    -
+      vid: language
+      tid: '308'
+      langcode: en
+      name: 'Zulu | a South African language'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: fe69a055-c50d-49c5-b322-f6c436d4e056
+      field_notes: {  }
+    -
+      vid: language
+      tid: '311'
+      langcode: en
+      name: 'Ελληνικά | Greek'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 15e83107-0a38-453a-8935-52a384f3547b
+      field_notes: {  }
+    -
+      vid: language
+      tid: '268'
+      langcode: en
+      name: 'русский | Russian'
+      description__value: null
+      description__format: null
+      weight: '2'
+      parent: '0'
+      uuid: 880057bf-6feb-417d-babb-d406e413671c
+      field_notes: {  }
+    -
+      vid: language
+      tid: '295'
+      langcode: en
+      name: 'українська мова | Ukrainian'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 10359c3b-c69e-4416-a371-c8e134c93cc1
+      field_notes: {  }
+    -
+      vid: language
+      tid: '289'
+      langcode: en
+      name: 'اَلْعَرَبِيَّةُ | Arabic'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 34dbb989-0fa0-4908-8a8b-603aa511f40e
+      field_notes: {  }
+    -
+      vid: language
+      tid: '306'
+      langcode: en
+      name: 'كِسوَحِيلِ | Swahili'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 776958e3-f3d0-4ec0-be23-69ea51bf98d3
+      field_notes: {  }
+    -
+      vid: language
+      tid: '297'
+      langcode: en
+      name: 'मराठी, 𑘦𑘨𑘰𑘙𑘲 | Marathi'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: f35263d8-8388-48d2-8ee8-25c7356db06f
+      field_notes: {  }
+    -
+      vid: language
+      tid: '296'
+      langcode: en
+      name: 'हिन्दी | Hindi'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 3c554f21-0052-4db3-b770-6b6bac06c24e
+      field_notes: {  }
+    -
+      vid: language
+      tid: '299'
+      langcode: en
+      name: 'ગુજરાતી | Gujarati'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 8ddd21d9-677e-43a7-97fc-b403be33f4a0
+      field_notes: {  }
+    -
+      vid: language
+      tid: '300'
+      langcode: en
+      name: 'தமிழ் | Tamil'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 0f4f74c2-8460-41d0-b063-838b0dcd9843
+      field_notes: {  }
+    -
+      vid: language
+      tid: '301'
+      langcode: en
+      name: 'සිංහල | Sinhala (Sri Lankan)'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 4aa43ab0-4b06-42b0-b92a-b3ed9e8d1c09
+      field_notes: {  }
+    -
+      vid: language
+      tid: '294'
+      langcode: en
+      name: 'ภาษาไทย | Thai'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 57549b28-3f5c-412b-acf5-3f452aa21bbb
+      field_notes: {  }
+    -
+      vid: language
+      tid: '275'
+      langcode: en
+      name: '官话; 官話 | Mandarin Chinese'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: ada0c786-baab-472f-8bae-07f1282aaea8
+      field_notes: {  }
+    -
+      vid: language
+      tid: '267'
+      langcode: en
+      name: '日本語 | Japanese'
+      description__value: null
+      description__format: null
+      weight: '1'
+      parent: '0'
+      uuid: 9bd8a2ef-807f-44d1-af98-b48078e00d6b
+      field_notes: {  }
+    -
+      vid: language
+      tid: '271'
+      langcode: en
+      name: '한국어 | Korean'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: ef0fa70b-2d14-4026-bc68-944dbf1c6eca
+      field_notes: {  }
+  length:
+    -
+      vid: length
+      tid: '31'
+      langcode: en
+      name: '1-1:30 hrs'
+      description__value: null
+      description__format: null
+      weight: '5'
+      parent: '0'
+      uuid: 45ac4b95-cac7-461d-91de-8ba156a18a2f
+    -
+      vid: length
+      tid: '32'
+      langcode: en
+      name: '1:30-2 hrs'
+      description__value: null
+      description__format: null
+      weight: '6'
+      parent: '0'
+      uuid: a6dc88df-d173-46e9-bc2c-34aebde1b2cd
+    -
+      vid: length
+      tid: '207'
+      langcode: en
+      name: '10-15 hrs'
+      description__value: null
+      description__format: null
+      weight: '15'
+      parent: '0'
+      uuid: e2c00807-4daa-43f9-a9c1-40648ff54e80
+    -
+      vid: length
+      tid: '27'
+      langcode: en
+      name: '10-20 min'
+      description__value: null
+      description__format: null
+      weight: '1'
+      parent: '0'
+      uuid: d8bc92e3-4d29-4272-9069-2f4400b4b91c
+    -
+      vid: length
+      tid: '208'
+      langcode: en
+      name: '15-20 hrs'
+      description__value: null
+      description__format: null
+      weight: '16'
+      parent: '0'
+      uuid: cd100813-83b3-49a6-b2f5-cb46e74f7fb3
+    -
+      vid: length
+      tid: '33'
+      langcode: en
+      name: '2-2:30 hrs'
+      description__value: null
+      description__format: null
+      weight: '7'
+      parent: '0'
+      uuid: 702af65b-69ae-4bf2-96ea-e4c12fd9aa60
+    -
+      vid: length
+      tid: '34'
+      langcode: en
+      name: '2:30-3 hrs'
+      description__value: null
+      description__format: null
+      weight: '8'
+      parent: '0'
+      uuid: 7fb4d0df-734c-4dbb-bdb5-654d7dd96f76
+    -
+      vid: length
+      tid: '28'
+      langcode: en
+      name: '20-30 min'
+      description__value: null
+      description__format: null
+      weight: '2'
+      parent: '0'
+      uuid: 1a9cf139-bc0f-4391-9028-8b6bef05b94f
+    -
+      vid: length
+      tid: '35'
+      langcode: en
+      name: '3-3:30 hrs'
+      description__value: null
+      description__format: null
+      weight: '9'
+      parent: '0'
+      uuid: 942097e9-da2a-4ae8-8617-588fd9ad6031
+    -
+      vid: length
+      tid: '202'
+      langcode: en
+      name: '3:30-4 hrs'
+      description__value: null
+      description__format: null
+      weight: '10'
+      parent: '0'
+      uuid: 1340ab89-98e8-4c58-801d-7a7ad5fa0ef4
+    -
+      vid: length
+      tid: '29'
+      langcode: en
+      name: '30-45 min'
+      description__value: null
+      description__format: null
+      weight: '3'
+      parent: '0'
+      uuid: 30413f93-512c-427c-ac58-397b45284d39
+    -
+      vid: length
+      tid: '203'
+      langcode: en
+      name: '4-4:30 hrs'
+      description__value: null
+      description__format: null
+      weight: '11'
+      parent: '0'
+      uuid: 4b250b22-189a-4453-8292-7cc647adaa38
+    -
+      vid: length
+      tid: '204'
+      langcode: en
+      name: '4:30-5 hrs'
+      description__value: null
+      description__format: null
+      weight: '12'
+      parent: '0'
+      uuid: 106a79a0-d527-42de-b6d7-cf84c5ee54a8
+    -
+      vid: length
+      tid: '30'
+      langcode: en
+      name: '45 min-1 hr'
+      description__value: null
+      description__format: null
+      weight: '4'
+      parent: '0'
+      uuid: 140d7a01-6f93-4999-9ac0-3495254c0d64
+    -
+      vid: length
+      tid: '205'
+      langcode: en
+      name: '5-7:30 hrs'
+      description__value: null
+      description__format: null
+      weight: '13'
+      parent: '0'
+      uuid: 104a1911-0091-4565-9342-65273a8602e3
+    -
+      vid: length
+      tid: '206'
+      langcode: en
+      name: '7:30-10 hrs'
+      description__value: null
+      description__format: null
+      weight: '14'
+      parent: '0'
+      uuid: bf9c504f-8196-4f0a-b685-22805070fc04
+    -
+      vid: length
+      tid: '209'
+      langcode: en
+      name: 'over 20 hrs'
+      description__value: null
+      description__format: null
+      weight: '17'
+      parent: '0'
+      uuid: 3c3d0da5-5e24-42cb-85c9-b7fe7347e181
+    -
+      vid: length
+      tid: '26'
+      langcode: en
+      name: 'under 10 min'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 604d8e00-51a1-4401-b18a-70d8448d41a6
+  rating:
+    -
+      vid: rating
+      tid: '173'
+      langcode: en
+      name: Explicit
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 28cd7bbf-3934-4057-b94d-c759b8d3d79e
+    -
+      vid: rating
+      tid: '177'
+      langcode: en
+      name: General
+      description__value: null
+      description__format: null
+      weight: '3'
+      parent: '0'
+      uuid: ce43373a-9f2a-4b5d-8ba5-33f3976da0b1
+    -
+      vid: rating
+      tid: '175'
+      langcode: en
+      name: Mature
+      description__value: null
+      description__format: null
+      weight: '1'
+      parent: '0'
+      uuid: 9abce6d2-f1d2-46e9-98ee-ff901473f613
+    -
+      vid: rating
+      tid: '254'
+      langcode: en
+      name: 'Not rated'
+      description__value: null
+      description__format: null
+      weight: '4'
+      parent: '0'
+      uuid: 65fd78a5-f63b-4807-85ee-eec9f1d9df95
+    -
+      vid: rating
+      tid: '176'
+      langcode: en
+      name: 'Teen and up'
+      description__value: null
+      description__format: null
+      weight: '2'
+      parent: '0'
+      uuid: f7fc4643-8fd8-4378-a499-bd1c9e10cbab
+  warning:
+    -
+      vid: warning
+      tid: '251'
+      langcode: en
+      name: 'Creator chooses not to warn so any or all warnings may apply'
+      description__value: null
+      description__format: null
+      weight: '5'
+      parent: '0'
+      uuid: bdeab647-4930-4735-88e4-1314c01e3f81
+    -
+      vid: warning
+      tid: '245'
+      langcode: en
+      name: 'Graphic depictions of violence'
+      description__value: null
+      description__format: null
+      weight: '1'
+      parent: '0'
+      uuid: 423f1c94-82d7-4c09-9427-1dbc7646dcc4
+    -
+      vid: warning
+      tid: '246'
+      langcode: en
+      name: 'Major character death'
+      description__value: null
+      description__format: null
+      weight: '2'
+      parent: '0'
+      uuid: 87839044-7d90-4643-9120-ee137ddcb8b9
+    -
+      vid: warning
+      tid: '250'
+      langcode: en
+      name: 'No warnings apply'
+      description__value: null
+      description__format: null
+      weight: '0'
+      parent: '0'
+      uuid: 59dc584d-cb26-4b99-bc4f-215445f9ceb7
+    -
+      vid: warning
+      tid: '247'
+      langcode: en
+      name: 'Rape or non-con'
+      description__value: null
+      description__format: null
+      weight: '3'
+      parent: '0'
+      uuid: 9e643310-6ea5-4ed0-9bd7-57d447e1cedb
+    -
+      vid: warning
+      tid: '248'
+      langcode: en
+      name: Underage
+      description__value: null
+      description__format: null
+      weight: '4'
+      parent: '0'
+      uuid: bd56b99b-7fb7-42d5-a0cc-26a0e6857672

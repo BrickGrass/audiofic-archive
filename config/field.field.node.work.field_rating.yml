@@ -1,0 +1,29 @@
+uuid: 773c8173-d0ee-4819-b0b1-3b78a3adcd9b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_rating
+    - node.type.work
+    - taxonomy.vocabulary.rating
+id: node.work.field_rating
+field_name: field_rating
+entity_type: node
+bundle: work
+label: Rating
+description: "<br />More details about how to rate podfics:  <span id=\"rating\" class=\"expand-help-hide\">\r\n<p><b>Explicit: </b>Contains explicit depictions of sex, or graphic violence etc.</p>\r\n<p><b>Mature: </b>Contains adult themes (sex, violence, etc.) that are not as graphic as explicit-rated content. A great explanation of the difference is <a href=\"https://tinsnip.tumblr.com/post/94902447909/okay-so-im-actually-about-to-write-a-porn-fic\">here</a></p>\r\n<p><b>Teen and up: </b>Content may be inappropriate for audiences under 13</p>\r\n<p><b>General: </b>Content is suitable for any age group</p>\r\n<p><b>Not rated: </b>Can be used if the author gave no rating. You might want to rate the work yourself, but if not, use this category</p></span>\r\n<a href=\"#\" role=\"button\" aria-label=\"Expand/Collapse help text\" class=\"expand-help-button\" data-for=\"rating\">Read More</a>\r\n"
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      rating: rating
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

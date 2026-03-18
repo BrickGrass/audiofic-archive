@@ -1,0 +1,23 @@
+uuid: c5ea12c9-6e41-43fa-a165-7f4fc6663ea4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_duration
+    - node.type.legacy_work
+  module:
+    - duration_field
+id: node.legacy_work.field_duration
+field_name: field_duration
+entity_type: node
+bundle: legacy_work
+label: Duration
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  granularity: 'h:i:s'
+  include_weeks: false
+field_type: duration

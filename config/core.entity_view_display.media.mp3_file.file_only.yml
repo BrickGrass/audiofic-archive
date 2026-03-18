@@ -1,0 +1,47 @@
+uuid: c30ce81c-af15-4309-ac5f-d27bfa5eb8f3
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.file_only
+    - field.field.media.mp3_file.field_chapter_label
+    - field.field.media.mp3_file.field_duration_seconds
+    - field.field.media.mp3_file.field_filename
+    - field.field.media.mp3_file.field_media_audio_file
+    - field.field.media.mp3_file.field_use_for_duration
+    - media.type.mp3_file
+  module:
+    - file_download
+id: media.mp3_file.file_only
+targetEntityType: media
+bundle: mp3_file
+mode: file_only
+content:
+  field_chapter_label:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_media_audio_file:
+    type: file_download_formatter
+    label: hidden
+    settings:
+      link_title: custom
+      custom_title_text: '[download]'
+      file_size: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  created: true
+  field_duration_seconds: true
+  field_filename: true
+  field_use_for_duration: true
+  langcode: true
+  name: true
+  search_api_excerpt: true
+  thumbnail: true
+  uid: true

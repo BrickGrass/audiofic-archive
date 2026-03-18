@@ -1,0 +1,22 @@
+uuid: 093f4306-76ef-419f-a2a0-92658bcce22e
+langcode: en
+status: true
+dependencies:
+  module:
+    - aa_nsfw_modal
+  theme:
+    - bootstrap_barrio_subtheme
+id: bootstrap_barrio_subtheme_nsfwconsentmodalblock
+theme: bootstrap_barrio_subtheme
+region: featured_top
+weight: 0
+provider: null
+plugin: aa_nsfw_modal_block
+settings:
+  id: aa_nsfw_modal_block
+  label: 'NSFW Consent Modal Block'
+  label_display: '0'
+  provider: aa_nsfw_modal
+  title: 'Welcome to the Audiofic Archive'
+  body_text: 'The Audiofic Archive is a repository of many podfics. Not all of these podfics are safe for work or appropriate for all ages/audiences. If you do not wish to see Explicit, Mature or Unrated content, please opt out now!'
+visibility: {  }

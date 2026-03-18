@@ -1,0 +1,15 @@
+uuid: 25a80edc-9189-4991-8e50-8c29c0b05d16
+langcode: en
+status: true
+dependencies: {  }
+name: original_aspect_ratio_mobile
+label: 'Original aspect ratio mobile'
+effects:
+  40f2d68f-efb3-4928-9952-f00d7d3e1671:
+    uuid: 40f2d68f-efb3-4928-9952-f00d7d3e1671
+    id: image_scale
+    weight: 1
+    data:
+      width: 500
+      height: null
+      upscale: false

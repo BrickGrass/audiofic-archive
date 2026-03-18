@@ -1,0 +1,89 @@
+uuid: 964faedc-e201-4d75-a145-8d1a712270d3
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.legacy_work.body
+    - field.field.node.legacy_work.field_author
+    - field.field.node.legacy_work.field_cover
+    - field.field.node.legacy_work.field_duration
+    - field.field.node.legacy_work.field_fandom2
+    - field.field.node.legacy_work.field_format
+    - field.field.node.legacy_work.field_language
+    - field.field.node.legacy_work.field_legacy_series
+    - field.field.node.legacy_work.field_length
+    - field.field.node.legacy_work.field_rating
+    - field.field.node.legacy_work.field_reader
+    - field.field.node.legacy_work.field_relationship
+    - node.type.legacy_work
+    - responsive_image.styles.teaser_cover
+  module:
+    - responsive_image
+    - user
+id: node.legacy_work.teaser
+targetEntityType: node
+bundle: legacy_work
+mode: teaser
+content:
+  field_author:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_cover:
+    type: responsive_image
+    label: hidden
+    settings:
+      responsive_image_style: teaser_cover
+      image_link: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_fandom2:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_rating:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_reader:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_relationship:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+hidden:
+  body: true
+  field_duration: true
+  field_format: true
+  field_language: true
+  field_legacy_series: true
+  field_length: true
+  langcode: true
+  links: true
+  search_api_excerpt: true

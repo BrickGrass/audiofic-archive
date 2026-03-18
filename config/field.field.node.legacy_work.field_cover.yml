@@ -1,0 +1,38 @@
+uuid: 43c992a7-8504-424c-ae37-5712b254f50d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_cover
+    - node.type.legacy_work
+  module:
+    - image
+id: node.legacy_work.field_cover
+field_name: field_cover
+entity_type: node
+bundle: legacy_work
+label: Cover
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'png gif jpg jpeg'
+  max_filesize: ''
+  max_resolution: ''
+  min_resolution: ''
+  alt_field: true
+  alt_field_required: true
+  title_field: false
+  title_field_required: false
+  default_image:
+    uuid: ''
+    alt: ''
+    title: ''
+    width: 500
+    height: 500
+field_type: image

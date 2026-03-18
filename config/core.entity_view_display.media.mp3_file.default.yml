@@ -1,0 +1,78 @@
+uuid: fb08d682-0347-488f-8748-ea44d5fe128e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.media.mp3_file.field_chapter_label
+    - field.field.media.mp3_file.field_duration_seconds
+    - field.field.media.mp3_file.field_filename
+    - field.field.media.mp3_file.field_media_audio_file
+    - field.field.media.mp3_file.field_use_for_duration
+    - media.type.mp3_file
+  module:
+    - file
+id: media.mp3_file.default
+targetEntityType: media
+bundle: mp3_file
+mode: default
+content:
+  field_chapter_label:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_duration_seconds:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_filename:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_media_audio_file:
+    type: file_audio
+    label: visually_hidden
+    settings:
+      controls: true
+      autoplay: false
+      loop: false
+      multiple_file_display_type: tags
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_use_for_duration:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  name:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  created: true
+  langcode: true
+  search_api_excerpt: true
+  thumbnail: true
+  uid: true

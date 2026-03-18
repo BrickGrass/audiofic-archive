@@ -1,0 +1,126 @@
+uuid: c4f4ea8f-df91-4537-a873-667024ee8982
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser_full
+    - field.field.node.legacy_work.body
+    - field.field.node.legacy_work.field_author
+    - field.field.node.legacy_work.field_cover
+    - field.field.node.legacy_work.field_duration
+    - field.field.node.legacy_work.field_fandom2
+    - field.field.node.legacy_work.field_format
+    - field.field.node.legacy_work.field_language
+    - field.field.node.legacy_work.field_legacy_series
+    - field.field.node.legacy_work.field_length
+    - field.field.node.legacy_work.field_rating
+    - field.field.node.legacy_work.field_reader
+    - field.field.node.legacy_work.field_relationship
+    - node.type.legacy_work
+    - responsive_image.styles.teaser_cover
+  module:
+    - responsive_image
+    - text
+    - user
+id: node.legacy_work.teaser_full
+targetEntityType: node
+bundle: legacy_work
+mode: teaser_full
+content:
+  body:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_author:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_cover:
+    type: responsive_image
+    label: hidden
+    settings:
+      responsive_image_style: teaser_cover
+      image_link: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_fandom2:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_format:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_language:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_legacy_series:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_length:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_rating:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_reader:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_relationship:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+hidden:
+  field_duration: true
+  flag_bookmark: true
+  flag_to_listen: true
+  langcode: true
+  links: true
+  search_api_excerpt: true

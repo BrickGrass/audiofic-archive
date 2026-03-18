@@ -58,17 +58,6 @@ function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
     $variables['series_positions'] = $series_positions;
   }
 
-  if ($variables['view_mode'] === 'full') {
-    // Find out if this node is on any rec lists
-    $rec_list_ids = \Drupal::entityQuery('node')
-      ->condition('type', 'rec_list')
-      ->condition('field_works.entity:node.nid', $node->id())
-      ->accessCheck(TRUE)
-      ->execute();
-    $variables['rec_lists'] = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($rec_list_ids);
-  }
-
-  // TODO: add query for rec_lists so they can list work attribution links!
   if (in_array($node_type, ["playlist", "reader_collection", "rec_list"])) {
     $results = NULL;
 

@@ -1,0 +1,11 @@
+uuid: 2ead2952-8229-4e7c-9ff1-56b067e772ba
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.playlist
+id: node.playlist
+target_entity_type_id: node
+target_bundle: playlist
+default_langcode: site_default
+language_alterable: false

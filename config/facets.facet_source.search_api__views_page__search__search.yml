@@ -1,0 +1,12 @@
+uuid: 07cf032a-f697-43a2-87b0-c468eca8b976
+langcode: en
+status: true
+dependencies: {  }
+id: search_api__views_page__search__search
+name: 'search_api:views_page__search__search'
+filter_key: fandom
+url_processor: query_string
+breadcrumb:
+  active: false
+  before: true
+  group: false

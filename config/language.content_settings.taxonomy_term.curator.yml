@@ -1,0 +1,11 @@
+uuid: eaa3ade5-3e5d-4829-b6bc-02670427c970
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.curator
+id: taxonomy_term.curator
+target_entity_type_id: taxonomy_term
+target_bundle: curator
+default_langcode: site_default
+language_alterable: true

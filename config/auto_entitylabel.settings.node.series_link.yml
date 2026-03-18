@@ -1,0 +1,10 @@
+status: 1
+pattern: '[node:field_order] [node:field_series]'
+escape: true
+preserve_titles: false
+save: false
+chunk: 50
+dependencies:
+  config:
+    - node.type.series_link
+new_content_behavior: 0

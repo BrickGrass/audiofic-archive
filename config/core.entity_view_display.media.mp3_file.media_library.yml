@@ -1,0 +1,42 @@
+uuid: 0d089fa0-46c0-4232-9122-f6d08be33532
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.media_library
+    - field.field.media.mp3_file.field_chapter_label
+    - field.field.media.mp3_file.field_duration_seconds
+    - field.field.media.mp3_file.field_filename
+    - field.field.media.mp3_file.field_media_audio_file
+    - field.field.media.mp3_file.field_use_for_duration
+    - image.style.medium
+    - media.type.mp3_file
+  module:
+    - image
+id: media.mp3_file.media_library
+targetEntityType: media
+bundle: mp3_file
+mode: media_library
+content:
+  thumbnail:
+    type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: medium
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  created: true
+  field_chapter_label: true
+  field_duration_seconds: true
+  field_filename: true
+  field_media_audio_file: true
+  field_use_for_duration: true
+  langcode: true
+  name: true
+  search_api_excerpt: true
+  uid: true

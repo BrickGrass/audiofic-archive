@@ -1,0 +1,33 @@
+uuid: 3ec6dce3-6b5e-4d71-983c-8466b9fa15ea
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_language
+    - node.type.legacy_work
+    - taxonomy.vocabulary.language
+  content:
+    - 'taxonomy_term:language:57e07385-1a6b-4ada-b21c-3557b89ff724'
+id: node.legacy_work.field_language
+field_name: field_language
+entity_type: node
+bundle: legacy_work
+label: Language
+description: "Use this to specify the language of your recording. The default value is English - delete the default text to locate a different language. You can only select languages that are already in the Archive. When searching for the language you want, just enter a few characters and options will appear. You can enter English versions of language names or the original language, including non-English characters. e.g. entering \"ko\" will bring up Korean, as will entering 한 . Before you decide that the language you want isn't in the Archive, search on the English version of its name, just to be sure. \r\n<br /><br />\r\nTo add a new language, go to the main menu and use \"add tags\", then return here. You can also save your work with English as the language, then edit it a bit later after you've added the new language that you need. "
+required: true
+translatable: false
+default_value:
+  -
+    target_uuid: 57e07385-1a6b-4ada-b21c-3557b89ff724
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      language: language
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

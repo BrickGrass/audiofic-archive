@@ -1,0 +1,10 @@
+status: 1
+pattern: 'Queue - [node:field_work_or_collection]'
+escape: false
+preserve_titles: false
+save: true
+chunk: 50
+dependencies:
+  config:
+    - node.type.for_later
+new_content_behavior: 0

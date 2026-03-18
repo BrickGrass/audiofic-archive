@@ -1,0 +1,58 @@
+uuid: e17135ab-63fe-4134-8748-6d1b80c45e5e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.work.field_owner
+    - field.storage.node.field_owner
+    - node.type.work
+  module:
+    - eca_content
+id: process_ga04fxt
+modeller: bpmn_io
+label: 'Add user to the list of owners in a new work'
+version: ''
+weight: 0
+events:
+  Event_1aq93be:
+    plugin: 'content_entity:create'
+    label: 'Initialize a new work'
+    configuration:
+      type: 'node work'
+    successors:
+      -
+        id: Activity_03me0ms
+        condition: ''
+conditions: {  }
+gateways: {  }
+actions:
+  Activity_1cm86us:
+    plugin: eca_set_field_value
+    label: 'Add reader name to owner'
+    configuration:
+      field_name: field_owner
+      field_value: '[session_user:field_reader_name:0:target_id]'
+      method: 'set:empty'
+      strip_tags: false
+      trim: false
+      save_entity: false
+      object: work
+    successors: {  }
+  Activity_03me0ms:
+    plugin: eca_token_load_entity
+    label: 'Load work'
+    configuration:
+      token_name: work
+      from: current
+      entity_type: node
+      entity_id: '[entity]'
+      revision_id: ''
+      properties: ''
+      langcode: _interface
+      latest_revision: false
+      unchanged: false
+      object: ''
+    successors:
+      -
+        id: Activity_1cm86us
+        condition: ''

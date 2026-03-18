@@ -1,0 +1,19 @@
+uuid: badb917d-41c5-4282-b1d3-26414e33a296
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_chapter_label
+    - media.type.mp3_file
+id: media.mp3_file.field_chapter_label
+field_name: field_chapter_label
+entity_type: media
+bundle: mp3_file
+label: 'Chapter label'
+description: 'Optional label to describe the file, for example "Chapter 1" or "with music"'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

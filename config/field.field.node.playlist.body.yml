@@ -1,0 +1,24 @@
+uuid: 9ab42764-9967-40d6-92f0-b7aa4905720d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.playlist
+  module:
+    - text
+id: node.playlist.body
+field_name: body
+entity_type: node
+bundle: playlist
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+  required_summary: false
+  allowed_formats: {  }
+field_type: text_with_summary

@@ -1,0 +1,178 @@
+uuid: 4293d7fe-31c7-41ba-a617-0fe141723bf1
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.full
+    - field.field.node.work.body
+    - field.field.node.work.field_author
+    - field.field.node.work.field_category
+    - field.field.node.work.field_completion_status
+    - field.field.node.work.field_cover
+    - field.field.node.work.field_cover_artist
+    - field.field.node.work.field_duration
+    - field.field.node.work.field_fandom2
+    - field.field.node.work.field_festival
+    - field.field.node.work.field_format
+    - field.field.node.work.field_language
+    - field.field.node.work.field_length
+    - field.field.node.work.field_mp3_files
+    - field.field.node.work.field_notes
+    - field.field.node.work.field_orders
+    - field.field.node.work.field_other_files
+    - field.field.node.work.field_owner
+    - field.field.node.work.field_part_label
+    - field.field.node.work.field_podfic_post
+    - field.field.node.work.field_rating
+    - field.field.node.work.field_reader
+    - field.field.node.work.field_reader_collections
+    - field.field.node.work.field_relationship
+    - field.field.node.work.field_series
+    - field.field.node.work.field_series_links
+    - field.field.node.work.field_streaming_format
+    - field.field.node.work.field_summary
+    - field.field.node.work.field_temp
+    - field.field.node.work.field_text_post
+    - field.field.node.work.field_warning
+    - node.type.work
+    - responsive_image.styles.details_cover
+  module:
+    - duration_field
+    - options
+    - responsive_image
+    - text
+    - user
+id: node.work.full
+targetEntityType: node
+bundle: work
+mode: full
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_author:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_completion_status:
+    type: list_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_cover:
+    type: responsive_image
+    label: hidden
+    settings:
+      responsive_image_style: details_cover
+      image_link: ''
+      image_loading:
+        attribute: eager
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_duration:
+    type: duration_time_display
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_language:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  field_length:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_notes:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 12
+    region: content
+  field_rating:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_reader:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_reader_collections:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_series:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_summary:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 11
+    region: content
+  flag_bookmark:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_category: true
+  field_cover_artist: true
+  field_fandom2: true
+  field_festival: true
+  field_format: true
+  field_mp3_files: true
+  field_orders: true
+  field_other_files: true
+  field_owner: true
+  field_part_label: true
+  field_podfic_post: true
+  field_relationship: true
+  field_series_links: true
+  field_streaming_format: true
+  field_temp: true
+  field_text_post: true
+  field_warning: true
+  flag_to_listen: true
+  langcode: true
+  links: true
+  search_api_excerpt: true

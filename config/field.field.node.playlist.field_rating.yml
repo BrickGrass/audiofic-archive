@@ -1,0 +1,33 @@
+uuid: 5c8327eb-66ce-4d1f-828c-f86221285eb6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_rating
+    - node.type.playlist
+    - taxonomy.vocabulary.rating
+  content:
+    - 'taxonomy_term:rating:1487369f-3042-46c1-832e-b7559094420f'
+id: node.playlist.field_rating
+field_name: field_rating
+entity_type: node
+bundle: playlist
+label: Rating
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    target_uuid: 1487369f-3042-46c1-832e-b7559094420f
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      rating: rating
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
