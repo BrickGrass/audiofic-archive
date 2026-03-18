@@ -56,7 +56,6 @@
         "drupal/cer": "^5.0@beta",
         "drupal/gin_toolbar": "^2.0",
         "drupal/gin": "^4.1",
-        "drupal/search_api_saved_searches": "^1.0",
         "drupal/metatag": "^2.1",
         "drupal/eca": "^2.1",
         "drupal/rules": "^4.0",

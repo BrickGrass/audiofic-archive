@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2d51a8b05cb85c30a562587719e2f2a5",
+    "content-hash": "97841e99deae4d2dfd77069180e9f062",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3968,61 +3968,6 @@
             "homepage": "https://www.drupal.org/project/search_api_pantheon",
             "support": {
                 "source": "https://git.drupalcode.org/project/search_api_pantheon"
-            }
-        },
-        {
-            "name": "drupal/search_api_saved_searches",
-            "version": "1.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/search_api_saved_searches.git",
-                "reference": "8.x-1.2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/search_api_saved_searches-8.x-1.2.zip",
-                "reference": "8.x-1.2",
-                "shasum": "589f7ad4e5ac09287cbc49bc1d8d998c2cf6b735"
-            },
-            "require": {
-                "drupal/core": "^10.1 || ^11",
-                "drupal/search_api": "^1.20"
-            },
-            "require-dev": {
-                "drupal/facets": "3.0.x-dev",
-                "drupal/search_api_page": "1.x-dev"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "8.x-1.2",
-                    "datestamp": "1762032031",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "Thomas Seidl",
-                    "homepage": "https://www.drupal.org/u/drunken-monkey"
-                },
-                {
-                    "name": "See other contributors",
-                    "homepage": "https://www.drupal.org/node/1142202/committers"
-                }
-            ],
-            "description": "Allows visitors to bookmark searches and get notifications for new results.",
-            "homepage": "https://www.drupal.org/project/search_api_saved_searches",
-            "support": {
-                "source": "http://git.drupal.org/project/search_api_saved_searches.git",
-                "issues": "https://www.drupal.org/project/issues/search_api_saved_searches",
-                "irc": "irc://irc.freenode.org/drupal-search-api"
             }
         },
         {
