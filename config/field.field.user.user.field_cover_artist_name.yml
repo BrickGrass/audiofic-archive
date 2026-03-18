@@ -1,0 +1,30 @@
+uuid: 49f1e6cb-3820-4067-9e2e-0fcf4c970f54
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_cover_artist_name
+    - taxonomy.vocabulary.cover_artist
+  module:
+    - user
+id: user.user.field_cover_artist_name
+field_name: field_cover_artist_name
+entity_type: user
+bundle: user
+label: 'Cover artist name'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      cover_artist: cover_artist
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

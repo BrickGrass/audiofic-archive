@@ -1,0 +1,10 @@
+status: 1
+pattern: '[media:field_chapter_label] File'
+escape: true
+preserve_titles: false
+save: false
+chunk: 50
+dependencies:
+  config:
+    - media.type.mp3_file
+new_content_behavior: 0

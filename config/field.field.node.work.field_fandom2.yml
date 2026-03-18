@@ -1,0 +1,29 @@
+uuid: f372910e-bb2c-41ad-8abd-298eb4ba1327
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_fandom2
+    - node.type.work
+    - taxonomy.vocabulary.fandom
+id: node.work.field_fandom2
+field_name: field_fandom2
+entity_type: node
+bundle: work
+label: Fandom
+description: "You can only select fandoms that are already in the archive. If you want to add a new fandom, click on the \"+\" button at right. \r\n<span id=\"fandom\" class=\"expand-help-hide\">\r\n<p>Always search the drop-down to check whether a fandom is already in the archive before adding a new one, to avoid creating duplicates. \r\nType in as little as possible and wait for the drop-down, as if you put in a detailed name spelled differently to an existing fandom you may not see any options. Pasting in the AO3 version of the fandom name helps, as that should be the version here. </p>\r\n<p>For fandoms with titles in non-English alphabets, the original characters plus a Romanized version of the name are usual, sometimes with the English version as well - again, use AO3 as a guide, and Wikipedia is also a source for Romanizations. e.g. 陈情令 | The Untamed (TV), or バクテン!! | Bakuten!! | Backflip!! (Anime). Use of Romanization isn't essential - Thai fandoms routinely have titles in Thai script plus English.\r\n<p>\r\nFor crossovers, separate fandoms with a comma.</p>\r\n<p></span>\r\n<a href=\"#\" role=\"button\" aria-label=\"Expand/Collapse help text\" class=\"expand-help-button\" data-for=\"fandom\">Read More</a>"
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      fandom: fandom
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: fandom
+field_type: entity_reference

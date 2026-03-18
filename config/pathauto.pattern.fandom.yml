@@ -1,0 +1,22 @@
+uuid: dc468ee2-99a0-4d16-82e8-f21264e25d6d
+langcode: en
+status: true
+dependencies:
+  module:
+    - taxonomy
+id: fandom
+label: Fandom
+type: 'canonical_entities:taxonomy_term'
+pattern: 'tags/fandom/[term:name]'
+selection_criteria:
+  19274192-88ef-4633-bf28-88317e8d8ea5:
+    id: 'entity_bundle:taxonomy_term'
+    negate: false
+    uuid: 19274192-88ef-4633-bf28-88317e8d8ea5
+    context_mapping:
+      taxonomy_term: taxonomy_term
+    bundles:
+      fandom: fandom
+selection_logic: and
+weight: -9
+relationships: {  }

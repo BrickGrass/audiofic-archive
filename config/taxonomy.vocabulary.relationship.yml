@@ -1,0 +1,15 @@
+uuid: ee6e1dce-1c56-4dd7-ae9c-2fd0b4325031
+langcode: en
+status: true
+dependencies:
+  module:
+    - taxonomy_unique
+third_party_settings:
+  taxonomy_unique:
+    enabled: true
+    message: 'Term %term already exists in vocabulary %vocabulary.'
+name: Relationship
+vid: relationship
+description: null
+weight: 0
+new_revision: false

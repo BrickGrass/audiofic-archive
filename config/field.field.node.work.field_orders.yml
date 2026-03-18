@@ -1,0 +1,22 @@
+uuid: 256d5814-53e8-437b-b35d-650a017bfbaf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_orders
+    - node.type.work
+  module:
+    - weight
+id: node.work.field_orders
+field_name: field_orders
+entity_type: node
+bundle: work
+label: Order
+description: 'The numbers here will be used to list the works in a series in order. Low numbers are listed first. Numbers can be negative. '
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  range: '20'
+field_type: weight

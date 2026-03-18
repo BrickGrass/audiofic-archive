@@ -1,0 +1,24 @@
+uuid: 04ed5dab-4c3e-48bf-8981-1b62cd377191
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_profile
+    - filter.format.basic_html
+  module:
+    - text
+    - user
+id: user.user.field_profile
+field_name: field_profile
+entity_type: user
+bundle: user
+label: Profile
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

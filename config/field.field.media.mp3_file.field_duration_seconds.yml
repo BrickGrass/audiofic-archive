@@ -1,0 +1,23 @@
+uuid: 47bfa433-c78b-42a7-944e-976c518b1d9c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_duration_seconds
+    - media.type.mp3_file
+id: media.mp3_file.field_duration_seconds
+field_name: field_duration_seconds
+entity_type: media
+bundle: mp3_file
+label: 'Duration in Seconds'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

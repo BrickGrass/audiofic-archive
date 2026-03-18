@@ -102,3 +102,6 @@ libraries/
 components/
 
 **/.DS_Store
+
+*.tar.gz
+*.sql

@@ -1,0 +1,15 @@
+uuid: 90df0126-797f-4c08-a6c2-4136c39b6804
+langcode: en
+status: true
+dependencies:
+  module:
+    - taxonomy_unique
+third_party_settings:
+  taxonomy_unique:
+    enabled: true
+    message: 'Term %term already exists in vocabulary %vocabulary.'
+name: 'Cover artist'
+vid: cover_artist
+description: null
+weight: 0
+new_revision: false

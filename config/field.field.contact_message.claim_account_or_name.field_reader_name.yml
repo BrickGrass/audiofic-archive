@@ -1,0 +1,29 @@
+uuid: d4ec9cad-c3e0-4633-9496-8108384a27af
+langcode: en
+status: true
+dependencies:
+  config:
+    - contact.form.claim_account_or_name
+    - field.storage.contact_message.field_reader_name
+    - taxonomy.vocabulary.reader
+id: contact_message.claim_account_or_name.field_reader_name
+field_name: field_reader_name
+entity_type: contact_message
+bundle: claim_account_or_name
+label: 'Reader name'
+description: 'Add the reader names you want to claim'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      reader: reader
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

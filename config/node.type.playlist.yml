@@ -1,0 +1,18 @@
+uuid: 4df0afdd-a190-4a09-bf81-ef1a104b0a83
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: Series
+type: playlist
+description: null
+help: "<b>These are made up of works by the same reader or multivoice group. They can either be: \r\n<ul><li>a series - more than one work in order (the system will automatically label the parts). e.g. when recording an author's  fic series</li>\r\n<li>a collection of works on a theme, where the order isn't important - e.g. \"my hurt/comfort podfics\"</li></ul></b>"
+new_revision: false
+preview_mode: 1
+display_submitted: false

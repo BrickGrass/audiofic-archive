@@ -1,0 +1,20 @@
+uuid: 5bfcbc37-d81a-4ffd-af3b-ed3f89189998
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.field_duration_seconds
+field_name: field_duration_seconds
+entity_type: media
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

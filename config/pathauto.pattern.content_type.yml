@@ -1,0 +1,28 @@
+uuid: d37425d4-8927-405a-9586-26e06a1b83fa
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: content_type
+label: 'Content Type'
+type: 'canonical_entities:node'
+pattern: '[node:title]'
+selection_criteria:
+  c3526024-358a-414f-990e-0373be758652:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: c3526024-358a-414f-990e-0373be758652
+    context_mapping:
+      node: node
+    bundles:
+      article: article
+      legacy_work: legacy_work
+      page: page
+      playlist: playlist
+      reader_collection: reader_collection
+      rec_list: rec_list
+      work: work
+selection_logic: and
+weight: -10
+relationships: {  }

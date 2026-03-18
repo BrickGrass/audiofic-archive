@@ -1,0 +1,23 @@
+uuid: 0bd68258-47e8-43d5-9d11-cce9f6bb2005
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_streaming_format
+    - node.type.work
+  module:
+    - options
+id: node.work.field_streaming_format
+field_name: field_streaming_format
+entity_type: node
+bundle: work
+label: 'Preferred streaming format'
+description: "The site uses streaming files for its players and to make the RSS feeds. By default it will first look for mp3 files, and if none are available it will look for m4a files. If you want to specify a different preferred streaming format you can do so here. \r\n\r\nAll files in all formats are available to download."
+required: true
+translatable: false
+default_value:
+  -
+    value: mp3
+default_value_callback: ''
+settings: {  }
+field_type: list_string

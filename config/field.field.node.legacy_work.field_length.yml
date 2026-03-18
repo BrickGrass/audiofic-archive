@@ -1,0 +1,29 @@
+uuid: 6fa0e281-e1cd-4cd7-829d-8576e791eb6b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_length
+    - node.type.legacy_work
+    - taxonomy.vocabulary.length
+id: node.legacy_work.field_length
+field_name: field_length
+entity_type: node
+bundle: legacy_work
+label: Length
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      length: length
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,29 @@
+uuid: e99a878d-2820-41e8-a0ee-4cbf67184dd3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_format
+    - node.type.work
+    - taxonomy.vocabulary.info
+id: node.work.field_format
+field_name: field_format
+entity_type: node
+bundle: work
+label: 'Other information'
+description: "<br />Additional information about the podfic. Most podfics will not require any of these tags. <br /><span id=\"other\" class=\"expand-help-hide\">\r\n<p><b>Commentary: </b>used for freetalk, chatty not!fic, DVD commentary, cold reads with asides and comments. You can tag for this whether the work has a lot of commentary or a little. </p>\r\n<p><b>Compilation: </b>used for a single file containing more than one work. e.g. for anthologies, compilation files of series or collections. Not used for compilation files of the parts/chapters of a single work.</p>\r\n<p><b>Filk: </b>a recorded song or sung poem within a fandom.</p>\r\n<p><b>Improvisation:</b> improvised works and not!fic containing some improvisation.</p>\r\n<p><b>Meta: </b>a recorded, often non-fiction fanwork which is about an aspect of fandom, or which discusses any aspect of fandom, fanworks, or canon.</p>\r\n<p><b>Multivoice: </b>a work performed by two or more readers.</p>\r\n<p><b>Other collaboration: </b>includes other participants than readers. e.g. podtogether, or recordings where a director, editor, translator etc. had a significant role.</p>\r\n<p><b>Poetry: </b>fanpoetry. If sung, this might also be a filk.</p>\r\n<p><b>Vid: </b>a podvid - a podfic illustrated by a video.<br />\r\n</span>\r\n<a href=\"#\" role=\"button\" aria-label=\"Expand/Collapse help text\" class=\"expand-help-button\" data-for=\"other\">Read More</a></p>"
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      info: info
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

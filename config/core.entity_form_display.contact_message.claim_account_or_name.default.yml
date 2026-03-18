@@ -1,0 +1,88 @@
+uuid: 577f8357-8c64-4ab0-8568-ee6d9a3a17ae
+langcode: en
+status: true
+dependencies:
+  config:
+    - contact.form.claim_account_or_name
+    - field.field.contact_message.claim_account_or_name.field_author_name
+    - field.field.contact_message.claim_account_or_name.field_cover_artist_name
+    - field.field.contact_message.claim_account_or_name.field_reader_name
+id: contact_message.claim_account_or_name.default
+targetEntityType: contact_message
+bundle: claim_account_or_name
+mode: default
+content:
+  copy:
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_author_name:
+    type: entity_reference_autocomplete_tags
+    weight: 4
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_cover_artist_name:
+    type: entity_reference_autocomplete_tags
+    weight: 5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_reader_name:
+    type: entity_reference_autocomplete_tags
+    weight: 3
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 7
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  mail:
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  message:
+    type: string_textarea
+    weight: 6
+    region: content
+    settings:
+      rows: 7
+      placeholder: ''
+    third_party_settings: {  }
+  name:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  preview:
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  subject:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: 'Claim accounts'
+    third_party_settings: {  }
+hidden: {  }

@@ -1,0 +1,20 @@
+uuid: 10b72b97-90ae-49ec-a9fa-98cfcd9c4384
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - taxonomy
+id: node.field_legacy_series
+field_name: field_legacy_series
+entity_type: node
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

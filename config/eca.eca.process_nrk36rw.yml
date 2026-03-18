@@ -1,0 +1,101 @@
+uuid: bf1a7c10-b3ae-4aad-8f61-74ea2e6dfac6
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.content_editor
+  module:
+    - eca_content
+    - eca_user
+    - user
+id: process_nrk36rw
+modeller: bpmn_io
+label: 'Add reader role'
+version: ''
+weight: 0
+events:
+  Event_0763l25:
+    plugin: 'content_entity:update'
+    label: 'Update user'
+    configuration:
+      type: 'user _all'
+    successors:
+      -
+        id: Activity_0ye8mx7
+        condition: ''
+conditions:
+  Flow_1vbwv20:
+    plugin: eca_user_role
+    configuration:
+      account: '[entity]'
+      role: content_editor
+      negate: true
+  Flow_1utqegz:
+    plugin: eca_entity_field_value_empty
+    configuration:
+      field_name: field_reader_name
+      negate: true
+      entity: user
+  Flow_0k5tv2i:
+    plugin: eca_entity_field_value_empty
+    configuration:
+      negate: false
+      field_name: field_reader_name
+      entity: user
+  Flow_0f001c3:
+    plugin: eca_user_role
+    configuration:
+      negate: false
+      account: '[user]'
+      role: content_editor
+gateways:
+  Gateway_1d7n8nq:
+    type: 0
+    successors:
+      -
+        id: Activity_1fhg1vj
+        condition: Flow_1vbwv20
+  Gateway_0u7k4rp:
+    type: 0
+    successors:
+      -
+        id: Activity_1wj0ul4
+        condition: Flow_0f001c3
+actions:
+  Activity_0ye8mx7:
+    plugin: eca_token_load_entity
+    label: 'Load user profile'
+    configuration:
+      token_name: user
+      from: current
+      entity_type: user
+      entity_id: '[entity]'
+      revision_id: ''
+      properties: ''
+      langcode: _interface
+      latest_revision: false
+      unchanged: false
+      object: ''
+    successors:
+      -
+        id: Gateway_1d7n8nq
+        condition: Flow_1utqegz
+      -
+        id: Gateway_0u7k4rp
+        condition: Flow_0k5tv2i
+  Activity_1fhg1vj:
+    plugin: user_add_role_action
+    label: 'Add role'
+    configuration:
+      replace_tokens: false
+      rid: content_editor
+      object: user
+    successors: {  }
+  Activity_1wj0ul4:
+    plugin: user_remove_role_action
+    label: 'Remove role'
+    configuration:
+      replace_tokens: false
+      rid: content_editor
+      object: user
+    successors: {  }

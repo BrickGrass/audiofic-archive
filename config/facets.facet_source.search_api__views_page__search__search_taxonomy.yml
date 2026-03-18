@@ -1,0 +1,9 @@
+uuid: 2c57a04c-61e1-4f96-a648-80c238bc9136
+langcode: en
+status: true
+dependencies: {  }
+id: search_api__views_page__search__search_taxonomy
+name: 'search_api:views_page__search__search_taxonomy'
+filter_key: null
+url_processor: query_string
+breadcrumb: {  }

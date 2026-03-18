@@ -1,0 +1,99 @@
+uuid: 81e1ae47-e495-442b-8f5d-ef14a72329f8
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.playlist.body
+    - field.field.node.playlist.field_author
+    - field.field.node.playlist.field_category
+    - field.field.node.playlist.field_cover
+    - field.field.node.playlist.field_duration
+    - field.field.node.playlist.field_fandom2
+    - field.field.node.playlist.field_format
+    - field.field.node.playlist.field_languages
+    - field.field.node.playlist.field_length
+    - field.field.node.playlist.field_rating
+    - field.field.node.playlist.field_reader
+    - field.field.node.playlist.field_relationship
+    - field.field.node.playlist.field_summary
+    - field.field.node.playlist.field_warning
+    - field.field.node.playlist.field_works_series
+    - node.type.playlist
+    - responsive_image.styles.teaser_cover
+  module:
+    - duration_field
+    - responsive_image
+    - text
+    - user
+id: node.playlist.teaser
+targetEntityType: node
+bundle: playlist
+mode: teaser
+content:
+  field_author:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_cover:
+    type: responsive_image
+    label: hidden
+    settings:
+      responsive_image_style: teaser_cover
+      image_link: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_duration:
+    type: duration_time_display
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_rating:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_reader:
+    type: entity_reference_label
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_summary:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden:
+  body: true
+  field_category: true
+  field_fandom2: true
+  field_format: true
+  field_languages: true
+  field_length: true
+  field_relationship: true
+  field_warning: true
+  field_works_series: true
+  langcode: true
+  search_api_excerpt: true

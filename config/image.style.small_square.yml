@@ -1,0 +1,15 @@
+uuid: 957c7960-5bc4-4cc1-9e97-5b44f6a456e9
+langcode: en
+status: true
+dependencies: {  }
+name: small_square
+label: 'Small square'
+effects:
+  32ae412e-3bf1-4c78-b042-9ea66e2c0abd:
+    uuid: 32ae412e-3bf1-4c78-b042-9ea66e2c0abd
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 180
+      height: 180
+      anchor: center-center
