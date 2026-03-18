@@ -11,10 +11,6 @@ database:
     version: "10.4"
 use_dns_when_possible: true
 composer_version: "2"
-web_environment:
-    - TERMINUS_MACHINE_TOKEN=DCIIPTKuh7oMyPpXT0pxnLY2GZvLXznjFRl9ghN-2Xkjs
-    - DDEV_PANTHEON_SITE=audiofic
-    - DDEV_PANTHEON_ENVIRONMENT=dev
 corepack_enable: false
 
 # Key features of DDEV's config.yaml:
