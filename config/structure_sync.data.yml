@@ -34,7 +34,7 @@ menus:
     description: null
     enabled: true
     expanded: false
-    weight: -48
+    weight: -49
     langcode: en
     uuid: ed87f397-7b1d-4433-9088-5197f0d0e9ab
     options: {  }
@@ -47,7 +47,7 @@ menus:
     description: null
     enabled: true
     expanded: false
-    weight: -49
+    weight: -50
     langcode: en
     uuid: d3dc94a9-d87f-4628-9baa-6adda3da2923
     options: {  }
@@ -55,7 +55,7 @@ menus:
     menu_name: main
     title: 'Tagging guide'
     parent: 'menu_link_content:4854f30c-75f0-4bb0-944c-a920651bbeb2'
-    uri: 'https://dev-audiofic.pantheonsite.io/tagging-guide'
+    uri: 'internal:/tagging-guide'
     link_title: ''
     description: null
     enabled: true
@@ -63,110 +63,6 @@ menus:
     weight: -50
     langcode: en
     uuid: 76a9970f-5027-490d-9e31-fb4c45fa0fd6
-    options: {  }
-  -
-    menu_name: main
-    title: 'Legacy series example'
-    parent: 'menu_link_content:57947341-c199-41bb-9ca9-c77eed81604b'
-    uri: 'https://dev-audiofic.pantheonsite.io/tags/series/all-these-half-tones-soul'
-    link_title: ''
-    description: null
-    enabled: true
-    expanded: false
-    weight: -48
-    langcode: en
-    uuid: d818ee15-e700-453a-ac96-d13f69529b4c
-    options: {  }
-  -
-    menu_name: main
-    title: Tests
-    parent: null
-    uri: 'route:<button>'
-    link_title: ''
-    description: null
-    enabled: true
-    expanded: false
-    weight: -45
-    langcode: en
-    uuid: 57947341-c199-41bb-9ca9-c77eed81604b
-    options: {  }
-  -
-    menu_name: main
-    title: 'Add For later bookmark'
-    parent: 'menu_link_content:57947341-c199-41bb-9ca9-c77eed81604b'
-    uri: 'https://dev-audiofic.pantheonsite.io/node/add/for_later'
-    link_title: ''
-    description: null
-    enabled: true
-    expanded: false
-    weight: -47
-    langcode: en
-    uuid: bafa9c4c-1194-4a87-be8c-d769ce3e56ad
-    options: {  }
-  -
-    menu_name: main
-    title: 'Festival 1 example'
-    parent: 'menu_link_content:57947341-c199-41bb-9ca9-c77eed81604b'
-    uri: 'https://dev-audiofic.pantheonsite.io/node/214'
-    link_title: ''
-    description: null
-    enabled: true
-    expanded: false
-    weight: -46
-    langcode: en
-    uuid: ca7508ca-3507-4db8-b290-aded536e0dfe
-    options: {  }
-  -
-    menu_name: main
-    title: 'Festival 2 example'
-    parent: 'menu_link_content:57947341-c199-41bb-9ca9-c77eed81604b'
-    uri: 'https://dev-audiofic.pantheonsite.io/node/222'
-    link_title: ''
-    description: null
-    enabled: true
-    expanded: false
-    weight: -45
-    langcode: en
-    uuid: 184a7d80-4584-4566-b3cb-835fc02519d3
-    options: {  }
-  -
-    menu_name: main
-    title: 'Your stuff'
-    parent: null
-    uri: 'route:<button>'
-    link_title: ''
-    description: null
-    enabled: true
-    expanded: false
-    weight: -46
-    langcode: en
-    uuid: c82965f0-1b38-490f-919d-7b30aebe3a85
-    options: {  }
-  -
-    menu_name: main
-    title: removereader
-    parent: 'menu_link_content:57947341-c199-41bb-9ca9-c77eed81604b'
-    uri: 'internal:/eca/removereader/138'
-    link_title: ''
-    description: null
-    enabled: true
-    expanded: false
-    weight: -49
-    langcode: en
-    uuid: 0a6efecb-9171-4446-b491-a4568127cb6b
-    options: {  }
-  -
-    menu_name: main
-    title: savedsearch
-    parent: 'menu_link_content:57947341-c199-41bb-9ca9-c77eed81604b'
-    uri: 'internal:/eca/savedsearch'
-    link_title: ''
-    description: null
-    enabled: true
-    expanded: false
-    weight: -50
-    langcode: en
-    uuid: 2dea9dac-2e67-4ed0-8502-295557c10c95
     options: {  }
   -
     menu_name: account
@@ -203,7 +99,7 @@ menus:
     description: null
     enabled: true
     expanded: false
-    weight: -47
+    weight: -48
     langcode: en
     uuid: 4854f30c-75f0-4bb0-944c-a920651bbeb2
     options: {  }

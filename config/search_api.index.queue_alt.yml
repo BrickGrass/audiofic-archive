@@ -3,9 +3,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.body
-    - field.storage.node.field_fandom2
-    - field.storage.node.field_work_or_collection
     - search_api.server.audiofic_solr
   module:
     - node
@@ -62,31 +59,12 @@ name: Queue
 description: ''
 read_only: false
 field_settings:
-  body:
-    label: Body
-    datasource_id: 'entity:node'
-    property_path: body
-    type: text
-    dependencies:
-      config:
-        - field.storage.node.body
   created:
     label: 'Authored on'
     datasource_id: 'entity:node'
     property_path: created
     type: date
     dependencies:
-      module:
-        - node
-  field_fandom2:
-    label: 'Work » Content » Fandom'
-    datasource_id: 'entity:node'
-    property_path: 'field_work_or_collection:entity:field_fandom2'
-    type: integer
-    dependencies:
-      config:
-        - field.storage.node.field_fandom2
-        - field.storage.node.field_work_or_collection
       module:
         - node
   node_grants:
@@ -148,8 +126,7 @@ processor_settings:
       preprocess_index: -15
       preprocess_query: -15
     all_fields: false
-    fields:
-      - body
+    fields: {  }
     title: true
     alt: true
     tags:
