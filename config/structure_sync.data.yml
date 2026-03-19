@@ -68,7 +68,7 @@ menus:
     menu_name: account
     title: Register
     parent: null
-    uri: 'https://dev-audiofic.pantheonsite.io/user/register'
+    uri: 'internal:/user/register'
     link_title: ''
     description: null
     enabled: true
