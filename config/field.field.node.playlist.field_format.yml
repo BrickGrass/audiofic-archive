@@ -10,7 +10,7 @@ id: node.playlist.field_format
 field_name: field_format
 entity_type: node
 bundle: playlist
-label: 'Format information if applicable'
+label: 'Other Information'
 description: 'Other information about the format. Most podfics will not require any of these. '
 required: false
 translatable: false
