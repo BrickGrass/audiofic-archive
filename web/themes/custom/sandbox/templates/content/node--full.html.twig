@@ -101,7 +101,10 @@ set classes = [
 <div{{ content_attributes.addClass('node__content', 'clearfix') }}>
   {% if content_type in ["work", "legacy_work", "playlist", "reader_collection", "rec_list"] %}
     {% set has_image = node.field_cover[0].entity.uri.value != null %}
-    {% set filters_enabled = content_type in ["playlist", "reader_collection", "rec_list"] %}
+    {# TODO: I have disabled showing the exposed filters for the work view block on series content types for now
+    will need to decide later if we still want these & implement them properly then if so! #}
+    {% set filters_enabled = false %}
+    {# {% set filters_enabled = content_type in ["playlist", "reader_collection", "rec_list"] %} #}
     {% if node.field_rating is not empty %}
       {% if node.field_rating[0].entity.name.value not in ["General", "Teen and up"] %}
         {% set explicit_rating = true %}
@@ -153,10 +156,6 @@ set classes = [
 
             {% if content_type == "playlist" %}
               <span class="badge bg-primary">Series</span>
-            {% elseif content_type == "reader_collection" %}
-              <span class="badge bg-primary">Reader Collection</span>
-            {% elseif content_type == "rec_list" %}
-              <span class="badge bg-primary">Rec List</span>
             {% elseif content_type == "legacy_work" %}
               <span class="badge bg-primary">Legacy Work</span>
             {% endif %}
@@ -175,10 +174,6 @@ set classes = [
             {{ drupal_view("work", "player") }}
           {% elseif content_type == "playlist" %}
             {{ drupal_view("seriess", "player") }}
-          {% elseif content_type == "reader_collection" %}
-            {{ drupal_view("reader_tags", "player") }}
-          {% elseif content_type == "rec_list" %}
-            {{ drupal_view("rec_lists", "player") }}
           {% endif %}
         </div>
 
