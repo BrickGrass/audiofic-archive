@@ -6,12 +6,10 @@ dependencies:
     - core.entity_form_mode.user.register
     - field.field.user.user.field_author_name
     - field.field.user.user.field_cover_artist_name
-    - field.field.user.user.field_curator_name
     - field.field.user.user.field_profile
     - field.field.user.user.field_reader_name
   module:
     - field_group
-    - profile
     - user
 third_party_settings:
   field_group:
@@ -98,7 +96,6 @@ content:
 hidden:
   field_author_name: true
   field_cover_artist_name: true
-  field_curator_name: true
   field_profile: true
   field_reader_name: true
   langcode: true

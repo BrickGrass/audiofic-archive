@@ -14,17 +14,12 @@ use Drupal\user\Entity\User;
  * Implements hook_form_alter().
  */
 function propagate_metadata_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  // Prefill reader/curator field on node creation.
+  // Prefill reader field on node creation.
   $reader_name = propagate_metadata_get_user_tag('field_reader_name');
   if ($reader_name !== NULL and
       in_array($form_id, ['node_work_form', 'node_playlist_form', 'node_reader_collection_form'])
     ) {
     propagate_metadata_fill_default_form_value($form, 'field_reader', $reader_name);
-  }
-
-  $curator_name = propagate_metadata_get_user_tag('field_curator_name');
-  if ($curator_name !== NULL and $form_id == 'node_rec_list_form') {
-    propagate_metadata_fill_default_form_value($form, 'field_curator', $reader_name);
   }
 }
 
@@ -80,20 +75,6 @@ function propagate_metadata_update_all_collections(NodeInterface $node, bool $no
   $utils = \Drupal::service('aa_utils.utils');
 
   $series = [];
-  $reader_collections = [];
-  $rec_lists = [];
-
-  if ($node->getType() === "work") {
-    $series = $node->get('field_series')->referencedEntities();
-    $reader_collections = $node->get('field_reader_collections')->referencedEntities();
-  }
-
-  $rec_list_ids = \Drupal::entityQuery('node')
-    ->condition('type', 'rec_list')
-    ->condition('field_works', [$node->id()], 'IN')
-    ->accessCheck(TRUE)
-    ->execute();
-  $rec_lists = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($rec_list_ids);
 
   if (!empty($series)) {
     $series = $series[0];
@@ -102,31 +83,6 @@ function propagate_metadata_update_all_collections(NodeInterface $node, bool $no
       $series_works[] = $node;
     }
     $utils->setCollectionMetadata($series, $series_works);
-  }
-
-  foreach ($reader_collections as $collection) {
-    $collection_works = propagate_metadata_get_collection_works($collection, $node, 'field_reader_collections.entity:node.nid');
-    if (!$node_deleted) {
-      $collection_works[] = $node;
-    }
-    $utils->setCollectionMetadata($collection, $collection_works);
-  }
-
-  foreach ($rec_lists as $rec_list) {
-    $rec_list_works = $rec_list->get('field_works')->referencedEntities();
-
-    $node_key = NULL;
-    foreach ($rec_list_works as $key => $value) {
-      if ($value->id() == $node->id()) {
-        $node_key = $key;
-        break;
-      }
-    }
-    if (!$node_deleted) {
-      $rec_list_works[$node_key] = $node;
-    }
-
-    $utils->setCollectionMetadata($rec_list, $rec_list_works);
   }
 }
 

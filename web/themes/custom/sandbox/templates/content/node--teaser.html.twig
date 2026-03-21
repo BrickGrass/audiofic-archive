@@ -113,8 +113,6 @@
           {% if content_type in ["work", "legacy_work", "playlist", "reader_collection"] %}
             {{ content.field_author }}
             {{ content.field_reader }}
-          {% elseif content_type == "rec_list" %}
-            {{ content.field_curator }}
           {% endif %}
         </div>
       </div>

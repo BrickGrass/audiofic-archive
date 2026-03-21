@@ -11,7 +11,6 @@ dependencies:
     - field.field.node.work.field_cover_artist
     - field.field.node.work.field_duration
     - field.field.node.work.field_fandom2
-    - field.field.node.work.field_festival
     - field.field.node.work.field_format
     - field.field.node.work.field_language
     - field.field.node.work.field_length
@@ -24,13 +23,11 @@ dependencies:
     - field.field.node.work.field_podfic_post
     - field.field.node.work.field_rating
     - field.field.node.work.field_reader
-    - field.field.node.work.field_reader_collections
     - field.field.node.work.field_relationship
     - field.field.node.work.field_series
     - field.field.node.work.field_series_links
     - field.field.node.work.field_streaming_format
     - field.field.node.work.field_summary
-    - field.field.node.work.field_temp
     - field.field.node.work.field_text_post
     - field.field.node.work.field_warning
     - image.style.small_square
@@ -45,8 +42,6 @@ third_party_settings:
   field_group:
     group_tags:
       children:
-        - field_author
-        - field_cover_artist
         - field_fandom2
         - field_relationship
         - field_category
@@ -54,11 +49,10 @@ third_party_settings:
         - field_warning
         - field_format
         - field_language
-        - field_completion_status
       label: Tags
       region: content
       parent_name: ''
-      weight: 3
+      weight: 6
       format_type: details
       format_settings:
         classes: ''
@@ -76,7 +70,7 @@ third_party_settings:
       label: Links
       region: content
       parent_name: ''
-      weight: 5
+      weight: 8
       format_type: details
       format_settings:
         classes: ''
@@ -95,7 +89,7 @@ third_party_settings:
       label: Files
       region: content
       parent_name: ''
-      weight: 4
+      weight: 7
       format_type: details
       format_settings:
         classes: ''
@@ -109,11 +103,10 @@ third_party_settings:
     group_series_and_collections:
       children:
         - field_series
-        - field_festival
       label: 'Series and festivals'
       region: content
       parent_name: ''
-      weight: 6
+      weight: 9
       format_type: details
       format_settings:
         classes: ''
@@ -127,28 +120,12 @@ third_party_settings:
       children:
         - field_owner
         - field_reader
-      label: 'Options for multi-voice works'
+        - field_author
+        - field_cover_artist
+      label: Attribution
       region: content
       parent_name: ''
-      weight: 2
-      format_type: details
-      format_settings:
-        classes: ''
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        open: false
-        description: ''
-        required_fields: false
-    group_summary_notes_and_cover:
-      children:
-        - field_summary
-        - field_notes
-        - field_cover
-      label: 'Summary, notes, and cover'
-      region: content
-      parent_name: ''
-      weight: 1
+      weight: 5
       format_type: details
       format_settings:
         classes: ''
@@ -165,7 +142,7 @@ mode: default
 content:
   field_author:
     type: entity_reference_autocomplete_tags
-    weight: 15
+    weight: 6
     region: content
     settings:
       match_operator: CONTAINS
@@ -181,13 +158,13 @@ content:
     third_party_settings: {  }
   field_completion_status:
     type: options_select
-    weight: 25
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
   field_cover:
     type: image_image
-    weight: 4
+    weight: 3
     region: content
     settings:
       progress_indicator: throbber
@@ -195,7 +172,7 @@ content:
     third_party_settings: {  }
   field_cover_artist:
     type: entity_reference_autocomplete_tags
-    weight: 16
+    weight: 7
     region: content
     settings:
       match_operator: CONTAINS
@@ -212,12 +189,6 @@ content:
       match_limit: 10
       size: 60
       placeholder: ''
-    third_party_settings: {  }
-  field_festival:
-    type: options_buttons
-    weight: 12
-    region: content
-    settings: {  }
     third_party_settings: {  }
   field_format:
     type: options_buttons
@@ -255,10 +226,10 @@ content:
     third_party_settings: {  }
   field_notes:
     type: text_textarea
-    weight: 3
+    weight: 2
     region: content
     settings:
-      rows: 5
+      rows: 1
       placeholder: ''
     third_party_settings: {  }
   field_other_files:
@@ -304,7 +275,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_reader:
-    type: entity_reference_autocomplete
+    type: entity_reference_autocomplete_tags
     weight: 5
     region: content
     settings:
@@ -337,20 +308,10 @@ content:
     third_party_settings: {  }
   field_summary:
     type: text_textarea
-    weight: 2
+    weight: 1
     region: content
     settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
-  field_temp:
-    type: entity_reference_autocomplete
-    weight: 26
-    region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
+      rows: 1
       placeholder: ''
     third_party_settings: {  }
   field_text_post:
@@ -369,7 +330,7 @@ content:
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 7
+    weight: 10
     region: content
     settings:
       display_label: true
@@ -389,7 +350,6 @@ hidden:
   field_length: true
   field_orders: true
   field_part_label: true
-  field_reader_collections: true
   field_series_links: true
   langcode: true
   path: true

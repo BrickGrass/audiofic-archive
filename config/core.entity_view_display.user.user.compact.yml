@@ -6,7 +6,6 @@ dependencies:
     - core.entity_view_mode.user.compact
     - field.field.user.user.field_author_name
     - field.field.user.user.field_cover_artist_name
-    - field.field.user.user.field_curator_name
     - field.field.user.user.field_profile
     - field.field.user.user.field_reader_name
   module:
@@ -51,7 +50,6 @@ content:
     weight: 1
     region: content
 hidden:
-  field_curator_name: true
   langcode: true
   member_for: true
   search_api_excerpt: true
