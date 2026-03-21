@@ -11,7 +11,6 @@ dependencies:
     - field.field.node.work.field_cover_artist
     - field.field.node.work.field_duration
     - field.field.node.work.field_fandom2
-    - field.field.node.work.field_festival
     - field.field.node.work.field_format
     - field.field.node.work.field_language
     - field.field.node.work.field_length
@@ -24,13 +23,11 @@ dependencies:
     - field.field.node.work.field_podfic_post
     - field.field.node.work.field_rating
     - field.field.node.work.field_reader
-    - field.field.node.work.field_reader_collections
     - field.field.node.work.field_relationship
     - field.field.node.work.field_series
     - field.field.node.work.field_series_links
     - field.field.node.work.field_streaming_format
     - field.field.node.work.field_summary
-    - field.field.node.work.field_temp
     - field.field.node.work.field_text_post
     - field.field.node.work.field_warning
     - node.type.work
@@ -75,14 +72,6 @@ content:
       separator: space
     third_party_settings: {  }
     weight: 111
-    region: content
-  field_festival:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 114
     region: content
   field_format:
     type: entity_reference_label
@@ -141,14 +130,6 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
-  field_reader_collections:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 7
-    region: content
   field_series_links:
     type: entity_reference_label
     label: above
@@ -170,14 +151,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 116
-    region: content
-  field_temp:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 121
     region: content
   flag_bookmark:
     settings: {  }

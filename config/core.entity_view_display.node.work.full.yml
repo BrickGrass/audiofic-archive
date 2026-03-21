@@ -12,7 +12,6 @@ dependencies:
     - field.field.node.work.field_cover_artist
     - field.field.node.work.field_duration
     - field.field.node.work.field_fandom2
-    - field.field.node.work.field_festival
     - field.field.node.work.field_format
     - field.field.node.work.field_language
     - field.field.node.work.field_length
@@ -25,13 +24,11 @@ dependencies:
     - field.field.node.work.field_podfic_post
     - field.field.node.work.field_rating
     - field.field.node.work.field_reader
-    - field.field.node.work.field_reader_collections
     - field.field.node.work.field_relationship
     - field.field.node.work.field_series
     - field.field.node.work.field_series_links
     - field.field.node.work.field_streaming_format
     - field.field.node.work.field_summary
-    - field.field.node.work.field_temp
     - field.field.node.work.field_text_post
     - field.field.node.work.field_warning
     - node.type.work
@@ -126,14 +123,6 @@ content:
     third_party_settings: {  }
     weight: 2
     region: content
-  field_reader_collections:
-    type: entity_reference_label
-    label: hidden
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 8
-    region: content
   field_series:
     type: entity_reference_label
     label: hidden
@@ -158,7 +147,6 @@ hidden:
   field_category: true
   field_cover_artist: true
   field_fandom2: true
-  field_festival: true
   field_format: true
   field_mp3_files: true
   field_orders: true
@@ -169,7 +157,6 @@ hidden:
   field_relationship: true
   field_series_links: true
   field_streaming_format: true
-  field_temp: true
   field_text_post: true
   field_warning: true
   flag_to_listen: true

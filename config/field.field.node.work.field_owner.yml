@@ -12,7 +12,7 @@ entity_type: node
 bundle: work
 label: Owner
 description: 'Add additional owners. These people will be able to edit and delete the work. You can remove yourself as an owner, but you cannot remove other owners. '
-required: false
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''

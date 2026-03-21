@@ -12,7 +12,7 @@ entity_type: node
 bundle: playlist
 label: Works
 description: "Click and hold (or in mobile press on) the up-down arrow symbol at left to change the order of works in a series. The one you've moved will be highlighted with color and an asterisk - that means the change needs to be saved. <br /><br />"
-required: false
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
