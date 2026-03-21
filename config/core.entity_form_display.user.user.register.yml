@@ -19,7 +19,7 @@ third_party_settings:
       label: '<h1>Reader name</h1> (required before you can post podfic)'
       region: hidden
       parent_name: ''
-      weight: 9
+      weight: 10
       format_type: fieldset
       format_settings:
         classes: ''
@@ -34,7 +34,7 @@ third_party_settings:
       label: '<h1>Public profile</h1>'
       region: hidden
       parent_name: ''
-      weight: 7
+      weight: 8
       format_type: fieldset
       format_settings:
         classes: ''
@@ -50,7 +50,7 @@ third_party_settings:
       label: '<h1>Author and Cover Artist names</h1>Add your author and cover artist names'
       region: hidden
       parent_name: ''
-      weight: 8
+      weight: 9
       format_type: fieldset
       format_settings:
         classes: ''
@@ -59,6 +59,21 @@ third_party_settings:
         label_as_html: true
         description: ''
         required_fields: true
+    group_blah:
+      children: {  }
+      label: 'Explanation of registration process'
+      region: content
+      parent_name: ''
+      weight: 0
+      format_type: details
+      format_settings:
+        classes: ''
+        show_empty_fields: true
+        id: register-form-more-info
+        label_as_html: true
+        open: false
+        description: "<p>Submitting this form will add you to a queue of users to be manually verified by our moderators. Don't worry - we don't bite! Because we allow users to host images, audio files and zip files we want to be extra sure that noone trying to spam gets access to the site, so that anyone browsing is protected from malware.</p>\r\n\r\n<p>We will contact you via the email you have provided as soon as possible and ask some really basic questions. If you already have podfics hosted with us (from the previous iteration of the site where you had moderators upload podfics for you) we will ask you to complete a verification process to be sure you are a specific podficcer, and give you edit access to all of your existing posts if you can prove this!</p>\r\n\r\n<p>The verification process is not at all about the contents or topic of the podfic you post - that's between you and your listeners!</p>"
+        required_fields: false
 _core:
   default_config_hash: FaQ9Ptcpxpg30AtiqRDtl_8zbJArHP1LPfug_s59TOA
 id: user.user.register
@@ -67,17 +82,7 @@ bundle: user
 mode: register
 content:
   account:
-    weight: 0
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  contact:
     weight: 1
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  language:
-    weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -88,15 +93,13 @@ content:
     settings:
       form_mode: default
     third_party_settings: {  }
-  timezone:
-    weight: 3
-    region: content
-    settings: {  }
-    third_party_settings: {  }
 hidden:
+  contact: true
   field_author_name: true
   field_cover_artist_name: true
   field_profile: true
   field_reader_name: true
   langcode: true
+  language: true
   path: true
+  timezone: true
