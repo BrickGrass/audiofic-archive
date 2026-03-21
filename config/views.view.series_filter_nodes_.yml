@@ -148,7 +148,7 @@ display:
           id: uid
           table: users_field_data
           field: uid
-          relationship: reverse__user__field_reader_name
+          relationship: reverse__user__field_reader_name_1
           group_type: group
           admin_label: ''
           entity_type: user
@@ -229,33 +229,24 @@ display:
           replica: false
           query_tags: {  }
       relationships:
-        field_reader:
-          id: field_reader
-          table: node__field_reader
-          field: field_reader
+        field_owner:
+          id: field_owner
+          table: node__field_owner
+          field: field_owner
           relationship: none
           group_type: group
-          admin_label: 'field_reader: Taxonomy term'
+          admin_label: 'field_owner: Taxonomy term'
           plugin_id: standard
           required: false
-        reverse__user__field_reader_name:
-          id: reverse__user__field_reader_name
+        reverse__user__field_reader_name_1:
+          id: reverse__user__field_reader_name_1
           table: taxonomy_term_field_data
           field: reverse__user__field_reader_name
-          relationship: field_reader
+          relationship: field_owner
           group_type: group
-          admin_label: field_reader_name
+          admin_label: field_reader_name_owner
           entity_type: taxonomy_term
           plugin_id: entity_reverse
-          required: false
-        field_reader_name:
-          id: field_reader_name
-          table: user__field_reader_name
-          field: field_reader_name
-          relationship: reverse__user__field_reader_name
-          group_type: group
-          admin_label: 'field_reader_name: Taxonomy term'
-          plugin_id: standard
           required: false
       group_by: true
       header: {  }

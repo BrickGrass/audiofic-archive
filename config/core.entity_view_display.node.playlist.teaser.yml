@@ -13,6 +13,7 @@ dependencies:
     - field.field.node.playlist.field_format
     - field.field.node.playlist.field_languages
     - field.field.node.playlist.field_length
+    - field.field.node.playlist.field_owner
     - field.field.node.playlist.field_rating
     - field.field.node.playlist.field_reader
     - field.field.node.playlist.field_relationship
@@ -92,6 +93,7 @@ hidden:
   field_format: true
   field_languages: true
   field_length: true
+  field_owner: true
   field_relationship: true
   field_warning: true
   field_works_series: true

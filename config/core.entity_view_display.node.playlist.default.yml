@@ -12,6 +12,7 @@ dependencies:
     - field.field.node.playlist.field_format
     - field.field.node.playlist.field_languages
     - field.field.node.playlist.field_length
+    - field.field.node.playlist.field_owner
     - field.field.node.playlist.field_rating
     - field.field.node.playlist.field_reader
     - field.field.node.playlist.field_relationship
@@ -97,6 +98,14 @@ content:
       link: true
     third_party_settings: {  }
     weight: 8
+    region: content
+  field_owner:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 120
     region: content
   field_reader:
     type: entity_reference_label
