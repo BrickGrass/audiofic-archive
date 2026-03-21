@@ -1,0 +1,29 @@
+uuid: 68fcf442-04c3-406c-a13e-61385a7f3af3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_owner
+    - node.type.playlist
+    - taxonomy.vocabulary.reader
+id: node.playlist.field_owner
+field_name: field_owner
+entity_type: node
+bundle: playlist
+label: Owner
+description: 'Add additional owners. These people will be able to edit and delete the work. You can remove yourself as an owner, but you cannot remove other owners. '
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      reader: reader
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
