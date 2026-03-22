@@ -139,6 +139,10 @@ button.nav-link {
 	font-weight: normal;
 }
 
+.work-card div.field--type-image {
+	margin: 0;
+}
+
 @media (max-width: 850px) {
 	.work-card {
 		min-height: 100px;
@@ -348,6 +352,7 @@ button.nav-link {
 @media (max-width: 1080px) {
 	.full-work {
 		grid-template-columns: 300px 1fr;
+		grid-template-rows: auto 1fr;
 	}
 
 	.full-work > .field--name-field-cover {
@@ -450,6 +455,7 @@ button.nav-link {
 @media (max-width: 768px) {
 	.full-work {
 		grid-template-columns: 150px 1fr;
+		grid-template-rows: auto auto 1fr;
 	}
 
 	.full-work-filters,
