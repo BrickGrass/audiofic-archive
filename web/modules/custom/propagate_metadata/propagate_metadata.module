@@ -9,6 +9,8 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\node\NodeInterface;
 use Drupal\user\Entity\User;
+use Drupal\Core\Entity\Query\QueryInterface;
+use Drupal\user\UserInterface;
 
 /**
  * Implements hook_form_alter().
@@ -17,9 +19,10 @@ function propagate_metadata_form_alter(&$form, FormStateInterface $form_state, $
   // Prefill reader field on node creation.
   $reader_name = propagate_metadata_get_user_tag('field_reader_name');
   if ($reader_name !== NULL and
-      in_array($form_id, ['node_work_form', 'node_playlist_form', 'node_reader_collection_form'])
+      in_array($form_id, ['node_work_form', 'node_playlist_form'])
     ) {
     propagate_metadata_fill_default_form_value($form, 'field_reader', $reader_name);
+    propagate_metadata_fill_default_form_value($form, 'field_owner', $reader_name);
   }
 }
 
@@ -28,11 +31,29 @@ function propagate_metadata_form_alter(&$form, FormStateInterface $form_state, $
  */
 function propagate_metadata_node_presave(NodeInterface $node) {
   if ($node->getType() === "work") {
-    propagate_metadata_set_duration($node);
+    $duration = propagate_metadata_set_duration($node);
+    propagate_metadata_update_all_collections($node, updated_duration_seconds: $duration);
   }
 
-  if (in_array($node->getType(), ["work", "legacy_work", "playlist", "reader_collection"])) {
+  if ($node->getType() === "legacy_work") {
     propagate_metadata_update_all_collections($node);
+  }
+
+  if ($node->getType() === "playlist") {
+    // Only update series metadata if a work is added/removed.
+    // Otherwise correct metadata will be overwritten.
+    $old_work_arr = $node->original->get('field_works_series');
+    $new_work_arr = $node->get('field_works_series');
+
+    if (count($old_work_arr) == count($new_work_arr)) {
+      return;
+    }
+
+    /** @var \Drupal\aa_utils\Service\AudioficUtils $utils */
+    $utils = \Drupal::service('aa_utils.utils');
+
+    $works = $new_work_arr->referencedEntities();
+    $utils->setCollectionMetadata($node, $works, save: FALSE);
   }
 }
 
@@ -40,8 +61,38 @@ function propagate_metadata_node_presave(NodeInterface $node) {
  * Implements hook_ENTITY_TYPE_delete() for nodes.
  */
 function propagate_metadata_node_delete(NodeInterface $node) {
-  if (in_array($node->getType(), ["work", "legacy_work", "playlist", "reader_collection"])) {
-    propagate_metadata_update_all_collections($node, TRUE);
+  if (in_array($node->getType(), ["work", "legacy_work"])) {
+    propagate_metadata_update_all_collections($node, work_deleted: TRUE);
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave() for users.
+ */
+function propagate_metadata_user_presave(UserInterface $user) {
+  // Ensure that administrators cannot have the podficcer role.
+  // Allowing both roles means that when an admin edits another users work
+  // errors with series links occur because restrictions that shouldn't
+  // apply to admins are applied.
+  $is_admin = FALSE;
+  $is_podficcer = FALSE;
+  $podfic_role_id = "";
+
+  /** @var \Drupal\user\Entity\Role $role */
+  foreach ($user->get('roles')->referencedEntities() as $role) {
+    if ($role->isAdmin()) {
+      $is_admin = TRUE;
+    }
+
+    if ($role->label() === "Podficcer") {
+      $is_podficcer = TRUE;
+      $podfic_role_id = $role->id();
+    }
+  }
+
+  if ($is_admin && $is_podficcer) {
+    $user->removeRole($podfic_role_id);
+    \Drupal::messenger()->addWarning(t('Administrators cannot have the Podficcer role, the role has been removed.'));
   }
 }
 
@@ -70,39 +121,47 @@ function propagate_metadata_fill_default_form_value(&$form, $fieldname, $tag) {
 /**
  * Updates the metadata of all of the series/collections that a work is a member of.
  */
-function propagate_metadata_update_all_collections(NodeInterface $node, bool $node_deleted = FALSE) {
+function propagate_metadata_update_all_collections(NodeInterface $work, int $updated_duration_seconds = 0, bool $work_deleted = FALSE) {
   /** @var \Drupal\aa_utils\Service\AudioficUtils $utils */
   $utils = \Drupal::service('aa_utils.utils');
 
-  $series = [];
-
-  if (!empty($series)) {
-    $series = $series[0];
-    $series_works = propagate_metadata_get_collection_works($series, $node, 'field_series.entity:node.nid');
-    if (!$node_deleted) {
-      $series_works[] = $node;
+  foreach ($work->get('field_series')->referencedEntities() as $series) {
+    $work_ids = propagate_metadata_works_in_collection_query($series)
+      ->condition('nid', [$work->id()], 'NOT IN')
+      ->execute();
+    $works = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($work_ids);
+    if (!$work_deleted) {
+      $works[] = $work;
     }
-    $utils->setCollectionMetadata($series, $series_works);
+
+    if ($work->getType() === "work") {
+      $utils->setCollectionMetadata($series, $works, updated_work_id: $work->id(), updated_work_duration_seconds: $updated_duration_seconds);
+    } elseif ($work->getType() === "legacy_work") {
+      $utils->setCollectionMetadata($series, $works);
+    }
   }
 }
 
 /**
- * Fetches all of the works in a collection.
+ * Builds a query to fetch all works linked to a collection that the logged in user can access.
  */
-function propagate_metadata_get_collection_works(EntityInterface $collection, NodeInterface $work, string $field_condition): array {
-  $work_ids = \Drupal::entityQuery('node')
+function propagate_metadata_works_in_collection_query(EntityInterface $collection): QueryInterface {
+  return \Drupal::entityQuery('node')
     ->condition('type', 'work')
-    ->condition($field_condition, $collection->id())
-    ->condition('nid', [$work->id()], 'NOT IN')
-    ->accessCheck(TRUE)
-    ->execute();
-  return \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($work_ids);
+    ->condition('field_series.entity:node.nid', $collection->id())
+    ->accessCheck(TRUE);
 }
 
 /**
  * Calculates the duration of a work from the files attached to it.
+ *
+ * @param \Drupal\node\NodeInterface $work
+ *   The work to calculate a new duration for.
+ *
+ * @return int
+ *   Returns the new duration in seconds.
  */
-function propagate_metadata_set_duration(NodeInterface $work) {
+function propagate_metadata_set_duration(NodeInterface $work): int {
   $duration = 0;
 
   foreach ($work->get("field_mp3_files")->referencedEntities() as $media) {
@@ -125,5 +184,6 @@ function propagate_metadata_set_duration(NodeInterface $work) {
   $utils = \Drupal::service('aa_utils.utils');
 
   $duration_interval = $utils->secondsToDateInterval($duration);
-  $work->field_duration = ['duration' => $duration_interval, 'seconds' => $duration];
+  $work->set('field_duration', ['duration' => $duration_interval, 'seconds' => $duration]);
+  return $duration;
 }
