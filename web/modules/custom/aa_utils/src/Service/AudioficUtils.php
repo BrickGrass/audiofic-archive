@@ -114,9 +114,16 @@ class AudioficUtils {
   /**
    * Sets the metadata of a series/collection.
    */
-  public function setCollectionMetadata(NodeInterface $collection, array $works) {
-    $data = $this->fetchWorkData($works);
+  public function setCollectionMetadata(
+    NodeInterface $collection,
+    array $works,
+    int $updated_work_id = 999999,
+    int $updated_work_duration_seconds = 0,
+    bool $save = TRUE,
+  ) {
+    $data = $this->fetchWorkData($works, $updated_work_id, $updated_work_duration_seconds);
 
+    $collection->set('field_owner', $data['owners']);
     $collection->set('field_author', $data['authors']);
     $collection->set('field_reader', $data['readers']);
     $collection->set('field_fandom2', $data['fandoms']);
@@ -127,16 +134,19 @@ class AudioficUtils {
     $collection->set('field_languages', $data['languages']);
     $duration_interval = $this->secondsToDateInterval($data['duration']);
     $collection->field_duration = ['duration' => $duration_interval, 'seconds' => $data['duration']];
-    $collection->save();
+    if ($save) {
+      $collection->save();
+    }
   }
 
   /**
    * Collects and collates the data of an array of works.
    */
-  private function fetchWorkData(array $works) {
+  private function fetchWorkData(array $works, int $updated_work_id, int $updated_work_duration_seconds) {
     $data = [
       'authors' => [],
       'readers' => [],
+      'owners' => [],
       'fandoms' => [],
       'relationships' => [],
       'ratings' => [],
@@ -146,9 +156,11 @@ class AudioficUtils {
       'duration' => 0,
     ];
 
+    /** @var \Drupal\node\NodeInterface $work */
     foreach ($works as $work) {
       $data['authors'] = array_merge($data['authors'], $work->get('field_author')->referencedEntities());
       $data['readers'] = array_merge($data['readers'], $work->get('field_reader')->referencedEntities());
+      $data['owners'] = array_merge($data['owners'], $work->get('field_owner')->referencedEntities());
       $data['fandoms'] = array_merge($data['fandoms'], $work->get('field_fandom2')->referencedEntities());
       $data['relationships'] = array_merge($data['relationships'], $work->get('field_relationship')->referencedEntities());
       $data['ratings'] = array_merge($data['ratings'], $work->get('field_rating')->referencedEntities());
@@ -161,7 +173,9 @@ class AudioficUtils {
       $lang_key = $work->hasField('field_language') ? 'field_language' : 'field_languages';
       $data['languages'] = array_merge($data['languages'], $work->get($lang_key)->referencedEntities());
 
-      if ($work->hasField('field_duration')) {
+      if ($work->id() === strval($updated_work_id)) {
+        $data['duration'] += $updated_work_duration_seconds;
+      } elseif ($work->hasField('field_duration')) {
         $found = FALSE;
         foreach ($work->get('field_duration') as $duration_field) {
           $data['duration'] += $duration_field->seconds;
@@ -190,8 +204,6 @@ class AudioficUtils {
       $data[$key] = $this->removeDuplicateEntities($data[$key]);
     }
 
-    // TODO: Rec lists can have works with a rating of NULL. Will need to decide
-    // if that has priority.
     $rating_value = [
       "General" => 0,
       "Teen and up" => 1,
