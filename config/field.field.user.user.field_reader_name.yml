@@ -12,7 +12,7 @@ field_name: field_reader_name
 entity_type: user
 bundle: user
 label: 'Reader name'
-description: "<p>Add a name to use when you post works you have narrated. You will not be able to add a name that already exists in the archive. If you want to claim an existing name, use the field below.</p>\r\n<p>Your reader name can be the same as your user name, but does not have to be. You can have multiple reader names. Put the default one first in the list.</p>"
+description: ''
 required: false
 translatable: false
 default_value: {  }

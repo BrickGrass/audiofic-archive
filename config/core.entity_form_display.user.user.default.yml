@@ -8,90 +8,9 @@ dependencies:
     - field.field.user.user.field_profile
     - field.field.user.user.field_reader_name
   module:
-    - field_group
-    - inline_entity_form
+    - tagify
     - text
     - user
-third_party_settings:
-  field_group:
-    group_user_name_and_password:
-      children:
-        - account
-      label: '<h1>User name and password</h1>'
-      region: content
-      parent_name: ''
-      weight: 0
-      format_type: fieldset
-      format_settings:
-        classes: ''
-        show_empty_fields: false
-        id: ''
-        label_as_html: true
-        description: ''
-        required_fields: false
-    group_podficcer_author_and_cover:
-      children:
-        - field_reader_name
-      label: '<h1>Reader name</h1> (required before you can post podfic)'
-      region: content
-      parent_name: ''
-      weight: 3
-      format_type: fieldset
-      format_settings:
-        classes: ''
-        show_empty_fields: false
-        id: ''
-        label_as_html: true
-        description: ''
-        required_fields: true
-    group_profile:
-      children:
-        - field_profile
-      label: '<h1>Public profile</h1>'
-      region: content
-      parent_name: ''
-      weight: 2
-      format_type: fieldset
-      format_settings:
-        classes: ''
-        show_empty_fields: false
-        id: ''
-        label_as_html: true
-        description: ''
-        required_fields: true
-    group_preferences:
-      children:
-        - contact
-        - language
-        - timezone
-      label: '<h1>Preferences</h1>'
-      region: content
-      parent_name: ''
-      weight: 1
-      format_type: fieldset
-      format_settings:
-        classes: ''
-        show_empty_fields: false
-        id: ''
-        label_as_html: true
-        description: ''
-        required_fields: false
-    group_be_recognized_as_an_author:
-      children:
-        - field_author_name
-        - field_cover_artist_name
-      label: '<h1>Author and Cover Artist names</h1>Add your author and cover artist names'
-      region: content
-      parent_name: ''
-      weight: 5
-      format_type: fieldset
-      format_settings:
-        classes: ''
-        show_empty_fields: false
-        id: ''
-        label_as_html: true
-        description: ''
-        required_fields: true
 _core:
   default_config_hash: FaQ9Ptcpxpg30AtiqRDtl_8zbJArHP1LPfug_s59TOA
 id: user.user.default
@@ -100,87 +19,71 @@ bundle: user
 mode: default
 content:
   account:
-    weight: 1
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  contact:
-    weight: 4
+    weight: 0
     region: content
     settings: {  }
     third_party_settings: {  }
   field_author_name:
-    type: inline_entity_form_complex
-    weight: 15
+    type: tagify_entity_reference_autocomplete_widget
+    weight: 5
     region: content
     settings:
-      form_mode: default
-      override_labels: true
-      label_singular: 'author name'
-      label_plural: 'author names'
-      allow_new: true
-      allow_existing: true
       match_operator: CONTAINS
-      allow_duplicate: false
-      collapsible: false
-      collapsed: false
-      revision: false
-      removed_reference: keep
+      match_limit: 0
+      placeholder: ''
+      suggestions_dropdown: 1
+      show_entity_id: 0
+      show_info_label: 0
+      info_label: ''
+      parent_selection: 1
     third_party_settings: {  }
   field_cover_artist_name:
-    type: inline_entity_form_complex
-    weight: 17
+    type: tagify_entity_reference_autocomplete_widget
+    weight: 6
     region: content
     settings:
-      form_mode: default
-      override_labels: true
-      label_singular: 'Cover artist'
-      label_plural: 'Cover artists'
-      allow_new: true
-      allow_existing: true
       match_operator: CONTAINS
-      allow_duplicate: false
-      collapsible: false
-      collapsed: false
-      revision: false
-      removed_reference: keep
+      match_limit: 0
+      placeholder: ''
+      suggestions_dropdown: 1
+      show_entity_id: 0
+      show_info_label: 0
+      info_label: ''
+      parent_selection: 1
     third_party_settings: {  }
   field_profile:
     type: text_textarea
-    weight: 16
+    weight: 3
     region: content
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
   field_reader_name:
-    type: inline_entity_form_complex
-    weight: 14
+    type: tagify_entity_reference_autocomplete_widget
+    weight: 4
     region: content
     settings:
-      form_mode: default
-      override_labels: true
-      label_singular: 'Reader name'
-      label_plural: 'Reader names'
-      allow_new: true
-      allow_existing: true
       match_operator: CONTAINS
-      allow_duplicate: false
-      collapsible: false
-      collapsed: false
-      revision: false
-      removed_reference: keep
+      match_limit: 0
+      placeholder: ''
+      suggestions_dropdown: 1
+      show_entity_id: 0
+      show_info_label: 0
+      info_label: ''
+      parent_selection: 1
     third_party_settings: {  }
   language:
-    weight: 5
+    weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }
   timezone:
-    weight: 6
+    weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
 hidden:
+  contact: true
   langcode: true
   path: true

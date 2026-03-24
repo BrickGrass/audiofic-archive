@@ -7,6 +7,7 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\node\Entity\Node;
+use Drupal\user\Entity\User;
 
 /**
  * Implements hook_page_attachments().
@@ -19,50 +20,11 @@ function aa_gin_page_attachments(array &$attachments) {
 }
 
 /**
- * Implements hook_field_group_form_process_alter().
- */
-function aa_gin_field_group_form_process_alter(array &$element, &$group, &$rendering_object) {
-  if (in_array($rendering_object['#form_id'], ['node_work_form', 'node_work_edit_form'])) {
-    $series_weight = $rendering_object['field_series']['#weight'];
-
-    $rendering_object['field_festival']['#weight'] = $series_weight + 3;
-  }
-}
-
-/**
  * Implements hook_form_alter().
  */
-function aa_gin_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+function aa_gin_form_alter(&$form, $_, $form_id) {
   if (in_array($form_id, ['node_work_form', 'node_work_edit_form'])) {
-    // Insert series creation fields.
-    $series_weight = $form['field_series']['#weight'];
-
-    $form['create_series'] = [
-      '#type' => 'checkbox',
-      '#title' => 'Create new series',
-      '#weight' => $series_weight + 1,
-      '#group' => 'group_series_and_collections',
-    ];
-
-    $form['new_series_name'] = [
-      '#type' => 'textfield',
-      '#title' => 'New series name',
-      '#weight' => $series_weight + 2,
-      '#group' => 'group_series_and_collections',
-      '#states' => [
-        'visible' => [':input[name="create_series"]' => ['checked' => TRUE]],
-      ],
-    ];
-
-    // Add custom submit handler.
-    foreach (array_keys($form['actions']) as $action) {
-      if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
-        $form['actions'][$action]['#submit'][] = 'aa_gin_form_submit';
-      }
-    }
-
-    $form['#attached']['library'][] = 'aa_gin/add-new-tag';
-    return;
+    aa_gin_alter_node_form($form);
   }
 
   if (in_array($form_id, [
@@ -72,21 +34,57 @@ function aa_gin_form_alter(&$form, FormStateInterface $form_state, $form_id) {
     'taxonomy_term_reader_form',
     'taxonomy_term_language_form',
   ])) {
-    $user = \Drupal::entityTypeManager()->getStorage('user')->load(\Drupal::currentUser()->id());
+    aa_gin_alter_taxonomy_form($form);
+  }
 
-    // If user is not admin, remove additional taxonomy term form widgets.
-    if (!$user->hasRole('administrator')) {
-      $form['relations']['#access'] = FALSE;
-      $form['revision_information']['#access'] = FALSE;
-    }
-    return;
+  if (in_array($form_id, ['user_form'])) {
+    aa_gin_alter_user_form($form);
   }
 }
 
 /**
- * Custom submit handler for node work forms.
+ * Alters the node creation form to insert the series creation fields.
+ *
+ * Also ensures that a custom submit handler that correctly handles
+ * input to those fields is added.
  */
-function aa_gin_form_submit(array $form, FormStateInterface $form_state) {
+function aa_gin_alter_node_form(array &$form) {
+  $series_weight = $form['field_series']['#weight'];
+
+  $form['create_series'] = [
+    '#type' => 'checkbox',
+    '#title' => 'Create new series',
+    '#weight' => $series_weight + 1,
+    '#group' => 'group_series_and_collections',
+  ];
+
+  $form['new_series_name'] = [
+    '#type' => 'textfield',
+    '#title' => 'New series name',
+    '#weight' => $series_weight + 2,
+    '#group' => 'group_series_and_collections',
+    '#states' => [
+      'visible' => [':input[name="create_series"]' => ['checked' => TRUE]],
+    ],
+  ];
+
+  foreach (array_keys($form['actions']) as $action) {
+    if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
+      $form['actions'][$action]['#submit'][] = 'aa_gin_node_form_submit';
+    }
+  }
+
+  $form['#attached']['library'][] = 'aa_gin/add-new-tag';
+}
+
+/**
+ * Custom submit handler for node work forms.
+ *
+ * If the create_series checkbox is ticked and a new series name is provided,
+ * this submit handler creates that new series and links the current work to
+ * it.
+ */
+function aa_gin_node_form_submit(array $form, FormStateInterface $form_state) {
   $series_title = $form['new_series_name']['#value'];
   if (!$form['create_series']['#checked'] || empty($series_title)) {
     return;
@@ -102,9 +100,40 @@ function aa_gin_form_submit(array $form, FormStateInterface $form_state) {
 
   /** @var \Drupal\aa_utils\Service\AudioficUtils $utils */
   $utils = \Drupal::service('aa_utils.utils');
-  $work = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+  $work = Node::load($nid);
 
   $utils->setCollectionMetadata($series, [$work]);
+}
+
+/**
+ * Alters the taxonomy form to ensure non-admins cannot edit protected fields.
+ */
+function aa_gin_alter_taxonomy_form(array &$form) {
+  /** @var \Drupal\user\UserInterface $user */
+  $user = User::load(\Drupal::currentUser()->id());
+  if ($user->hasRole('administrator')) {
+    return;
+  }
+
+  $form['status']['#access'] = FALSE;
+  $form['relations']['#access'] = FALSE;
+  $form['revision_information']['#access'] = FALSE;
+}
+
+/**
+ * Alters the user form to ensure non-admins cannot edit protected fields.
+ */
+function aa_gin_alter_user_form(array &$form) {
+  /** @var \Drupal\user\UserInterface $user */
+  $user = User::load(\Drupal::currentUser()->id());
+  if ($user->hasRole('administrator')) {
+    return;
+  }
+
+  $form['field_cover_artist_name']['#access'] = FALSE;
+  $form['field_reader_name']['#access'] = FALSE;
+  $form['field_author_name']['#access'] = FALSE;
+  $form['contact']['#access'] = FALSE;
 }
 
 /**
