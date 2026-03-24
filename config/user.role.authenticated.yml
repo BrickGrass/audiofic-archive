@@ -28,7 +28,6 @@ permissions:
   - 'access file download'
   - 'access shortcuts'
   - 'access site-wide contact form'
-  - 'access user contact forms'
   - 'access user profiles'
   - 'create terms in author'
   - 'create terms in cover_artist'

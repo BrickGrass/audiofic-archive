@@ -42,6 +42,10 @@ function propagate_metadata_node_presave(NodeInterface $node) {
   if ($node->getType() === "playlist") {
     // Only update series metadata if a work is added/removed.
     // Otherwise correct metadata will be overwritten.
+    if (is_null($node->original)) {
+      return;
+    }
+
     $old_work_arr = $node->original->get('field_works_series');
     $new_work_arr = $node->get('field_works_series');
 
