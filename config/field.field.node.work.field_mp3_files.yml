@@ -12,7 +12,7 @@ entity_type: node
 bundle: work
 label: 'Streaming files'
 description: "This is for mp3 files only.<br /><br />\r\nOnce uploaded, clicking 'create media item' saves the file. If you have more mp3 files for the work, like chapters, or alternates like 'no sfx' or 'with music', continue adding them here and save each one using 'create media item'. More fields to add details about your work are below this before the work itself is published. "
-required: false
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
