@@ -18,7 +18,6 @@ dependencies:
     - shortcut
     - system
     - taxonomy
-    - userprotect
 id: authenticated
 label: Authenticated
 weight: -9
@@ -37,9 +36,6 @@ permissions:
   - 'flag queue_flag'
   - 'unflag queue_flag'
   - 'use text format basic_html'
-  - userprotect.account.edit
-  - userprotect.mail.edit
-  - userprotect.pass.edit
   - 'view any profile'
   - 'view media'
   - 'view own profile'

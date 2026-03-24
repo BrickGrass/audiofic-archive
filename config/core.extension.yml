@@ -55,6 +55,7 @@ module:
   node: 0
   options: 0
   page_cache: 0
+  pages_restriction: 0
   path: 0
   path_alias: 0
   profile: 0
@@ -80,7 +81,6 @@ module:
   update: 0
   upgrade_status: 0
   user: 0
-  userprotect: 0
   views_autocomplete_filters: 0
   views_bulk_edit: 0
   views_bulk_operations: 0
