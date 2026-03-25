@@ -29,14 +29,15 @@ set classes = [
   <div class="user-profile-header">
     <div class="contextual-menu">
       <a class="btn btn-primary" href="/user/{{ user.id }}/edit">Settings <i class="bi bi-gear-fill"></i></a>
-      <a class="btn btn-primary" href="/node/{{ user.id }}/delete">Delete Account <i class="bi bi-trash-fill"></i></a>
+      <a class="btn btn-primary" href="/user/{{ user.id }}/cancel">Delete Account <i class="bi bi-trash-fill"></i></a>
+      <a class="btn btn-primary" href="/claim-account">Claim Psudonym <i class="bi bi-person-fill-add"></i></a>
     </div>
-    <div>
+    <div class="user-profile-title">
       <h1>{{ user.name[0].value }}</h1>
     </div>
   </div>
-  <div class="d-flex flex-column w-100">
-    <div class="alert alert-aa-metadata d-flex flex-column" role="alert">
+  <div class="d-flex flex-column w-100 pt-2">
+    <div class="alert alert-aa-metadata d-flex flex-column mb-2" role="alert">
       {{ content.field_reader_name }}
       {{ content.field_author_name }}
       {{ content.field_cover_artist_name }}
@@ -45,14 +46,35 @@ set classes = [
         <span>{{ created_at }}</span>
       </span>
     </div>
-    <div>
+    {% if user.field_profile[0].value %}
+    <div class="user-profile-bio">
+      <h5>Bio</h5>
       {{ content.field_profile }}
     </div>
-    <div>
-      {# recent works #}
-    </div>
-    <div>
-      {# recent series #}
+    {% endif %}
+    <div class="user-profile-content">
+      {% set works_result = drupal_view_result('user_s_works', 'users_works', reader_ids) %}
+      {% if works_result %}
+      <div class="user-profile-works">
+        <h5>Recent works</h5>
+        {{ drupal_view('user_s_works', 'users_works', reader_ids) }}
+        {% if works_result | length == 5 %}
+        <a class="user-profile-see-more" href="/search/works?reader={{ reader_ids | replace({"+": ","}) }}">See more</a>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      {% set series_result = drupal_view_result('user_s_works', 'users_series', reader_ids) %}
+      {% if series_result %}
+      <hr>
+      <div class="user-profile-series">
+        <h5>Recent series</h5>
+        {{ drupal_view('user_s_works', 'users_series', reader_ids) }}
+        {% if series_result | length == 5 %}
+        <a class="user-profile-see-more" href="/search/collections?reader={{ reader_ids | replace({"+": ","}) }}">See more</a>
+        {% endif %}
+      </div>
+      {% endif %}
     </div>
   </div>
 </div>

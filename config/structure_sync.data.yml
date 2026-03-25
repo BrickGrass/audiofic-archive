@@ -78,19 +78,6 @@ menus:
     uuid: 8a4d1d10-ddd0-4d19-8d77-6007ddf74d35
     options: {  }
   -
-    menu_name: account
-    title: 'Claim existing account'
-    parent: null
-    uri: 'https://dev-audiofic.pantheonsite.io/contact/claim_account_or_name'
-    link_title: ''
-    description: null
-    enabled: true
-    expanded: false
-    weight: -46
-    langcode: en
-    uuid: f67fd239-7fa9-4674-89cd-9f8de0c65ee5
-    options: {  }
-  -
     menu_name: main
     title: About
     parent: null

@@ -583,13 +583,52 @@ button.nav-link {
 
 .user-profile-header {
 	display: flex;
-	flex-direction: row;
+	flex-direction: row-reverse;
 	justify-content: space-between;
 	align-items: center;
 }
 
 .user-profile-header .contextual-menu {
-	order: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+}
+
+.user-profile-header .user-profile-title {
+    padding-right: 0.5rem;
+}
+
+.user-profile-header .user-profile-title h1 {
+    margin-bottom: 0;
+}
+
+.user-profile-bio p {
+    margin-bottom: 0.5rem;
+}
+
+.user-profile-content > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-profile-see-more {
+    align-self: flex-end;
+}
+
+@media (max-width: 500px) {
+    .user-profile-header {
+        flex-direction: column;
+    }
+
+    .user-profile-header .contextual-menu {
+        align-self: flex-end;
+    }
+
+    .user-profile-header .user-profile-title {
+        align-self: flex-start;
+    }
 }
 
 /* Forms & Facets */

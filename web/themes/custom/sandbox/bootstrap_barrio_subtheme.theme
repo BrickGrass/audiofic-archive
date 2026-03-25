@@ -59,10 +59,9 @@ function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
   }
 
   if ($node_type === "playlist") {
-    $condition = $node_type === "playlist" ? "field_series.entity:node.nid" : "field_reader_collections.entity:node.nid";
     $results = \Drupal::entityQuery('node')
       ->condition('type', 'work')
-      ->condition($condition, $node->id())
+      ->condition('field_series.entity:node.nid', $node->id())
       ->accessCheck(TRUE)
       ->execute();
     $variables["collection_length"] = count($results);
@@ -113,6 +112,12 @@ function bootstrap_barrio_subtheme_preprocess_user(&$variables) {
   $date_formatter = \Drupal::service('date.formatter');
   $created_date = $date_formatter->format($user->getCreatedTime(), "custom", "j F Y");
   $variables['created_at'] = $created_date;
+
+  $reader_name_ids = [];
+  foreach ($user->get('field_reader_name')->referencedEntities() as $reader_name) {
+    $reader_name_ids[] = $reader_name->id();
+  }
+  $variables['reader_ids'] = implode('+', $reader_name_ids);
 }
 
 /**

@@ -13,7 +13,6 @@ dependencies:
     - taxonomy.vocabulary.cover_artist
     - taxonomy.vocabulary.curator
     - taxonomy.vocabulary.fandom
-    - taxonomy.vocabulary.language
     - taxonomy.vocabulary.reader
     - taxonomy.vocabulary.relationship
   module:
@@ -46,7 +45,6 @@ permissions:
   - 'create terms in cover_artist'
   - 'create terms in curator'
   - 'create terms in fandom'
-  - 'create terms in language'
   - 'create terms in reader'
   - 'create terms in relationship'
   - 'create work content'
