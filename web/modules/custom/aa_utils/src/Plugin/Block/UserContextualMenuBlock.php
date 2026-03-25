@@ -9,18 +9,18 @@ use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Displays Edit/Delete links on nodes that a user has access to edit.
+ * Displays Settings, Delete etc links when a user has access to edit a user.
  *
  * @Block(
- *   id = "node_contextual_menu",
- *   admin_label = @Translation("Node Contextual Menu Block"),
+ *   id = "user_contextual_menu",
+ *   admin_label = @Translation("User Contextual Menu Block"),
  *   category = @Translation("Menus"),
  *   context_definitions = {
- *     "node" = @ContextDefinition("entity:node", label = @Translation("Node"))
+ *     "user" = @ContextDefinition("entity:user", label = @Translation("User"))
  *   }
  * )
  */
-class NodeContextualMenuBlock extends BlockBase implements ContainerFactoryPluginInterface {
+class UserContextualMenuBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
    * The entity type manager.
@@ -37,7 +37,7 @@ class NodeContextualMenuBlock extends BlockBase implements ContainerFactoryPlugi
   protected $currentUser;
 
   /**
-   * Constructs a NodeContextualMenuBlock object.
+   * Constructs a UserContextualMenuBlock object.
    */
   public function __construct(
     array $configuration,
@@ -68,17 +68,17 @@ class NodeContextualMenuBlock extends BlockBase implements ContainerFactoryPlugi
    * {@inheritdoc}
    */
   public function build() {
-    $node = $this->getContextValue('node');
-    $user = $this->entityTypeManager->getStorage('user')->load($this->currentUser->id());
-    $nid = $node->id();
+    $user = $this->getContextValue('user');
+    $uid = $user->id();
+    $current_user = $this->entityTypeManager->getStorage('user')->load($this->currentUser->id());
 
     return [
-      '#theme' => 'node-contextual-menu',
-      '#nid' => $nid,
-      '#has_edit_access' => $node->access('update', $user),
+      '#theme' => 'user-contextual-menu',
+      '#uid' => $uid,
+      '#has_edit_access' => $user->access('update', $current_user),
       '#cache' => [
         'contexts' => ['user'],
-        'tags' => ["node:{$nid}"],
+        'tags' => ["user:{$uid}"],
       ],
     ];
   }

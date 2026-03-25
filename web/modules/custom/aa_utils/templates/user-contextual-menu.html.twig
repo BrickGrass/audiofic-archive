@@ -1,0 +1,5 @@
+{% if has_edit_access %}
+  <a class="btn btn-primary" href="/user/{{ uid }}/edit">Settings <i class="bi bi-gear-fill"></i></a>
+  <a class="btn btn-primary" href="/user/{{ uid }}/cancel">Delete Account <i class="bi bi-trash-fill"></i></a>
+  <a class="btn btn-primary" href="/claim-account">Claim Pseudonym <i class="bi bi-person-fill-add"></i></a>
+{% endif %}
