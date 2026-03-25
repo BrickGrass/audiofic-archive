@@ -610,6 +610,10 @@ button.nav-link {
     line-height: 1.25rem;
 }
 
+.user-profile-bio p {
+    margin-bottom: 1.25rem;
+}
+
 .user-profile-bio > p:last-child {
     margin-bottom: 0;
 }
