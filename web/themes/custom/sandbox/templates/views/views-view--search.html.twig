@@ -199,6 +199,9 @@
       <div class="mb-2 contextual-menu d-flex justify-content-end">
         {{ other_search }}
         {{ tag_info_btn }}
+        {% if user is not empty %}
+          <a class="btn btn-primary ms-1" href="/user/{{ user.id }}">View User Profile <i class="bi bi-person-fill"></i></a>
+        {% endif %}
         <a class="btn btn-primary ms-1" href="{{ rss_feed }}">RSS <i class="bi bi-rss-fill"></i></a>
         <a id="expand-filters" class="btn btn-primary d-md-none ms-1" data-bs-toggle="collapse" href="#{{ form_target }}" role="button" aria-expanded="true" aria-controls="{{ form_target }}">
           Filters <i class="bi bi-funnel-fill"></i>

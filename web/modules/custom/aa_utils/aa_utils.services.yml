@@ -1,3 +1,8 @@
 services:
   aa_utils.utils:
     class: Drupal\aa_utils\Service\AudioficUtils
+  aa_utils.user_route_context:
+    class: Drupal\aa_utils\ContextProvider\UserRouteContext
+    arguments: ['@current_route_match']
+    tags:
+      - { name: 'context_provider' }

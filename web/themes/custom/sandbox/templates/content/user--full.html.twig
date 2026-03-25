@@ -28,9 +28,7 @@ set classes = [
 <div class="p-2 user-profile">
   <div class="user-profile-header">
     <div class="contextual-menu">
-      <a class="btn btn-primary" href="/user/{{ user.id }}/edit">Settings <i class="bi bi-gear-fill"></i></a>
-      <a class="btn btn-primary" href="/user/{{ user.id }}/cancel">Delete Account <i class="bi bi-trash-fill"></i></a>
-      <a class="btn btn-primary" href="/claim-account">Claim Pseudonym <i class="bi bi-person-fill-add"></i></a>
+      {{ drupal_block("user_contextual_menu", {context_mapping: {user: '@aa_utils.user_route_context:user'}}, wrapper=false) }}
     </div>
     <div class="user-profile-title">
       <h1>{{ user.name[0].value }}</h1>
