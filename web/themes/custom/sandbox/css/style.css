@@ -619,8 +619,8 @@ button.nav-link {
 }
 
 .expand-help-hide {
-    height: 6.25rem !important;
-    overflow: hidden !important;
+    max-height: 6.25rem;
+    overflow: hidden;
     line-height: 1.25rem;
 }
 
