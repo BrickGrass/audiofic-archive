@@ -602,6 +602,7 @@ button.nav-link {
 
 .user-profile-header .user-profile-title h1 {
     margin-bottom: 0;
+    text-wrap: nowrap;
 }
 
 .user-profile-bio p {
