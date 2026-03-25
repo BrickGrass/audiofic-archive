@@ -58,36 +58,15 @@ function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
     $variables['series_positions'] = $series_positions;
   }
 
-  if (in_array($node_type, ["playlist", "reader_collection", "rec_list"])) {
-    $results = NULL;
+  if ($node_type === "playlist") {
+    $results = \Drupal::entityQuery('node')
+      ->condition('type', 'work')
+      ->condition('field_series.entity:node.nid', $node->id())
+      ->accessCheck(TRUE)
+      ->execute();
+    $variables["collection_length"] = count($results);
 
-    if (in_array($node_type, ['playlist', 'reader_collection'])) {
-      $condition = $node_type === "playlist" ? "field_series.entity:node.nid" : "field_reader_collections.entity:node.nid";
-      $results = \Drupal::entityQuery('node')
-        ->condition('type', 'work')
-        ->condition($condition, $node->id())
-        ->accessCheck(TRUE)
-        ->execute();
-      $variables["collection_length"] = count($results);
-    }
-
-    if ($variables["view_mode"] === "full" and $node_type === "rec_list") {
-      $rec_list_works = $node->get("field_works")->referencedEntities();
-
-      // TODO: not collecting attribution links because we're unsure if we're displaying them.
-      // Will be easy to add them if we do decide to.
-      $legacy_works = FALSE;
-      foreach ($rec_list_works as $rec_list_work) {
-        if ($rec_list_work->getType() === "legacy_work") {
-          $legacy_works = TRUE;
-        }
-      }
-
-      $variables['total_nsfw'] = $utils->getTotalNsfw($rec_list_works);
-      $variables['legacy_works'] = $legacy_works;
-    }
-
-    if ($variables["view_mode"] === "full" and in_array($node_type, ["playlist", "reader_collection"]) and $results !== NULL) {
+    if ($variables["view_mode"] === "full" and $results !== NULL) {
       $works = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($results);
 
       $work_text_links = [];
@@ -123,6 +102,22 @@ function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
       $variables['total_nsfw'] = $total_nsfw;
     }
   }
+}
+
+/**
+ * Implements hook_preprocess_user().
+ */
+function bootstrap_barrio_subtheme_preprocess_user(&$variables) {
+  $user = $variables['user'];
+  $date_formatter = \Drupal::service('date.formatter');
+  $created_date = $date_formatter->format($user->getCreatedTime(), "custom", "j F Y");
+  $variables['created_at'] = $created_date;
+
+  $reader_name_ids = [];
+  foreach ($user->get('field_reader_name')->referencedEntities() as $reader_name) {
+    $reader_name_ids[] = $reader_name->id();
+  }
+  $variables['reader_ids'] = implode('+', $reader_name_ids);
 }
 
 /**

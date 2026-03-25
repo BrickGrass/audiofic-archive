@@ -14,7 +14,7 @@ use Drupal\user\Entity\User;
  */
 function aa_gin_page_attachments(array &$attachments) {
   $route = \Drupal::routeMatch()->getRouteName();
-  if (in_array($route, ["node.add", "node.add_page", "entity.node.edit_form", "entity.node.delete_form"])) {
+  if (in_array($route, ["node.add", "node.add_page", "entity.node.edit_form", "entity.node.delete_form", "entity.user.canonical"])) {
     $attachments['#attached']['library'][] = 'aa_gin/content-form';
   }
 }

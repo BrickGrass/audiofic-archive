@@ -579,6 +579,70 @@ button.nav-link {
 	}
 }
 
+/* User profile pages */
+
+.user-profile-header {
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.user-profile-header .contextual-menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+}
+
+.user-profile-header .user-profile-title {
+    padding-right: 0.5rem;
+}
+
+.user-profile-header .user-profile-title h1 {
+    margin-bottom: 0;
+    text-wrap: nowrap;
+}
+
+.user-profile-bio {
+    display: inherit;
+    line-height: 1.25rem;
+}
+
+.user-profile-bio > p:last-child {
+    margin-bottom: 0;
+}
+
+.expand-help-hide {
+    height: 6.25rem !important;
+    overflow: hidden !important;
+    line-height: 1.25rem;
+}
+
+.user-profile-content > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-profile-see-more {
+    align-self: flex-end;
+}
+
+@media (max-width: 500px) {
+    .user-profile-header {
+        flex-direction: column;
+    }
+
+    .user-profile-header .contextual-menu {
+        align-self: flex-end;
+    }
+
+    .user-profile-header .user-profile-title {
+        align-self: flex-start;
+    }
+}
+
 /* Forms & Facets */
 .fieldset-wrapper div.checkbox {
 	margin-bottom: 0px !important;

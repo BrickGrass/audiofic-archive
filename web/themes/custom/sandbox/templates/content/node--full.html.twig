@@ -136,10 +136,6 @@ set classes = [
         <div id="full-work-filters" class="full-work-filters collapse dont-collapse-sm">
           {% if content_type == "playlist" %}
             {{ drupal_block("views_exposed_filter_block:seriess-works", wrapper=false) }}
-          {% elseif content_type == "reader_collection" %}
-            {{ drupal_block("views_exposed_filter_block:reader_tags-works", wrapper=false) }}
-          {% elseif content_type == "rec_list" %}
-            {{ drupal_block("views_exposed_filter_block:rec_lists-works", wrapper=false) }}
           {% endif %}
         </div>
       {% endif %}
@@ -233,28 +229,6 @@ set classes = [
               <a href="{{ path('entity.node.canonical', {'node': series.id}) }}">{{ series.title.value }}</a>
             </span>
           {% endfor %}
-
-          {% if node.field_reader_collections is not empty %}
-            <span>
-              <b>Part of Collection(s)</b>
-              {% for collection in node.field_reader_collections %}
-                <a href="{{ path('entity.node.canonical', {'node': collection.entity.id}) }}">{{ collection.entity.title.value }}</a>
-              {% endfor %}
-            </span>
-          {% endif %}
-
-          {# TODO: is this desireable? The work/collection creator has no way of
-          deciding if this should appear. Should there instead be a reciprocal
-          relationship, where if the reader can authorise the rec lists they want
-          to display? #}
-          {% if rec_lists is not empty %}
-            <span>
-              <b>Part of Rec List(s)</b>
-              {% for rec_list in rec_lists %}
-                <a href="{{ path('entity.node.canonical', {'node': rec_list.id}) }}">{{ rec_list.title.value }}</a>
-              {% endfor %}
-            </span>
-          {% endif %}
         </div>
 
         {% if node.field_summary is not empty or node.field_notes is not empty %}
