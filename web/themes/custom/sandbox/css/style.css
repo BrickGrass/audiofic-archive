@@ -605,8 +605,19 @@ button.nav-link {
     text-wrap: nowrap;
 }
 
-.user-profile-bio p {
-    margin-bottom: 0.5rem;
+.user-profile-bio {
+    display: inherit;
+    line-height: 1.25rem;
+}
+
+.user-profile-bio > p:last-child {
+    margin-bottom: 0;
+}
+
+.expand-help-hide {
+    height: 6.25rem !important;
+    overflow: hidden !important;
+    line-height: 1.25rem;
 }
 
 .user-profile-content > div {

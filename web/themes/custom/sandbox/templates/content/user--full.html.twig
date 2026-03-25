@@ -30,7 +30,7 @@ set classes = [
     <div class="contextual-menu">
       <a class="btn btn-primary" href="/user/{{ user.id }}/edit">Settings <i class="bi bi-gear-fill"></i></a>
       <a class="btn btn-primary" href="/user/{{ user.id }}/cancel">Delete Account <i class="bi bi-trash-fill"></i></a>
-      <a class="btn btn-primary" href="/claim-account">Claim Psudonym <i class="bi bi-person-fill-add"></i></a>
+      <a class="btn btn-primary" href="/claim-account">Claim Pseudonym <i class="bi bi-person-fill-add"></i></a>
     </div>
     <div class="user-profile-title">
       <h1>{{ user.name[0].value }}</h1>
@@ -47,7 +47,7 @@ set classes = [
       </span>
     </div>
     {% if user.field_profile[0].value %}
-    <div class="user-profile-bio">
+    <div class="mb-2">
       <h5>Bio</h5>
       {{ content.field_profile }}
     </div>

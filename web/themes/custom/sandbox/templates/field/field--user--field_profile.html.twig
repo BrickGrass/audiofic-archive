@@ -38,9 +38,9 @@
  */
 #}
 
-<span>
-    <span class="work-field-label">Author Pseudonym(s):</span>
-    {% for item in items %}
-        {{ item.content }}{{- not loop.last ? ', ' -}}
-    {% endfor %}
-</span>
+<div id="userProfileBio" class="user-profile-bio expand-help-hide">
+{% for item in items %}
+  {{  item.content }}
+{% endfor %}
+</div>
+<a href="#" data-for="userProfileBio" class="expand-help-button">Read More</a>
