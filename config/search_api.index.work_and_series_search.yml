@@ -7,6 +7,7 @@ dependencies:
     - field.storage.node.field_author
     - field.storage.node.field_category
     - field.storage.node.field_completion_status
+    - field.storage.node.field_cover_artist
     - field.storage.node.field_duration
     - field.storage.node.field_fandom2
     - field.storage.node.field_format
@@ -128,6 +129,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_completion_status
+  field_cover_artist:
+    label: 'Cover artist'
+    datasource_id: 'entity:node'
+    property_path: field_cover_artist
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_cover_artist
   field_duration__seconds:
     label: 'Duration » Seconds'
     datasource_id: 'entity:node'
@@ -270,6 +279,16 @@ field_settings:
         - field.storage.node.field_warning
       module:
         - taxonomy
+  name_1:
+    label: 'Cover artist » Taxonomy term » Name'
+    datasource_id: 'entity:node'
+    property_path: 'field_cover_artist:entity:name'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_cover_artist
+      module:
+        - taxonomy
   nid:
     label: ID
     datasource_id: 'entity:node'
@@ -290,8 +309,6 @@ field_settings:
     datasource_id: 'entity:node'
     property_path: status
     type: boolean
-    indexed_locked: true
-    type_locked: true
     dependencies:
       module:
         - node
@@ -308,6 +325,8 @@ field_settings:
     datasource_id: 'entity:node'
     property_path: status
     type: boolean
+    indexed_locked: true
+    type_locked: true
     dependencies:
       module:
         - node
@@ -382,6 +401,7 @@ processor_settings:
       - field_relationship__name
       - field_series__title
       - name
+      - name_1
       - title
       - type
     title: true

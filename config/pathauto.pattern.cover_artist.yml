@@ -1,0 +1,22 @@
+uuid: 5b19e37c-813a-4e0d-9980-cfef148fcdfb
+langcode: en
+status: true
+dependencies:
+  module:
+    - taxonomy
+id: cover_artist
+label: 'Cover Artist'
+type: 'canonical_entities:taxonomy_term'
+pattern: 'tags/cover-artist/[term:name]'
+selection_criteria:
+  805c574b-34c8-4ab4-90ab-88dc4f6dd530:
+    id: 'entity_bundle:taxonomy_term'
+    negate: false
+    uuid: 805c574b-34c8-4ab4-90ab-88dc4f6dd530
+    context_mapping:
+      taxonomy_term: taxonomy_term
+    bundles:
+      cover_artist: cover_artist
+selection_logic: and
+weight: -5
+relationships: {  }

@@ -35,6 +35,7 @@ visibility:
     bundles:
       author: author
       category: category
+      cover_artist: cover_artist
       curator: curator
       fandom: fandom
       info: info
