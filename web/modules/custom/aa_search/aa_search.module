@@ -233,8 +233,7 @@ function aa_search_preprocess_views_view(&$variables) {
           ->execute();
         $users = \Drupal::entityTypeManager()->getStorage('user')->loadMultiple($user_ids);
 
-        // TODO: if this tag isn't linked to a user, find all tags in other vocabs
-        // that are similar, so we can suggest that there's possibly more content there.
+        $variables['user'] = NULL;
         if (!empty($users)) {
           $user = reset($users);
           $variables['user'] = $user;
