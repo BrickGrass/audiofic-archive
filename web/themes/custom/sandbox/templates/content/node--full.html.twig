@@ -329,6 +329,10 @@ set classes = [
         {% endif %}
       </div>
     </div>
+  {% elseif content_type == "page" %}
+    <div class="p-3">
+      {{ content }}
+    </div>
   {% else %}
     {{ content }}
   {% endif %}

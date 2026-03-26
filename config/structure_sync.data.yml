@@ -90,6 +90,19 @@ menus:
     langcode: en
     uuid: 4854f30c-75f0-4bb0-944c-a920651bbeb2
     options: {  }
+  -
+    menu_name: footer
+    title: 'Cookie Policy'
+    parent: null
+    uri: 'internal:/cookie-policy'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: 040b2790-2ca4-48f6-9a3f-d52906dbba98
+    options: {  }
 taxonomies:
   category:
     -

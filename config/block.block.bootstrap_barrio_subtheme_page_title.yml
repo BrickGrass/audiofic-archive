@@ -23,4 +23,4 @@ visibility:
   request_path:
     id: request_path
     negate: false
-    pages: "<front>\r\n/search/works\r\n/search/collections\r\n/taxonomy/term/*\r\n/queue\r\n/tagging-guide\r\n/my-links/*\r\n/my-links\r\n/my-drafts\r\n/search-tags"
+    pages: "/search/works\r\n/search/collections\r\n/taxonomy/term/*\r\n/queue\r\n/my-links/*\r\n/my-links\r\n/my-drafts\r\n/search-tags"
