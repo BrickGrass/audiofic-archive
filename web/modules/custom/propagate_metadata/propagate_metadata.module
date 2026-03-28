@@ -27,6 +27,16 @@ function propagate_metadata_form_alter(&$form, FormStateInterface $form_state, $
 }
 
 /**
+ * Fetches the reader_name of the currently logged in user.
+ */
+function propagate_metadata_get_user_tag(string $field_name): EntityInterface|null {
+  $user = User::load(\Drupal::currentUser()->id());
+  $terms = $user->get($field_name)->referencedEntities();
+
+  return count($terms) > 0 ? $terms[0] : NULL;
+}
+
+/**
  * Implements hook_ENTITY_TYPE_presave() for nodes.
  */
 function propagate_metadata_node_presave(NodeInterface $node) {
@@ -42,11 +52,11 @@ function propagate_metadata_node_presave(NodeInterface $node) {
   if ($node->getType() === "playlist") {
     // Only update series metadata if a work is added/removed.
     // Otherwise correct metadata will be overwritten.
-    if (is_null($node->original)) {
+    if (is_null($node->getOriginal())) {
       return;
     }
 
-    $old_work_arr = $node->original->get('field_works_series');
+    $old_work_arr = $node->getOriginal()->get('field_works_series');
     $new_work_arr = $node->get('field_works_series');
 
     if (count($old_work_arr) == count($new_work_arr)) {
@@ -72,12 +82,16 @@ function propagate_metadata_node_delete(NodeInterface $node) {
 
 /**
  * Implements hook_ENTITY_TYPE_presave() for users.
+ *
+ * Enforces rules when saving users, such as:
+ * - Administrators cannot have the podficcer role - this
+ *   breaks series links when an admin edits another persons
+ *   work, as it causes restrictions that shouldn't apply to
+ *   admins to apply!
+ * - A reader, author or cover artist tag cannot be linked to more
+ *   than one user.
  */
 function propagate_metadata_user_presave(UserInterface $user) {
-  // Ensure that administrators cannot have the podficcer role.
-  // Allowing both roles means that when an admin edits another users work
-  // errors with series links occur because restrictions that shouldn't
-  // apply to admins are applied.
   $is_admin = FALSE;
   $is_podficcer = FALSE;
   $podfic_role_id = "";
@@ -98,16 +112,70 @@ function propagate_metadata_user_presave(UserInterface $user) {
     $user->removeRole($podfic_role_id);
     \Drupal::messenger()->addWarning(t('Administrators cannot have the Podficcer role, the role has been removed.'));
   }
+
+  propagate_metadata_ensure_noone_else_has_tag($user, 'field_reader_name', 'reader');
+  propagate_metadata_ensure_noone_else_has_tag($user, 'field_author_name', 'author');
+  propagate_metadata_ensure_noone_else_has_tag($user, 'field_cover_artist_name', 'cover_artist');
 }
 
 /**
- * Fetches the reader_name of the currently logged in user.
+ * Finds out if any other user has any of the tags being added to the user passed in and removes those new tags if so.
  */
-function propagate_metadata_get_user_tag(string $field_name): EntityInterface|null {
-  $user = User::load(\Drupal::currentUser()->id());
-  $terms = $user->get($field_name)->referencedEntities();
+function propagate_metadata_ensure_noone_else_has_tag(UserInterface $user, string $user_tag_field_name, string $vid) {
+  $current_tags = $user->get($user_tag_field_name)->referencedEntities();
+  $original_user = $user->getOriginal();
 
-  return count($terms) > 0 ? $terms[0] : NULL;
+  $vocabulary = \Drupal::entityTypeManager()->getStorage('taxonomy_vocabulary')->load($vid);
+  $vocabulary_label = $vocabulary->label();
+
+  $newly_added_tags = [];
+  if ($original_user) {
+    $original_tag_ids = array_map(function ($t) {
+      return $t->id();
+    }, $original_user->get($user_tag_field_name)->referencedEntities());
+
+    foreach ($current_tags as $tag) {
+      if (in_array($tag->id(), $original_tag_ids)) {
+        continue;
+      }
+      $newly_added_tags[] = $tag;
+    }
+  } else {
+    $newly_added_tags = $current_tags;
+  }
+
+  $tags_to_remove = [];
+  foreach ($newly_added_tags as $tag) {
+    /** @var \Drupal\user\UserInterface[] $users_with_tag */
+    $users_with_tag = \Drupal::entityQuery('user')
+      ->condition("$user_tag_field_name.entity:taxonomy_term.tid", [$tag->id()], 'IN')
+      ->condition('uid', [$user->id()], 'NOT IN')
+      ->accessCheck(TRUE)
+      ->execute();
+    if (!$users_with_tag) {
+      continue;
+    }
+
+    $tags_to_remove[] = $tag->id();
+    \Drupal::messenger()->addWarning(t(
+      'The User @user_displayname is already using the @tag_type tag @tag_name, removing it from this user.',
+      [
+        '@user_displayname' => User::load(array_first($users_with_tag))->getDisplayName(),
+        '@tag_type' => $vocabulary_label,
+        '@tag_name' => $tag->getName(),
+      ]
+    ));
+  }
+
+  $remaining_tags = [];
+  foreach ($current_tags as $current_tag) {
+    if (in_array($current_tag->id(), $tags_to_remove)) {
+      continue;
+    }
+
+    $remaining_tags[] = $current_tag;
+  }
+  $user->set($user_tag_field_name, $remaining_tags);
 }
 
 /**
