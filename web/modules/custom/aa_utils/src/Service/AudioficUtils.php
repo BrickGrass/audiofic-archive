@@ -131,6 +131,7 @@ class AudioficUtils {
     $collection->set('field_rating', $data['ratings']);
     $collection->set('field_category', $data['categories']);
     $collection->set('field_format', $data['format_info']);
+    $collection->set('field_warning', $data['warnings']);
     $collection->set('field_languages', $data['languages']);
     $duration_interval = $this->secondsToDateInterval($data['duration']);
     $collection->field_duration = ['duration' => $duration_interval, 'seconds' => $data['duration']];
@@ -152,6 +153,7 @@ class AudioficUtils {
       'ratings' => [],
       'categories' => [],
       'format_info' => [],
+      'warnings' => [],
       'languages' => [],
       'duration' => 0,
     ];
@@ -165,6 +167,7 @@ class AudioficUtils {
       $data['relationships'] = array_merge($data['relationships'], $work->get('field_relationship')->referencedEntities());
       $data['ratings'] = array_merge($data['ratings'], $work->get('field_rating')->referencedEntities());
       $data['format_info'] = array_merge($data['format_info'], $work->get('field_format')->referencedEntities());
+      $data['warnings'] = array_merge($data['warnings'], $work->get('field_warning')->referencedEntities());
 
       if ($work->hasField('field_category')) {
         $data['categories'] = array_merge($data['categories'], $work->get('field_category')->referencedEntities());
