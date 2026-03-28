@@ -6,6 +6,6 @@ dependencies:
     - node
 id: node.limited_post_entry
 label: 'Limited post entry'
-description: ''
+description: null
 targetEntityType: node
 cache: true
