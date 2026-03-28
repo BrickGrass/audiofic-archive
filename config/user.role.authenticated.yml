@@ -12,7 +12,6 @@ dependencies:
     - contextual
     - file_download
     - filter
-    - flag
     - media
     - profile
     - shortcut
@@ -32,8 +31,6 @@ permissions:
   - 'create terms in author'
   - 'create terms in cover_artist'
   - 'create terms in reader'
-  - 'flag queue_flag'
-  - 'unflag queue_flag'
   - 'use text format basic_html'
   - 'view any profile'
   - 'view media'
