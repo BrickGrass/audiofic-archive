@@ -77,7 +77,6 @@ module:
   typed_data: 0
   ultimate_cron: 0
   update: 0
-  upgrade_status: 0
   user: 0
   views_autocomplete_filters: 0
   views_bulk_edit: 0

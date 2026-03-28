@@ -3,6 +3,7 @@ langcode: en
 status: false
 dependencies:
   config:
+    - core.entity_view_mode.node.rss
     - core.entity_view_mode.node.teaser
     - node.type.work
   module:
@@ -395,7 +396,7 @@ display:
         type: node_rss
         options:
           relationship: none
-          view_mode: default
+          view_mode: rss
       display_extenders: {  }
       path: rss.xml
       sitename_title: true
