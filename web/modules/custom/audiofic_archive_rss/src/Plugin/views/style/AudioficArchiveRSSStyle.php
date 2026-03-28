@@ -2,7 +2,7 @@
 
 namespace Drupal\audiofic_archive_rss\Plugin\views\style;
 
-use Drupal\core\form\FormStateInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Plugin\views\style\Rss;
 
 /**

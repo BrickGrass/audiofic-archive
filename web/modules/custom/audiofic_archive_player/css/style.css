@@ -61,6 +61,7 @@
 	color: white;
 	max-height: calc(37px * 5.5);
 	overflow-y: scroll;
+	scrollbar-width: none;
 }
 
 .full-work-player-playlist > button {

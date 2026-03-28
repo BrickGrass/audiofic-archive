@@ -2,7 +2,7 @@
 
 namespace Drupal\audiofic_archive_player\Plugin\views\style;
 
-use Drupal\core\form\FormStateInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Plugin\views\style\StylePluginBase;
 
 /**
