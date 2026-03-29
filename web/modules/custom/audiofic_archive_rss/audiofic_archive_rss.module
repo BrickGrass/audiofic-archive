@@ -7,7 +7,6 @@
 
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\file\Entity\File;
-use Drupal\media\MediaInterface;
 
 /**
  * Implements template_preprocess_views_view() for audiofic_archive_rss.
@@ -261,24 +260,6 @@ function audiofic_archive_rss_tokens($type, $tokens, array $data, array $options
   }
 
   return $replacements;
-}
-
-/**
- * Implements hook_ENTITY_TYPE_presave() for media.
- */
-function audiofic_archive_rss_media_presave(MediaInterface $entity) {
-  if ($entity->bundle() == 'mp3_file') {
-    if (count($entity->get("field_duration_seconds")) <= 0) {
-      $file = File::load($entity->get("field_media_audio_file")[0]->target_id);
-      $file_path_on_disk = \Drupal::service('file_system')->realpath($file->getFileUri());
-
-      $getID3 = new \getID3();
-      $file_info = $getID3->analyze($file_path_on_disk);
-      $duration = round($file_info['playtime_seconds']);
-
-      $entity->set("field_duration_seconds", $duration);
-    }
-  }
 }
 
 /**
