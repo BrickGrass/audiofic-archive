@@ -6,7 +6,6 @@ use Drupal\aa_utils\Service\AudioficUtils;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Hook\Attribute\Hook;
-use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\file\Entity\File;
 use Drupal\media\MediaInterface;
 use Drupal\node\Entity\Node;
@@ -24,7 +23,6 @@ class PropagateWorkMetadata {
     protected readonly AudioficUtils $utils,
     protected readonly EntityTypeManagerInterface $entity_type_manager,
     protected readonly FileSystemInterface $file_system,
-    protected readonly AccountProxyInterface $current_user,
   ) {}
 
   /**
