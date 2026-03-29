@@ -1,0 +1,8 @@
+{
+  "name": "audiofic_archive/audiofic_propagate_metadata",
+  "description": "Enforces & calculates user/work/series metadata for the audiofic archive.",
+  "type": "drupal-module",
+  "require": {
+    "james-heinrich/getid3": "^1.9"
+  }
+}
