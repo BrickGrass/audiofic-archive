@@ -32,10 +32,6 @@
 #}
 {% if view.id == "search" and view.current_display == "search_taxonomy" and taxonomy_term.bundle == "series" %}
   <div class="p-2 full-work no-image legacy-series">
-    {# TODO: When the filters are placed above the rest of the content and hidden,
-      their row gap is still rendered, so we get a double-height margin at the top of
-      the page. To fix this I'll need to add some js listening to whether the filters
-      are collapsed, and add a negative margin to the .full-work div based on that. #}
       <div class="d-flex flex-column w-100 full-work-main-content">
         <h1>{{ taxonomy_term.name.value }}</h1>
 

@@ -303,7 +303,7 @@ class AASearchThemeHooks {
       $readers = array_merge($readers, $this->tag_utils->fetchFieldTerms($work, 'field_reader'));
       $languages = array_merge($languages, $this->tag_utils->fetchFieldTerms($work, 'field_language'));
 
-      foreach (["field_fandom2", "field_relationship", "field_warning", "field_category", "field_format"] as $key) {
+      foreach (["field_fandom2", "field_relationship", "field_category", "field_format"] as $key) {
         $all_tags = array_merge($all_tags, $this->tag_utils->fetchFieldTerms($work, $key));
       }
     }
