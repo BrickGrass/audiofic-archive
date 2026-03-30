@@ -63,7 +63,7 @@ module:
   search_api: 0
   search_api_solr: 0
   search_api_solr_admin: 0
-  series_part_label_validation: 0
+  serialization: 0
   shortcut: 0
   structure_sync: 0
   system: 0
