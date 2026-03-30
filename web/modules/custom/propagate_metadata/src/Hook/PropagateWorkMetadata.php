@@ -54,8 +54,8 @@ class PropagateWorkMetadata {
         $old_works = $node->getOriginal()->get('field_works_series')->referencedEntities();
         $new_works = $node->get('field_works_series')->referencedEntities();
 
-        $old_work_ids = array_map(function ($work) { return $work->id(); }, $old_works);
-        $new_work_ids = array_map(function ($work) { return $work->id(); }, $new_works);
+        $old_work_ids = array_map(fn ($work) => $work->id(), $old_works);
+        $new_work_ids = array_map(fn ($work) => $work->id(), $new_works);
         if ($this->arraysAreIdentical($old_work_ids, $new_work_ids)) {
           return;
         }

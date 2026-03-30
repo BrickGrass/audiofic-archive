@@ -36,17 +36,6 @@ class AudioficUtils {
   ];
 
   /**
-   * Fetches all the terms from a given vocabulary and adds them to all_terms.
-   */
-  public function fetchVocabTerms(NodeInterface $entity, string $vocab_name, array &$all_terms): void {
-    if ($entity->hasField($vocab_name)) {
-      foreach ($entity->get($vocab_name)->referencedEntities() as $term) {
-        $all_terms[] = $term;
-      }
-    }
-  }
-
-  /**
    * Determines whether an entity is rated nsfw (no rating or null is nsfw).
    */
   public function isNsfw(NodeInterface $node): bool {
@@ -54,8 +43,8 @@ class AudioficUtils {
       return TRUE;
     }
 
-    foreach ($node->get("field_rating")->referencedEntities() as $rating) {
-      if (in_array($rating->name->value, ["General", "Teen and up"])) {
+    if ($rating = array_first($node->get('field_rating')->referencedEntities())) {
+      if (in_array($rating->name->value, ['General', "Teen and up"])) {
         return FALSE;
       }
     }

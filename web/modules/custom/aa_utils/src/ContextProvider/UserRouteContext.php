@@ -18,21 +18,11 @@ class UserRouteContext implements ContextProviderInterface {
   use StringTranslationTrait;
 
   /**
-   * The route match object.
-   *
-   * @var \Drupal\Core\Routing\RouteMatchInterface
-   */
-  protected $routeMatch;
-
-  /**
    * Constructs a new UserRouteContext.
-   *
-   * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
-   *   The route match object.
    */
-  public function __construct(RouteMatchInterface $route_match) {
-    $this->routeMatch = $route_match;
-  }
+  public function __construct(
+    protected RouteMatchInterface $route_match,
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -41,13 +31,13 @@ class UserRouteContext implements ContextProviderInterface {
     $result = [];
     $context_definition = EntityContextDefinition::create('user')->setRequired(FALSE);
     $value = NULL;
-    if (($route_object = $this->routeMatch->getRouteObject())) {
+    if (($route_object = $this->route_match->getRouteObject())) {
       $route_contexts = $route_object->getOption('parameters');
       // Check for a node revision parameter first.
-      if (isset($route_contexts['user_revision']) && $revision = $this->routeMatch->getParameter('user_revision')) {
+      if (isset($route_contexts['user_revision']) && $revision = $this->route_match->getParameter('user_revision')) {
         $value = $revision;
       }
-      elseif (isset($route_contexts['user']) && $user = $this->routeMatch->getParameter('user')) {
+      elseif (isset($route_contexts['user']) && $user = $this->route_match->getParameter('user')) {
         $value = $user;
       }
     }

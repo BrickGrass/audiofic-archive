@@ -23,12 +23,14 @@ function bootstrap_barrio_subtheme_preprocess_node(&$variables) {
   $node_type = $node->getType();
   /** @var \Drupal\aa_utils\Service\AudioficUtils $utils */
   $utils = \Drupal::service('aa_utils.utils');
+  /** @var \Drupal\aa_utils\Service\AudioficTagUtils $tag_utils */
+  $tag_utils = \Drupal::service('aa_utils.tag_utils');
 
   if (in_array($node_type, ["work", "legacy_work", "playlist", "reader_collection", "rec_list"])) {
     $all_tags = [];
 
     foreach (['field_warning', 'field_fandom2', 'field_relationship', 'field_category', 'field_format'] as $key) {
-      $utils->fetchVocabTerms($node, $key, $all_tags);
+      $all_tags = array_merge($all_tags, $tag_utils->fetchFieldTerms($node, $key));
     }
 
     $variables["all_tags"] = $all_tags;
