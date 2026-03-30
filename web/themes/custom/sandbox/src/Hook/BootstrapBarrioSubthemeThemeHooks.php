@@ -73,11 +73,10 @@ class BootstrapBarrioSubthemeThemeHooks {
     }
     $variables["all_tags"] = $all_tags;
 
-    $variables['created_at'] = $this->date_formatter
-      ->format($node->getCreatedTime(), "custom", "j F Y");
-
-    $variables['updated_at'] = $this->date_formatter
-      ->format($node->getChangedTime(), "custom", "j F Y");
+    $variables['created_at'] = $this->date_formatter->format(
+      $node->getCreatedTime(), "custom", "j F Y");
+    $variables['updated_at'] = $this->date_formatter->format(
+      $node->getChangedTime(), "custom", "j F Y");
 
     if ($variables['view_mode'] === 'full' && $node_type === 'work') {
       $variables['series_positions'] = $this->getSeriesPositions($node);
