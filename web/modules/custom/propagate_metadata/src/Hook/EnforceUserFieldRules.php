@@ -129,7 +129,7 @@ class EnforceUserFieldRules {
     $tags_to_remove = [];
     foreach ($newly_added_tags as $tag) {
       /** @var \Drupal\user\UserInterface[] $users_with_tag */
-      $users_with_tag = $this->entity_type_manager->getStorage('user')->getQuery('AND')
+      $users_with_tag = $this->entity_type_manager->getStorage('user')->getQuery()
         ->condition("$field_name.entity:taxonomy_term.tid", [$tag->id()], 'IN')
         ->condition('uid', [$user->id()], 'NOT IN')
         ->accessCheck(TRUE)
