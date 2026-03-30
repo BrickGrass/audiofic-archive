@@ -31,24 +31,16 @@
  */
 #}
 {% if view.id == "search" and view.current_display == "search_taxonomy" and taxonomy_term.bundle == "series" %}
-  <div class="p-2 full-work no-image filters-enabled legacy-series">
+  <div class="p-2 full-work no-image legacy-series">
     {# TODO: When the filters are placed above the rest of the content and hidden,
       their row gap is still rendered, so we get a double-height margin at the top of
       the page. To fix this I'll need to add some js listening to whether the filters
       are collapsed, and add a negative margin to the .full-work div based on that. #}
-      <div class="contextual-menu">
-        <a id="expand-filters" class="btn btn-primary d-md-none" data-bs-toggle="collapse" href="#block-bootstrap-barrio-subtheme-exposedformsearchsearch-taxonomy" role="button" aria-expanded="true" aria-controls="block-bootstrap-barrio-subtheme-exposedformsearchsearch-taxonomy">
-          Filters <i class="bi bi-funnel-fill"></i>
-        </a>
-      </div>
-      <div class="full-work-filters">
-        {{ drupal_entity("block", "bootstrap_barrio_subtheme_exposedformsearchsearch_taxonomy", check_access=false) }}
-      </div>
       <div class="d-flex flex-column w-100 full-work-main-content">
         <h1>{{ taxonomy_term.name.value }}</h1>
 
-        <div class="d-flex justify-content-between align-items-center">
-          <div class="d-flex full-work-lozenges">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <div class="d-flex flex-wrap gap-1 full-work-lozenges">
             {# TODO: Actually calculate this! Not decided on the priority of ratings, but keep in mind that one of the options is NULL #}
             <span class="badge bg-secondary me-1">Age Rating Unknown</span>
             <span class="badge bg-primary me-1">Legacy Series</span>
@@ -61,37 +53,39 @@
           </div>
         </div>
 
-        <span>
-          <span class="work-field-label">Written by</span>
-          {% for author in authors %}
-            {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': author.id}) %}
-            <a href="{{ taxonomy_path }}">{{ author.name.value }}</a>{{- not loop.last ? ', ' -}}
-          {% endfor %}
-        </span>
+        <div class="alert alert-aa-metadata d-flex flex-column" role="alert">
+          <span>
+            <span class="work-field-label">Written by</span>
+            {% for author in authors %}
+              {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': author.id}) %}
+              <a href="{{ taxonomy_path }}">{{ author.name.value }}</a>{{- not loop.last ? ', ' -}}
+            {% endfor %}
+          </span>
 
-        <span>
-          <span class="work-field-label">Read by</span>
-          {% for reader in readers %}
-            {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': reader.id}) %}
-            <a href="{{ taxonomy_path }}">{{ reader.name.value }}</a>{{- not loop.last ? ', ' -}}
-          {% endfor %}
-        </span>
+          <span>
+            <span class="work-field-label">Read by</span>
+            {% for reader in readers %}
+              {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': reader.id}) %}
+              <a href="{{ taxonomy_path }}">{{ reader.name.value }}</a>{{- not loop.last ? ', ' -}}
+            {% endfor %}
+          </span>
 
-        <div class="mb-1">
-          {% for tag in all_tags %}
-            {% set vocabulary = tag.vid.value[0]["target_id"] %}
-            {% set fandom_or_ship = vocabulary in ["fandom", "relationship"] ? "fw-bolder" : "" %}
-            {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': tag.id}) %}
-            <a class="{{ fandom_or_ship }}" href="{{ taxonomy_path }}">{{ tag.name.value }}</a>{{- not loop.last ? ', ' -}}
-          {% endfor %}
+          <div class="mb-1">
+            {% for tag in all_tags %}
+              {% set vocabulary = tag.vid.value[0]["target_id"] %}
+              {% set fandom_or_ship = vocabulary in ["fandom", "relationship"] ? "fw-bolder" : "" %}
+              {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': tag.id}) %}
+              <a class="{{ fandom_or_ship }}" href="{{ taxonomy_path }}">{{ tag.name.value }}</a>{{- not loop.last ? ', ' -}}
+            {% endfor %}
+          </div>
+
+          <span>
+            <b>Language(s)</b>
+            {% for lang in languages %}
+              {{ lang.name.value }}{{- not loop.last ? ', ' -}}
+            {% endfor %}
+          </span>
         </div>
-
-        <span>
-          <b>Language(s)</b>
-          {% for lang in languages %}
-            {{ lang.name.value }}{{- not loop.last ? ', ' -}}
-          {% endfor %}
-        </span>
 
         {# All works in this series as teaser-full (teaser + body text) #}
         <div class="mt-2">
@@ -170,10 +164,10 @@
             <p>View this user's profile page <a href="/user/{{ user.id }}">here</a>.</p>
           {% endif %}
 
-          {% if psudonyms is not empty %}
+          {% if pseudonyms is not empty %}
             <p>
               This user also has works archived under the following names:
-              {% for tag in psudonyms %}
+              {% for tag in pseudonyms %}
                 {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': tag.id}) %}
                 <a href="{{ taxonomy_path }}">{{ tag.name.value }} ({{ tag.bundle|replace({"_": " "})|title }})</a>{{- not loop.last ? ', ' -}}
               {% endfor %}

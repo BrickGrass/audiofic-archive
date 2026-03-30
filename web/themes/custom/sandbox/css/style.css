@@ -344,7 +344,7 @@ button.nav-link {
 		grid-template-columns: 300px 1fr 400px;
 	}
 
-	.full-work.legacy-series {
+	.full-work.legacy-series:not(.filters-enabled) {
 		grid-template-columns: 300px 1fr;
 	}
 }
