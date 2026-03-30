@@ -38,9 +38,9 @@ class EnforceUserFieldRules {
   public function userPresave(UserInterface $user) {
     $this->ensureNotPodficcerAndAdministrator($user);
 
-    $this->ensureTagsAreNotInUse($user, 'field_reader_name', 'reader');
-    $this->ensureTagsAreNotInUse($user, 'field_author_name', 'author');
-    $this->ensureTagsAreNotInUse($user, 'field_cover_artist_name', 'cover_artist');
+    $this->ensureTagsAreNotInUse($user, 'field_reader_name');
+    $this->ensureTagsAreNotInUse($user, 'field_author_name');
+    $this->ensureTagsAreNotInUse($user, 'field_cover_artist_name');
   }
 
   /**
@@ -99,10 +99,10 @@ class EnforceUserFieldRules {
 
     $newly_added_tags = [];
     if ($original_user) {
-      $original_tag_ids = array_map(function ($t) {
-        return $t->id();
-      }, $original_user->get($field_name)->referencedEntities());
-
+      $original_tag_ids = array_map(
+        fn ($t) => $t->id(),
+        $original_user->get($field_name)->referencedEntities()
+      );
       foreach ($current_tags as $tag) {
         if (!in_array($tag->id(), $original_tag_ids)) {
           $newly_added_tags[] = $tag;

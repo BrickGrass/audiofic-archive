@@ -3,21 +3,22 @@
 namespace Drupal\audiofic_archive_rss\Plugin\views\style;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\views\Plugin\views\style\Rss;
+use Drupal\views\Attribute\ViewsStyle;
 
 /**
  * Style plugin to render Podcast RSS feeds from lists of works.
  *
  * @ingroup views_style_plugins
- *
- * @ViewsStyle(
- *   id = "audiofic_archive_rss",
- *   title = @Translation("Audiofic Archive Podcast RSS Feed"),
- *   help = @Translation("Creates a podcast RSS feed for all of the works in a view. Each streaming file attached to a work is given it's own separate entry."),
- *   theme = "views_view_audiofic_archive_rss",
- *   display_types = { "feed" }
- * )
  */
+#[ViewsStyle(
+  id: "audiofic_archive_rss",
+  title: new TranslatableMarkup("Audiofic Archive Podcast RSS Feed"),
+  help: new TranslatableMarkup("Creates a podcast RSS feed for all of the works in a view. Each streaming file attached to a work is given it's own separate entry."),
+  theme: "views_view_audiofic_archive_rss",
+  display_types: ["feed"],
+)]
 class AudioficArchiveRSSStyle extends Rss {
 
   /**
@@ -56,7 +57,7 @@ class AudioficArchiveRSSStyle extends Rss {
     $form['link'] = [
       '#type' => 'textfield',
       '#title' => $this->t('The link of this RSS feed'),
-      '#description' => $this->t('Provide the link in the format "search/works". Tokens are available in this field'),
+      '#description' => $this->t('Provide the link in the format "/search/works". Tokens are available in this field'),
       '#default_value' => (isset($this->options['link'])) ? $this->options['link'] : '',
       '#weight' => 3,
     ];

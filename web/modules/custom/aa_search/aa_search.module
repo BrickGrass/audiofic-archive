@@ -197,6 +197,8 @@ function aa_search_preprocess_views_view(&$variables) {
   $view = $variables['view'];
   /** @var \Drupal\aa_utils\Service\AudioficUtils $utils */
   $utils = \Drupal::service('aa_utils.utils');
+  /** @var \Drupal\aa_utils\Service\AudioficTagUtils $tag_utils */
+  $tag_utils = \Drupal::service('aa_utils.tag_utils');
 
   if ($view->id() != 'search') {
     return;
@@ -271,12 +273,12 @@ function aa_search_preprocess_views_view(&$variables) {
         $all_tags = [];
 
         foreach ($series_works as $work) {
-          $utils->fetchVocabTerms($work, 'field_author', $authors);
-          $utils->fetchVocabTerms($work, 'field_reader', $readers);
-          $utils->fetchVocabTerms($work, 'field_language', $languages);
+          $authors = array_merge($authors, $tag_utils->fetchFieldTerms($work, 'field_author'));
+          $readers = array_merge($readers, $tag_utils->fetchFieldTerms($work, 'field_reader'));
+          $languages = array_merge($languages, $tag_utils->fetchFieldTerms($work, 'field_language'));
 
           foreach (["field_fandom2", "field_relationship", "field_warning", "field_category", "field_format"] as $key) {
-            $utils->fetchVocabTerms($work, $key, $all_tags);
+            $all_tags = array_merge($all_tags, $tag_utils->fetchFieldTerms($work, $key));
           }
         }
 
