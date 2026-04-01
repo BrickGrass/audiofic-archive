@@ -6,6 +6,7 @@ use Drupal\aa_utils\Service\AudioficUtils;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\file\Entity\File;
 use Drupal\media\MediaInterface;
@@ -13,6 +14,7 @@ use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\user\Entity\User;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Class PropagateMetadataNodePresaveHooks.
@@ -21,12 +23,14 @@ use Drupal\user\Entity\User;
  * have the correct data set when saved.
  */
 class PropagateMetadataNodePresaveHooks {
+  use StringTranslationTrait;
 
   public function __construct(
     protected AudioficUtils $utils,
     protected EntityTypeManagerInterface $entity_type_manager,
     protected FileSystemInterface $file_system,
     protected AccountInterface $current_user,
+    protected MessengerInterface $messenger,
   ) {}
 
   /**
@@ -205,7 +209,7 @@ class PropagateMetadataNodePresaveHooks {
         Term::loadMultiple($unauthorised_to_remove)
       ));
 
-      \Drupal::messenger()->addError("You cannot remove other owners!");
+      $this->messenger->addError($this->t('You cannot remove other owners!'));
     }
   }
 
