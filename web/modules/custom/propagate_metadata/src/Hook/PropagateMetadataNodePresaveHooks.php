@@ -6,23 +6,27 @@ use Drupal\aa_utils\Service\AudioficUtils;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\file\Entity\File;
 use Drupal\media\MediaInterface;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
+use Drupal\taxonomy\Entity\Term;
+use Drupal\user\Entity\User;
 
 /**
- * Class PropagateWorkMetadata.
+ * Class PropagateMetadataNodePresaveHooks.
  *
  * Ensures that the work/legacy_work/playlist node types
  * have the correct data set when saved.
  */
-class PropagateWorkMetadata {
+class PropagateMetadataNodePresaveHooks {
 
   public function __construct(
-    protected readonly AudioficUtils $utils,
-    protected readonly EntityTypeManagerInterface $entity_type_manager,
-    protected readonly FileSystemInterface $file_system,
+    protected AudioficUtils $utils,
+    protected EntityTypeManagerInterface $entity_type_manager,
+    protected FileSystemInterface $file_system,
+    protected AccountInterface $current_user,
   ) {}
 
   /**
@@ -37,14 +41,22 @@ class PropagateWorkMetadata {
     switch ($node->getType()) {
       case 'work':
         $duration = $this->setWorkDuration($node);
+        // TODO: if a user removes themselves as an owner, will that data be correctly
+        // propagated down to their related series?
+        $this->enforceOwnerRules($node);
         $this->updateAllCollections($node, updated_duration_seconds: $duration);
         break;
 
       case 'legacy_work':
-        $this->updateAllCollections($node);
+        // TODO: update duration based on taxonomy length field?
+        $this->enforceOwnerRules($node);
         break;
 
       case 'playlist':
+        // TODO: How to enforce owner rules on series without endless loops? think!
+        // The solution may honestly be to disable editing reader/owner tags on
+        // series themselves!
+
         // Only update series metadata if a work is added/removed
         // otherwise correct metadata will be overwritten.
         if (is_null($node->getOriginal())) {
@@ -70,17 +82,11 @@ class PropagateWorkMetadata {
    */
   #[Hook('node_delete')]
   public function nodeDelete(NodeInterface $node) {
-    if (in_array($node->getType(), ['work', 'legacy_work'])) {
-      $this->updateAllCollections($node, work_deleted: TRUE);
+    if ($node->getType() !== 'work') {
+      return;
     }
-  }
 
-  /**
-   * Tests whether two arrays contain the same values, irregardless of order.
-   */
-  private function arraysAreIdentical(array $array_1, array $array_2): bool {
-    return $array_1 === array_intersect($array_1, $array_2) &&
-           $array_2 === array_intersect($array_2, $array_1);
+    $this->updateAllCollections($node, work_deleted: TRUE);
   }
 
   /**
@@ -108,6 +114,14 @@ class PropagateWorkMetadata {
     $duration = round($file_info['playtime_seconds']);
 
     $media->set('field_duration_seconds', $duration);
+  }
+
+  /**
+   * Tests whether two arrays contain the same values, irregardless of order.
+   */
+  private function arraysAreIdentical(array $array_1, array $array_2): bool {
+    return $array_1 === array_intersect($array_1, $array_2) &&
+           $array_2 === array_intersect($array_2, $array_1);
   }
 
   /**
@@ -164,6 +178,34 @@ class PropagateWorkMetadata {
           $this->utils->setCollectionMetadata($series, $works);
           break;
       }
+    }
+  }
+
+  /**
+   * Enforce rules on who can edit the owners of a node.
+   */
+  private function enforceOwnerRules(NodeInterface $node) {
+    $user = User::load($this->current_user->id());
+    if ($user && $user->hasRole('administrator')) {
+      return;
+    }
+
+    $original_owners = array_column($node->getOriginal()->get('field_owner')->getValue(), 'target_id');
+    $updated_owners = array_column($node->get('field_owner')->getValue(), 'target_id');
+    $removed_owners = array_diff($original_owners, $updated_owners);
+    if (empty($removed_owners)) {
+      return;
+    }
+
+    $user_tags = array_column($user->get('field_reader_name')->getValue(), 'target_id');
+    $unauthorised_to_remove = array_diff($removed_owners, $user_tags);
+    if (!empty($unauthorised_to_remove)) {
+      $node->set('field_owner', array_merge(
+        Term::loadMultiple($updated_owners),
+        Term::loadMultiple($unauthorised_to_remove)
+      ));
+
+      \Drupal::messenger()->addError("You cannot remove other owners!");
     }
   }
 

@@ -1,0 +1,29 @@
+uuid: 56957f2b-fa34-40ce-a504-e6857568f4cb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_owner
+    - node.type.legacy_work
+    - taxonomy.vocabulary.reader
+id: node.legacy_work.field_owner
+field_name: field_owner
+entity_type: node
+bundle: legacy_work
+label: Owner
+description: 'Add additional owners. These people will be able to edit and delete the work. You can remove yourself as an owner, but you cannot remove other owners. '
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      reader: reader
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

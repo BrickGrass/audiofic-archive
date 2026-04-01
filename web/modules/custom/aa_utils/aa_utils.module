@@ -15,7 +15,9 @@ function aa_utils_theme($existing, $type, $theme, $path) {
       'path' => $path . '/templates',
       'variables' => [
         'has_edit_access' => '',
+        'can_remove_attribution' => '',
         'nid' => '',
+        'uid' => '',
       ],
     ],
 

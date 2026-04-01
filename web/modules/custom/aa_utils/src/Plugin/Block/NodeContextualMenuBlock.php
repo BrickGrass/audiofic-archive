@@ -2,6 +2,7 @@
 
 namespace Drupal\aa_utils\Plugin\Block;
 
+use Drupal\aa_utils\Service\AudioficUtils;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
@@ -23,20 +24,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class NodeContextualMenuBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
-   * The entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   * Current user account.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
-   */
-  protected $currentUser;
-
-  /**
    * Constructs a NodeContextualMenuBlock object.
    */
   public function __construct(
@@ -45,10 +32,9 @@ class NodeContextualMenuBlock extends BlockBase implements ContainerFactoryPlugi
     $plugin_definition,
     protected EntityTypeManagerInterface $entity_type_manager,
     protected AccountInterface $current_user,
+    protected AudioficUtils $utils,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->entityTypeManager = $entity_type_manager;
-    $this->currentUser = $current_user;
   }
 
   /**
@@ -61,6 +47,7 @@ class NodeContextualMenuBlock extends BlockBase implements ContainerFactoryPlugi
       $plugin_definition,
       $container->get('entity_type.manager'),
       $container->get('current_user'),
+      $container->get('aa_utils.utils'),
     );
   }
 
@@ -69,18 +56,39 @@ class NodeContextualMenuBlock extends BlockBase implements ContainerFactoryPlugi
    */
   public function build() {
     $node = $this->getContextValue('node');
-    $user = $this->entityTypeManager->getStorage('user')->load($this->currentUser->id());
+    $user = $this->entity_type_manager->getStorage('user')->load($this->current_user->id());
     $nid = $node->id();
+
+    $can_remove_attribution = $this->utils->isUserAttributed($user, $node) &&
+                              $node->getType() !== 'playlist' &&
+                              $this->isWorkMultivoice($user, $node);
 
     return [
       '#theme' => 'node-contextual-menu',
       '#nid' => $nid,
+      '#uid' => $this->current_user->id(),
       '#has_edit_access' => $node->access('update', $user),
+      '#can_remove_attribution' => $can_remove_attribution,
       '#cache' => [
         'contexts' => ['user'],
         'tags' => ["node:{$nid}"],
       ],
     ];
+  }
+
+  /**
+   * Checks whether users other than user are readers on the node.
+   */
+  private function isWorkMultivoice($user, $node): bool {
+    if (!$user) {
+      return FALSE;
+    }
+
+    $user_reader_tags = array_column($user->get('field_reader_name')->getValue(), 'target_id');
+    $node_reader_tags = array_column($node->get('field_reader')->getValue(), 'target_id');
+    $other_readers = array_diff($node_reader_tags, $user_reader_tags);
+
+    return !empty($other_readers);
   }
 
 }

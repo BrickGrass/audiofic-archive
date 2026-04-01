@@ -2,3 +2,6 @@
   <a class="btn btn-primary" href="/node/{{ nid }}/edit">Edit <i class="bi bi-pencil-fill"></i></a>
   <a class="btn btn-primary" href="/node/{{ nid }}/delete">Delete <i class="bi bi-trash-fill"></i></a>
 {% endif %}
+{% if can_remove_attribution %}
+  <a class="btn btn-primary" href="/node/{{ nid }}/user/{{ uid }}/delete">Remove my Attribution <i class="bi bi-person-dash-fill"></i></a>
+{% endif %}

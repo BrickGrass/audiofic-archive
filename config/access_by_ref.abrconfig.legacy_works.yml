@@ -5,7 +5,7 @@ dependencies: {  }
 id: legacy_works
 label: 'Legacy works'
 bundle: legacy_work
-field: field_reader
+field: field_owner
 reference_type: shared
 extra: field_reader_name
 rights_type: ''

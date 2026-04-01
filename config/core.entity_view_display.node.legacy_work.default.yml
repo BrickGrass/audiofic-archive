@@ -12,6 +12,7 @@ dependencies:
     - field.field.node.legacy_work.field_language
     - field.field.node.legacy_work.field_legacy_series
     - field.field.node.legacy_work.field_length
+    - field.field.node.legacy_work.field_owner
     - field.field.node.legacy_work.field_rating
     - field.field.node.legacy_work.field_reader
     - field.field.node.legacy_work.field_relationship
@@ -101,6 +102,14 @@ content:
       link: true
     third_party_settings: {  }
     weight: 6
+    region: content
+  field_owner:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 120
     region: content
   field_rating:
     type: entity_reference_label

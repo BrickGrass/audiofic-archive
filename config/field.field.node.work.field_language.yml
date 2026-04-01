@@ -13,7 +13,7 @@ field_name: field_language
 entity_type: node
 bundle: work
 label: Language
-description: "<br />This specifies the main language of your recording: <span id=\"lang\" class=\"expand-help-hide\">\r\n<p>\r\nThe default value is English - delete the default text to locate a different language. When searching for the language you want, enter a few characters and drop-down options will appear. You can enter English versions of language names or the original language, including non-English characters. e.g. entering \"ko\" will bring up Korean, as will entering 한 . </p><p>To add a new language, use the \"+\" button at right. Before you decide that the language you want isn't in the Archive, search for the English version of its name, just to be sure.</p>  </span><a href=\"#\" role=\"button\" aria-label=\"Expand/Collapse help text\" class=\"expand-help-button\" data-for=\"lang\">Read More</a>\r\n"
+description: '<p>The main language of your recording</p>'
 required: true
 translatable: false
 default_value:

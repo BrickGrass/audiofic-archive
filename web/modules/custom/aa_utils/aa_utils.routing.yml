@@ -1,0 +1,13 @@
+aa_utils.delete_attribution:
+  path: node/{node}/user/{user}/delete
+  defaults:
+    _form: \Drupal\aa_utils\Form\ConfirmDeleteAttributionForm
+  requirements:
+    _custom_access: '\Drupal\aa_utils\Form\ConfirmDeleteAttributionForm::access'
+  options:
+    _admin_route: TRUE
+    parameters:
+      user:
+        type: entity:user
+      node:
+        type: entity:node
