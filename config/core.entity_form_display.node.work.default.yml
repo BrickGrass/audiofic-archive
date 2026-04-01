@@ -197,14 +197,10 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_language:
-    type: entity_reference_autocomplete_tags
+    type: options_select
     weight: 24
     region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
+    settings: {  }
     third_party_settings: {  }
   field_mp3_files:
     type: inline_entity_form_complex

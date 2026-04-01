@@ -13,6 +13,7 @@ dependencies:
     - field.field.node.legacy_work.field_language
     - field.field.node.legacy_work.field_legacy_series
     - field.field.node.legacy_work.field_length
+    - field.field.node.legacy_work.field_owner
     - field.field.node.legacy_work.field_rating
     - field.field.node.legacy_work.field_reader
     - field.field.node.legacy_work.field_relationship
@@ -120,5 +121,6 @@ hidden:
   field_language: true
   field_legacy_series: true
   field_length: true
+  field_owner: true
   field_rating: true
   field_relationship: true

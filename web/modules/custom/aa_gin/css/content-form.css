@@ -12,3 +12,11 @@
 .expand-help-hide {
     display: none;
 }
+
+@media (max-width: 40em) {
+    .layout-container {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-inline: 0 !important;
+    }
+}

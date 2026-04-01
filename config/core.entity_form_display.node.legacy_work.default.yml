@@ -12,6 +12,7 @@ dependencies:
     - field.field.node.legacy_work.field_language
     - field.field.node.legacy_work.field_legacy_series
     - field.field.node.legacy_work.field_length
+    - field.field.node.legacy_work.field_owner
     - field.field.node.legacy_work.field_rating
     - field.field.node.legacy_work.field_reader
     - field.field.node.legacy_work.field_relationship
@@ -49,6 +50,7 @@ content:
       show_entity_id: 0
       show_info_label: 0
       info_label: ''
+      parent_selection: 1
     third_party_settings: {  }
   field_cover:
     type: image_image
@@ -76,6 +78,7 @@ content:
       show_entity_id: 0
       show_info_label: 0
       info_label: ''
+      parent_selection: 1
     third_party_settings: {  }
   field_format:
     type: tagify_entity_reference_autocomplete_widget
@@ -89,6 +92,7 @@ content:
       show_entity_id: 0
       show_info_label: 0
       info_label: ''
+      parent_selection: 1
     third_party_settings: {  }
   field_language:
     type: tagify_entity_reference_autocomplete_widget
@@ -102,6 +106,7 @@ content:
       show_entity_id: 0
       show_info_label: 0
       info_label: ''
+      parent_selection: 1
     third_party_settings: {  }
   field_legacy_series:
     type: tagify_entity_reference_autocomplete_widget
@@ -115,12 +120,27 @@ content:
       show_entity_id: 0
       show_info_label: 0
       info_label: ''
+      parent_selection: 1
     third_party_settings: {  }
   field_length:
     type: options_select
     weight: 5
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_owner:
+    type: tagify_entity_reference_autocomplete_widget
+    weight: 1
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      placeholder: ''
+      suggestions_dropdown: 1
+      show_entity_id: 0
+      show_info_label: 0
+      info_label: ''
+      parent_selection: 1
     third_party_settings: {  }
   field_rating:
     type: options_select
@@ -140,6 +160,7 @@ content:
       show_entity_id: 0
       show_info_label: 0
       info_label: ''
+      parent_selection: 1
     third_party_settings: {  }
   field_relationship:
     type: tagify_entity_reference_autocomplete_widget
@@ -153,6 +174,7 @@ content:
       show_entity_id: 0
       show_info_label: 0
       info_label: ''
+      parent_selection: 1
     third_party_settings: {  }
   title:
     type: string_textfield

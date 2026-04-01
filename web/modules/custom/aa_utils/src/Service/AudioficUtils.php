@@ -4,6 +4,7 @@ namespace Drupal\aa_utils\Service;
 
 use Drupal\node\NodeInterface;
 use Drupal\taxonomy\TermInterface;
+use Drupal\user\UserInterface;
 
 /**
  * Class AudioficUtils.
@@ -98,6 +99,26 @@ class AudioficUtils {
     $a = new \DateTime('@0');
     $b = new \DateTime("@{$total_seconds}");
     return $a->diff($b);
+  }
+
+  /**
+   * Checks whether a user is listed as a reader on a node.
+   */
+  public function isUserAttributed(?UserInterface $user, NodeInterface $node): bool {
+    if (!$user) {
+      return FALSE;
+    }
+
+    $user_reader_tags = array_column($user->get('field_reader_name')->getValue(), 'target_id');
+    $node_reader_tags = array_column($node->get('field_reader')->getValue(), 'target_id');
+
+    foreach ($user_reader_tags as $user_reader_tag) {
+      if (in_array($user_reader_tag, $node_reader_tags)) {
+        return TRUE;
+      }
+    }
+
+    return FALSE;
   }
 
   /**
