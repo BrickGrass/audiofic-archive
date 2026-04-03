@@ -37,6 +37,7 @@ dependencies:
     - image
     - inline_entity_form
     - link
+    - tagify
     - text
 third_party_settings:
   field_group:
@@ -141,14 +142,18 @@ bundle: work
 mode: default
 content:
   field_author:
-    type: entity_reference_autocomplete_tags
+    type: tagify_entity_reference_autocomplete_widget
     weight: 6
     region: content
     settings:
       match_operator: CONTAINS
       match_limit: 10
-      size: 60
       placeholder: ''
+      suggestions_dropdown: 1
+      show_entity_id: 0
+      show_info_label: 0
+      info_label: ''
+      parent_selection: 1
     third_party_settings: {  }
   field_category:
     type: options_buttons
@@ -171,24 +176,32 @@ content:
       preview_image_style: small_square
     third_party_settings: {  }
   field_cover_artist:
-    type: entity_reference_autocomplete_tags
+    type: tagify_entity_reference_autocomplete_widget
     weight: 7
     region: content
     settings:
       match_operator: CONTAINS
       match_limit: 10
-      size: 60
       placeholder: ''
+      suggestions_dropdown: 1
+      show_entity_id: 0
+      show_info_label: 0
+      info_label: ''
+      parent_selection: 1
     third_party_settings: {  }
   field_fandom2:
-    type: entity_reference_autocomplete_tags
+    type: tagify_entity_reference_autocomplete_widget
     weight: 18
     region: content
     settings:
       match_operator: CONTAINS
       match_limit: 10
-      size: 60
       placeholder: ''
+      suggestions_dropdown: 1
+      show_entity_id: 0
+      show_info_label: 0
+      info_label: ''
+      parent_selection: 1
     third_party_settings: {  }
   field_format:
     type: options_buttons
@@ -247,14 +260,18 @@ content:
       removed_reference: delete
     third_party_settings: {  }
   field_owner:
-    type: entity_reference_autocomplete_tags
+    type: tagify_entity_reference_autocomplete_widget
     weight: 4
     region: content
     settings:
       match_operator: CONTAINS
       match_limit: 10
-      size: 60
       placeholder: ''
+      suggestions_dropdown: 1
+      show_entity_id: 0
+      show_info_label: 0
+      info_label: ''
+      parent_selection: 1
     third_party_settings: {  }
   field_podfic_post:
     type: link_default
@@ -271,24 +288,32 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_reader:
-    type: entity_reference_autocomplete_tags
+    type: tagify_entity_reference_autocomplete_widget
     weight: 5
     region: content
     settings:
       match_operator: CONTAINS
       match_limit: 10
-      size: 60
       placeholder: ''
+      suggestions_dropdown: 1
+      show_entity_id: 0
+      show_info_label: 0
+      info_label: ''
+      parent_selection: 1
     third_party_settings: {  }
   field_relationship:
-    type: entity_reference_autocomplete_tags
+    type: tagify_entity_reference_autocomplete_widget
     weight: 19
     region: content
     settings:
       match_operator: CONTAINS
       match_limit: 10
-      size: 60
       placeholder: ''
+      suggestions_dropdown: 1
+      show_entity_id: 0
+      show_info_label: 0
+      info_label: ''
+      parent_selection: 1
     third_party_settings: {  }
   field_series:
     type: options_buttons

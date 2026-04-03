@@ -104,7 +104,7 @@ class ComplexSearchApiForm extends FormBase {
     ];
 
     $form['fandom'] = [
-      '#type' => 'entity_autocomplete',
+      '#type' => 'entity_autocomplete_aa',
       '#title' => $this->t('Fandom'),
       '#target_type' => 'taxonomy_term',
       // Allow multiple selection.
@@ -115,7 +115,7 @@ class ComplexSearchApiForm extends FormBase {
     ];
 
     $form['relationship'] = [
-      '#type' => 'entity_autocomplete',
+      '#type' => 'entity_autocomplete_aa',
       '#title' => $this->t('Relationship'),
       '#target_type' => 'taxonomy_term',
       // Allow multiple selection.
