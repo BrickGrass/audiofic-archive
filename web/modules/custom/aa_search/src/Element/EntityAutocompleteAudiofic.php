@@ -134,12 +134,6 @@ class EntityAutocompleteAudiofic extends Textfield {
       'selection_settings_key' => $selection_settings_key,
     ])->toString();
 
-    // TODO: Do I need this?
-    $element['#attached']['drupalSettings']['aa_search']['information_message'] = [
-      'limit_tag' => t('Tags are limited to:'),
-      'no_matching_suggestions' => t('No matching suggestions found for:'),
-    ];
-
     // TODO: Should this happen here? Or should these happen in a theming hook?
     $element['#attached']['library'][] = 'aa_search/autocomplete-token-input';
     if (!isset($element['#attributes']['class'])) {
