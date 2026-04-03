@@ -173,15 +173,12 @@ class PropagateMetadataNodePresaveHooks {
         $works[] = $work;
       }
 
-      switch ($work->getType()) {
-        case 'work':
-          $this->utils->setCollectionMetadata($series, $works, updated_work_id: $work->id(), updated_work_duration_seconds: $updated_duration_seconds);
-          break;
-
-        case 'legacy_work':
-          $this->utils->setCollectionMetadata($series, $works);
-          break;
+      if (empty($works)) {
+        $series->delete();
+        continue;
       }
+
+      $this->utils->setCollectionMetadata($series, $works, updated_work_id: $work->id(), updated_work_duration_seconds: $updated_duration_seconds);
     }
   }
 
