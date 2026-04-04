@@ -614,6 +614,7 @@ $settings['update_free_access'] = FALSE;
  * about securing private files.
  */
 # $settings['file_private_path'] = '';
+$settings['file_private_path'] = '../private_files';
 
 /**
  * Temporary file path:
