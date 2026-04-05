@@ -298,11 +298,10 @@ display:
         type: audiofic_archive_rss
         options:
           uses_fields: false
-          description: '[contextual-filter-node:tags]'
+          description: ''
           title: '[contextual-filter-node:title]'
           link: '[contextual-filter-node:link]'
           cover_url: sites/default/files/2024-10/audiofic_archive_feed_logo.png
-          creator_truncation: '3'
           is_contextual: 1
           override_media_pubdate: 1
           token_tree: ''

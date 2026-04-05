@@ -70,22 +70,12 @@ class AudioficArchiveRSSStyle extends Rss {
       '#weight' => 3,
     ];
 
-    $form['creator_truncation'] = [
-      '#type' => 'number',
-      '#title' => $this->t('Author/Reader truncation value'),
-      '#description' => $this->t('How many authors or readers to list before truncating the list. For a work with the author "Sally" and the readers "Darren", "Sophie" and "Jess", a truncation value of 2 would result in "Read by: Darren, Sophie and more | Written by Sally".'),
-      '#step' => 1,
-      '#min' => 1,
-      '#default_value' => (isset($this->options['creator_truncation'])) ? $this->options['creator_truncation'] : 3,
-      '#weight' => 4,
-    ];
-
     $form['is_contextual'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Use contextual filters to fill RSS feed metadata'),
       '#description' => $this->t('The data of the work or collection that is contextually filtered will be used to decide the metadata of the overall RSS feed. Eg: The title, description, cover image, etc.'),
       '#default_value' => (isset($this->options['is_contextual'])) ? $this->options['is_contextual'] : FALSE,
-      '#weight' => 5,
+      '#weight' => 4,
     ];
 
     $form['override_media_pubdate'] = [
@@ -96,7 +86,7 @@ class AudioficArchiveRSSStyle extends Rss {
       '#states' => [
         'visible' => [':input[name="style_options[is_contextual]"]' => ['checked' => TRUE]],
       ],
-      '#weight' => 6,
+      '#weight' => 5,
     ];
 
     $form['token_tree'] = [
@@ -105,7 +95,7 @@ class AudioficArchiveRSSStyle extends Rss {
       '#token_types' => ['contextual-filter-node', 'contextual-filter-term', 'exposed-filters'],
       '#show_restricted' => TRUE,
       '#global_types' => FALSE,
-      '#weight' => 7,
+      '#weight' => 6,
     ];
   }
 

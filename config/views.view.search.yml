@@ -2865,8 +2865,7 @@ display:
           description: "Result from Audiofic Archive Work Search\r\n\r\n[exposed-filters:filter-summary]"
           title: 'Audiofic Archive Work Search [exposed-filters:top-4-filters]'
           link: /search/works
-          cover_url: sites/default/files/2024-10/audiofic_archive_feed_logo.png
-          creator_truncation: '3'
+          cover_url: /themes/custom/sandbox/no_cover_art.jpeg
           is_contextual: 0
           override_media_pubdate: 0
           token_tree: ''

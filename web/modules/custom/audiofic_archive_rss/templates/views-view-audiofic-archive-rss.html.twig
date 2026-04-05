@@ -20,7 +20,7 @@
   <channel>
     <title>{{ options.title|trim }}</title>
     <link>https://{{ hostname }}{{ options.link }}</link>
-    <description>{{ options.description|trim }}</description>
+    <description><![CDATA[{{ options.description | raw | trim }}]]></description>
     <language>en</language>
     {% if options.is_contextual and contextual_filter == "node" %}
       {% if source_node.cover_url != NULL %}
@@ -40,9 +40,14 @@
       {% for file in work.files %}
         <item>
           <itunes:episodeType>full</itunes:episodeType>
-          <title>{{ work.title }} {{ file.name }}</title>
-          <itunes:title>{{ work.title }} {{ file.name }}</itunes:title>
-          <description>{{ work.tags }}</description>
+          {% if file.name %}
+            {% set part_title = work.title ~ " - " ~ file.name %}
+          {% else %}
+            {% set part_title = work.title %}
+          {% endif %}
+          <title>{{ part_title }}</title>
+          <itunes:title>{{ part_title }}</itunes:title>
+          <description><![CDATA[{{ file.part_no | raw }}{{ work.tags | raw }}{{ work.summary | raw }}]]></description>
           <enclosure
             length="{{ file.file_size }}"
             type="{{ file.mime_type }}"

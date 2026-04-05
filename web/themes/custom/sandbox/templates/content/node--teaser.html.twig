@@ -111,8 +111,8 @@
 
         <div class="d-flex flex-row column-gap-2 flex-wrap mb-2">
           {% if content_type in ["work", "legacy_work", "playlist", "reader_collection"] %}
-            {{ content.field_author }}
             {{ content.field_reader }}
+            {{ content.field_author }}
           {% endif %}
         </div>
       </div>

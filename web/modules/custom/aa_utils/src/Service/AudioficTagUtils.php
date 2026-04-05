@@ -50,6 +50,9 @@ class AudioficTagUtils {
    */
   public function allNodeTagsToString(NodeInterface $node): string {
     $tags = [
+      'Read by: ' => $this->nodeTagsToString($node, 'field_reader'),
+      'Written by: ' => $this->nodeTagsToString($node, 'field_author'),
+      'Cover art created by: ' => $this->nodeTagsToString($node, 'field_cover_artist'),
       'Warning(s): ' => $this->nodeTagsToString($node, 'field_warning'),
       'Fandom(s): ' => $this->nodeTagsToString($node, 'field_fandom2', 10),
       'Relationship(s): ' => $this->nodeTagsToString($node, 'field_relationship', 10),
@@ -59,12 +62,14 @@ class AudioficTagUtils {
 
     $text = [];
     foreach ($tags as $label => $content) {
-      if (!empty($content)) {
-        $text[] = $this->t($label) . $content;
+      if (empty($content)) {
+        continue;
       }
+
+      $text[] = '<b>' . $this->t($label) . '</b>' . $content . '</br>';
     }
 
-    return implode("\n", $text);
+    return '<p>' . implode('', $text) . '</p>';
   }
 
 }

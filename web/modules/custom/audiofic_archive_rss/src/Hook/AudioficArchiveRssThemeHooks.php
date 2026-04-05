@@ -70,6 +70,7 @@ class AudioficArchiveRssThemeHooks {
         'explicit' => $this->utils->isNsfw($entity),
         'files' => $this->fetchStreamingFiles($entity, $override_media_pubdate),
         'tags' => $this->tag_utils->allNodeTagsToString($entity),
+        'summary' => $this->fetchSummary($entity),
         'cover_url' => $this->fetchCover($entity),
         'link' => $entity->toUrl(),
       ];
@@ -135,21 +136,34 @@ class AudioficArchiveRssThemeHooks {
       return [];
     }
 
+    $total_parts = count($mp3_files);
+    $i = 1;
+
     $work_files = [];
     foreach ($mp3_files as $file) {
       $phys_file = File::load($file->field_media_audio_file[0]->target_id);
       $label = $file->get('field_chapter_label');
+      $label = !empty($label) && strlen($label[0]->value) > 0 ? $label[0]->value : '';
       $duration = $file->get('field_duration_seconds');
 
+      $part_no = $total_parts > 1 ? $this->t('@part_label (Part @part of @total)', [
+        '@part' => $i,
+        '@total' => $total_parts,
+        '@part_label' => !empty($label) ? ': ' . $label : '',
+      ]) : '';
+      $link = '<p><a href="' . $work->toUrl()->toString() . '">' . $work->getTitle() . $part_no . '</a></p>';
+
       $work_files[] = [
-        'name' => count($label) > 0 ? $label[0]->value : '',
+        'name' => $label,
         'file_size' => $phys_file->filesize->value,
         'mime_type' => $phys_file->filemime->value,
         'url' => $phys_file->createFileUrl(),
         'uuid' => $file->uuid(),
-        'duration' => count($duration) > 0 ? $duration[0]->value : 0,
+        'duration' => !empty($duration) ? $duration[0]->value : 0,
         'date_created' => $file->getCreatedTime(),
+        'part_no' => $link,
       ];
+      $i++;
     }
 
     if (!$sort_by_chapter) {
@@ -158,15 +172,27 @@ class AudioficArchiveRssThemeHooks {
 
     // To have the chapters of a work appear sequentially in any of
     // our feeds, they need to have sequential publishing dates.
-    // Series may be out of order, but they atleast won't be jumbled.
-    $date_updated = $work->getCreatedTime();
-    usort($work_files, fn($a, $b) => strcmp($a['name'], $b['name']));
+    // This only ensures that a works chapters appear in order -
+    // it does not fix a series appearing in the wrong order because
+    // it was uploaded non-sequentially, as that would involve changing
+    // the pubdate of items constantly causing confusion in podcast clients!
+    $date_created = $work->getCreatedTime();
     $i = 0;
     foreach ($work_files as $file_data) {
-      $file_data['date_created'] = $date_updated + $i;
+      $file_data['date_created'] = $date_created + $i;
       $i++;
     }
     return $work_files;
+  }
+
+  /**
+   * Fetches the summary field from a work, if it exists.
+   */
+  private function fetchSummary(NodeInterface $work): string {
+    if ($summary = array_first($work->get('field_summary')->getValue())) {
+      return $summary['value'];
+    }
+    return '';
   }
 
 }

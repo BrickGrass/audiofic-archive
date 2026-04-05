@@ -59,7 +59,6 @@ class AudioficArchiveRssTokenHooks {
           'link' => ['name' => $this->t('Link')],
         ],
         'exposed-filters' => [
-          'top-4-filters' => ['name' => $this->t('The top 4 most important filters applied')],
           'filter-summary' => ['name' => $this->t('A formatted summary of all the filters applied')],
           'spacer' => ['name' => $this->t("Prints a '|' character if any filters are present")],
         ],
@@ -85,9 +84,6 @@ class AudioficArchiveRssTokenHooks {
 
       case 'exposed-filters':
         $this->exposedFilterTokens($tokens, $data, $replacements);
-        break;
-
-      default:
         break;
     }
 
@@ -170,10 +166,6 @@ class AudioficArchiveRssTokenHooks {
 
     foreach ($tokens as $key => $token) {
       switch ($key) {
-        case 'top-4-filters':
-          // TODO: this seems unimplemented? What was the intention here?
-          break;
-
         case 'spacer':
           if (!empty(array_filter($filter_data))) {
             $replacements[$token] = "|";
