@@ -231,7 +231,6 @@ class AASearchThemeHooks {
         break;
 
       case 'search':
-      case 'search_collection':
         $variables['rss_feed'] = $url_data['url_path'] . '/rss.xml?' . $url_data['url_query'];
         break;
     }

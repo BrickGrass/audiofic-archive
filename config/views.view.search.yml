@@ -33,7 +33,7 @@ dependencies:
 id: search
 label: Search
 module: views
-description: ''
+description: 'Search pages with exposed filters & their corresponding RSS feeds (which also accept filters)'
 tag: ''
 base_table: search_api_index_work_and_series_search
 base_field: search_api_id
@@ -2915,6 +2915,7 @@ display:
     display_plugin: feed
     position: 5
     display_options:
+      enabled: false
       title: 'Search Collections'
       pager:
         type: none
