@@ -1229,59 +1229,6 @@ display:
           min_length: null
           fields:
             - auto_aggregated_fulltext_field
-        title:
-          id: title
-          table: search_api_index_work_and_series_search
-          field: title
-          relationship: none
-          group_type: group
-          admin_label: Title
-          plugin_id: search_api_text
-          operator: '='
-          value:
-            min: ''
-            max: ''
-            value: ''
-          group: 1
-          exposed: true
-          expose:
-            operator_id: title_op
-            label: 'Title Search'
-            description: ''
-            use_operator: false
-            operator: title_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: title
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            min_placeholder: ''
-            max_placeholder: ''
-            placeholder: ''
-            autocomplete_filter: 1
-            autocomplete_min_chars: '3'
-            autocomplete_items: '10'
-            autocomplete_field: title
-            autocomplete_raw_suggestion: 1
-            autocomplete_raw_dropdown: 1
-            autocomplete_dependent: 0
-            autocomplete_contextual: 0
-            autocomplete_autosubmit: 0
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
         field_completion_status:
           id: field_completion_status
           table: search_api_index_work_and_series_search
@@ -1687,51 +1634,6 @@ display:
             group_items: {  }
           reduce_duplicates: false
           vid: reader
-          type: textfield
-          hierarchy: false
-          limit: true
-          error_message: true
-        field_cover_artist:
-          id: field_cover_artist
-          table: search_api_index_work_and_series_search
-          field: field_cover_artist
-          relationship: none
-          group_type: group
-          admin_label: 'Cover Artist'
-          plugin_id: search_api_term
-          operator: or
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: field_cover_artist_op
-            label: 'Cover artist'
-            description: ''
-            use_operator: false
-            operator: field_cover_artist_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: cover_artist
-            required: false
-            remember: false
-            multiple: true
-            remember_roles:
-              authenticated: authenticated
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: false
-          vid: cover_artist
           type: textfield
           hierarchy: false
           limit: true
@@ -2863,7 +2765,7 @@ display:
         options:
           uses_fields: false
           description: "Result from Audiofic Archive Work Search\r\n\r\n[exposed-filters:filter-summary]"
-          title: 'Audiofic Archive Work Search [exposed-filters:top-4-filters]'
+          title: 'Audiofic Archive Work Search'
           link: /search/works
           cover_url: /themes/custom/sandbox/no_cover_art.jpeg
           is_contextual: 0
@@ -5397,59 +5299,6 @@ display:
           min_length: null
           fields:
             - auto_aggregated_fulltext_field
-        title:
-          id: title
-          table: search_api_index_work_and_series_search
-          field: title
-          relationship: none
-          group_type: group
-          admin_label: Title
-          plugin_id: search_api_text
-          operator: '='
-          value:
-            min: ''
-            max: ''
-            value: ''
-          group: 1
-          exposed: true
-          expose:
-            operator_id: title_op
-            label: Title
-            description: ''
-            use_operator: false
-            operator: title_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: title
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            min_placeholder: ''
-            max_placeholder: ''
-            placeholder: ''
-            autocomplete_filter: 1
-            autocomplete_min_chars: '3'
-            autocomplete_items: '10'
-            autocomplete_field: title
-            autocomplete_raw_suggestion: 1
-            autocomplete_raw_dropdown: 1
-            autocomplete_dependent: 0
-            autocomplete_contextual: 0
-            autocomplete_autosubmit: 0
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
         field_completion_status:
           id: field_completion_status
           table: search_api_index_work_and_series_search
@@ -7634,59 +7483,6 @@ display:
           min_length: null
           fields:
             - auto_aggregated_fulltext_field
-        title:
-          id: title
-          table: search_api_index_work_and_series_search
-          field: title
-          relationship: none
-          group_type: group
-          admin_label: Title
-          plugin_id: search_api_text
-          operator: '='
-          value:
-            min: ''
-            max: ''
-            value: ''
-          group: 1
-          exposed: true
-          expose:
-            operator_id: title_op
-            label: Title
-            description: ''
-            use_operator: false
-            operator: title_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: title
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            min_placeholder: ''
-            max_placeholder: ''
-            placeholder: ''
-            autocomplete_filter: 1
-            autocomplete_min_chars: '3'
-            autocomplete_items: '10'
-            autocomplete_field: title
-            autocomplete_raw_suggestion: 1
-            autocomplete_raw_dropdown: 1
-            autocomplete_dependent: 0
-            autocomplete_contextual: 0
-            autocomplete_autosubmit: 0
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
         field_rating:
           id: field_rating
           table: search_api_index_work_and_series_search

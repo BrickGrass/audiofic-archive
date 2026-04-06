@@ -10,6 +10,7 @@ use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\Core\Utility\Token;
+use Drupal\taxonomy\Entity\Vocabulary;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
@@ -76,9 +77,45 @@ class AudioficArchiveRssThemeHooks {
       ];
     }
 
+    if (!$options['is_contextual'] || $variables['contextual_filter'] != 'node') {
+      $variables['explicit'] = $this->doFiltersAllowExplicitWorks($variables);
+    }
+
     $variables['options'] = $options;
     $variables['works'] = $works;
     $variables['hostname'] = $this->request_stack->getCurrentRequest()->getHost();
+  }
+
+  /**
+   * Checks whether the current filters allow for works with an Explicit, Mature or Unrated rating.
+   */
+  private function doFiltersAllowExplicitWorks(array $variables): bool {
+    $filter_data = AudioficArchiveRssTokenHooks::getExposedFilterData($variables['view']->filter);
+    $include_rating = NULL;
+    $exclude_rating = NULL;
+
+    foreach ($filter_data as $key => $value) {
+      switch ($key) {
+        case 'field_rating':
+          $include_rating = array_map(fn($t) => $t->name->value, Term::loadMultiple($value));
+          break;
+
+        case 'field_rating_1':
+          $exclude_rating = array_map(fn($t) => $t->name->value, Term::loadMultiple($value));
+          break;
+      }
+    }
+
+    if (array_any(['Teen and up', 'General'], fn($t) => in_array($t, $include_rating)) &&
+        array_all(['Mature', 'Explicit', 'Not rated'], fn($t) => !in_array($t, $include_rating))) {
+      return FALSE;
+    }
+
+    if (array_all(['Mature', 'Explicit', 'Not rated'], fn($t) => in_array($t, $exclude_rating))) {
+      return FALSE;
+    }
+
+    return TRUE;
   }
 
   /**
@@ -143,7 +180,7 @@ class AudioficArchiveRssThemeHooks {
     foreach ($mp3_files as $file) {
       $phys_file = File::load($file->field_media_audio_file[0]->target_id);
       $label = $file->get('field_chapter_label');
-      $label = !empty($label) && strlen($label[0]->value) > 0 ? $label[0]->value : '';
+      $label = count($label) > 0 && strlen($label[0]->value) > 0 ? $label[0]->value : '';
       $duration = $file->get('field_duration_seconds');
 
       $part_no = $total_parts > 1 ? $this->t('@part_label (Part @part of @total)', [

@@ -177,10 +177,10 @@ class AASearchThemeHooks {
 
     $total_seconds = $variables['element']['#value'];
     if ($total_seconds !== '') {
-      $total_seconds = (int) $total_seconds;
-      $variables["hours"] = str_pad(floor($total_seconds / 3600), 2, "0", STR_PAD_LEFT);
-      $variables["mins"] = str_pad(floor(floor($total_seconds / 60) % 60), 2, "0", STR_PAD_LEFT);
-      $variables["seconds"] = str_pad($total_seconds % 60, 2, "0", STR_PAD_LEFT);
+      $formatted_duration = $this->utils->secondsToHMS((int) $total_seconds);
+      $variables['hours'] = $formatted_duration['hours'];
+      $variables['mins'] = $formatted_duration['mins'];
+      $variables['seconds'] = $formatted_duration['seconds'];
     }
   }
 
@@ -195,6 +195,8 @@ class AASearchThemeHooks {
     if ($view->id() !== 'search') {
       return;
     }
+
+    // dpm($view->filter['field_duration_seconds']);
 
     $entities = array_map(fn($result) => $result->_entity, $view->result);
     $variables['total_nsfw'] = $this->utils->getTotalNsfw($entities);

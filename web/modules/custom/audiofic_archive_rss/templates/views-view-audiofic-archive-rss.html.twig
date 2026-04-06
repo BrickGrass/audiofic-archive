@@ -33,8 +33,7 @@
       {% if options.cover_url|trim is not empty %}
       <itunes:image href="https://{{ hostname }}{{ options.cover_url }}"/>
       {% endif %}
-      <!-- TODO: For now assume that all our search feeds are nsfw. -->
-      <itunes:explicit>true</itunes:explicit>
+      <itunes:explicit>{{ explicit ? 'true' : 'false' }}</itunes:explicit>
     {% endif %}
     {% for work in works %}
       {% for file in work.files %}

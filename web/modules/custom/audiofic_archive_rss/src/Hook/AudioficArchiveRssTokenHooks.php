@@ -3,6 +3,7 @@
 namespace Drupal\audiofic_archive_rss\Hook;
 
 use Drupal\aa_utils\Service\AudioficTagUtils;
+use Drupal\aa_utils\Service\AudioficUtils;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Render\BubbleableMetadata;
@@ -15,14 +16,22 @@ class AudioficArchiveRssTokenHooks {
   use StringTranslationTrait;
 
   const FILTER_KEYS = [
-    'search_api_fulltext', 'field_completion_status', 'field_rating',
-    'field_category', 'field_format', 'field_language', 'field_length',
+    // OTHER:
+    'search_api_fulltext', 'field_completion_status', 'field_duration_seconds',
+    'field_duration_seconds_1',
+    // INCLUDE:
+    'field_rating', 'field_category', 'field_format', 'field_language',
     'field_warning', 'field_author', 'field_reader', 'field_fandom2',
     'field_relationship',
+    // EXCLUDE:
+    'field_rating_1', 'field_category_1', 'field_format_1', 'field_language_1',
+    'field_warning_1', 'field_author_1', 'field_fandom2_1', 'field_reader_1',
+    'field_relationship_1',
   ];
 
   public function __construct(
-    protected readonly AudioficTagUtils $tag_utils,
+    protected AudioficUtils $utils,
+    protected AudioficTagUtils $tag_utils,
   ) {}
 
   /**
@@ -141,14 +150,9 @@ class AudioficArchiveRssTokenHooks {
   }
 
   /**
-   * Populates exposed filter tokens.
+   * Fetches all search exposed filter values set by the user.
    */
-  private function exposedFilterTokens(array $tokens, array $data, array &$replacements) {
-    if (!array_key_exists('view', $data)) {
-      return;
-    }
-
-    $filters = $data['view']->filter;
+  public static function getExposedFilterData(array $filters): array {
     $filter_data = [];
 
     foreach (AudioficArchiveRssTokenHooks::FILTER_KEYS as $key) {
@@ -163,6 +167,18 @@ class AudioficArchiveRssTokenHooks {
         $filter_data[$key] = $filters[$key]->value;
       }
     }
+
+    return $filter_data;
+  }
+
+  /**
+   * Populates exposed filter tokens.
+   */
+  private function exposedFilterTokens(array $tokens, array $data, array &$replacements) {
+    if (!array_key_exists('view', $data)) {
+      return;
+    }
+    $filter_data = $this->getExposedFilterData($data['view']->filter);
 
     foreach ($tokens as $key => $token) {
       switch ($key) {
@@ -186,18 +202,28 @@ class AudioficArchiveRssTokenHooks {
     $formatted = [];
     $max = 50;
     $labels = [
-      'search_api_fulltext' => $this->t("Search Query"),
-      'field_completion_status' => $this->t("Completion Status"),
-      'field_rating' => $this->t("Rating"),
-      'field_category' => $this->t("Category/Categories"),
-      'field_format' => $this->t("Format Info"),
-      'field_language' => $this->t("Language(s)"),
-      'field_length' => $this->t("Length(s)"),
-      'field_warning' => $this->t("Warning(s)"),
-      'field_author' => $this->t("Author(s)"),
-      'field_reader' => $this->t("Reader(s)"),
-      'field_fandom2' => $this->t("Fandom(s)"),
-      'field_relationship' => $this->t("Relationship(s)"),
+      'search_api_fulltext' => $this->t('Search Query'),
+      'field_completion_status' => $this->t('Completion Status'),
+      'field_duration_seconds' => $this->t('Minimum Duration'),
+      'field_duration_seconds_1' => $this->t('Maximum Duration'),
+      'field_rating' => $this->t('Include Rating'),
+      'field_category' => $this->t('Include Category/Categories'),
+      'field_format' => $this->t('Include Format Info'),
+      'field_language' => $this->t('Include Language(s)'),
+      'field_warning' => $this->t('Include Warning(s)'),
+      'field_author' => $this->t('Include Author(s)'),
+      'field_reader' => $this->t('Include Reader(s)'),
+      'field_fandom2' => $this->t('Include Fandom(s)'),
+      'field_relationship' => $this->t('Include Relationship(s)'),
+      'field_rating_1' => $this->t('Exclude Rating'),
+      'field_category_1' => $this->t('Exclude Category/Categories'),
+      'field_format_' => $this->t('Exclude Format Info'),
+      'field_language_1' => $this->t('Exclude Language(s)'),
+      'field_warning_1' => $this->t('Exclude Warning(s)'),
+      'field_author_1' => $this->t('Exclude Author(s)'),
+      'field_reader_1' => $this->t('Exclude Reader(s)'),
+      'field_fandom2_1' => $this->t('Exclude Fandom(s)'),
+      'field_relationship_1' => $this->t('Exclude Relationship(s)'),
     ];
 
     foreach ($filter_data as $key => $value) {
@@ -208,6 +234,12 @@ class AudioficArchiveRssTokenHooks {
 
         case 'field_completion_status':
           $filter_str = $value ? $this->t('Only complete works') : '';
+          break;
+
+        case 'field_duration_seconds':
+        case 'field_duration_seconds_1':
+          $duration_value = array_first($value);
+          $filter_str = !empty($duration_value) ? implode(':', $this->utils->secondsToHMS((int) $duration_value)) : '';
           break;
 
         default:
@@ -222,6 +254,10 @@ class AudioficArchiveRssTokenHooks {
 
       $filter_str = strlen($filter_str) > $max + 3 ? substr($filter_str, 0, $max) . '...' : $filter_str;
       $formatted[] = sprintf('%s: %s', $labels[$key], $filter_str);
+    }
+
+    if (count($formatted) > 0) {
+      array_unshift($formatted, $this->t('Applied Filters:'));
     }
 
     return implode("\n", $formatted);
