@@ -151,6 +151,17 @@ class AudioficUtils {
   }
 
   /**
+   * Converts a total seconds value to an array containing HH:MM:SS string values.
+   */
+  public function secondsToHMS(int $total_seconds): array {
+    return [
+      'hours' => str_pad(floor($total_seconds / 3600), 2, '0', STR_PAD_LEFT),
+      'mins' => str_pad(floor(floor($total_seconds / 60) % 60), 2, '0', STR_PAD_LEFT),
+      'seconds' => str_pad($total_seconds % 60, 2, '0', STR_PAD_LEFT),
+    ];
+  }
+
+  /**
    * Collects and collates the data of an array of works.
    */
   private function fetchWorkData(array $works, int $updated_work_id, int $updated_work_duration_seconds) {

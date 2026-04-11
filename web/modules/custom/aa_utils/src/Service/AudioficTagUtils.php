@@ -46,25 +46,26 @@ class AudioficTagUtils {
   }
 
   /**
-   * Summarises all main metadata on a work into a formatted string.
+   * Summarises all main metadata on a work into an array.
    */
-  public function allNodeTagsToString(NodeInterface $node): string {
+  public function allNodeTagsToString(NodeInterface $node): array {
     $tags = [
+      'Read by: ' => $this->nodeTagsToString($node, 'field_reader'),
+      'Written by: ' => $this->nodeTagsToString($node, 'field_author'),
+      'Cover art created by: ' => $this->nodeTagsToString($node, 'field_cover_artist'),
       'Warning(s): ' => $this->nodeTagsToString($node, 'field_warning'),
       'Fandom(s): ' => $this->nodeTagsToString($node, 'field_fandom2', 10),
       'Relationship(s): ' => $this->nodeTagsToString($node, 'field_relationship', 10),
       'Category/Categories: ' => $this->nodeTagsToString($node, 'field_category'),
       'Format Info: ' => $this->nodeTagsToString($node, 'field_format'),
     ];
-
-    $text = [];
     foreach ($tags as $label => $content) {
-      if (!empty($content)) {
-        $text[] = $this->t($label) . $content;
+      if (empty($content)) {
+        unset($tags[$label]);
       }
     }
 
-    return implode("\n", $text);
+    return $tags;
   }
 
 }

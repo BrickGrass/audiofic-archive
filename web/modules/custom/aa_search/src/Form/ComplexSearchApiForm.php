@@ -84,10 +84,10 @@ class ComplexSearchApiForm extends FormBase {
     $form['sort_bef_combine'] = [
       '#type' => 'select',
       '#title' => $this->t('Sort by'),
-      '#default_value' => 'revision_timestamp_DESC',
+      '#default_value' => 'changed_DESC',
       '#options' => [
-        'revision_timestamp_DESC' => $this->t('Date Updated (New to Old)'),
-        'revision_timestamp_ASC' => $this->t('Date Updated (Old to New)'),
+        'changed_DESC' => $this->t('Date Updated (New to Old)'),
+        'changed_ASC' => $this->t('Date Updated (Old to New)'),
         'created_DESC' => $this->t('Date Posted (New to Old)'),
         'created_ASC' => $this->t('Date Posted (Old to New)'),
         'title_DESC' => $this->t('Title (Z to A)'),

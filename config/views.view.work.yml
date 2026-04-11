@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.rss
     - core.entity_view_mode.node.teaser
     - node.type.work
   module:
@@ -13,7 +14,7 @@ dependencies:
 id: work
 label: 'Content: Work'
 module: views
-description: 'Teaser, Player and RSS for a work'
+description: 'Teaser, Player and Downloads for a work'
 tag: ''
 base_table: node_field_data
 base_field: nid
@@ -298,39 +299,6 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-        - 'user.node_grants:view'
-        - user.permissions
-      tags: {  }
-  rss:
-    id: rss
-    display_title: Feed
-    display_plugin: feed
-    position: 3
-    display_options:
-      enabled: false
-      style:
-        type: audiofic_archive_rss
-        options:
-          uses_fields: false
-          description: '[contextual-filter-node:tags]'
-          title: '[contextual-filter-node:title]'
-          link: '[contextual-filter-node:link]'
-          cover_url: sites/default/files/2024-10/audioficc-archive_feed_logo.png
-          creator_truncation: '3'
-          is_contextual: 1
-          override_media_pubdate: 1
-          token_tree: ''
-      row:
-        type: node_rss
-        options: {  }
-      display_extenders: {  }
-      path: work/%/rss.xml/2
-      sitename_title: false
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_interface'
-        - url
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }

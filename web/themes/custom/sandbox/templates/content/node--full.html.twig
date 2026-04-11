@@ -119,8 +119,8 @@ set classes = [
       are collapsed, and add a negative margin to the .full-work div based on that. #}
       <div class="contextual-menu">
         {{ drupal_block("node_contextual_menu", {context_mapping: {node: '@node.node_route_context:node'}}, wrapper=false) }}
-        {% if content_type in ["work", "playlist", "reader_collection", "rec_list"] %}
-          {% set url_prefix = {"work": "work", "playlist": "series", "reader_collection": "collection", "rec_list": "rec-list"} %}
+        {% if content_type in ["work", "playlist"] %}
+          {% set url_prefix = {"work": "work", "playlist": "series"} %}
           <a class="btn btn-primary" href="/{{ url_prefix[content_type] }}/{{ node.id }}/rss.xml">RSS <i class="bi bi-rss-fill"></i></a>
         {% endif %}
         {% if filters_enabled %}
@@ -174,9 +174,9 @@ set classes = [
         </div>
 
         <div class="alert alert-aa-metadata d-flex flex-column" role="alert">
-          {{ content.field_author }}
-
           {{ content.field_reader }}
+
+          {{ content.field_author }}
 
           <div class="mb-1">
             {% for tag in all_tags %}

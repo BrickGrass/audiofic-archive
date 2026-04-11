@@ -12,7 +12,7 @@ dependencies:
 id: node_rss_feeds
 label: 'Node RSS Feeds'
 module: views
-description: ''
+description: 'RSS feeds for individual works/series'
 tag: ''
 base_table: node_field_data
 base_field: nid
@@ -258,6 +258,10 @@ display:
     display_plugin: feed
     position: 1
     display_options:
+      pager:
+        type: none
+        options:
+          offset: 0
       arguments:
         nid_1:
           id: nid_1
@@ -302,7 +306,6 @@ display:
           title: '[contextual-filter-node:title]'
           link: '[contextual-filter-node:link]'
           cover_url: sites/default/files/2024-10/audiofic_archive_feed_logo.png
-          creator_truncation: '3'
           is_contextual: 1
           override_media_pubdate: 1
           token_tree: ''

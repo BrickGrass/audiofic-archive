@@ -12,7 +12,7 @@ dependencies:
 id: series_filter_nodes_
 label: 'My series'
 module: views
-description: ''
+description: 'Entity reference list containing the series the logged in user has edit access to - used in the work creation form'
 tag: ''
 base_table: node_field_data
 base_field: nid

@@ -1,4 +1,9 @@
 (function ($) {
+  const ratingExplicit = "173";
+  const ratingMature = "175";
+  const ratingNotRated = "254";
+  let originalRssSearchURL = "";
+
   function toggleNsfwContent() {
     $('.work-card-nsfw').each(function(i, obj) {
       $(obj).toggleClass("d-none")
@@ -15,6 +20,31 @@
     $('.nsfw-total').each(function(i, obj) {
       $(obj).toggleClass("d-none")
     });
+
+    rssLink = $("#rssLink");
+    if (!rssLink) {
+      return;
+    }
+
+    if (originalRssSearchURL == rssLink.attr("href")) {
+      // filter nsfw
+      rssLink.attr("href", rewriteRssQuery(originalRssSearchURL));
+    } else {
+      // reset to normal
+      rssLink.attr("href", originalRssSearchURL);
+    }
+  }
+
+  function rewriteRssQuery(url) {
+    [urlPrefix, urlQuery] = url.split("?");
+    queryParams = new URLSearchParams(urlQuery);
+    queryParams.append(`rating-exclude[${ratingExplicit}]`, ratingExplicit);
+    queryParams.append(`rating-exclude[${ratingMature}]`, ratingMature);
+    queryParams.append(`rating-exclude[${ratingNotRated}]`, ratingNotRated);
+
+    console.log(queryParams.toString());
+
+    return urlPrefix + "?" + queryParams.toString();
   }
 
   function isWorkOrLegacyWork() {
@@ -49,6 +79,9 @@
   }
 
   $(document).ready(function() {
+    originalRssSearchURL = $("#rssLink").attr("href");
+    console.log(originalRssSearchURL);
+
     let showNsfw = Cookies.get("nsfwConsentStatus");
 
     // == so that undefined and null are caught

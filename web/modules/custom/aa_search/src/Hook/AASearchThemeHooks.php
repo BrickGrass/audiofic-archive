@@ -177,10 +177,10 @@ class AASearchThemeHooks {
 
     $total_seconds = $variables['element']['#value'];
     if ($total_seconds !== '') {
-      $total_seconds = (int) $total_seconds;
-      $variables["hours"] = str_pad(floor($total_seconds / 3600), 2, "0", STR_PAD_LEFT);
-      $variables["mins"] = str_pad(floor(floor($total_seconds / 60) % 60), 2, "0", STR_PAD_LEFT);
-      $variables["seconds"] = str_pad($total_seconds % 60, 2, "0", STR_PAD_LEFT);
+      $formatted_duration = $this->utils->secondsToHMS((int) $total_seconds);
+      $variables['hours'] = $formatted_duration['hours'];
+      $variables['mins'] = $formatted_duration['mins'];
+      $variables['seconds'] = $formatted_duration['seconds'];
     }
   }
 
@@ -198,7 +198,7 @@ class AASearchThemeHooks {
 
     $entities = array_map(fn($result) => $result->_entity, $view->result);
     $variables['total_nsfw'] = $this->utils->getTotalNsfw($entities);
-    $url_data = $this->getUrlPathAndQuery();
+    $url_data = $this->getUrlPathAndQuery(TRUE);
 
     switch ($view->current_display) {
       case 'search_taxonomy':
@@ -209,7 +209,7 @@ class AASearchThemeHooks {
           break;
         }
 
-        $variables['rss_feed'] = '/taxonomy/term/$tid/rss.xml?' . $url_data['url_query'];
+        $variables['rss_feed'] = '/taxonomy/term/' . $tid . '/rss.xml?' . $url_data['url_query'];
         $variables['taxonomy_term'] = $term;
         if ($term->parent->target_id !== 0) {
           $variables['term_parent'] = Term::load($term->parent->target_id);
@@ -231,7 +231,6 @@ class AASearchThemeHooks {
         break;
 
       case 'search':
-      case 'search_collection':
         $variables['rss_feed'] = $url_data['url_path'] . '/rss.xml?' . $url_data['url_query'];
         break;
     }
@@ -240,13 +239,28 @@ class AASearchThemeHooks {
   /**
    * Find & return the current url path & query.
    */
-  private function getUrlPathAndQuery(): array {
+  private function getUrlPathAndQuery(bool $remove_page = FALSE): array {
     $current_uri = $this->request_stack->getCurrentRequest()->getRequestUri();
     $url_sections = explode('?', $current_uri);
-    $url_path = $url_sections[0];
+
     // Remove trailing forwards slash, if present.
+    $url_path = $url_sections[0];
     $url_path = substr($url_path, -1) === '/' ? substr($url_path, 0, strlen($url_path) - 1) : $url_path;
+
+    // Remove page param, if present & requested.
     $url_query = implode('?', array_slice($url_sections, 1, count($url_sections)));
+    if ($remove_page && strlen($url_query) > 0) {
+      $url_query_sections = explode('&', $url_query);
+      // dpm($url_query_sections);
+      $url_query_sections = array_reduce($url_query_sections, function ($acc, $query_section) {
+        if (!str_starts_with($query_section, 'page')) {
+          $acc[] = $query_section;
+        }
+        return $acc;
+      });
+      $url_query = implode('&', $url_query_sections);
+    }
+
     return ['url_path' => $url_path, 'url_query' => $url_query];
   }
 

@@ -14,7 +14,7 @@ dependencies:
 id: user_s_works
 label: "User's Works"
 module: views
-description: ''
+description: "Blocks used on a user's profile page showing their recent works &/ series"
 tag: ''
 base_table: node_field_data
 base_field: nid

@@ -197,7 +197,9 @@
         {{ other_search }}
         {{ tag_info_btn }}
         {{ user_profile_btn }}
-        <a class="btn btn-primary ms-1" href="{{ rss_feed }}">RSS <i class="bi bi-rss-fill"></i></a>
+        {% if view.current_display != "search_collection" %}
+        <a class="btn btn-primary ms-1" id="rssLink" href="{{ rss_feed }}">RSS <i class="bi bi-rss-fill"></i></a>
+        {% endif %}
         <a id="expand-filters" class="btn btn-primary d-md-none ms-1" data-bs-toggle="collapse" href="#{{ form_target }}" role="button" aria-expanded="true" aria-controls="{{ form_target }}">
           Filters <i class="bi bi-funnel-fill"></i>
         </a>

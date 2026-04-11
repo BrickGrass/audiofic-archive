@@ -87,6 +87,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.body
+  changed:
+    label: Changed
+    datasource_id: 'entity:node'
+    property_path: changed
+    type: date
+    dependencies:
+      module:
+        - node
   created:
     label: 'Authored on'
     datasource_id: 'entity:node'
@@ -309,14 +317,6 @@ field_settings:
     datasource_id: 'entity:node'
     property_path: status
     type: boolean
-    dependencies:
-      module:
-        - node
-  revision_timestamp:
-    label: 'Revision create time'
-    datasource_id: 'entity:node'
-    property_path: revision_timestamp
-    type: date
     dependencies:
       module:
         - node

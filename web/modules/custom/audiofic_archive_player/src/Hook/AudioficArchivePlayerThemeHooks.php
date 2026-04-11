@@ -3,14 +3,17 @@
 namespace Drupal\audiofic_archive_player\Hook;
 
 use Drupal\aa_utils\Service\AudioficUtils;
+use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\node\NodeInterface;
 use Drupal\file\Entity\File;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Class AudioficArchivePlayerThemeHooks processes data for the player.
  */
 class AudioficArchivePlayerThemeHooks {
+  use StringTranslationTrait;
 
   public function __construct(
     protected AudioficUtils $utils,
@@ -68,37 +71,55 @@ class AudioficArchivePlayerThemeHooks {
   private function fetchMediaFiles(NodeInterface $node, string $media_type, bool $is_series, array &$files) {
     $field_name = $media_type === 'mp3' ? 'field_mp3_files' : 'field_other_files';
 
-    if ($node->hasField($field_name)) {
-      foreach ($node->get($field_name)->referencedEntities() as $file) {
-        $phys_file = NULL;
-        $label = NULL;
-        if ($media_type === 'mp3') {
-          $phys_file = File::load($file->field_media_audio_file[0]->target_id);
-          $label = $file->get('field_chapter_label');
-        } else {
-          $phys_file = File::load($file->field_media_file[0]->target_id);
-          $label = $file->get('field_file_label');
-        }
-
-        $name = count($label) > 0 ? $label[0]->value : '';
-
-        if ($is_series) {
-          $name = trim(implode(' ', [$node->getTitle(), $name]), '');
-        } else {
-          $name = $name != '' ? $name : $node->getTitle();
-        }
-
-        $data = [
-          'name' => $name,
-          'file_size' => $this->makeBytesReadable($phys_file->filesize->value),
-          'mime_type' => $this->getFileType($phys_file->filemime->value),
-          'url' => $phys_file->createFileUrl(),
-          'nsfw' => $this->utils->isNsfw($node),
-        ];
-
-        $files[] = $data;
-      }
+    if (!$node->hasField($field_name)) {
+      return;
     }
+
+    $work_files = $node->get($field_name)->referencedEntities();
+    $i = 1;
+    $total = count($work_files);
+    foreach ($work_files as $file) {
+      $phys_file = NULL;
+      $label = NULL;
+      if ($media_type === 'mp3') {
+        $phys_file = File::load($file->field_media_audio_file[0]->target_id);
+        $label = $file->get('field_chapter_label');
+      } else {
+        $phys_file = File::load($file->field_media_file[0]->target_id);
+        $label = $file->get('field_file_label');
+      }
+
+      $data = [
+        'name' => $this->getMediaLabel($node, $label, $is_series, $i, $total),
+        'file_size' => $this->makeBytesReadable($phys_file->filesize->value),
+        'mime_type' => $this->getFileType($phys_file->filemime->value),
+        'url' => $phys_file->createFileUrl(),
+        'nsfw' => $this->utils->isNsfw($node),
+      ];
+
+      $files[] = $data;
+      $i++;
+    }
+  }
+
+  private function getMediaLabel(NodeInterface $work, FieldItemListInterface $label_field, bool $is_series, int $part, int $total): string {
+    $user_label = count($label_field) > 0 ? $label_field[0]->value : '';
+    $user_label_empty = strlen(trim($user_label)) < 1;
+    $label_parts = [];
+
+    if ($user_label_empty || $is_series) {
+      $label_parts[] = $work->getTitle();
+    }
+
+    if ($user_label_empty) {
+      if ($total > 1) {
+        $label_parts[] = $this->t('Part @part of @total', ['@part' => $part, '@total' => $total]);
+      }
+    } else {
+      $label_parts[] = $user_label;
+    }
+
+    return trim(implode(' - ', $label_parts));
   }
 
   /**
