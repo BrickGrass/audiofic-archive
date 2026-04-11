@@ -57,7 +57,7 @@ class AttributionTagNotAlreadyInUseConstraintValidator extends ConstraintValidat
       return;
     }
 
-    $vocab = $this->entityTypeManager->getStorage('vocabulary')->load(array_first($tags)->bundle());
+    $vocab = $this->entityTypeManager->getStorage('taxonomy_vocabulary')->load(array_first($tags)->bundle());
 
     foreach ($tags as $tag) {
       $user_storage = $this->entityTypeManager->getStorage('user');

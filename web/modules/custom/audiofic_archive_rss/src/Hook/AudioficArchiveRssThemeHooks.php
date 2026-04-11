@@ -13,6 +13,7 @@ use Drupal\taxonomy\Entity\Term;
 use Drupal\Core\Utility\Token;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\Path\CurrentPathStack;
 
 /**
  * RSS View Hooks.
@@ -25,6 +26,7 @@ class AudioficArchiveRssThemeHooks {
     protected AudioficTagUtils $tag_utils,
     protected Token $token,
     protected RequestStack $request_stack,
+    protected CurrentPathStack $current_path,
   ) {}
 
   /**
@@ -88,6 +90,9 @@ class AudioficArchiveRssThemeHooks {
     $variables['hostname'] = $this->request_stack->getCurrentRequest()->getHost();
   }
 
+  /**
+   * Fetches the pagination links for this feed (if available).
+   */
   private function setPaginationData(&$variables) {
     /** @var \Drupal\views\Plugin\views\pager\Full $pager */
     $pager = $variables['view']->pager;
@@ -97,9 +102,9 @@ class AudioficArchiveRssThemeHooks {
       return;
     }
 
-    $host = \Drupal::request()->getSchemeAndHttpHost();
-    $path = \Drupal::service('path.current')->getPath();
-    $queryParams = \Drupal::request()->query->all();
+    $host = $this->request_stack->getCurrentRequest()->getSchemeAndHttpHost();
+    $path = $this->current_path->getPath();
+    $queryParams = $this->request_stack->getCurrentRequest()->query->all();
 
     if (array_key_exists('page', $queryParams)) {
       unset($queryParams['page']);
@@ -117,6 +122,9 @@ class AudioficArchiveRssThemeHooks {
     }
   }
 
+  /**
+   * Generates a url from a host + path + query params + page no.
+   */
   private function generatePageUrl(string $host, string $path, array $queryParams, int $page): string {
     $queryParams['page'] = $page;
     return $host . $path . '?' . http_build_query($queryParams);
