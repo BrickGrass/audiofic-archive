@@ -2322,9 +2322,27 @@ display:
     display_options:
       title: 'Search Works'
       pager:
-        type: none
+        type: full
         options:
           offset: 0
+          pagination_heading_level: h4
+          items_per_page: 200
+          total_pages: null
+          id: 0
+          tags:
+            next: 'Next ›'
+            previous: '‹ Previous'
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
       exposed_form:
         type: bef
         options:
@@ -2798,6 +2816,7 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
+        - url.query_args
         - 'url.query_args:sort_by'
         - 'url.query_args:sort_order'
         - 'user.node_grants:view'
@@ -4233,9 +4252,27 @@ display:
     display_options:
       title: 'Search Taxonomy (I will have the taxonomy term name + related data display here)'
       pager:
-        type: none
+        type: full
         options:
           offset: 0
+          pagination_heading_level: h4
+          items_per_page: 200
+          total_pages: null
+          id: 0
+          tags:
+            next: 'Next ›'
+            previous: '‹ Previous'
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
       exposed_form:
         type: bef
         options:
@@ -4708,6 +4745,7 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
+        - url.query_args
         - 'url.query_args:sort_by'
         - 'url.query_args:sort_order'
         - 'user.node_grants:view'

@@ -258,6 +258,10 @@ display:
     display_plugin: feed
     position: 1
     display_options:
+      pager:
+        type: none
+        options:
+          offset: 0
       arguments:
         nid_1:
           id: nid_1
@@ -298,7 +302,7 @@ display:
         type: audiofic_archive_rss
         options:
           uses_fields: false
-          description: ''
+          description: '[contextual-filter-node:tags]'
           title: '[contextual-filter-node:title]'
           link: '[contextual-filter-node:link]'
           cover_url: sites/default/files/2024-10/audiofic_archive_feed_logo.png

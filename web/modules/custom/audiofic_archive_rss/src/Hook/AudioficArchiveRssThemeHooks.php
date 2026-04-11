@@ -5,12 +5,12 @@ namespace Drupal\audiofic_archive_rss\Hook;
 use Drupal\aa_utils\Service\AudioficUtils;
 use Drupal\aa_utils\Service\AudioficTagUtils;
 use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\Link;
 use Drupal\file\Entity\File;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\Core\Utility\Token;
-use Drupal\taxonomy\Entity\Vocabulary;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
@@ -51,11 +51,13 @@ class AudioficArchiveRssThemeHooks {
     $token_data = ['view' => $variables['view']];
     $contextual_filters = $variables['view']->argument;
 
+    $this->setPaginationData($variables);
+
     $this->setRssContextualFilterData($contextual_filters, $variables, $token_data);
     $override_media_pubdate = $variables['contextual_filter'] !== 'none' && $options['override_media_pubdate'];
 
-    $options['title'] = $this->token->replace($options['title'], $token_data, ['clear' => TRUE]);
-    $options['description'] = $this->token->replace($options['description'], $token_data, ['clear' => TRUE]);
+    $options['title'] = $this->token->replacePlain($options['title'], $token_data, ['clear' => TRUE]);
+    $options['description'] = $this->token->replacePlain($options['description'], $token_data, ['clear' => TRUE]);
     $options['link'] = $this->token->replace($options['link'], $token_data, ['clear' => TRUE]);
 
     $works = [];
@@ -71,7 +73,7 @@ class AudioficArchiveRssThemeHooks {
         'explicit' => $this->utils->isNsfw($entity),
         'files' => $this->fetchStreamingFiles($entity, $override_media_pubdate),
         'tags' => $this->tag_utils->allNodeTagsToString($entity),
-        'summary' => $this->fetchSummary($entity),
+        'summary' => check_markup($this->fetchSummary($entity), 'basic_html'),
         'cover_url' => $this->fetchCover($entity),
         'link' => $entity->toUrl(),
       ];
@@ -84,6 +86,40 @@ class AudioficArchiveRssThemeHooks {
     $variables['options'] = $options;
     $variables['works'] = $works;
     $variables['hostname'] = $this->request_stack->getCurrentRequest()->getHost();
+  }
+
+  private function setPaginationData(&$variables) {
+    /** @var \Drupal\views\Plugin\views\pager\Full $pager */
+    $pager = $variables['view']->pager;
+    $current_page = $pager->getCurrentPage();
+
+    if ($current_page == NULL) {
+      return;
+    }
+
+    $host = \Drupal::request()->getSchemeAndHttpHost();
+    $path = \Drupal::service('path.current')->getPath();
+    $queryParams = \Drupal::request()->query->all();
+
+    if (array_key_exists('page', $queryParams)) {
+      unset($queryParams['page']);
+    }
+
+    $variables['pagination'] = [
+      'self' => $this->generatePageUrl($host, $path, $queryParams, $current_page),
+      'first' => $this->generatePageUrl($host, $path, $queryParams, 0),
+      'last' => $this->generatePageUrl($host, $path, $queryParams, $pager->getPagerTotal()),
+      'next' => $this->generatePageUrl($host, $path, $queryParams, $current_page + 1),
+    ];
+
+    if ($current_page > 0) {
+      $variables['pagination']['previous'] = $this->generatePageUrl($host, $path, $queryParams, $current_page - 1);
+    }
+  }
+
+  private function generatePageUrl(string $host, string $path, array $queryParams, int $page): string {
+    $queryParams['page'] = $page;
+    return $host . $path . '?' . http_build_query($queryParams);
   }
 
   /**
@@ -173,6 +209,7 @@ class AudioficArchiveRssThemeHooks {
       return [];
     }
 
+    $date_created = $work->getCreatedTime();
     $total_parts = count($mp3_files);
     $i = 1;
 
@@ -183,42 +220,33 @@ class AudioficArchiveRssThemeHooks {
       $label = count($label) > 0 && strlen($label[0]->value) > 0 ? $label[0]->value : '';
       $duration = $file->get('field_duration_seconds');
 
-      $part_no = $total_parts > 1 ? $this->t('@part_label (Part @part of @total)', [
+      $part_no = $total_parts > 1 ? $this->t('@part_label [Part @part of @total]', [
         '@part' => $i,
         '@total' => $total_parts,
         '@part_label' => !empty($label) ? ': ' . $label : '',
       ]) : '';
-      $link = '<p><a href="' . $work->toUrl()->toString() . '">' . $work->getTitle() . $part_no . '</a></p>';
+      $link = Link::fromTextAndUrl($work->getTitle() . $part_no, $work->toUrl());
+      // To have the chapters of a work appear sequentially in any of
+      // our feeds, they need to have sequential publishing dates.
+      // This only ensures that a works chapters appear in order -
+      // it does not fix a series appearing in the wrong order because
+      // it was uploaded non-sequentially, as that would involve changing
+      // the pubdate of items constantly causing confusion in podcast clients!
+      $file_created = $sort_by_chapter ? $date_created + $i : $file->getCreatedTime();
 
       $work_files[] = [
-        'name' => $label,
+        'name' => $part_no,
         'file_size' => $phys_file->filesize->value,
         'mime_type' => $phys_file->filemime->value,
         'url' => $phys_file->createFileUrl(),
         'uuid' => $file->uuid(),
         'duration' => !empty($duration) ? $duration[0]->value : 0,
-        'date_created' => $file->getCreatedTime(),
+        'date_created' => $file_created,
         'part_no' => $link,
       ];
       $i++;
     }
 
-    if (!$sort_by_chapter) {
-      return $work_files;
-    }
-
-    // To have the chapters of a work appear sequentially in any of
-    // our feeds, they need to have sequential publishing dates.
-    // This only ensures that a works chapters appear in order -
-    // it does not fix a series appearing in the wrong order because
-    // it was uploaded non-sequentially, as that would involve changing
-    // the pubdate of items constantly causing confusion in podcast clients!
-    $date_created = $work->getCreatedTime();
-    $i = 0;
-    foreach ($work_files as $file_data) {
-      $file_data['date_created'] = $date_created + $i;
-      $i++;
-    }
     return $work_files;
   }
 

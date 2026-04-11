@@ -18,9 +18,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
   <channel>
-    <title>{{ options.title|trim }}</title>
+    <title>{{ options.title | trim }}</title>
     <link>https://{{ hostname }}{{ options.link }}</link>
-    <description><![CDATA[{{ options.description | raw | trim }}]]></description>
+    <description>{{ options.description | trim }}</description>
     <language>en</language>
     {% if options.is_contextual and contextual_filter == "node" %}
       {% if source_node.cover_url != NULL %}
@@ -35,18 +35,21 @@
       {% endif %}
       <itunes:explicit>{{ explicit ? 'true' : 'false' }}</itunes:explicit>
     {% endif %}
+    {% for key, url in pagination %}
+      <link rel="{{ key }}" href="{{ url | raw }}"/>
+    {% endfor %}
     {% for work in works %}
       {% for file in work.files %}
         <item>
           <itunes:episodeType>full</itunes:episodeType>
           {% if file.name %}
-            {% set part_title = work.title ~ " - " ~ file.name %}
+            {% set part_title = work.title ~ file.name %}
           {% else %}
             {% set part_title = work.title %}
           {% endif %}
           <title>{{ part_title }}</title>
           <itunes:title>{{ part_title }}</itunes:title>
-          <description><![CDATA[{{ file.part_no | raw }}{{ work.tags | raw }}{{ work.summary | raw }}]]></description>
+          <description><![CDATA[{{ file.part_no }}<p>{% for label, content in work.tags %}<b>{{label}}</b>{{content}}</br>{% endfor %}</p>{{ work.summary | raw }}]]></description>
           <enclosure
             length="{{ file.file_size }}"
             type="{{ file.mime_type }}"

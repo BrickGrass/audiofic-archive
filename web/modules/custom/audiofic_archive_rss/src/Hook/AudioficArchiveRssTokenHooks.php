@@ -116,7 +116,11 @@ class AudioficArchiveRssTokenHooks {
           break;
 
         case 'tags':
-          $replacements[$token] = $this->tag_utils->allNodeTagsToString($node);
+          $text = [];
+          foreach ($this->tag_utils->allNodeTagsToString($node) as $label => $content) {
+            $text[] = $label . $content;
+          }
+          $replacements[$token] = implode("\n", $text);
           break;
 
         case 'link':

@@ -46,9 +46,9 @@ class AudioficTagUtils {
   }
 
   /**
-   * Summarises all main metadata on a work into a formatted string.
+   * Summarises all main metadata on a work into an array.
    */
-  public function allNodeTagsToString(NodeInterface $node): string {
+  public function allNodeTagsToString(NodeInterface $node): array {
     $tags = [
       'Read by: ' => $this->nodeTagsToString($node, 'field_reader'),
       'Written by: ' => $this->nodeTagsToString($node, 'field_author'),
@@ -59,17 +59,13 @@ class AudioficTagUtils {
       'Category/Categories: ' => $this->nodeTagsToString($node, 'field_category'),
       'Format Info: ' => $this->nodeTagsToString($node, 'field_format'),
     ];
-
-    $text = [];
     foreach ($tags as $label => $content) {
       if (empty($content)) {
-        continue;
+        unset($tags[$label]);
       }
-
-      $text[] = '<b>' . $this->t($label) . '</b>' . $content . '</br>';
     }
 
-    return '<p>' . implode('', $text) . '</p>';
+    return $tags;
   }
 
 }
