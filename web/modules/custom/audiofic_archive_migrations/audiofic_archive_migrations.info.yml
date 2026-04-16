@@ -1,0 +1,7 @@
+name: Audiofic Archive Migrations
+description: A custom module that defines the migrations used to port the old Drupal 7 version of the Audiofic Archive to the new site
+core_version_requirement: ^10.1 || ^11
+type: module
+dependencies:
+  - drupal:migrate
+  - drupal:migrate_drupal

@@ -6,6 +6,7 @@ dependencies:
     - core.entity_form_mode.node.limited_post_entry
     - field.field.node.legacy_work.body
     - field.field.node.legacy_work.field_author
+    - field.field.node.legacy_work.field_category
     - field.field.node.legacy_work.field_cover
     - field.field.node.legacy_work.field_duration
     - field.field.node.legacy_work.field_fandom2
@@ -17,6 +18,7 @@ dependencies:
     - field.field.node.legacy_work.field_rating
     - field.field.node.legacy_work.field_reader
     - field.field.node.legacy_work.field_relationship
+    - field.field.node.legacy_work.field_warning
     - image.style.thumbnail
     - node.type.legacy_work
   module:
@@ -115,6 +117,7 @@ content:
     third_party_settings: {  }
 hidden:
   body: true
+  field_category: true
   field_duration: true
   field_fandom2: true
   field_format: true
@@ -124,3 +127,4 @@ hidden:
   field_owner: true
   field_rating: true
   field_relationship: true
+  field_warning: true

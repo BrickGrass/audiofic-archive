@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.node.legacy_work.body
     - field.field.node.legacy_work.field_author
+    - field.field.node.legacy_work.field_category
     - field.field.node.legacy_work.field_cover
     - field.field.node.legacy_work.field_duration
     - field.field.node.legacy_work.field_fandom2
@@ -16,6 +17,7 @@ dependencies:
     - field.field.node.legacy_work.field_rating
     - field.field.node.legacy_work.field_reader
     - field.field.node.legacy_work.field_relationship
+    - field.field.node.legacy_work.field_warning
     - image.style.thumbnail
     - node.type.legacy_work
   module:
@@ -30,7 +32,7 @@ mode: default
 content:
   body:
     type: text_textarea_with_summary
-    weight: 11
+    weight: 12
     region: content
     settings:
       rows: 9
@@ -39,34 +41,6 @@ content:
       show_summary: false
     third_party_settings: {  }
   field_author:
-    type: tagify_entity_reference_autocomplete_widget
-    weight: 2
-    region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      placeholder: ''
-      suggestions_dropdown: 1
-      show_entity_id: 0
-      show_info_label: 0
-      info_label: ''
-      parent_selection: 1
-    third_party_settings: {  }
-  field_cover:
-    type: image_image
-    weight: 7
-    region: content
-    settings:
-      progress_indicator: throbber
-      preview_image_style: thumbnail
-    third_party_settings: {  }
-  field_duration:
-    type: duration_widget
-    weight: 121
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_fandom2:
     type: tagify_entity_reference_autocomplete_widget
     weight: 3
     region: content
@@ -80,25 +54,35 @@ content:
       info_label: ''
       parent_selection: 1
     third_party_settings: {  }
-  field_format:
-    type: tagify_entity_reference_autocomplete_widget
-    weight: 9
+  field_category:
+    type: entity_reference_autocomplete
+    weight: 14
     region: content
     settings:
       match_operator: CONTAINS
       match_limit: 10
+      size: 60
       placeholder: ''
-      suggestions_dropdown: 1
-      show_entity_id: 0
-      show_info_label: 0
-      info_label: ''
-      parent_selection: 1
     third_party_settings: {  }
-  field_language:
-    type: tagify_entity_reference_autocomplete_widget
+  field_cover:
+    type: image_image
     weight: 8
     region: content
     settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+  field_duration:
+    type: duration_widget
+    weight: 13
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_fandom2:
+    type: tagify_entity_reference_autocomplete_widget
+    weight: 4
+    region: content
+    settings:
       match_operator: CONTAINS
       match_limit: 10
       placeholder: ''
@@ -108,7 +92,7 @@ content:
       info_label: ''
       parent_selection: 1
     third_party_settings: {  }
-  field_legacy_series:
+  field_format:
     type: tagify_entity_reference_autocomplete_widget
     weight: 10
     region: content
@@ -122,9 +106,37 @@ content:
       info_label: ''
       parent_selection: 1
     third_party_settings: {  }
+  field_language:
+    type: tagify_entity_reference_autocomplete_widget
+    weight: 9
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      placeholder: ''
+      suggestions_dropdown: 1
+      show_entity_id: 0
+      show_info_label: 0
+      info_label: ''
+      parent_selection: 1
+    third_party_settings: {  }
+  field_legacy_series:
+    type: tagify_entity_reference_autocomplete_widget
+    weight: 11
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      placeholder: ''
+      suggestions_dropdown: 1
+      show_entity_id: 0
+      show_info_label: 0
+      info_label: ''
+      parent_selection: 1
+    third_party_settings: {  }
   field_length:
     type: options_select
-    weight: 5
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -144,13 +156,13 @@ content:
     third_party_settings: {  }
   field_rating:
     type: options_select
-    weight: 6
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
   field_reader:
     type: tagify_entity_reference_autocomplete_widget
-    weight: 1
+    weight: 2
     region: content
     settings:
       match_operator: CONTAINS
@@ -164,7 +176,7 @@ content:
     third_party_settings: {  }
   field_relationship:
     type: tagify_entity_reference_autocomplete_widget
-    weight: 4
+    weight: 5
     region: content
     settings:
       match_operator: CONTAINS
@@ -175,6 +187,16 @@ content:
       show_info_label: 0
       info_label: ''
       parent_selection: 1
+    third_party_settings: {  }
+  field_warning:
+    type: entity_reference_autocomplete
+    weight: 15
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   title:
     type: string_textfield

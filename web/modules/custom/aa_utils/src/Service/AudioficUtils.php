@@ -16,11 +16,11 @@ class AudioficUtils {
   private const MINUTE = 60;
   private const HOUR = self::MINUTE * 60;
   private const LENGTHRANGEMAPPING = [
-    'under 10 min' =>                   self::MINUTE * 5,
-    '10-20 min'    =>                   self::MINUTE * 15,
-    '20-30 min'    =>                   self::MINUTE * 25,
-    '30-45 min'    =>                   self::MINUTE * 37,
-    '45 min-1hr'   =>                   self::MINUTE * 52,
+    'under 10 mins' =>                   self::MINUTE * 5,
+    '10-20 mins'    =>                   self::MINUTE * 15,
+    '20-30 mins'    =>                   self::MINUTE * 25,
+    '30-45 mins'    =>                   self::MINUTE * 37,
+    '45 mins-1hr'   =>                   self::MINUTE * 52,
     '1-1:30 hrs'   => self::HOUR      + self::MINUTE * 15,
     '1:30-2 hrs'   => self::HOUR      + self::MINUTE * 45,
     '2-2:30 hrs'   => self::HOUR * 2  + self::MINUTE * 15,

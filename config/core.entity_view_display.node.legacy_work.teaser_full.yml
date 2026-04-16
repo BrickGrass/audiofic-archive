@@ -6,6 +6,7 @@ dependencies:
     - core.entity_view_mode.node.teaser_full
     - field.field.node.legacy_work.body
     - field.field.node.legacy_work.field_author
+    - field.field.node.legacy_work.field_category
     - field.field.node.legacy_work.field_cover
     - field.field.node.legacy_work.field_duration
     - field.field.node.legacy_work.field_fandom2
@@ -17,6 +18,7 @@ dependencies:
     - field.field.node.legacy_work.field_rating
     - field.field.node.legacy_work.field_reader
     - field.field.node.legacy_work.field_relationship
+    - field.field.node.legacy_work.field_warning
     - node.type.legacy_work
     - responsive_image.styles.teaser_cover
   module:
@@ -119,8 +121,10 @@ content:
     weight: 4
     region: content
 hidden:
+  field_category: true
   field_duration: true
   field_owner: true
+  field_warning: true
   flag_bookmark: true
   flag_to_listen: true
   langcode: true

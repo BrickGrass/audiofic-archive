@@ -1,0 +1,23 @@
+uuid: 3a05c82e-756e-46d8-bfed-11d21265ff6a
+langcode: en
+status: true
+dependencies: {  }
+name: 'Legacy Work HTML'
+format: legacy_work_html
+weight: 0
+filters:
+  filter_html:
+    id: filter_html
+    provider: filter
+    status: true
+    weight: -10
+    settings:
+      allowed_html: "<a href hreflang> <em> <strong> <cite> <blockquote cite> <code> <ul type> <ol start type='1 A I'> <li> <dl> <dt> <dd> <h2 id='jump-*'> <h3 id> <h4 id> <h5 id> <h6 id> <audio src crossorigin preload controls>"
+      filter_html_help: true
+      filter_html_nofollow: false
+  filter_htmlcorrector:
+    id: filter_htmlcorrector
+    provider: filter
+    status: true
+    weight: 10
+    settings: {  }

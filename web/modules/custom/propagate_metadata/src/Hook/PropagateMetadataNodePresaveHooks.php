@@ -52,15 +52,11 @@ class PropagateMetadataNodePresaveHooks {
         break;
 
       case 'legacy_work':
-        // TODO: update duration based on taxonomy length field?
+        $this->setLegacyWorkDuration($node);
         $this->enforceOwnerRules($node);
         break;
 
       case 'playlist':
-        // TODO: How to enforce owner rules on series without endless loops? think!
-        // The solution may honestly be to disable editing reader/owner tags on
-        // series themselves!
-
         // Only update series metadata if a work is added/removed
         // otherwise correct metadata will be overwritten.
         if (is_null($node->getOriginal())) {
@@ -158,6 +154,24 @@ class PropagateMetadataNodePresaveHooks {
   }
 
   /**
+   * Sets the duration of a legacy work, based on it's length tag.
+   */
+  private function setLegacyWorkDuration(NodeInterface $legacy_work) {
+    $length = $legacy_work->get('field_length')->referencedEntities();
+    if (empty($length)) {
+      return;
+    }
+
+    $duration = $this->utils->convertLengthRangeToDuration($length[0]);
+    if (empty($duration)) {
+      return;
+    }
+
+    $duration_interval = $this->utils->secondsToDateInterval($duration);
+    $legacy_work->set('field_duration', ['duration' => $duration_interval, 'seconds' => $duration]);
+  }
+
+  /**
    * Updates the metadata of all collections related to a work.
    */
   private function updateAllCollections(NodeInterface $work, int $updated_duration_seconds = 0, bool $work_deleted = FALSE) {
@@ -191,7 +205,12 @@ class PropagateMetadataNodePresaveHooks {
       return;
     }
 
-    $original_owners = array_column($node->getOriginal()->get('field_owner')->getValue(), 'target_id');
+    if (empty($original = $node->getOriginal())) {
+      // No previous node to check against.
+      return;
+    }
+
+    $original_owners = array_column($original->get('field_owner')->getValue(), 'target_id');
     $updated_owners = array_column($node->get('field_owner')->getValue(), 'target_id');
     $removed_owners = array_diff($original_owners, $updated_owners);
     if (empty($removed_owners)) {

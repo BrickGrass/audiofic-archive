@@ -1,0 +1,29 @@
+uuid: f2dbb743-a9a9-4f77-a0f5-93620b1c158b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_category
+    - node.type.legacy_work
+    - taxonomy.vocabulary.category
+id: node.legacy_work.field_category
+field_name: field_category
+entity_type: node
+bundle: legacy_work
+label: Category
+description: "<strong>gen: </strong>Used if the work has no main relationships as below, or has only \"&\" relationships. May include background (e.g. canon) relationships that aren't the main focus.<br>\r\n<strong>f/f: </strong>female-female relationships<br>\r\n<strong>f/m: </strong>female-male relationships<br>\r\n<strong>m/m: </strong>male-male relationships<br>\r\n<strong>poly: </strong>polyamorous relationships (<a href=\"https://en.wikipedia.org/wiki/Polyamory\">info here</a>)<br>\r\n<strong>qpr: </strong>queerplatonic relationships (<a href=\"https://en.wikipedia.org/wiki/Queerplatonic_relationship\">info here</a>)<br>\r\n<strong>other: </strong>Can be used if the relationship is in a different category to those above. <br><br>"
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      category: category
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
