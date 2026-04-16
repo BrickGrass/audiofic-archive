@@ -1,0 +1,375 @@
+diff --git a/dist/css/components/sidebar.css b/dist/css/components/sidebar.css
+index f62a2882..73f8bfeb 100644
+--- a/dist/css/components/sidebar.css
++++ b/dist/css/components/sidebar.css
+@@ -63,7 +63,8 @@ body[data-meta-sidebar=closed] .layout-region-node-secondary {
+   }
+ }
+ 
+-:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__close {
++:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__close,
++.meta-sidebar__close {
+   cursor: pointer;
+   background: transparent;
+   height: 32px;
+@@ -72,12 +73,14 @@ body[data-meta-sidebar=closed] .layout-region-node-secondary {
+ }
+ 
+ @media (prefers-reduced-motion: no-preference) {
+-  :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__close {
++  :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__close,
++  .meta-sidebar__close {
+     transition: background var(--gin-transition-fast);
+   }
+ }
+ 
+-:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__close::before {
++:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__close::before,
++.meta-sidebar__close::before {
+   content: "";
+   display: inline-block;
+   width: 100%;
+@@ -89,23 +92,30 @@ body[data-meta-sidebar=closed] .layout-region-node-secondary {
+   background-color: var(--gin-icon-color);
+ }
+ 
+-:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__close:hover, :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__close:focus {
++:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__close:hover, :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__close:focus,
++.meta-sidebar__close:hover,
++.meta-sidebar__close:focus {
+   background-color: var(--gin-color-primary-light);
+ }
+ 
+-:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__close:hover::before, :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__close:focus::before {
++:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__close:hover::before, :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__close:focus::before,
++.meta-sidebar__close:hover::before,
++.meta-sidebar__close:focus::before {
+   background-color: var(--gin-color-primary);
+ }
+ 
+-:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__close.is-active {
++:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__close.is-active,
++.meta-sidebar__close.is-active {
+   background-color: var(--gin-color-primary-light-hover);
+ }
+ 
+-:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__close.is-active::before {
++:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__close.is-active::before,
++.meta-sidebar__close.is-active::before {
+   background-color: var(--gin-color-primary-active);
+ }
+ 
+-:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__trigger {
++:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__trigger,
++.meta-sidebar__trigger {
+   cursor: pointer;
+   background: transparent;
+   display: block;
+@@ -115,12 +125,14 @@ body[data-meta-sidebar=closed] .layout-region-node-secondary {
+ }
+ 
+ @media (prefers-reduced-motion: no-preference) {
+-  :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__trigger {
++  :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__trigger,
++  .meta-sidebar__trigger {
+     transition: background var(--gin-transition-fast);
+   }
+ }
+ 
+-:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__trigger::before {
++:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__trigger::before,
++.meta-sidebar__trigger::before {
+   display: inline-block;
+   width: 100%;
+   height: 100%;
+@@ -137,19 +149,29 @@ body[data-meta-sidebar=closed] .layout-region-node-secondary {
+   border-radius: 50%;
+ }
+ 
+-:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__trigger:hover, :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__trigger:focus, :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__trigger.is-active, :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__trigger.is-active:hover {
++:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__trigger:hover, :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__trigger:focus, :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__trigger.is-active, :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__trigger.is-active:hover,
++.meta-sidebar__trigger:hover,
++.meta-sidebar__trigger:focus,
++.meta-sidebar__trigger.is-active,
++.meta-sidebar__trigger.is-active:hover {
+   background-color: var(--gin-color-primary-light);
+ }
+ 
+-:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__trigger:hover::before, :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__trigger:focus::before, :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__trigger.is-active::before, :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__trigger.is-active:hover::before {
++:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__trigger:hover::before, :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__trigger:focus::before, :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__trigger.is-active::before, :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__trigger.is-active:hover::before,
++.meta-sidebar__trigger:hover::before,
++.meta-sidebar__trigger:focus::before,
++.meta-sidebar__trigger.is-active::before,
++.meta-sidebar__trigger.is-active:hover::before {
+   background-color: var(--gin-color-primary);
+ }
+ 
+-:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__trigger.is-active {
++:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__trigger.is-active,
++.meta-sidebar__trigger.is-active {
+   background-color: var(--gin-bg-item-hover);
+ }
+ 
+-:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__close {
++:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__close,
++.meta-sidebar__close {
+   z-index: 104;
+   position: absolute;
+   inset-block-start: 18px;
+@@ -157,19 +179,22 @@ body[data-meta-sidebar=closed] .layout-region-node-secondary {
+ }
+ 
+ @media (min-width: 64em) {
+-  :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__close {
++  :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__close,
++  .meta-sidebar__close {
+     display: none;
+   }
+ }
+ 
+-:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__close::before {
++:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__close::before,
++.meta-sidebar__close::before {
+   -webkit-mask-image: url("../../media/sprite.svg#close-view");
+           mask-image: url("../../media/sprite.svg#close-view");
+   -webkit-mask-size: 16px 16px;
+           mask-size: 16px 16px;
+ }
+ 
+-:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__overlay {
++:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__overlay,
++.meta-sidebar__overlay {
+   z-index: 102;
+   position: fixed;
+   inset-block-start: 0;
+@@ -181,13 +206,15 @@ body[data-meta-sidebar=closed] .layout-region-node-secondary {
+   background: var(--gin-bg-layer2);
+ }
+ 
+-body[data-meta-sidebar=open] :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__overlay {
++body[data-meta-sidebar=open] :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__overlay,
++body[data-meta-sidebar=open] .meta-sidebar__overlay {
+   opacity: .9;
+   visibility: visible;
+ }
+ 
+ @media (min-width: 64em) {
+-  :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__overlay {
++  :is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar__overlay,
++  .meta-sidebar__overlay {
+     display: none;
+   }
+ }
+diff --git a/styles/components/sidebar.scss b/styles/components/sidebar.scss
+index 0c3316b5..aeb6daba 100644
+--- a/styles/components/sidebar.scss
++++ b/styles/components/sidebar.scss
+@@ -62,119 +62,118 @@ body[data-meta-sidebar=open] {
+   }
+ }
+ 
+-:is(#extra-specificity-hack, [data-drupal-admin-styles]) {
+-  .meta-sidebar {
+-    &__close {
+-      cursor: pointer;
+-      background: transparent;
+-      height: 32px;
+-      width: 32px;
+-      border-radius: var(--gin-border-m);
+-
+-      @media (prefers-reduced-motion: no-preference) {
+-        transition: background var(--gin-transition-fast);
+-      }
++:is(#extra-specificity-hack, [data-drupal-admin-styles]) .meta-sidebar,
++.meta-sidebar {
++  &__close {
++    cursor: pointer;
++    background: transparent;
++    height: 32px;
++    width: 32px;
++    border-radius: var(--gin-border-m);
++
++    @media (prefers-reduced-motion: no-preference) {
++      transition: background var(--gin-transition-fast);
++    }
+ 
+-      &::before {
+-        content: "";
+-        display: inline-block;
+-        width: 100%;
+-        height: 100%;
+-        mask-repeat: no-repeat;
+-        mask-position: center center;
+-        background-color: var(--gin-icon-color);
+-      }
++    &::before {
++      content: "";
++      display: inline-block;
++      width: 100%;
++      height: 100%;
++      mask-repeat: no-repeat;
++      mask-position: center center;
++      background-color: var(--gin-icon-color);
++    }
+ 
+-      &:hover, &:focus {
+-        background-color: var(--gin-color-primary-light);
++    &:hover, &:focus {
++      background-color: var(--gin-color-primary-light);
+ 
+-        &::before {
+-          background-color: var(--gin-color-primary);
+-        }
++      &::before {
++        background-color: var(--gin-color-primary);
+       }
++    }
+ 
+-      &.is-active {
+-        background-color: var(--gin-color-primary-light-hover);
++    &.is-active {
++      background-color: var(--gin-color-primary-light-hover);
+ 
+-        &::before {
+-          background-color: var(--gin-color-primary-active);
+-        }
++      &::before {
++        background-color: var(--gin-color-primary-active);
+       }
+     }
++  }
+ 
+-    &__trigger {
+-      cursor: pointer;
+-      background: transparent;
+-      display: block;
+-      width: 32px;
+-      height: 32px;
+-      border-radius: var(--gin-border-m);
++  &__trigger {
++    cursor: pointer;
++    background: transparent;
++    display: block;
++    width: 32px;
++    height: 32px;
++    border-radius: var(--gin-border-m);
+ 
+-      @media (prefers-reduced-motion: no-preference) {
+-        transition: background var(--gin-transition-fast);
+-      }
++    @media (prefers-reduced-motion: no-preference) {
++      transition: background var(--gin-transition-fast);
++    }
+ 
+-      &::before {
+-        display: inline-block;
+-        width: 100%;
+-        height: 100%;
+-        content: "";
+-        mask-repeat: no-repeat;
+-        mask-position: center center;
+-        background-color: var(--gin-icon-color);
+-        mask-image: icon('sidebar');
+-        mask-size: var(--gin-icon-size-sidebar-toggle) var(--gin-icon-size-sidebar-toggle);
+-        border-radius: 50%;
+-      }
++    &::before {
++      display: inline-block;
++      width: 100%;
++      height: 100%;
++      content: "";
++      mask-repeat: no-repeat;
++      mask-position: center center;
++      background-color: var(--gin-icon-color);
++      mask-image: icon('sidebar');
++      mask-size: var(--gin-icon-size-sidebar-toggle) var(--gin-icon-size-sidebar-toggle);
++      border-radius: 50%;
++    }
+ 
+-      &:hover, &:focus, &.is-active, &.is-active:hover {
+-        background-color: var(--gin-color-primary-light);
++    &:hover, &:focus, &.is-active, &.is-active:hover {
++      background-color: var(--gin-color-primary-light);
+ 
+-        &::before {
+-          background-color: var(--gin-color-primary);
+-        }
++      &::before {
++        background-color: var(--gin-color-primary);
+       }
++    }
+ 
+-      &.is-active {
+-        background-color: var(--gin-bg-item-hover);
+-      }
++    &.is-active {
++      background-color: var(--gin-bg-item-hover);
+     }
++  }
+ 
+-    &__close {
+-      z-index: 104;
+-      position: absolute;
+-      inset-block-start: 18px;
+-      inset-inline-end: var(--gin-spacing-m);
++  &__close {
++    z-index: 104;
++    position: absolute;
++    inset-block-start: 18px;
++    inset-inline-end: var(--gin-spacing-m);
+ 
+-      @include mq(large) {
+-        display: none;
+-      }
++    @include mq(large) {
++      display: none;
++    }
+ 
+-      &::before {
+-        mask-image: icon('close');
+-        mask-size: 16px 16px;
+-      }
++    &::before {
++      mask-image: icon('close');
++      mask-size: 16px 16px;
+     }
++  }
+ 
+-    &__overlay {
+-      z-index: 102;
+-      position: fixed;
+-      inset-block-start: 0;
+-      inset-inline-start: 0;
+-      width: 100%;
+-      height: 100%;
+-      opacity: 0;
+-      visibility: hidden;
+-      background: var(--gin-bg-layer2);
++  &__overlay {
++    z-index: 102;
++    position: fixed;
++    inset-block-start: 0;
++    inset-inline-start: 0;
++    width: 100%;
++    height: 100%;
++    opacity: 0;
++    visibility: hidden;
++    background: var(--gin-bg-layer2);
+ 
+-      body[data-meta-sidebar=open] & {
+-        opacity: .9;
+-        visibility: visible;
+-      }
++    body[data-meta-sidebar=open] & {
++      opacity: .9;
++      visibility: visible;
++    }
+ 
+-      @include mq(large) {
+-        display: none;
+-      }
++    @include mq(large) {
++      display: none;
+     }
+   }
+ }
