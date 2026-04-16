@@ -1,0 +1,41 @@
+id: aa_d7_taxonomy_term_author
+label: Drupal 7 Taxonomy Term Authors
+migration_tags:
+  - 'Drupal 7'
+  - 'Audiofic Archive'
+source:
+  key: migrate
+  plugin: d7_taxonomy_term
+  bundle: vocabulary_2
+  constants:
+    vid: 'author'
+process:
+  tid: tid
+  revision_id: tid
+  vid: constants/vid
+  name:
+    -
+      plugin: explode
+      source: name
+      delimiter: '|'
+    -
+      plugin: extract
+      index: [0]
+  'description/value': description
+  'description/format': format
+  weight: weight
+  parent_id:
+    plugin: skip_on_empty
+    method: process
+    source: parent
+  parent:
+    plugin: default_value
+    default_value: 0
+    source: '@parent_id'
+  changed: timestamp
+  langcode: language
+destination:
+  plugin: entity:taxonomy_term
+migration_dependencies:
+  required: { }
+  optional: { }

@@ -1,0 +1,123 @@
+id: aa_d7_podfic_post
+label: Drupal 7 Podfic Post
+migration_tags:
+  - 'Drupal 7'
+  - 'Audiofic Archive'
+source:
+  key: migrate
+  plugin: d7_node
+  node_type: post
+  constants:
+    anon_user: 0
+process:
+  nid: nid
+  vid: vid
+  langcode:
+    plugin: default_value
+    source: language
+    default_value: "und"
+  title: title
+  uid: constants/anon_user
+  status: status
+  created: created
+  changed: changed
+  promote: promote
+  sticky: sticky
+  revision_uid: constants/anon_user
+  revision_log: log
+  revision_timestamp: timestamp
+  path: path
+  'body/value':
+    -
+      plugin: extract
+      source: body
+      index:
+        - 0
+        - value
+    -
+      plugin: aa_newlines_to_html
+  'body/format':
+    plugin: default_value
+    default_value: 'legacy_work_html'
+  field_author:
+    plugin: sub_process
+    source: taxonomy_vocabulary_2
+    process:
+      target_id: tid
+  field_category:
+    plugin: sub_process
+    source: field_category
+    process:
+      target_id: tid
+  field_fandom2:
+    plugin: sub_process
+    source: taxonomy_vocabulary_1
+    process:
+      target_id: tid
+  field_format:
+    plugin: sub_process
+    source: taxonomy_vocabulary_7
+    process:
+      target_id: tid
+  field_language:
+    -
+      plugin: sub_process
+      source: taxonomy_vocabulary_11
+      process:
+        target_id: tid
+    -
+      plugin: default_value
+      default_value:
+        - target_id: 22783 # TODO: Fill this value CORRECTLY before importing - it should be 22823, but double check!
+  field_relationship:
+    plugin: sub_process
+    source: taxonomy_vocabulary_12
+    process:
+      target_id: tid
+  field_rating:
+    plugin: sub_process
+    source: field_rating
+    process:
+      target_id: tid
+  field_reader:
+    plugin: sub_process
+    source: taxonomy_vocabulary_6
+    process:
+      target_id: tid
+  field_owner:
+    plugin: sub_process
+    source: taxonomy_vocabulary_6
+    process:
+      target_id: tid
+  field_legacy_series:
+    plugin: sub_process
+    source: field_series
+    process:
+      target_id: tid
+  field_length:
+    plugin: sub_process
+    source: taxonomy_vocabulary_3
+    process:
+      target_id: tid
+  field_warning:
+    plugin: sub_process
+    source: field_warning
+    process:
+      target_id: tid
+destination:
+  plugin: entity:node
+  default_bundle: 'legacy_work'
+migration_dependencies:
+  required:
+    - aa_d7_taxonomy_term_author
+    - aa_d7_taxonomy_term_category
+    - aa_d7_taxonomy_term_fandom
+    - aa_d7_taxonomy_term_info
+    - aa_d7_taxonomy_term_language
+    - aa_d7_taxonomy_term_pairings
+    - aa_d7_taxonomy_term_rating
+    - aa_d7_taxonomy_term_reader
+    - aa_d7_taxonomy_term_series
+    - aa_d7_taxonomy_term_time
+    - aa_d7_taxonomy_term_warning
+  optional: { }

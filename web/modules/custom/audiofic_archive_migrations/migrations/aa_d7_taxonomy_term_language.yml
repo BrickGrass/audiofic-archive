@@ -1,0 +1,38 @@
+id: aa_d7_taxonomy_term_language
+label: Drupal 7 Taxonomy Term Langauge
+migration_tags:
+  - 'Drupal 7'
+  - 'Audiofic Archive'
+source:
+  key: migrate
+  plugin: d7_taxonomy_term
+  bundle: vocabulary_11
+  constants:
+    vid: 'language'
+process:
+  tid: tid
+  revision_id: tid
+  vid: constants/vid
+  # Remove language| prefix
+  name:
+    plugin: substr
+    source: name
+    start: 9
+  'description/value': description
+  'description/format': format
+  weight: weight
+  parent_id:
+    plugin: skip_on_empty
+    method: process
+    source: parent
+  parent:
+    plugin: default_value
+    default_value: 0
+    source: '@parent_id'
+  changed: timestamp
+  langcode: language
+destination:
+  plugin: entity:taxonomy_term
+migration_dependencies:
+  required: { }
+  optional: { }

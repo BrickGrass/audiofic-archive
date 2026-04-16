@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - filter.format.basic_html
+    - filter.format.legacy_work_html
     - media.type.mp3_file
     - media.type.other_file
     - node.type.legacy_work
@@ -61,6 +62,7 @@ permissions:
   - 'revert work revisions'
   - 'update media'
   - 'use text format basic_html'
+  - 'use text format legacy_work_html'
   - 'view legacy_work revisions'
   - 'view own unpublished media'
   - 'view playlist revisions'
