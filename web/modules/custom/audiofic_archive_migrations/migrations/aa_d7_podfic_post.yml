@@ -68,7 +68,7 @@ process:
     -
       plugin: default_value
       default_value:
-        - target_id: 22783 # TODO: Fill this value CORRECTLY before importing - it should be 22823, but double check!
+        - target_id: 22823 # TODO: Fill this value CORRECTLY before importing - it should be 22823, but double check!
   field_relationship:
     plugin: sub_process
     source: taxonomy_vocabulary_12
