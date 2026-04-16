@@ -251,14 +251,17 @@ class AASearchThemeHooks {
     $url_query = implode('?', array_slice($url_sections, 1, count($url_sections)));
     if ($remove_page && strlen($url_query) > 0) {
       $url_query_sections = explode('&', $url_query);
-      // dpm($url_query_sections);
       $url_query_sections = array_reduce($url_query_sections, function ($acc, $query_section) {
         if (!str_starts_with($query_section, 'page')) {
           $acc[] = $query_section;
         }
         return $acc;
       });
-      $url_query = implode('&', $url_query_sections);
+      if (empty($url_query_sections)) {
+        $url_query = "";
+      } else {
+        $url_query = implode('&', $url_query_sections);
+      }
     }
 
     return ['url_path' => $url_path, 'url_query' => $url_query];

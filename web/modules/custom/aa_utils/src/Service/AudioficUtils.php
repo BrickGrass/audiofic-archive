@@ -127,7 +127,7 @@ class AudioficUtils {
   public function setCollectionMetadata(
     NodeInterface $collection,
     array $works,
-    int $updated_work_id = 999999,
+    ?int $updated_work_id = 999999,
     int $updated_work_duration_seconds = 0,
     bool $save = TRUE,
   ) {
@@ -164,7 +164,7 @@ class AudioficUtils {
   /**
    * Collects and collates the data of an array of works.
    */
-  private function fetchWorkData(array $works, int $updated_work_id, int $updated_work_duration_seconds) {
+  private function fetchWorkData(array $works, ?int $updated_work_id, int $updated_work_duration_seconds) {
     $data = [
       'authors' => [],
       'readers' => [],
