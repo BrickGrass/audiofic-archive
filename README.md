@@ -53,3 +53,6 @@ Once you have all of these dependencies installed, you will need to do the follo
 - `ddev composer require <module_name>` - installs a new PHP or drupal module and adds it to the composer.json
 - `ddev drush cex` - exports all config to the config/ directory
 - `ddev drush cim` - imports config from the config/ directory
+
+## How to do a migration
+See: [https://github.com/BrickGrass/audiofic-archive/pull/61](https://github.com/BrickGrass/audiofic-archive/pull/61)
