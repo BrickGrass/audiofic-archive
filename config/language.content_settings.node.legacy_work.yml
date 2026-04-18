@@ -1,0 +1,11 @@
+uuid: db24430d-2cf3-4c69-a526-958669fbf7f0
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.legacy_work
+id: node.legacy_work
+target_entity_type_id: node
+target_bundle: legacy_work
+default_langcode: site_default
+language_alterable: false

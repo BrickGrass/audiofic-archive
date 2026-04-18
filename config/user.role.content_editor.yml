@@ -12,12 +12,10 @@ dependencies:
     - node.type.work
     - taxonomy.vocabulary.author
     - taxonomy.vocabulary.cover_artist
-    - taxonomy.vocabulary.curator
     - taxonomy.vocabulary.fandom
     - taxonomy.vocabulary.reader
     - taxonomy.vocabulary.relationship
   module:
-    - access_by_ref
     - contextual
     - file
     - file_download
@@ -35,7 +33,6 @@ is_admin: false
 permissions:
   - 'access contextual links'
   - 'access file download'
-  - 'access node by reference'
   - 'cancel account'
   - 'create legacy_work content'
   - 'create mp3_file media'
@@ -43,7 +40,6 @@ permissions:
   - 'create playlist content'
   - 'create terms in author'
   - 'create terms in cover_artist'
-  - 'create terms in curator'
   - 'create terms in fandom'
   - 'create terms in reader'
   - 'create terms in relationship'
@@ -54,17 +50,8 @@ permissions:
   - 'delete own other_file media'
   - 'edit own mp3_file media'
   - 'edit own other_file media'
-  - 'revert all revisions'
-  - 'revert any mp3_file media revisions'
-  - 'revert any other_file media revisions'
-  - 'revert legacy_work revisions'
-  - 'revert playlist revisions'
-  - 'revert work revisions'
   - 'update media'
   - 'use text format basic_html'
   - 'use text format legacy_work_html'
-  - 'view legacy_work revisions'
   - 'view own unpublished media'
-  - 'view playlist revisions'
   - 'view the administration theme'
-  - 'view work revisions'

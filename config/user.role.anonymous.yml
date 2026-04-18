@@ -4,9 +4,6 @@ status: true
 dependencies:
   config:
     - filter.format.basic_html
-    - taxonomy.vocabulary.author
-    - taxonomy.vocabulary.cover_artist
-    - taxonomy.vocabulary.reader
   module:
     - contact
     - file_download
@@ -23,9 +20,6 @@ permissions:
   - 'access file download'
   - 'access site-wide contact form'
   - 'access user profiles'
-  - 'create terms in author'
-  - 'create terms in cover_artist'
-  - 'create terms in reader'
   - 'use text format basic_html'
   - 'view media'
   - 'view the administration theme'

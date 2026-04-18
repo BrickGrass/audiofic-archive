@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.node.work.body
+    - field.field.node.work.field_archive_lock
     - field.field.node.work.field_author
     - field.field.node.work.field_category
     - field.field.node.work.field_completion_status
@@ -41,6 +42,16 @@ targetEntityType: node
 bundle: work
 mode: default
 content:
+  field_archive_lock:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 121
+    region: content
   field_category:
     type: entity_reference_label
     label: above

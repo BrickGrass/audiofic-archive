@@ -5,6 +5,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.playlist.body
+    - field.field.node.playlist.field_archive_lock
     - field.field.node.playlist.field_author
     - field.field.node.playlist.field_category
     - field.field.node.playlist.field_cover
@@ -88,6 +89,7 @@ content:
     region: content
 hidden:
   body: true
+  field_archive_lock: true
   field_category: true
   field_fandom2: true
   field_format: true
