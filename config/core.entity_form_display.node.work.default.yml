@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.node.work.body
+    - field.field.node.work.field_archive_lock
     - field.field.node.work.field_author
     - field.field.node.work.field_category
     - field.field.node.work.field_completion_status
@@ -53,7 +54,7 @@ third_party_settings:
       label: Tags
       region: content
       parent_name: ''
-      weight: 6
+      weight: 7
       format_type: details
       format_settings:
         classes: ''
@@ -71,7 +72,7 @@ third_party_settings:
       label: Links
       region: content
       parent_name: ''
-      weight: 8
+      weight: 9
       format_type: details
       format_settings:
         classes: ''
@@ -90,7 +91,7 @@ third_party_settings:
       label: Files
       region: content
       parent_name: ''
-      weight: 7
+      weight: 8
       format_type: details
       format_settings:
         classes: ''
@@ -107,7 +108,7 @@ third_party_settings:
       label: 'Series and festivals'
       region: content
       parent_name: ''
-      weight: 9
+      weight: 10
       format_type: details
       format_settings:
         classes: ''
@@ -126,7 +127,7 @@ third_party_settings:
       label: Attribution
       region: content
       parent_name: ''
-      weight: 5
+      weight: 6
       format_type: details
       format_settings:
         classes: ''
@@ -141,9 +142,16 @@ targetEntityType: node
 bundle: work
 mode: default
 content:
+  field_archive_lock:
+    type: boolean_checkbox
+    weight: 5
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
   field_author:
     type: tagify_entity_reference_autocomplete_widget
-    weight: 6
+    weight: 11
     region: content
     settings:
       match_operator: CONTAINS
@@ -177,7 +185,7 @@ content:
     third_party_settings: {  }
   field_cover_artist:
     type: tagify_entity_reference_autocomplete_widget
-    weight: 7
+    weight: 12
     region: content
     settings:
       match_operator: CONTAINS
@@ -261,7 +269,7 @@ content:
     third_party_settings: {  }
   field_owner:
     type: tagify_entity_reference_autocomplete_widget
-    weight: 4
+    weight: 9
     region: content
     settings:
       match_operator: CONTAINS
@@ -289,7 +297,7 @@ content:
     third_party_settings: {  }
   field_reader:
     type: tagify_entity_reference_autocomplete_widget
-    weight: 5
+    weight: 10
     region: content
     settings:
       match_operator: CONTAINS
@@ -351,7 +359,7 @@ content:
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 10
+    weight: 11
     region: content
     settings:
       display_label: true
@@ -363,6 +371,11 @@ content:
     settings:
       size: 60
       placeholder: ''
+    third_party_settings: {  }
+  url_redirects:
+    weight: 12
+    region: content
+    settings: {  }
     third_party_settings: {  }
 hidden:
   body: true

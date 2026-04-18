@@ -5,6 +5,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.legacy_work.body
+    - field.field.node.legacy_work.field_archive_lock
     - field.field.node.legacy_work.field_author
     - field.field.node.legacy_work.field_category
     - field.field.node.legacy_work.field_cover
@@ -82,6 +83,7 @@ content:
     region: content
 hidden:
   body: true
+  field_archive_lock: true
   field_category: true
   field_duration: true
   field_format: true

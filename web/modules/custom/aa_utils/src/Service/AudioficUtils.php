@@ -71,7 +71,7 @@ class AudioficUtils {
   /**
    * Removes duplicate entities in an array.
    *
-   * Uses the id() menthod to calculate uniqueness.
+   * Uses the id() method to calculate uniqueness.
    */
   public function removeDuplicateEntities(array $entities): array {
     $ids = array_map(fn ($tag) => $tag->id(), $entities);
@@ -145,6 +145,7 @@ class AudioficUtils {
     $collection->set('field_languages', $data['languages']);
     $duration_interval = $this->secondsToDateInterval($data['duration']);
     $collection->field_duration = ['duration' => $duration_interval, 'seconds' => $data['duration']];
+    $collection->set('field_archive_lock', $data['archive_locked']);
     if ($save) {
       $collection->save();
     }
@@ -159,6 +160,19 @@ class AudioficUtils {
       'mins' => str_pad(floor(floor($total_seconds / 60) % 60), 2, '0', STR_PAD_LEFT),
       'seconds' => str_pad($total_seconds % 60, 2, '0', STR_PAD_LEFT),
     ];
+  }
+
+  /**
+   * Checks if a node is archive locked or not.
+   *
+   * Nodes without a archive lock field are never locked.
+   */
+  public function isNodeArchiveLocked(NodeInterface $node): bool {
+    if (!$node->hasField('field_archive_lock')) {
+      return FALSE;
+    }
+
+    return (bool) $node->get('field_archive_lock')->value;
   }
 
   /**
@@ -177,6 +191,7 @@ class AudioficUtils {
       'warnings' => [],
       'languages' => [],
       'duration' => 0,
+      'archive_locked' => [],
     ];
 
     /** @var \Drupal\node\NodeInterface $work */
@@ -189,6 +204,7 @@ class AudioficUtils {
       $data['ratings'] = array_merge($data['ratings'], $work->get('field_rating')->referencedEntities());
       $data['format_info'] = array_merge($data['format_info'], $work->get('field_format')->referencedEntities());
       $data['warnings'] = array_merge($data['warnings'], $work->get('field_warning')->referencedEntities());
+      $data['archive_locked'][] = $this->isNodeArchiveLocked($work);
 
       if ($work->hasField('field_category')) {
         $data['categories'] = array_merge($data['categories'], $work->get('field_category')->referencedEntities());
@@ -222,7 +238,7 @@ class AudioficUtils {
     }
 
     foreach ($data as $key => $value) {
-      if ($key == 'duration') {
+      if ($key == 'duration' || $key == 'archive_locked') {
         continue;
       }
       $data[$key] = $this->removeDuplicateEntities($data[$key]);
@@ -245,6 +261,13 @@ class AudioficUtils {
       }
     }
     $data['ratings'] = [$rating];
+
+    if (!in_array(FALSE, $data['archive_locked'])) {
+      $data['archive_locked'] = TRUE;
+    } else {
+      $data['archive_locked'] = FALSE;
+    }
+
     return $data;
   }
 

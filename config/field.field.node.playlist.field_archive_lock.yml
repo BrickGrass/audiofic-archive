@@ -1,17 +1,18 @@
-uuid: 92cf99fc-bb28-4bf1-b913-23e8114350c8
+uuid: 8fba8699-3f76-4354-ba36-e096a654f411
 langcode: en
 status: true
 dependencies:
   config:
+    - field.storage.node.field_archive_lock
     - node.type.playlist
-id: node.playlist.promote
-field_name: promote
+id: node.playlist.field_archive_lock
+field_name: field_archive_lock
 entity_type: node
 bundle: playlist
-label: 'Promoted to front page'
+label: 'Archive Lock'
 description: ''
 required: false
-translatable: true
+translatable: false
 default_value:
   -
     value: 0

@@ -1,0 +1,23 @@
+uuid: 0852a76b-e83b-4f16-84b8-5e689f78b96c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_archive_lock
+    - node.type.legacy_work
+id: node.legacy_work.field_archive_lock
+field_name: field_archive_lock
+entity_type: node
+bundle: legacy_work
+label: 'Archive Lock'
+description: 'If you archive lock a work it is only accessible to logged in users. However, the files attached to this work are always accessible to anyone on the internet if they have the direct link. '
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

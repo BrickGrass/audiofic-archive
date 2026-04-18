@@ -5,6 +5,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.work.body
+    - field.field.node.work.field_archive_lock
     - field.field.node.work.field_author
     - field.field.node.work.field_category
     - field.field.node.work.field_completion_status
@@ -107,6 +108,7 @@ content:
     region: content
 hidden:
   body: true
+  field_archive_lock: true
   field_category: true
   field_completion_status: true
   field_cover_artist: true

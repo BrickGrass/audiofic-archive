@@ -3,12 +3,10 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.rss
     - core.entity_view_mode.node.teaser
     - node.type.work
   module:
     - audiofic_archive_player
-    - audiofic_archive_rss
     - node
     - user
 id: work
@@ -172,17 +170,6 @@ display:
           break_phrase: false
           not: false
       filters:
-        status:
-          id: status
-          table: node_field_data
-          field: status
-          entity_type: node
-          entity_field: status
-          plugin_id: boolean
-          value: '1'
-          group: 1
-          expose:
-            operator: ''
         type:
           id: type
           table: node_field_data

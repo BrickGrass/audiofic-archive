@@ -5,6 +5,7 @@ dependencies:
   config:
     - core.entity_form_mode.node.limited_post_entry
     - field.field.node.playlist.body
+    - field.field.node.playlist.field_archive_lock
     - field.field.node.playlist.field_author
     - field.field.node.playlist.field_category
     - field.field.node.playlist.field_cover
@@ -116,8 +117,14 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  url_redirects:
+    weight: 50
+    region: content
+    settings: {  }
+    third_party_settings: {  }
 hidden:
   body: true
+  field_archive_lock: true
   field_category: true
   field_duration: true
   field_fandom2: true
