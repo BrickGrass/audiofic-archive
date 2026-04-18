@@ -16,7 +16,6 @@
     "require": {
         "composer/installers": "^1.9",
         "cweagans/composer-patches": "^1.7",
-        "drupal/access_by_ref": "^4.0",
         "drupal/admin_toolbar": "^3.4",
         "drupal/auto_entitylabel": "^3.3",
         "drupal/better_exposed_filters": "^7.0",
