@@ -156,7 +156,6 @@ set classes = [
               <span class="badge bg-primary">Legacy Work</span>
             {% endif %}
 
-            {# TODO: if open/closed status on series/collections stays: render it here as a WIP lozenge #}
             {{ content.field_completion_status }}
           </div>
           <div class="d-flex flex-column justify-content-end text-end full-work-dates">
@@ -214,7 +213,6 @@ set classes = [
           {% endif %}
 
           {% if node.field_legacy_series is not empty %}
-            {# TODO: Could fetch position in series as well, if we care to. #}
             {% set legacy_series = node.field_legacy_series[0].entity %}
             <span>
               <b>Part of Series</b>
@@ -273,8 +271,6 @@ set classes = [
         {% endif %}
       </div>
       <div class="full-work-links-downloads">
-        {# TODO: not displaying attribution links for rec lists. Would need to edit this if we do decide
-        we want to display them. #}
         {% set warning_text = "To leave feedback please see the" %}
         {% set warning_text_multiple = "written work(s) and podfic post(s)." %}
 
@@ -295,8 +291,6 @@ set classes = [
             <p>
               Written work(s):
               {% for link in text_links %}
-                {# TODO: for multiple links on a single work use the links text field
-                to add a label? #}
                 {% set title = content_type == "work" ? "link %s"|format(loop.index) : link.title %}
                 <a href="{{ link.uri }}">{{ title }}</a>{% if not loop.last %},{% endif %}
               {% endfor %}
