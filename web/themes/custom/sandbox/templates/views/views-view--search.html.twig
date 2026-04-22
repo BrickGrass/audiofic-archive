@@ -206,6 +206,10 @@
       </div>
     {% endif %}
 
+    {% if pager %}
+      {{ pager }}
+    {% endif %}
+
     {% if rows %}
       <div class="view-content row">
         {{ rows }}
