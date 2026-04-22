@@ -51,10 +51,11 @@
         "drupal/views_contextual_filters_or": "^1.4",
         "drupal/weight": "^3.5",
         "drush/drush": "^13",
-        "james-heinrich/getid3": "^1.9"
+        "james-heinrich/getid3": "^1.9",
+        "weitzman/drupal-test-traits": "^2.6"
     },
     "require-dev": {
-        "drupal/core-dev": "^11"
+        "drupal/core-dev": "^11.3"
     },
     "conflict": {
         "drupal/drupal": "*"

@@ -16,11 +16,11 @@ class AudioficUtils {
   private const MINUTE = 60;
   private const HOUR = self::MINUTE * 60;
   private const LENGTHRANGEMAPPING = [
-    'under 10 mins' =>                   self::MINUTE * 5,
-    '10-20 mins'    =>                   self::MINUTE * 15,
-    '20-30 mins'    =>                   self::MINUTE * 25,
-    '30-45 mins'    =>                   self::MINUTE * 37,
-    '45 mins-1hr'   =>                   self::MINUTE * 52,
+    'under 10 mins' =>                  self::MINUTE * 5,
+    '10-20 mins'    =>                  self::MINUTE * 15,
+    '20-30 mins'    =>                  self::MINUTE * 25,
+    '30-45 mins'    =>                  self::MINUTE * 37,
+    '45 mins-1hr'   =>                  self::MINUTE * 52,
     '1-1:30 hrs'   => self::HOUR      + self::MINUTE * 15,
     '1:30-2 hrs'   => self::HOUR      + self::MINUTE * 45,
     '2-2:30 hrs'   => self::HOUR * 2  + self::MINUTE * 15,
@@ -93,6 +93,17 @@ class AudioficUtils {
   }
 
   /**
+   * Converts a total seconds value to an array containing HH:MM:SS strings.
+   */
+  public function secondsToHms(int $total_seconds): array {
+    return [
+      'hours' => str_pad(floor($total_seconds / 3600), 2, '0', STR_PAD_LEFT),
+      'mins' => str_pad(floor(floor($total_seconds / 60) % 60), 2, '0', STR_PAD_LEFT),
+      'seconds' => str_pad($total_seconds % 60, 2, '0', STR_PAD_LEFT),
+    ];
+  }
+
+  /**
    * Converts a total N.O. seconds to a date interval.
    */
   public function secondsToDateInterval(int $total_seconds): \DateInterval {
@@ -149,17 +160,6 @@ class AudioficUtils {
     if ($save) {
       $collection->save();
     }
-  }
-
-  /**
-   * Converts a total seconds value to an array containing HH:MM:SS string values.
-   */
-  public function secondsToHMS(int $total_seconds): array {
-    return [
-      'hours' => str_pad(floor($total_seconds / 3600), 2, '0', STR_PAD_LEFT),
-      'mins' => str_pad(floor(floor($total_seconds / 60) % 60), 2, '0', STR_PAD_LEFT),
-      'seconds' => str_pad($total_seconds % 60, 2, '0', STR_PAD_LEFT),
-    ];
   }
 
   /**

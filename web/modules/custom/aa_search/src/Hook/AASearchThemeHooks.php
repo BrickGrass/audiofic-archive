@@ -177,7 +177,7 @@ class AASearchThemeHooks {
 
     $total_seconds = $variables['element']['#value'];
     if ($total_seconds !== '') {
-      $formatted_duration = $this->utils->secondsToHMS((int) $total_seconds);
+      $formatted_duration = $this->utils->secondsToHms((int) $total_seconds);
       $variables['hours'] = $formatted_duration['hours'];
       $variables['mins'] = $formatted_duration['mins'];
       $variables['seconds'] = $formatted_duration['seconds'];

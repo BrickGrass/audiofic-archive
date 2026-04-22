@@ -243,7 +243,7 @@ class AudioficArchiveRssTokenHooks {
         case 'field_duration_seconds':
         case 'field_duration_seconds_1':
           $duration_value = array_first($value);
-          $filter_str = !empty($duration_value) ? implode(':', $this->utils->secondsToHMS((int) $duration_value)) : '';
+          $filter_str = !empty($duration_value) ? implode(':', $this->utils->secondsToHms((int) $duration_value)) : '';
           break;
 
         default:
