@@ -18,8 +18,11 @@ dependencies:
     - field.storage.node.field_relationship
     - field.storage.node.field_series
     - field.storage.node.field_warning
+    - field.storage.taxonomy_term.field_canon_sibling
+    - field.storage.taxonomy_term.field_canonicity
     - search_api.server.audiofic_solr
   module:
+    - aa_search
     - node
     - search_api_solr
     - taxonomy
@@ -161,6 +164,28 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_fandom2
+  field_fandom2_canon_sibling:
+    label: 'Fandom » Taxonomy term » Canon Sibling'
+    datasource_id: 'entity:node'
+    property_path: 'field_fandom2:entity:field_canon_sibling'
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_fandom2
+        - field.storage.taxonomy_term.field_canon_sibling
+      module:
+        - taxonomy
+  field_fandom2_canonicity:
+    label: 'Fandom » Taxonomy term » Canonicity'
+    datasource_id: 'entity:node'
+    property_path: 'field_fandom2:entity:field_canonicity'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_fandom2
+        - field.storage.taxonomy_term.field_canonicity
+      module:
+        - taxonomy
   field_fandom__name:
     label: 'Fandom » Taxonomy term » Name'
     datasource_id: 'entity:node'
@@ -259,6 +284,28 @@ field_settings:
         - field.storage.node.field_relationship
       module:
         - taxonomy
+  field_relationship_canon_sibling:
+    label: 'Ship » Taxonomy term » Canon Sibling'
+    datasource_id: 'entity:node'
+    property_path: 'field_relationship:entity:field_canon_sibling'
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_relationship
+        - field.storage.taxonomy_term.field_canon_sibling
+      module:
+        - taxonomy
+  field_relationship_canonicity:
+    label: 'Ship » Taxonomy term » Canonicity'
+    datasource_id: 'entity:node'
+    property_path: 'field_relationship:entity:field_canonicity'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_relationship
+        - field.storage.taxonomy_term.field_canonicity
+      module:
+        - taxonomy
   field_series__title:
     label: 'Series » Content » Title'
     datasource_id: 'entity:node'
@@ -317,6 +364,8 @@ field_settings:
     datasource_id: 'entity:node'
     property_path: status
     type: boolean
+    indexed_locked: true
+    type_locked: true
     dependencies:
       module:
         - node
@@ -325,8 +374,6 @@ field_settings:
     datasource_id: 'entity:node'
     property_path: status
     type: boolean
-    indexed_locked: true
-    type_locked: true
     dependencies:
       module:
         - node
@@ -381,7 +428,7 @@ processor_settings:
   entity_type: {  }
   hierarchy:
     weights:
-      preprocess_index: -45
+      preprocess_index: -16
     fields:
       field_fandom2: taxonomy_term-parent
   html_filter:
@@ -394,11 +441,13 @@ processor_settings:
       - body
       - field_author__name
       - field_completion_status
+      - field_fandom2_canonicity
       - field_fandom__name
       - field_format__name
       - field_legacy_series__name
       - field_reader__name
       - field_relationship__name
+      - field_relationship_canonicity
       - field_series__title
       - name
       - name_1
@@ -413,6 +462,10 @@ processor_settings:
       h3: 2.0
       strong: 2.0
   language_with_fallback: {  }
+  node_taxonomy_canonicity:
+    fields:
+      field_fandom2: field_fandom2
+      field_relationship: field_relationship
   rendered_item: {  }
   solr_date_range:
     weights:

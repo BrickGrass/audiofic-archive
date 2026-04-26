@@ -1,17 +1,15 @@
-uuid: 2dde23b6-05d0-4520-ae39-c1e972811a98
+uuid: 378ea92e-da14-4004-808b-d6132dfdeafc
 langcode: en
 status: true
 dependencies:
   module:
     - taxonomy
-id: taxonomy_term.field_notes
-field_name: field_notes
+id: taxonomy_term.field_canon_sibling
+field_name: field_canon_sibling
 entity_type: taxonomy_term
-type: string
+type: entity_reference
 settings:
-  max_length: 255
-  case_sensitive: false
-  is_ascii: false
+  target_type: taxonomy_term
 module: core
 locked: false
 cardinality: 1

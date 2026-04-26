@@ -24,6 +24,8 @@ class AAGinFormHooks {
    */
   #[Hook('form_alter')]
   public function formAlter(&$form, FormStateInterface $form_state, string $form_id) {
+    $this->alterTagifySelectionHandler($form);
+
     if (in_array($form_id, ['node_work_form', 'node_work_edit_form'])) {
       $this->insertSeriesCreationWidget($form);
     }
@@ -156,6 +158,28 @@ class AAGinFormHooks {
     }
 
     $form['#attached']['library'][] = 'aa_gin/add-new-tag';
+  }
+
+  /**
+   * Alter tagify entity autocomplete widgets to use custom selection handler.
+   */
+  private function alterTagifySelectionHandler(&$form) {
+    foreach ($form as $key => $value) {
+      if (!is_array($value)) {
+        continue;
+      }
+
+      if (!isset($value['widget']) || !isset($value['widget']['#type'])) {
+        continue;
+      }
+
+      if ($value['widget']['#type'] != 'entity_autocomplete_tagify') {
+        continue;
+      }
+
+      $form[$key]['widget']['#selection_handler'] = 'search_index:taxonomy_term';
+      $form[$key]['widget']['#selection_settings']['search_index'] = 'canon_taxonomy_terms';
+    }
   }
 
   /**

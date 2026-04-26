@@ -40,7 +40,7 @@ class AudioficEntityAutocompleteMatcher implements AudioficEntityAutocompleteMat
    * @param string $string
    *   (optional) The label of the entity to query by.
    * @param array $selected
-   *   Am array of selected values.
+   *   An array of selected values.
    *
    * @return array
    *   An array of matched entity labels, in the format required by the AJAX
@@ -71,9 +71,13 @@ class AudioficEntityAutocompleteMatcher implements AudioficEntityAutocompleteMat
             continue;
           }
 
-          if ($label !== NULL) {
-            $matches[$entity_id] = $this->buildAudioficItem($entity_id, $label);
+          if ($label === NULL) {
+            continue;
           }
+
+          // TODO: Fetch entity & confirm that if it has a canonicity field, it is canon!
+
+          $matches[$entity_id] = $this->buildAudioficItem($entity_id, $label);
         }
       }
 

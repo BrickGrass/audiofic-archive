@@ -1,0 +1,23 @@
+uuid: 2ee3af28-c537-4a3f-94eb-3baaddf8be6b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_canonicity
+    - taxonomy.vocabulary.relationship
+  module:
+    - options
+id: taxonomy_term.relationship.field_canonicity
+field_name: field_canonicity
+entity_type: taxonomy_term
+bundle: relationship
+label: Canonicity
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: unsorted
+default_value_callback: ''
+settings: {  }
+field_type: list_string

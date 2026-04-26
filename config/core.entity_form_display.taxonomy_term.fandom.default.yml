@@ -3,9 +3,12 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.taxonomy_term.fandom.field_canon_sibling
+    - field.field.taxonomy_term.fandom.field_canonicity
     - taxonomy.vocabulary.fandom
   module:
     - field_group
+    - tagify
 third_party_settings:
   field_group:
     group_new_fandom:
@@ -28,6 +31,26 @@ targetEntityType: taxonomy_term
 bundle: fandom
 mode: default
 content:
+  field_canon_sibling:
+    type: tagify_entity_reference_autocomplete_widget
+    weight: 101
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      placeholder: ''
+      suggestions_dropdown: 1
+      show_entity_id: 0
+      show_info_label: 0
+      info_label: ''
+      parent_selection: 1
+    third_party_settings: {  }
+  field_canonicity:
+    type: options_select
+    weight: 26
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   langcode:
     type: language_select
     weight: 2

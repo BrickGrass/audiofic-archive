@@ -1,17 +1,17 @@
-uuid: 64ec667f-01a5-4795-9af6-0be635d0b82a
+uuid: 53c77d3e-34fd-4b1c-bba2-d0a057dbb435
 langcode: en
 status: true
 dependencies:
   config:
-    - field.field.taxonomy_term.fandom.field_canon_sibling
-    - field.field.taxonomy_term.fandom.field_canonicity
-    - taxonomy.vocabulary.fandom
+    - field.field.taxonomy_term.relationship.field_canon_sibling
+    - field.field.taxonomy_term.relationship.field_canonicity
+    - taxonomy.vocabulary.relationship
   module:
     - options
     - text
-id: taxonomy_term.fandom.default
+id: taxonomy_term.relationship.default
 targetEntityType: taxonomy_term
-bundle: fandom
+bundle: relationship
 mode: default
 content:
   description:
