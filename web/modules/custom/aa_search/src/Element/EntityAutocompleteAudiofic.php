@@ -33,6 +33,8 @@ use Drupal\Core\Render\Attribute\FormElement;
  *   - target_bundles: Array of bundles to allow (omit to allow all bundles).
  *   - sort: Array with 'field' and 'direction' keys, determining how results
  *     will be sorted. Defaults to unsorted.
+ *   - search_index: The machine name of the search index to query for taxonomy
+ *     terms. Defaults to canon_taxonomy_terms.
  * - #autocreate: (optional) Array of settings used to auto-create entities
  *   that do not exist (omit to not auto-create entities). Elements:
  *   - bundle: (required) Bundle to use for auto-created entities.
@@ -51,8 +53,9 @@ class EntityAutocompleteAudiofic extends Textfield {
     $info = parent::getInfo();
 
     $info['#target_type'] = NULL;
-    $info['#selection_handler'] = 'default';
-    $info['#selection_settings'] = [];
+    $info['#selection_handler'] = 'search_index:taxonomy_term';
+    $info['#selection_settings'] = $info['#selection_settings'] ?? [];
+    $info['#selection_settings']['search_index'] = 'canon_taxonomy_terms';
     $info['#tags'] = FALSE;
     $info['#autocreate'] = NULL;
     $info['#show_entity_id'] = FALSE;

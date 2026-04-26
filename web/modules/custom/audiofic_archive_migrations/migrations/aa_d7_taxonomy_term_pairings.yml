@@ -27,6 +27,10 @@ process:
     source: '@parent_id'
   changed: timestamp
   langcode: language
+  field_canonicity:
+    plugin: default_value
+    default_value:
+      - value: 'canon'
 destination:
   plugin: entity:taxonomy_term
 migration_dependencies:

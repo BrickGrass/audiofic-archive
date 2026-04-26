@@ -1,0 +1,28 @@
+uuid: abf188d1-fd75-45d6-bc20-9db93d7193ae
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_canon_sibling
+    - taxonomy.vocabulary.fandom
+id: taxonomy_term.fandom.field_canon_sibling
+field_name: field_canon_sibling
+entity_type: taxonomy_term
+bundle: fandom
+label: 'Canon Sibling'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      fandom: fandom
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: fandom
+field_type: entity_reference

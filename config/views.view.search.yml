@@ -1083,19 +1083,6 @@ display:
             label: Duration
             field_identifier: field_duration_seconds
           exposed: true
-        random:
-          id: random
-          table: views
-          field: random
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: random
-          order: ASC
-          expose:
-            label: Random
-            field_identifier: random
-          exposed: true
         field_author_name:
           id: field_author_name
           table: search_api_index_work_and_series_search
@@ -1182,7 +1169,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: search_api_fulltext
-          operator: and
+          operator: or
           value: ''
           group: 1
           exposed: true
@@ -1204,6 +1191,7 @@ display:
             placeholder: ''
             searched_fields_id: search_api_fulltext_searched_fields
             value_maxlength: 128
+            value_max_words: null
             autocomplete_filter: 0
             autocomplete_min_chars: '0'
             autocomplete_items: '10'
@@ -2295,7 +2283,7 @@ display:
       footer: {  }
       display_extenders: {  }
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -2811,7 +2799,7 @@ display:
       display_extenders: {  }
       path: search/works/rss.xml
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -4226,7 +4214,7 @@ display:
       display_extenders: {  }
       path: search/collections/rss.xml
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -4740,7 +4728,7 @@ display:
       display_extenders: {  }
       path: taxonomy/term/%/rss.xml
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -5241,19 +5229,6 @@ display:
           expose:
             label: Title
             field_identifier: title
-          exposed: true
-        random:
-          id: random
-          table: views
-          field: random
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: random
-          order: ASC
-          expose:
-            label: Random
-            field_identifier: random
           exposed: true
         field_author_name:
           id: field_author_name
@@ -6291,7 +6266,7 @@ display:
       exposed_block: true
       display_extenders: {  }
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -6838,19 +6813,6 @@ display:
             label: Duration
             field_identifier: field_duration_seconds
           exposed: true
-        random:
-          id: random
-          table: views
-          field: random
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: random
-          order: ASC
-          expose:
-            label: Random
-            field_identifier: random
-          exposed: true
         field_author_name:
           id: field_author_name
           table: search_api_index_work_and_series_search
@@ -6915,7 +6877,7 @@ display:
         parent: 'menu_link_content:d3dc94a9-d87f-4628-9baa-6adda3da2923'
         context: '0'
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -7424,19 +7386,6 @@ display:
           expose:
             label: Duration
             field_identifier: field_duration_seconds
-          exposed: true
-        random:
-          id: random
-          table: views
-          field: random
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: random
-          order: ASC
-          expose:
-            label: Random
-            field_identifier: random
           exposed: true
         field_author_name:
           id: field_author_name
@@ -8544,7 +8493,7 @@ display:
         parent: 'menu_link_content:d3dc94a9-d87f-4628-9baa-6adda3da2923'
         context: '0'
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -9112,7 +9061,7 @@ display:
         parent: 'menu_link_content:d3dc94a9-d87f-4628-9baa-6adda3da2923'
         context: '0'
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'

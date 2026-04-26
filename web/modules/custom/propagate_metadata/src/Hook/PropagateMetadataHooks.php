@@ -41,6 +41,11 @@ class PropagateMetadataHooks {
       $entity_types['user']->addConstraint('UserNotAdminAndPodficcer');
       $entity_types['user']->addConstraint('AttributionTagNotAlreadyInUse');
     }
+
+    if (isset($entity_types['taxonomy_term'])) {
+      $entity_types['taxonomy_term']->addConstraint('CanonicalTagCannotHaveSibling');
+      $entity_types['taxonomy_term']->addConstraint('NonCanonicalTagMustHaveSibling');
+    }
   }
 
   /**

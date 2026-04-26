@@ -4,6 +4,7 @@ namespace Drupal\aa_utils\Service;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\node\NodeInterface;
+use Drupal\taxonomy\TermInterface;
 
 /**
  * Class AudioficTagUtils holds utility functions for node tags.
@@ -66,6 +67,13 @@ class AudioficTagUtils {
     }
 
     return $tags;
+  }
+
+  /**
+   * Checks if a term has canonicity data.
+   */
+  public function isTagCanonicityAware(TermInterface $term): bool {
+    return $term->hasField('field_canonicity') && $term->hasField('field_canon_sibling');
   }
 
 }

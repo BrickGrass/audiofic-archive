@@ -3,7 +3,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.taxonomy_term.language.field_notes
     - taxonomy.vocabulary.language
   module:
     - field_group
@@ -29,14 +28,6 @@ targetEntityType: taxonomy_term
 bundle: language
 mode: default
 content:
-  field_notes:
-    type: string_textfield
-    weight: 1
-    region: content
-    settings:
-      size: 60
-      placeholder: 'Add notes for the mods'
-    third_party_settings: {  }
   langcode:
     type: language_select
     weight: 2

@@ -82,6 +82,10 @@ class SimpleSearchApiForm extends FormBase {
       '#attributes' => ['title' => $this->t('Enter the terms you wish to search for.')],
       '#search_api_blocks' => TRUE,
     ];
+    $form['sort_bef_combine'] = [
+      '#type' => 'hidden',
+      '#default_value' => 'search_api_relevance_DESC',
+    ];
 
     $form['actions'] = ['#type' => 'actions'];
     $form['actions']['submit'] = [

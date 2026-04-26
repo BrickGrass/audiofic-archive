@@ -1,0 +1,30 @@
+uuid: aad63f93-6a84-4eaa-8c84-9d0739048cca
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - taxonomy
+id: taxonomy_term.field_canonicity
+field_name: field_canonicity
+entity_type: taxonomy_term
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: canon
+      label: Canon
+    -
+      value: non_canon
+      label: Non-Canon
+    -
+      value: unsorted
+      label: Unsorted
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

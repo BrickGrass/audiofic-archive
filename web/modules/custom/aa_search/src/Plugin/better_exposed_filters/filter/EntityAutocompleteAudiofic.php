@@ -56,7 +56,7 @@ class EntityAutocompleteAudiofic extends FilterWidgetBase implements ContainerFa
       '#type' => 'entity_autocomplete_aa',
       '#target_type' => $form[$field_id]['#target_type'],
       '#tags' => $form[$field_id]['#tags'],
-      '#selection_handler' => $form[$field_id]['#selection_handler'] ?? 'default',
+      '#selection_handler' => 'search_index:taxonomy_term',
       '#selection_settings' => $form[$field_id]['#selection_settings'] ?? [],
       '#match_operator' => 'CONTAINS',
       '#max_items' => 10,
@@ -64,6 +64,8 @@ class EntityAutocompleteAudiofic extends FilterWidgetBase implements ContainerFa
       '#attributes' => ['class' => [$field_id]],
       '#element_validate' => [[$this, 'elementValidate']],
     ];
+
+    $form[$field_id]['#selection_settings']['search_index'] = 'canon_taxonomy_terms';
 
     if ($this->configuration['advanced']['hide_label'] === TRUE) {
       $form[$field_id]['#title_display'] = 'invisible';

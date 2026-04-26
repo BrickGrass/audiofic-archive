@@ -99,7 +99,6 @@ class ComplexSearchApiForm extends FormBase {
         'field_author_name_DESC' => $this->t('Author (Z to A)'),
         'field_author_name_ASC' => $this->t('Author (A to Z)'),
         'search_api_relevance_DESC' => $this->t('Relevance'),
-        'random_DESC' => $this->t('Random'),
       ],
     ];
 
@@ -110,6 +109,7 @@ class ComplexSearchApiForm extends FormBase {
       // Allow multiple selection.
       '#tags' => TRUE,
       '#selection_settings' => [
+        'search_index' => 'canon_taxonomy_terms',
         'target_bundles' => ['fandom'],
       ],
     ];
@@ -121,6 +121,7 @@ class ComplexSearchApiForm extends FormBase {
       // Allow multiple selection.
       '#tags' => TRUE,
       '#selection_settings' => [
+        'search_index' => 'canon_taxonomy_terms',
         'target_bundles' => ['relationship'],
       ],
     ];

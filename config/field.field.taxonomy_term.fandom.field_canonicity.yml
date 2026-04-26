@@ -1,0 +1,23 @@
+uuid: 76060d75-a718-4a07-b776-d4901caa637a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_canonicity
+    - taxonomy.vocabulary.fandom
+  module:
+    - options
+id: taxonomy_term.fandom.field_canonicity
+field_name: field_canonicity
+entity_type: taxonomy_term
+bundle: fandom
+label: Canonicity
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: unsorted
+default_value_callback: ''
+settings: {  }
+field_type: list_string
