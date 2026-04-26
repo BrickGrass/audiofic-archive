@@ -71,13 +71,9 @@ class AudioficEntityAutocompleteMatcher implements AudioficEntityAutocompleteMat
             continue;
           }
 
-          if ($label === NULL) {
-            continue;
+          if ($label != NULL) {
+            $matches[$entity_id] = $this->buildAudioficItem($entity_id, $label);
           }
-
-          // TODO: Fetch entity & confirm that if it has a canonicity field, it is canon!
-
-          $matches[$entity_id] = $this->buildAudioficItem($entity_id, $label);
         }
       }
 
