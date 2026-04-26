@@ -47,8 +47,6 @@ class AAGinFormHooks {
   #[Hook('form_taxonomy_term_reader_form_alter')]
   #[Hook('form_taxonomy_term_cover_artist_form_alter')]
   public function formTaxonomyAlter(&$form, FormStateInterface $form_state, $form_id) {
-    dpm($form);
-
     $user = User::load($this->current_user->id());
     if ($user && $user->hasRole('administrator')) {
       return;
