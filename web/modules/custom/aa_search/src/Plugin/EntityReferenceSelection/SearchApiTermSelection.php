@@ -148,7 +148,7 @@ class SearchApiTermSelection extends DefaultSelection {
     $index = Index::load($search_index);
     $query = $index->query();
 
-    // TODO: Could consider terms plugin?
+    // TODO: Could consider terms parse mode plugin?
     /** @var \Drupal\search_api\ParseMode\ParseModeInterface $parse_mode */
     $parse_mode = $this->parseModePluginManager->createInstance('direct');
     $parse_mode->setConjunction('OR');
@@ -158,12 +158,6 @@ class SearchApiTermSelection extends DefaultSelection {
     if (is_array($target_bundles)) {
       $query->addCondition('vid', $target_bundles, 'IN');
     }
-
-    // TODO: Preprocessor to exclude non-canonical terms!
-    // If we try to do it here, it will not work and we will
-    // need two separate indexes, one for canonicals and one
-    // for terms that don't care about canonicity.
-    // $query->addCondition('field_canonicity', 'canonical');
 
     return $query;
   }
