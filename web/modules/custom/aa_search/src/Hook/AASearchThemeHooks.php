@@ -211,10 +211,15 @@ class AASearchThemeHooks {
 
         $variables['rss_feed'] = '/taxonomy/term/' . $tid . '/rss.xml?' . $url_data['url_query'];
         $variables['taxonomy_term'] = $term;
+
+        /** @var \Drupal\taxonomy\TermStorageInterface $taxonomy_term_storage */
+        $taxonomy_term_storage = $this->entity_type_manager->getStorage('taxonomy_term');
         if ($term->parent->target_id !== 0) {
-          $variables['term_parent'] = Term::load($term->parent->target_id);
+          $parents = $taxonomy_term_storage->loadAllParents($term->id());
+          unset($parents[$term->id()]);
+          $variables['term_parents'] = $parents;
         }
-        $variables['term_children'] = $this->entity_type_manager->getStorage('taxonomy_term')->loadTree(
+        $variables['term_children'] = $taxonomy_term_storage->loadTree(
           $term->bundle(), $term->id(), NULL, TRUE);
 
         switch ($term->bundle()) {

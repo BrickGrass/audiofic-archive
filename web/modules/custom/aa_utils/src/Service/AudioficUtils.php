@@ -35,6 +35,26 @@ class AudioficUtils {
     '15-20 hrs'    => self::HOUR * 17 + self::MINUTE * 30,
     'over 20 hrs'  => self::HOUR * 20,
   ];
+  private const OLDLENGTHRANGEMAPPING = [
+    'under 0:10:00' => 'under 10 mins',
+    '0:10:00-0:20:00' => '10-20 mins',
+    '0:20:00-0:30:00' => '20-30 mins',
+    '0:30:00-0:45:00' => '30-45 mins',
+    '0:45:00-1:00:00' => '45 mins-1hr',
+    '1:00:00-1:30:00' => '1-1:30 hrs',
+    '1:30:00-2:00:00' => '1:30-2 hrs',
+    '2:00:00-2:30:00' => '2-2:30 hrs',
+    '2:30:00-3:00:00' => '2:30-3 hrs',
+    '3:00:00-3:30:00' => '3-3:30 hrs',
+    '3:30:00-4:00:00' => '3:30-4 hrs',
+    '4:00:00-4:30:00' => '4-4:30 hrs',
+    '4:30:00-5:00:00' => '4:30-5 hrs',
+    '5:00:00-7:30:00' => '5-7:30 hrs',
+    '7:30:00-10:00:00' => '7:30-10 hrs',
+    '10:00:00-15:00:00' => '10-15 hrs',
+    '15:00:00-20:00:00' => '15-20 hrs',
+    'over 20:00:00' => 'over 20 hrs',
+  ];
 
   /**
    * Determines whether an entity is rated nsfw (no rating or null is nsfw).
@@ -87,6 +107,9 @@ class AudioficUtils {
   public function convertLengthRangeToDuration(TermInterface $length): ?int {
     if (isset(self::LENGTHRANGEMAPPING[$length->getName()])) {
       return self::LENGTHRANGEMAPPING[$length->getName()];
+    }
+    if (isset(self::OLDLENGTHRANGEMAPPING[$length->getName()])) {
+      return self::LENGTHRANGEMAPPING[self::OLDLENGTHRANGEMAPPING[$length->getName()]];
     }
 
     return NULL;

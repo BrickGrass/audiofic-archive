@@ -138,9 +138,14 @@
         {# TODO: Add type of fandom tag after a comma (This tag is a Fandom tag, in the category Movie & TV Fandoms). #}
         <p>This tag is a {{ taxonomy_term.bundle|replace({"_": " "})|title }} tag.</p>
 
-        {% if term_parent is not empty %}
-          {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': term_parent.id}) %}
-          <p><b>Parent Tag:</b> <a href="{{ taxonomy_path }}">{{ term_parent.name.value }}</a></p>
+        {% if term_parents is not empty %}
+          <p>
+            <b>Parent Tag(s):</b>
+            {% for parent in term_parents %}
+              {%  set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': parent.id}) %}
+              <a href="{{ taxonomy_path }}">{{ parent.name.value }}</a>{{- not loop.last ? ', ' -}}
+            {% endfor %}
+          </p>
         {% endif %}
 
         {% if term_children is not empty %}
