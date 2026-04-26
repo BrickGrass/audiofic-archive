@@ -30,7 +30,7 @@ process:
   field_canonicity:
     plugin: default_value
     default_value:
-      - 'canon'
+      - value: 'canon'
 destination:
   plugin: entity:taxonomy_term
 migration_dependencies:
