@@ -81,12 +81,12 @@ field_settings:
   auto_aggregated_fulltext_field:
     label: 'Auto aggregated fulltext field'
     property_path: auto_aggregated_fulltext_field
-    type: text
+    type: 'solr_text_custom:edge'
   body:
     label: Body
     datasource_id: 'entity:node'
     property_path: body
-    type: text
+    type: 'solr_text_custom:edge'
     dependencies:
       config:
         - field.storage.node.body
@@ -118,7 +118,7 @@ field_settings:
     label: 'Author » Taxonomy term » Name'
     datasource_id: 'entity:node'
     property_path: 'field_author:entity:name'
-    type: text
+    type: 'solr_text_custom:edge'
     dependencies:
       config:
         - field.storage.node.field_author
@@ -190,7 +190,7 @@ field_settings:
     label: 'Fandom » Taxonomy term » Name'
     datasource_id: 'entity:node'
     property_path: 'field_fandom2:entity:name'
-    type: text
+    type: 'solr_text_custom:edge'
     dependencies:
       config:
         - field.storage.node.field_fandom2
@@ -208,7 +208,7 @@ field_settings:
     label: 'Format information if applicable » Taxonomy term » Name'
     datasource_id: 'entity:node'
     property_path: 'field_format:entity:name'
-    type: text
+    type: 'solr_text_custom:edge'
     dependencies:
       config:
         - field.storage.node.field_format
@@ -234,7 +234,7 @@ field_settings:
     label: 'Legacy Series » Taxonomy term » Name'
     datasource_id: 'entity:node'
     property_path: 'field_legacy_series:entity:name'
-    type: text
+    type: 'solr_text_custom:edge'
     dependencies:
       config:
         - field.storage.node.field_legacy_series
@@ -260,7 +260,7 @@ field_settings:
     label: 'Reader » Taxonomy term » Name'
     datasource_id: 'entity:node'
     property_path: 'field_reader:entity:name'
-    type: text
+    type: 'solr_text_custom:edge'
     dependencies:
       config:
         - field.storage.node.field_reader
@@ -278,7 +278,7 @@ field_settings:
     label: 'Ship » Taxonomy term » Name'
     datasource_id: 'entity:node'
     property_path: 'field_relationship:entity:name'
-    type: text
+    type: 'solr_text_custom:edge'
     dependencies:
       config:
         - field.storage.node.field_relationship
@@ -310,7 +310,7 @@ field_settings:
     label: 'Series » Content » Title'
     datasource_id: 'entity:node'
     property_path: 'field_series:entity:title'
-    type: text
+    type: 'solr_text_custom:edge'
     dependencies:
       config:
         - field.storage.node.field_series
@@ -328,7 +328,7 @@ field_settings:
     label: 'Warning » Taxonomy term » Name'
     datasource_id: 'entity:node'
     property_path: 'field_warning:entity:name'
-    type: text
+    type: 'solr_text_custom:edge'
     dependencies:
       config:
         - field.storage.node.field_warning
@@ -338,7 +338,7 @@ field_settings:
     label: 'Cover artist » Taxonomy term » Name'
     datasource_id: 'entity:node'
     property_path: 'field_cover_artist:entity:name'
-    type: text
+    type: 'solr_text_custom:edge'
     dependencies:
       config:
         - field.storage.node.field_cover_artist
@@ -364,8 +364,6 @@ field_settings:
     datasource_id: 'entity:node'
     property_path: status
     type: boolean
-    indexed_locked: true
-    type_locked: true
     dependencies:
       module:
         - node
@@ -374,6 +372,8 @@ field_settings:
     datasource_id: 'entity:node'
     property_path: status
     type: boolean
+    indexed_locked: true
+    type_locked: true
     dependencies:
       module:
         - node
@@ -381,7 +381,7 @@ field_settings:
     label: Title
     datasource_id: 'entity:node'
     property_path: title
-    type: text
+    type: 'solr_text_custom:edge'
     dependencies:
       module:
         - node

@@ -73,7 +73,7 @@ field_settings:
     label: Name
     datasource_id: 'entity:taxonomy_term'
     property_path: name
-    type: text
+    type: 'solr_text_custom:edge'
     dependencies:
       module:
         - taxonomy
