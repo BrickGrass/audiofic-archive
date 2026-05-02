@@ -1,0 +1,25 @@
+uuid: f25ff91a-ecad-42f7-971e-832e857d8d23
+langcode: en
+status: true
+dependencies:
+  module:
+    - audiofic_archive_wrangling
+    - system
+  theme:
+    - gin
+id: gin_addcanonicalbuttonblock
+theme: gin
+region: content
+weight: -5
+provider: null
+plugin: add_canonical_button
+settings:
+  id: add_canonical_button
+  label: 'Add Canonical Button Block'
+  label_display: '0'
+  provider: audiofic_archive_wrangling
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '/admin/structure/taxonomy/wrangling/wrangle-non-canonical/*'

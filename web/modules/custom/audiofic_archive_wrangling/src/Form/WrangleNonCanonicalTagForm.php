@@ -94,6 +94,7 @@ class WrangleNonCanonicalTagForm extends FormBase {
     $field_definitions = $this->entityFieldManager->getFieldDefinitions('taxonomy_term', $this->term->bundle());
     $allowed_options = options_allowed_values($field_definitions['field_canonicity']->getFieldStorageDefinition());
     unset($allowed_options['canon']);
+    unset($allowed_options['canonical_root_fandom']);
 
     $form['canonicity'] = [
       '#type' => 'select',

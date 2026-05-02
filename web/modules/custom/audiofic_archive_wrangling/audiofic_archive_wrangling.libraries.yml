@@ -1,0 +1,9 @@
+fandom-tree:
+  version: 1.x
+  css:
+    component:
+      css/style.css: {}
+  js:
+    js/fandom_tree.js: {}
+  dependencies:
+    - core/jquery

@@ -3,7 +3,6 @@
 namespace Drupal\audiofic_archive_wrangling\Form;
 
 use Drupal\aa_utils\Service\AudioficTagUtils;
-use Drupal\Core\Entity\EntityFieldManager;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -11,7 +10,7 @@ use Drupal\taxonomy\TermInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Form which allows archivists to wrangle a user-created tag.
+ * Form which allows archivists to wrangle/create a canonical tag.
  */
 class WrangleCanonicalTagForm extends FormBase {
 
@@ -96,7 +95,7 @@ class WrangleCanonicalTagForm extends FormBase {
     $term_storage = $this->entityTypeManager->getStorage('taxonomy_term');
     $root_fandoms = [];
     $root_fandoms[0] = $this->t('--- Select a root fandom ---');
-    foreach ($term_storage->loadMultiple($this->getRootFandomIds()) as $tid => $term) {
+    foreach ($term_storage->loadMultiple($this->tagUtils->getRootFandomIds()) as $tid => $term) {
       $root_fandoms[$tid] = $term->getName();
     }
     uasort($root_fandoms, function ($a, $b) {
@@ -115,9 +114,7 @@ class WrangleCanonicalTagForm extends FormBase {
         'autocomplete' => 'off',
       ],
       '#states' => [
-        'visible' => [
-          ':input[name="tag_vocabulary"]' => ['value' => 'fandom'],
-        ],
+        'visible' => [':input[name="tag_vocabulary"]' => ['value' => 'fandom']],
       ],
     ];
 
@@ -195,7 +192,7 @@ class WrangleCanonicalTagForm extends FormBase {
       $new_term->save();
       $this->messenger()->addStatus(
         $this->t('Canonical tag @tag created', ['@tag' => $name]));
-      $form_state->setRedirect('audiofic_archive_wrangling.wrangle_canonical', ['taxonomy_term' => $new_term->id()]);
+      $form_state->setRedirect('audiofic_archive_wrangling.wrangle_root_fandom', ['taxonomy_term' => $new_term->id()]);
     } else {
       // Editing an existing canonical term.
       $this->term->setName($name);
@@ -226,7 +223,7 @@ class WrangleCanonicalTagForm extends FormBase {
       return [$root_fandom_id];
     }
 
-    $root_fandom_ids = $this->getRootFandomIds();
+    $root_fandom_ids = $this->tagUtils->getRootFandomIds();
     $parent_ids = [];
     foreach (json_decode($parents_str) as $item) {
       // Ensure only one root fandom is included.
@@ -240,18 +237,6 @@ class WrangleCanonicalTagForm extends FormBase {
   }
 
   /**
-   * Fetch the ids of all of the root fandoms.
-   */
-  private function getRootFandomIds(): array {
-    $term_storage = $this->entityTypeManager->getStorage('taxonomy_term');
-    return $term_storage->getQuery()
-      ->accessCheck(TRUE)
-      ->condition('vid', 'fandom')
-      ->condition('field_root_fandom', TRUE)
-      ->execute();
-  }
-
-  /**
    * Sets the default values of all form fields, based on the term being edited.
    */
   private function setDefaultValues(&$form) {
@@ -260,7 +245,7 @@ class WrangleCanonicalTagForm extends FormBase {
     $form['tag_vocabulary']['#type'] = 'hidden';
 
     if ($this->term->bundle() == 'fandom') {
-      $root_fandom_ids = $this->getRootFandomIds();
+      $root_fandom_ids = $this->tagUtils->getRootFandomIds();
       /** @var \Drupal\taxonomy\TermStorage $term_storage */
       $term_storage = $this->entityTypeManager->getStorage('taxonomy_term');
       $term_parents = $term_storage->loadParents($this->term->id());

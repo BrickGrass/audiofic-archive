@@ -23,6 +23,9 @@ settings:
     -
       value: unsorted
       label: Unsorted
+    -
+      value: canonical_root_fandom
+      label: 'Canonical Root Fandom'
   allowed_values_function: ''
 module: options
 locked: false

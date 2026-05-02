@@ -12,7 +12,7 @@ dependencies:
 id: gin_views_block__unwrangled_tag_works_relationship
 theme: gin
 region: content
-weight: 0
+weight: -1
 provider: null
 plugin: 'views_block:unwrangled_tag_works-unwrangled_relationship_tag_works'
 settings:
