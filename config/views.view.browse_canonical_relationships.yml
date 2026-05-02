@@ -451,7 +451,7 @@ display:
     position: 1
     display_options:
       display_extenders: {  }
-      path: admin/structure/taxonomy/wrangling/browse-canonical-fandoms
+      path: admin/structure/taxonomy/wrangling/browse-canonical-relationships
       menu:
         type: normal
         title: 'Browse Canonical Relationships'

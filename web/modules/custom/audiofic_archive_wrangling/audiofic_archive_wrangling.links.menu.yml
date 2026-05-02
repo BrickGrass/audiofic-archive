@@ -25,3 +25,10 @@ audiofic_archive_wrangling.create_root_fandom:
   description: The form to create a new root fandom tag - these should be created very rarely, please ensure you cannot create a category under an existing root fandom!
   parent: audiofic_archive_wrangling.tag_wrangling
   weight: 2
+
+audiofic_archive_wrangling.browse_invalid_canonical_fandoms:
+  title: Browse Invalid Canonical Fandoms
+  route_name: audiofic_archive_wrangling.browse_invalid_canonical_fandoms
+  description: This is the list of canonical fandoms that are missing a root fandom
+  parent: audiofic_archive_wrangling.tag_wrangling
+  weight: 3

@@ -5,6 +5,7 @@ namespace Drupal\audiofic_archive_wrangling\Controller;
 use Drupal\aa_utils\Service\AudioficTagUtils;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\Link;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Url;
 use Drupal\taxonomy\TermInterface;
@@ -92,9 +93,13 @@ class TagWranglingController extends ControllerBase {
           'description' => $this->t('The form to create a new root fandom tag - these should be created very rarely, please ensure you cannot create a category under an existing root fandom!'),
           'url' => Url::fromRoute('audiofic_archive_wrangling.create_root_fandom'),
         ],
+        'browse_invalid_fandoms' => [
+          'title' => $this->t('Browse Invalid Canonical Fandoms'),
+          'description' => $this->t('This is the list of canonical fandoms that are missing a root fandom.'),
+          'url' => Url::fromRoute('audiofic_archive_wrangling.browse_invalid_canonical_fandoms'),
+        ],
       ],
     ];
-    // TODO: View to help find canonical fandoms with invalid heirarchy data - not linked to a root fandom
 
     $build = [
       '#theme' => 'admin_page',
@@ -130,8 +135,11 @@ class TagWranglingController extends ControllerBase {
     if (empty($taxonomy_term)) {
       throw new \Exception('Taxonomy term not provided');
     }
-    if ($taxonomy_term->bundle() != 'fandom') {
-      throw new \Exception('Taxonomy term provided must be in the fandom vocabulary');
+    $bundle = $taxonomy_term->bundle();
+    if ($bundle != 'fandom') {
+      $name = $taxonomy_term->getName();
+      $tid = $taxonomy_term->id();
+      throw new \Exception("Taxonomy term provided must be in the fandom vocabulary, term name: $name, term bundle: $bundle, term id: $tid");
     }
     if (!$this->tagUtils->isTagCanonicityAware($taxonomy_term)) {
       throw new \Exception('Taxonomy term provided must be canonicity aware');
@@ -151,6 +159,61 @@ class TagWranglingController extends ControllerBase {
       '#top_label' => FALSE,
     ];
     return new Response($this->renderer->render($build));
+  }
+
+  /**
+   * Returns the Invalid Canonical Fandom tag browsing page.
+   */
+  public function browseInvalidCanonicalFandoms() {
+    /** @var \Drupal\taxonomy\TermStorage $term_storage */
+    $term_storage = $this->entityTypeManager->getStorage('taxonomy_term');
+    // Pretty horrible, but the best way I can figure out to do this.
+    // Hopefully this page will simply not be needed very often D:
+    $valid_terms = $term_storage->getQuery()
+      ->accessCheck(TRUE)
+      ->condition('vid', 'fandom')
+      ->condition('field_canonicity', 'canon')
+      ->condition('parent.entity:taxonomy_term.field_canonicity', 'canonical_root_fandom')
+      ->execute();
+    $invalid_terms = $term_storage->getQuery()
+      ->accessCheck(TRUE)
+      ->condition('vid', 'fandom')
+      ->condition('field_canonicity', 'canon')
+      ->condition('tid', $valid_terms, 'NOT IN')
+      ->pager(50)
+      ->execute();
+
+    $rows = [];
+    /** @var \Drupal\taxonomy\TermInterface $fandom */
+    foreach ($term_storage->loadMultiple($invalid_terms) as $fandom) {
+      $name = $fandom->getName();
+      $url = Url::fromRoute('audiofic_archive_wrangling.wrangle_canonical', ['taxonomy_term' => $fandom->id()]);
+      $link = Link::fromTextAndUrl($this->t('edit'), $url);
+      $rows[] = [
+        'name' => ['data' => ['#markup' => $name]],
+        'edit' => ['data' => $link->toRenderable()],
+      ];
+    }
+
+    return [
+      'content' => [
+        'caption' => [
+          '#markup' => $this->t('This is the list of canonical fandoms that are missing a root fandom, please edit them to fix this.'),
+        ],
+        'table' => [
+          '#type' => 'table',
+          '#header' => [
+            'name' => $this->t('Tag Name'),
+            'edit' => $this->t('Edit'),
+          ],
+          '#rows' => $rows,
+          '#empty' => $this->t('There are no invalid canonical fandom terms, congratulations!'),
+        ],
+        'pager' => [
+          '#type' => 'pager',
+        ],
+      ],
+    ];
   }
 
   /**
@@ -191,6 +254,9 @@ class TagWranglingController extends ControllerBase {
         'has_children' => !empty($children),
       ];
     }
+    uasort($fandoms, function ($a, $b) {
+      return strcmp($a['name'], $b['name']);
+    });
     return $fandoms;
   }
 
