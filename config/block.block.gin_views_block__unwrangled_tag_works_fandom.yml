@@ -1,0 +1,30 @@
+uuid: a2e6e3ef-c263-47c7-8f3f-6c6d56d2ae3b
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.unwrangled_tag_works
+  module:
+    - system
+    - views
+  theme:
+    - gin
+id: gin_views_block__unwrangled_tag_works_fandom
+theme: gin
+region: content
+weight: 0
+provider: null
+plugin: 'views_block:unwrangled_tag_works-unwrangled_fandom_tag_works'
+settings:
+  id: 'views_block:unwrangled_tag_works-unwrangled_fandom_tag_works'
+  label: ''
+  label_display: '0'
+  provider: views
+  context_mapping: {  }
+  views_label: ''
+  items_per_page: null
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '/admin/structure/taxonomy/wrangling/wrangle-non-canonical/*'

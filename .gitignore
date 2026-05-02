@@ -106,3 +106,6 @@ components/
 *.tar.gz
 *.sql
 *.txt.gz
+**/node_modules
+db_backups/
+private_files/

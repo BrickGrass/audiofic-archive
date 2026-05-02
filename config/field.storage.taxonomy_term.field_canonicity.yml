@@ -18,6 +18,9 @@ settings:
       value: non_canon
       label: Non-Canon
     -
+      value: not_wrangleable
+      label: 'Not Wrangleable'
+    -
       value: unsorted
       label: Unsorted
   allowed_values_function: ''

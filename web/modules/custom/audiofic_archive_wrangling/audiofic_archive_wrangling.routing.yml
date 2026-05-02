@@ -1,0 +1,45 @@
+audiofic_archive_wrangling.tag_wrangling:
+  path: admin/structure/taxonomy/wrangling
+  defaults:
+    _controller: \Drupal\audiofic_archive_wrangling\Controller\TagWranglingController::home
+    _title: Tag wrangling
+  requirements:
+    _role: administrator
+  options:
+    _admin_route: TRUE
+
+audiofic_archive_wrangling.wrangle_non_canonical:
+  path: admin/structure/taxonomy/wrangling/wrangle-non-canonical/{taxonomy_term}
+  defaults:
+    _form: \Drupal\audiofic_archive_wrangling\Form\WrangleNonCanonicalTagForm
+    _title: Wrangle Non-Canonical Tag
+  requirements:
+    _role: administrator
+  options:
+    _admin_route: TRUE
+    parameters:
+      taxonomy_term:
+        type: entity:taxonomy_term
+
+audiofic_archive_wrangling.create_canonical:
+  path: admin/structure/taxonomy/wrangling/create-canonical
+  defaults:
+    _form: \Drupal\audiofic_archive_wrangling\Form\WrangleCanonicalTagForm
+    _title: Create Canonical Tag
+  requirements:
+    _role: administrator
+  options:
+    _admin_route: TRUE
+
+audiofic_archive_wrangling.wrangle_canonical:
+  path: admin/structure/taxonomy/wrangling/wrangle-canonical/{taxonomy_term}
+  defaults:
+    _form: \Drupal\audiofic_archive_wrangling\Form\WrangleCanonicalTagForm
+    _title: Wrangle Canonical Tag
+  requirements:
+    _role: administrator
+  options:
+    _admin_route: TRUE
+    parameters:
+      taxonomy_term:
+        type: entity:taxonomy_term

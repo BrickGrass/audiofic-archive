@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.taxonomy_term.fandom.field_canon_sibling
     - field.field.taxonomy_term.fandom.field_canonicity
+    - field.field.taxonomy_term.fandom.field_root_fandom
     - taxonomy.vocabulary.fandom
   module:
     - options
@@ -35,6 +36,16 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 1
+    region: content
+  field_root_fandom:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 3
     region: content
 hidden:
   langcode: true

@@ -1,0 +1,13 @@
+audiofic_archive_wrangling.tag_wrangling:
+  title: Tag Wrangling
+  route_name: audiofic_archive_wrangling.tag_wrangling
+  description: Wrangle and sort Audiofic Archive tags
+  parent: entity.taxonomy_vocabulary.collection
+  weight: -997
+
+audiofic_archive_wrangling.create_canonical:
+  title: Create Canonical Tag
+  route_name: audiofic_archive_wrangling.create_canonical
+  description: The form to create a new canonical tag - please refer to our tagging standards & ensure you are not duplicating an existing canonical tag!
+  parent: audiofic_archive_wrangling.tag_wrangling
+  weight: 0
