@@ -80,7 +80,7 @@ class WrangleNonCanonicalTagForm extends FormBase {
     }
 
     $canonicity = $this->term->get('field_canonicity')->value;
-    if ($canonicity == 'canon') {
+    if (!in_array($canonicity, ['non_canon', 'not_wrangleable', 'unsorted'])) {
       throw new \Exception("The term $term_name is canonical, only non-canonical tags can be edited using this form.");
     }
 
