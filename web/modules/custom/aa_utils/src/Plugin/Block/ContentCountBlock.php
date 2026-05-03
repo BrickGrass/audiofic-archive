@@ -49,8 +49,8 @@ class ContentCountBlock extends BlockBase implements ContainerFactoryPluginInter
    */
   public function build() {
     $work_count = $this->entity_type_manager->getStorage('node')->getQuery()
-      ->accessCheck(TRUE)
       ->condition('type', ['work', 'legacy_work'], 'IN')
+      ->condition('status', 1)
       ->count()
       ->execute();
 
@@ -75,8 +75,7 @@ class ContentCountBlock extends BlockBase implements ContainerFactoryPluginInter
       '#user_count' => $user_count,
       // Cache record to expire after 6 hours.
       '#cache' => [
-        // Different users can access different works.
-        'contexts' => ['user.roles'],
+        'contexts' => ['route'],
         'max-age' => 21600,
       ],
     ];
