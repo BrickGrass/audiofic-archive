@@ -41,6 +41,7 @@ Once you have all of these dependencies installed, you will need to do the follo
 - Open the url https://audiofic-archive.ddev.site in your web browser - there will be no homepage as you have not created one yet, but the menu should be populated and the site should be using the theme.
     - NOTE: If when you open the page in your browser you are warned about certificate issues/told the site is not secure the ssl/tls certificate that ddev generated has not been correctly added to your keystore. You can fix this by running the command: `mkcert -install && ddev poweroff && ddev start`
     - NOTE: Do not worry if the site appears, but the theme looks wrong. Log into the admin account by navigating to https://audiofic-archive.ddev.site/user/login and entering the password you saved earlier. Then navigate using the admin menu to `Appearance > Settings > Bootstrap Barrio Subtheme`, scroll to the bottom of the page and press `Save Configuration`, this should fix it.
+- When you log in you will be prompted to Rebuild the content access permissions - click the link and do this as prompted.
 - You will now need to create the solr collection the site will use. Ensure you are logged in as the admin user and navigate to: https://audiofic-archive.ddev.site/admin/config/search/search-api. Click on the server "Audiofic Solr" and on the edit page that loads press the "Upload configset" button. Accept the default settings on the page that opens.
 
 ## Cheat sheet of commands
