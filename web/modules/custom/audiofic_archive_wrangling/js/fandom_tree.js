@@ -18,4 +18,8 @@
   }
 
   $(".fandom-tree details").on("click", detailsClickCallback);
+
+  $("#toggleLineColours").on("click", function() {
+    $(".fandom-tree").toggleClass("lines-alternating");
+  })
 })(jQuery);

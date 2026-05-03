@@ -1,5 +1,11 @@
 {% set edit_url = top_level ? '/admin/structure/taxonomy/wrangling/wrangle-root-fandom/' : '/admin/structure/taxonomy/wrangling/wrangle-canonical/' %}
 
+{% if top_level %}
+<div class="fandom-tree-button-container">
+  <a id="toggleLineColours" href="#" role="button">Toggle line colours</a>
+</div>
+{% endif %}
+
 <ul class="{{ top_level ? 'fandom-tree' : '' }}">
   {% for tid, fandom in fandoms %}
   <li
@@ -9,11 +15,11 @@
   >
     {% if fandom.has_children %}
     <details data-tid="{{ tid }}" data-children-loaded="false">
-      <summary><span>{{ fandom.name }}</span><a href="{{ edit_url }}{{ tid }}">edit</a></summary>
+      <summary><span aria-label="expand group">{{ fandom.name }}</span><a aria-label="edit fandom {{ fandom.name }}" href="{{ edit_url }}{{ tid }}">edit</a></summary>
       <ul></ul>
     </details>
     {% else %}
-      <span>{{ fandom.name }}</span><a href="{{ edit_url }}{{ tid }}">edit</a>
+      <span>{{ fandom.name }}</span><a aria-label="edit fandom {{ fandom.name }}" href="{{ edit_url }}{{ tid }}">edit</a>
     {% endif %}
   </li>
   {% endfor %}

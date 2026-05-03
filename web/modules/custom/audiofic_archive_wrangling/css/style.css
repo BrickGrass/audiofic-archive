@@ -1,3 +1,9 @@
+.fandom-tree-button-container {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 10px;
+}
+
 .fandom-tree {
     --spacing: 1.5rem;
     --radius: 10px;
@@ -12,6 +18,14 @@ ul.fandom-tree {
   display: block;
   position: relative;
   padding-left: calc(2 * var(--spacing) - var(--radius) - 2px);
+}
+
+.fandom-tree.lines-alternating li:nth-child(2n+1) {
+  background: var(--gin-bg-header);
+}
+
+.fandom-tree.lines-alternating li:nth-child(2n) {
+  background: var(--gin-bg-app);
 }
 
 .fandom-tree li.fandom-tree-leaf {
