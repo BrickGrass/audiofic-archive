@@ -16,12 +16,16 @@ small {
 	font-size: 0.85rem;
 }
 
-.content .title {
-	padding-left: 1rem;
-	padding-right: 1rem;
+.disable-padding {
+	padding: 0 !important;
 }
 
 @media (min-width: 768px) {
+	.content .title {
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+
 	.collapse.dont-collapse-sm {
 		display: block;
 		height: auto !important;

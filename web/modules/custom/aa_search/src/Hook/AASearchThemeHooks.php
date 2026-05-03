@@ -8,6 +8,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Template\Attribute;
 use Drupal\node\Entity\Node;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\taxonomy\TermInterface;
@@ -124,8 +125,19 @@ class AASearchThemeHooks {
    */
   #[Hook('preprocess_page_title')]
   public function preprocessPageTitle(&$variables) {
+    $route_name = $this->route_match->getRouteName();
+
     if (
-      $this->route_match->getRouteName() !== 'entity.taxonomy_term.canonical' or
+      $route_name == 'view.search.search' ||
+      $route_name == 'view.search.search_collection' ||
+      $route_name == 'entity.taxonomy_term.canonical' &&
+      isset($variables['title_attributes'])
+    ) {
+      $variables['title_attributes'] = new Attribute(['class' => 'disable-padding']);
+    }
+
+    if (
+      $route_name !== 'entity.taxonomy_term.canonical' or
       !\array_key_exists('title', $variables) or
       !\is_array($variables['title']) or
       !\array_key_exists('#markup', $variables['title'])
