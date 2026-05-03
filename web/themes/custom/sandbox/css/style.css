@@ -16,6 +16,10 @@ small {
 	font-size: 0.85rem;
 }
 
+.content .title {
+	padding-left: 1rem;
+}
+
 @media (min-width: 768px) {
 	.collapse.dont-collapse-sm {
 		display: block;
