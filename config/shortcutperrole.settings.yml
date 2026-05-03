@@ -1,0 +1,6 @@
+role:
+  anonymous: archivist
+  authenticated: archivist
+  content_editor: archivist
+  archivist: archivist
+  administrator: default

@@ -31,7 +31,6 @@ dependencies:
     - media
     - node
     - taxonomy
-    - toolbar
 id: archivist
 label: Archivist
 weight: -7
@@ -41,7 +40,6 @@ permissions:
   - 'access help pages'
   - 'access site-wide contact form'
   - 'access taxonomy overview'
-  - 'access toolbar'
   - 'administer taxonomy'
   - 'cancel account'
   - 'create legacy_work content'
