@@ -36,7 +36,7 @@ Once you have all of these dependencies installed, you will need to do the follo
 - Run `ddev drush site-install --existing-config minimal` to install the drupal site using the existing config
     - NOTE: When this command finishes it will create an admin account for you, and it will output the password for that account to the command line. Make sure you write down/save that password for later so that you can use the admin account!
 - Run `ddev drush import-menus --choice=full` to import all menu items
-- Run `ddev drush import-taxonomies --choice=full` to import static taxonomy terms (warnings, ratings, etc)
+- ~~Run `ddev drush import-taxonomies --choice=full` to import static taxonomy terms (warnings, ratings, etc)~~ (Prefer importing taxonomies using a migration! See end of page.)
 - Run `ddev drush cache:rebuild` to rebuild the cache
 - Open the url https://audiofic-archive.ddev.site in your web browser - there will be no homepage as you have not created one yet, but the menu should be populated and the site should be using the theme.
     - NOTE: If when you open the page in your browser you are warned about certificate issues/told the site is not secure the ssl/tls certificate that ddev generated has not been correctly added to your keystore. You can fix this by running the command: `mkcert -install && ddev poweroff && ddev start`
