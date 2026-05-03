@@ -1,0 +1,4 @@
+name: Audiofic Archive Tag Wrangling
+description: A custom module which provides admin pages and functionality to wrangle tags which have the concept of canonicity
+core_version_requirement: ^10.1 || ^11
+type: module

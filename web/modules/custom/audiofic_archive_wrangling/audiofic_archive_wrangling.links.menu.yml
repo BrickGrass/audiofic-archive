@@ -1,0 +1,34 @@
+audiofic_archive_wrangling.tag_wrangling:
+  title: Tag Wrangling
+  route_name: audiofic_archive_wrangling.tag_wrangling
+  description: Wrangle and sort Audiofic Archive tags
+  parent: entity.taxonomy_vocabulary.collection
+  weight: -997
+
+audiofic_archive_wrangling.browse_canonical_fandoms:
+  title: Browse Canonical Fandoms
+  route_name: audiofic_archive_wrangling.browse_canonical_fandoms
+  description: Browse the canonical fandom hierarchy
+  parent: audiofic_archive_wrangling.tag_wrangling
+  weight: 0
+
+audiofic_archive_wrangling.create_canonical:
+  title: Create Canonical Tag
+  route_name: audiofic_archive_wrangling.create_canonical
+  description: The form to create a new canonical tag - please refer to our tagging standards & ensure you are not duplicating an existing canonical tag!
+  parent: audiofic_archive_wrangling.tag_wrangling
+  weight: 1
+
+audiofic_archive_wrangling.create_root_fandom:
+  title: Create Root Fandom Tag
+  route_name: audiofic_archive_wrangling.create_root_fandom
+  description: The form to create a new root fandom tag - these should be created very rarely, please ensure you cannot create a category under an existing root fandom!
+  parent: audiofic_archive_wrangling.tag_wrangling
+  weight: 2
+
+audiofic_archive_wrangling.browse_invalid_canonical_fandoms:
+  title: Browse Invalid Canonical Fandoms
+  route_name: audiofic_archive_wrangling.browse_invalid_canonical_fandoms
+  description: This is the list of canonical fandoms that are missing a root fandom
+  parent: audiofic_archive_wrangling.tag_wrangling
+  weight: 3

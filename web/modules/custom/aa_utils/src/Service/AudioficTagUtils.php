@@ -2,6 +2,7 @@
 
 namespace Drupal\aa_utils\Service;
 
+use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\node\NodeInterface;
 use Drupal\taxonomy\TermInterface;
@@ -11,6 +12,17 @@ use Drupal\taxonomy\TermInterface;
  */
 class AudioficTagUtils {
   use StringTranslationTrait;
+
+  /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManager
+   */
+  protected $entityTypeManager;
+
+  public function __construct(EntityTypeManager $entity_type_manager) {
+    $this->entityTypeManager = $entity_type_manager;
+  }
 
   /**
    * Fetches all terms from a field on a node.
@@ -74,6 +86,18 @@ class AudioficTagUtils {
    */
   public function isTagCanonicityAware(TermInterface $term): bool {
     return $term->hasField('field_canonicity') && $term->hasField('field_canon_sibling');
+  }
+
+  /**
+   * Fetch the ids of all of the root fandoms.
+   */
+  public function getRootFandomIds(): array {
+    $term_storage = $this->entityTypeManager->getStorage('taxonomy_term');
+    return $term_storage->getQuery()
+      ->accessCheck(TRUE)
+      ->condition('vid', 'fandom')
+      ->condition('field_canonicity', ['canonical_root_fandom'], 'IN')
+      ->execute();
   }
 
 }

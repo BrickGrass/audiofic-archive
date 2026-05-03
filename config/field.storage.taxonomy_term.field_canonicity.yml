@@ -18,8 +18,14 @@ settings:
       value: non_canon
       label: Non-Canon
     -
+      value: not_wrangleable
+      label: 'Not Wrangleable'
+    -
       value: unsorted
       label: Unsorted
+    -
+      value: canonical_root_fandom
+      label: 'Canonical Root Fandom'
   allowed_values_function: ''
 module: options
 locked: false

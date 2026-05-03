@@ -3,6 +3,7 @@ services:
     class: Drupal\aa_utils\Service\AudioficUtils
   aa_utils.tag_utils:
     class: Drupal\aa_utils\Service\AudioficTagUtils
+    arguments: ['@entity_type.manager']
 
   Drupal\aa_utils\Service\AudioficUtils:
     alias: 'aa_utils.utils'

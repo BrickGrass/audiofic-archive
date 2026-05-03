@@ -1,0 +1,88 @@
+.fandom-tree {
+    --spacing: 1.5rem;
+    --radius: 10px;
+}
+
+ul.fandom-tree {
+  margin-left: 0;
+  max-width: 900px;
+}
+
+.fandom-tree li {
+  display: block;
+  position: relative;
+  padding-left: calc(2 * var(--spacing) - var(--radius) - 2px);
+}
+
+.fandom-tree li.fandom-tree-leaf {
+  display: flex;
+  justify-content: space-between;
+}
+
+.fandom-tree ul {
+  margin-left: calc(var(--radius) - var(--spacing));
+  padding-left: 0;
+}
+
+.fandom-tree ul li {
+  border-left: 2px solid #ddd;
+}
+
+.fandom-tree ul li:last-child {
+  border-color: transparent;
+}
+
+.fandom-tree ul li::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: calc(var(--spacing) / -2);
+  left: -2px;
+  width: calc(var(--spacing) + 2px);
+  height: calc(var(--spacing) + 1px);
+  border: solid #ddd;
+  border-width: 0 0 2px 2px;
+}
+
+.fandom-tree summary {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 0;
+  background-color: inherit;
+}
+
+.fandom-tree summary::marker,
+.fandom-tree summary::-webkit-details-marker {
+  display: none;
+}
+
+.fandom-tree summary:focus {
+  outline: none;
+}
+
+.fandom-tree summary:focus-visible {
+  outline: 1px dotted #000;
+}
+
+.fandom-tree li::after,
+.fandom-tree summary::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: calc(var(--spacing) / 2 - var(--radius));
+  left: calc(var(--spacing) - var(--radius) - 1px);
+  width: calc(2 * var(--radius));
+  height: calc(2 * var(--radius));
+  border-radius: 50%;
+  background: #ddd;
+}
+
+.fandom-tree summary::before {
+  z-index: 1;
+  background: var(--gin-color-primary) url('/themes/custom/sandbox/expand-collapse.svg') 0 0;
+}
+
+.fandom-tree details[open] > summary::before {
+  background-position: calc(-2 * var(--radius)) 0;
+}

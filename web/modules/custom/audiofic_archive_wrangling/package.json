@@ -1,0 +1,13 @@
+{
+  "name": "audiofic_archive_wrangling",
+  "version": "1.0.0",
+  "description": "Frontend build tools for the audiofic_archive_wrangling module",
+  "license": "GPLV3",
+  "author": "BrickGrass",
+  "scripts": {
+    "start": "npm run dev"
+  },
+  "dependencies": {
+    "cytoscape": "^3.33.3"
+  }
+}
