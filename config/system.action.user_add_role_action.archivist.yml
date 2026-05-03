@@ -1,0 +1,14 @@
+uuid: 7da0cac6-4815-499f-8fce-6a7dd28b205b
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.archivist
+  module:
+    - user
+id: user_add_role_action.archivist
+label: 'Add the Archivist role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: archivist

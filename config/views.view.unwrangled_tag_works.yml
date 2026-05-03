@@ -6,6 +6,8 @@ dependencies:
     - core.entity_view_mode.node.teaser
     - field.storage.node.field_podfic_post
     - field.storage.node.field_text_post
+    - user.role.administrator
+    - user.role.archivist
   module:
     - link
     - node
@@ -378,9 +380,11 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: perm
+        type: role
         options:
-          perm: 'access content'
+          role:
+            archivist: archivist
+            administrator: administrator
       cache:
         type: tag
         options: {  }
@@ -550,7 +554,7 @@ display:
         - 'languages:language_interface'
         - url
         - 'user.node_grants:view'
-        - user.permissions
+        - user.roles
       tags:
         - 'config:field.storage.node.field_podfic_post'
         - 'config:field.storage.node.field_text_post'
@@ -622,7 +626,7 @@ display:
         - 'languages:language_interface'
         - url
         - 'user.node_grants:view'
-        - user.permissions
+        - user.roles
       tags:
         - 'config:field.storage.node.field_podfic_post'
         - 'config:field.storage.node.field_text_post'
@@ -695,7 +699,7 @@ display:
         - 'languages:language_interface'
         - url
         - 'user.node_grants:view'
-        - user.permissions
+        - user.roles
       tags:
         - 'config:field.storage.node.field_podfic_post'
         - 'config:field.storage.node.field_text_post'

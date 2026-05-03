@@ -1,0 +1,142 @@
+uuid: fb20318f-8d0a-4df9-b47f-ec7104f245da
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+    - filter.format.legacy_work_html
+    - media.type.mp3_file
+    - media.type.other_file
+    - node.type.legacy_work
+    - node.type.playlist
+    - node.type.work
+    - taxonomy.vocabulary.author
+    - taxonomy.vocabulary.category
+    - taxonomy.vocabulary.cover_artist
+    - taxonomy.vocabulary.curator
+    - taxonomy.vocabulary.fandom
+    - taxonomy.vocabulary.info
+    - taxonomy.vocabulary.language
+    - taxonomy.vocabulary.length
+    - taxonomy.vocabulary.rating
+    - taxonomy.vocabulary.reader
+    - taxonomy.vocabulary.relationship
+    - taxonomy.vocabulary.series
+    - taxonomy.vocabulary.warning
+  module:
+    - contact
+    - contextual
+    - filter
+    - help
+    - media
+    - node
+    - taxonomy
+    - toolbar
+id: archivist
+label: Archivist
+weight: -7
+is_admin: false
+permissions:
+  - 'access contextual links'
+  - 'access help pages'
+  - 'access site-wide contact form'
+  - 'access taxonomy overview'
+  - 'access toolbar'
+  - 'administer taxonomy'
+  - 'cancel account'
+  - 'create legacy_work content'
+  - 'create mp3_file media'
+  - 'create other_file media'
+  - 'create playlist content'
+  - 'create terms in author'
+  - 'create terms in category'
+  - 'create terms in cover_artist'
+  - 'create terms in curator'
+  - 'create terms in fandom'
+  - 'create terms in info'
+  - 'create terms in language'
+  - 'create terms in length'
+  - 'create terms in rating'
+  - 'create terms in reader'
+  - 'create terms in relationship'
+  - 'create terms in series'
+  - 'create terms in warning'
+  - 'create work content'
+  - 'delete all taxonomy revisions'
+  - 'delete media'
+  - 'delete own mp3_file media'
+  - 'delete own other_file media'
+  - 'delete term revisions in author'
+  - 'delete term revisions in category'
+  - 'delete term revisions in cover_artist'
+  - 'delete term revisions in curator'
+  - 'delete term revisions in fandom'
+  - 'delete term revisions in info'
+  - 'delete term revisions in language'
+  - 'delete term revisions in length'
+  - 'delete term revisions in rating'
+  - 'delete term revisions in reader'
+  - 'delete term revisions in relationship'
+  - 'delete term revisions in series'
+  - 'delete term revisions in warning'
+  - 'delete terms in author'
+  - 'delete terms in category'
+  - 'delete terms in cover_artist'
+  - 'delete terms in curator'
+  - 'delete terms in fandom'
+  - 'delete terms in info'
+  - 'delete terms in language'
+  - 'delete terms in length'
+  - 'delete terms in rating'
+  - 'delete terms in reader'
+  - 'delete terms in relationship'
+  - 'delete terms in series'
+  - 'delete terms in warning'
+  - 'edit own mp3_file media'
+  - 'edit own other_file media'
+  - 'edit terms in author'
+  - 'edit terms in category'
+  - 'edit terms in cover_artist'
+  - 'edit terms in curator'
+  - 'edit terms in fandom'
+  - 'edit terms in info'
+  - 'edit terms in language'
+  - 'edit terms in length'
+  - 'edit terms in rating'
+  - 'edit terms in reader'
+  - 'edit terms in relationship'
+  - 'edit terms in series'
+  - 'edit terms in warning'
+  - 'revert all taxonomy revisions'
+  - 'revert term revisions in author'
+  - 'revert term revisions in category'
+  - 'revert term revisions in cover_artist'
+  - 'revert term revisions in curator'
+  - 'revert term revisions in fandom'
+  - 'revert term revisions in info'
+  - 'revert term revisions in language'
+  - 'revert term revisions in length'
+  - 'revert term revisions in rating'
+  - 'revert term revisions in reader'
+  - 'revert term revisions in relationship'
+  - 'revert term revisions in series'
+  - 'revert term revisions in warning'
+  - 'update media'
+  - 'use text format basic_html'
+  - 'use text format legacy_work_html'
+  - 'view all taxonomy revisions'
+  - 'view own unpublished media'
+  - 'view term revisions in author'
+  - 'view term revisions in category'
+  - 'view term revisions in cover_artist'
+  - 'view term revisions in curator'
+  - 'view term revisions in fandom'
+  - 'view term revisions in info'
+  - 'view term revisions in language'
+  - 'view term revisions in length'
+  - 'view term revisions in rating'
+  - 'view term revisions in reader'
+  - 'view term revisions in relationship'
+  - 'view term revisions in series'
+  - 'view term revisions in warning'
+  - 'view vocabulary labels'

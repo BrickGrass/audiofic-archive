@@ -8,6 +8,8 @@ dependencies:
     - system.menu.admin
     - taxonomy.vocabulary.fandom
     - taxonomy.vocabulary.relationship
+    - user.role.administrator
+    - user.role.archivist
   module:
     - node
     - options
@@ -558,9 +560,11 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: perm
+        type: role
         options:
-          perm: 'access content'
+          role:
+            archivist: archivist
+            administrator: administrator
       cache:
         type: tag
         options: {  }
@@ -917,7 +921,7 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-        - user.permissions
+        - user.roles
       tags:
         - 'config:field.storage.taxonomy_term.field_canon_sibling'
         - 'config:field.storage.taxonomy_term.field_canonicity'
@@ -945,7 +949,7 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-        - user.permissions
+        - user.roles
       tags:
         - 'config:field.storage.taxonomy_term.field_canon_sibling'
         - 'config:field.storage.taxonomy_term.field_canonicity'

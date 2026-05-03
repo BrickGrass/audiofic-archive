@@ -5,6 +5,7 @@ dependencies:
   config:
     - taxonomy.vocabulary.fandom
     - user.role.administrator
+    - user.role.archivist
   module:
     - node
     - options
@@ -246,6 +247,7 @@ display:
         type: role
         options:
           role:
+            archivist: archivist
             administrator: administrator
       cache:
         type: tag
