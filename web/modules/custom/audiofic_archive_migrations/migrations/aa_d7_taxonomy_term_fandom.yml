@@ -28,9 +28,8 @@ process:
   changed: timestamp
   langcode: language
   field_canonicity:
-    plugin: default_value
-    default_value:
-      - value: 'canon'
+    plugin: aa_fandom_canonicity
+    source: name
 destination:
   plugin: entity:taxonomy_term
 migration_dependencies:

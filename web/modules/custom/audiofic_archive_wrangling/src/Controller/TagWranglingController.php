@@ -242,17 +242,33 @@ class TagWranglingController extends ControllerBase {
    *   Array of taxonomy terms to load data on.
    */
   private function loadFandomList(array $taxonomy_terms): array {
+    /** @var \Drupal\taxonomy\TermStorage $term_storage */
+    $term_storage = $this->entityTypeManager->getStorage('taxonomy_term');
+
     $fandoms = [];
+    $grandchildren = [];
+    /** @var \Drupal\taxonomy\TermInterface $fandom */
     foreach ($taxonomy_terms as $tid => $fandom) {
-      $children = $this->entityTypeManager->getStorage('taxonomy_term')->getQuery()
+      if (in_array($tid, $grandchildren)) {
+        continue;
+      }
+      $children = $term_storage->getQuery()
         ->accessCheck(TRUE)
         ->condition('field_canonicity', 'canon')
         ->condition('parent.entity:taxonomy_term.tid', $tid)
         ->execute();
+      $grandchildren = array_merge($grandchildren, $children);
+      $parents = $term_storage->loadParents($tid);
+      $parents_str = empty($parents) ? '' : 'Parent(s): ' . implode(', ', array_map(fn ($t) => $t->getName(), $parents));
       $fandoms[$tid] = [
         'name' => $fandom->getName(),
         'has_children' => !empty($children),
+        'parents' => $parents_str,
       ];
+    }
+    // Remove all terms which will appear lower in the tree later on.
+    foreach ($grandchildren as $tid) {
+      unset($fandoms[$tid]);
     }
     uasort($fandoms, function ($a, $b) {
       return strcmp($a['name'], $b['name']);

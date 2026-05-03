@@ -2,7 +2,11 @@
 
 <ul class="{{ top_level ? 'fandom-tree' : '' }}">
   {% for tid, fandom in fandoms %}
-  <li data-tid="{{ tid }}" class="{{ fandom.has_children ? '' : 'fandom-tree-leaf' }}">
+  <li
+    data-tid="{{ tid }}"
+    class="{{ fandom.has_children ? '' : 'fandom-tree-leaf' }}"
+    title="{{ fandom.parents }}"
+  >
     {% if fandom.has_children %}
     <details data-tid="{{ tid }}" data-children-loaded="false">
       <summary><span>{{ fandom.name }}</span><a href="{{ edit_url }}{{ tid }}">edit</a></summary>
