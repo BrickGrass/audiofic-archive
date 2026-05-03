@@ -192,7 +192,7 @@ class WrangleCanonicalTagForm extends FormBase {
       $new_term->save();
       $this->messenger()->addStatus(
         $this->t('Canonical tag @tag created', ['@tag' => $name]));
-      $form_state->setRedirect('audiofic_archive_wrangling.wrangle_root_fandom', ['taxonomy_term' => $new_term->id()]);
+      $form_state->setRedirect('audiofic_archive_wrangling.wrangle_canonical', ['taxonomy_term' => $new_term->id()]);
     } else {
       // Editing an existing canonical term.
       $this->term->setName($name);
