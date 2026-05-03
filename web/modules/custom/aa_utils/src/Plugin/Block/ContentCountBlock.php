@@ -51,6 +51,7 @@ class ContentCountBlock extends BlockBase implements ContainerFactoryPluginInter
     $work_count = $this->entity_type_manager->getStorage('node')->getQuery()
       ->condition('type', ['work', 'legacy_work'], 'IN')
       ->condition('status', 1)
+      ->accessCheck(FALSE)
       ->count()
       ->execute();
 
