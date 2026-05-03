@@ -17,7 +17,6 @@ class AAUtilsThemeHooks {
     return [
       'node-contextual-menu' => [
         'template' => 'node-contextual-menu',
-        'path' => $path . '/templates',
         'variables' => [
           'has_edit_access' => '',
           'can_remove_attribution' => '',
@@ -28,10 +27,18 @@ class AAUtilsThemeHooks {
 
       'user-contextual-menu' => [
         'template' => 'user-contextual-menu',
-        'path' => $path . '/templates',
         'variables' => [
           'has_edit_access' => '',
           'uid' => '',
+        ],
+      ],
+
+      'content-count' => [
+        'template' => 'content-count',
+        'variables' => [
+          'work_count' => 0,
+          'fandom_count' => 0,
+          'user_count' => 0,
         ],
       ],
     ];

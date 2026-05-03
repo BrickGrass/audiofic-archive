@@ -11,7 +11,7 @@ _core:
 id: bootstrap_barrio_subtheme_page_title
 theme: bootstrap_barrio_subtheme
 region: content
-weight: -12
+weight: -9
 provider: null
 plugin: page_title_block
 settings:
@@ -23,4 +23,4 @@ visibility:
   request_path:
     id: request_path
     negate: false
-    pages: "/search/works\r\n/search/collections\r\n/taxonomy/term/*\r\n/queue\r\n/my-links/*\r\n/my-links\r\n/my-drafts\r\n/search-tags"
+    pages: "/search/works\r\n/search/collections\r\n/taxonomy/term/*\r\n/queue\r\n/my-links/*\r\n/my-links\r\n/my-drafts\r\n/search-tags\r\n<front>"

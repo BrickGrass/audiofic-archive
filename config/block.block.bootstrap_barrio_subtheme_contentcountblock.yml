@@ -1,0 +1,25 @@
+uuid: cc8ebf7d-3606-4123-8fae-f079bea89a29
+langcode: en
+status: true
+dependencies:
+  module:
+    - aa_utils
+    - system
+  theme:
+    - bootstrap_barrio_subtheme
+id: bootstrap_barrio_subtheme_contentcountblock
+theme: bootstrap_barrio_subtheme
+region: content
+weight: -6
+provider: null
+plugin: content_count
+settings:
+  id: content_count
+  label: 'Content Count Block'
+  label_display: '0'
+  provider: aa_utils
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'
