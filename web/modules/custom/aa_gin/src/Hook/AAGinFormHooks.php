@@ -68,9 +68,14 @@ class AAGinFormHooks {
    * Implements hook_form_FORM_ID_alter() for user_form.
    *
    * Alters the user form to ensure non-admins cannot edit protected fields.
+   * Also changes the label on the cancel account button to be more clear.
    */
   #[Hook('form_user_form_alter')]
   public function formUserAlter(&$form, FormStateInterface $form_state, $form_id) {
+    if (isset($form['actions']) && isset($form['actions']['delete'])) {
+      $form['actions']['delete']['#title'] = $this->t('Delete account');
+    }
+
     $user = User::load($this->current_user->id());
     if ($user && $user->hasRole('administrator')) {
       return;
