@@ -27,19 +27,21 @@ dependencies:
     - contact
     - contextual
     - filter
-    - help
     - media
     - node
+    - shortcut
     - taxonomy
+    - toolbar
 id: archivist
 label: Archivist
 weight: -7
 is_admin: false
 permissions:
   - 'access contextual links'
-  - 'access help pages'
+  - 'access shortcuts'
   - 'access site-wide contact form'
   - 'access taxonomy overview'
+  - 'access toolbar'
   - 'administer taxonomy'
   - 'cancel account'
   - 'create legacy_work content'
