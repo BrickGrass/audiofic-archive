@@ -7,6 +7,7 @@ use Drupal\Core\Entity\EntityFieldManager;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\redirect\Entity\Redirect;
 use Drupal\taxonomy\TermInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
@@ -168,7 +169,13 @@ class WrangleNonCanonicalTagForm extends FormBase {
       }
 
       $this->term->set('field_canon_sibling', $canon_sibling_term);
+      $this->createRedirect($this->term, $canon_sibling_term);
     } else {
+      $previous_canon_sibling = $this->term->get('field_canon_sibling')->referencedEntities();
+      if (!empty($previous_canon_sibling)) {
+        $this->removeRedirect($this->term, $previous_canon_sibling[0]);
+      }
+
       $this->term->set('field_canon_sibling', NULL);
     }
 
@@ -182,6 +189,61 @@ class WrangleNonCanonicalTagForm extends FormBase {
    */
   public function getFormId(): string {
     return "wrangle_non_canonical_tag_form";
+  }
+
+  /**
+   * Creates a redirect between two terms.
+   */
+  private function createRedirect(TermInterface $source, TermInterface $destination) {
+    $existing_redirect_ids = $this->entityTypeManager->getStorage('redirect')->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('redirect_source.path', 'taxonomy/term/' . $source->id())
+      ->execute();
+
+    $redirect_already_exists = FALSE;
+    foreach (Redirect::loadMultiple($existing_redirect_ids) as $existing_redirect) {
+      if ($existing_redirect->getRedirect()['uri'] == 'internal:/taxonomy/term/' . $destination->id()) {
+        $redirect_already_exists = TRUE;
+        continue;
+      }
+
+      $existing_redirect->delete();
+    }
+
+    if ($redirect_already_exists) {
+      return;
+    }
+
+    $redirect = Redirect::create([
+      'redirect_source' => [
+        'path' => 'taxonomy/term/' . $source->id(),
+        'query' => [],
+      ],
+      'redirect_redirect' => [
+        'uri' => 'internal:/taxonomy/term/' . $destination->id(),
+        'options' => [],
+      ],
+      'status_code' => '301',
+    ]);
+    $redirect->save();
+  }
+
+  /**
+   * Removes any redirects that exist between two terms.
+   */
+  private function removeRedirect(TermInterface $source, TermInterface $destination) {
+    $existing_redirect_ids = $this->entityTypeManager->getStorage('redirect')->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('redirect_source.path', 'taxonomy/term/' . $source->id())
+      ->execute();
+
+    foreach (Redirect::loadMultiple($existing_redirect_ids) as $existing_redirect) {
+      if ($existing_redirect->getRedirect()['uri'] != 'internal:/taxonomy/term/' . $destination->id()) {
+        continue;
+      }
+
+      $existing_redirect->delete();
+    }
   }
 
 }
