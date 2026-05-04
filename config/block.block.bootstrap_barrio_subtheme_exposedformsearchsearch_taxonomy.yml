@@ -5,6 +5,7 @@ dependencies:
   config:
     - views.view.search
   module:
+    - aa_search
     - system
     - taxonomy
     - views
@@ -45,3 +46,9 @@ visibility:
       reader: reader
       relationship: relationship
       warning: warning
+  taxonomy_canonical_condition:
+    id: taxonomy_canonical_condition
+    disable_not_canonical: 1
+    negate: 0
+    context_mapping:
+      taxonomy_term: '@taxonomy_term.taxonomy_term_route_context:taxonomy_term'
