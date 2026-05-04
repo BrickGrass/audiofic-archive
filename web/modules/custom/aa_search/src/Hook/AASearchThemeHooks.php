@@ -4,6 +4,7 @@ namespace Drupal\aa_search\Hook;
 
 use Drupal\aa_utils\Service\AudioficTagUtils;
 use Drupal\aa_utils\Service\AudioficUtils;
+use Drupal\block\Entity\Block;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
@@ -137,17 +138,24 @@ class AASearchThemeHooks {
     }
 
     if (
-      $route_name !== 'entity.taxonomy_term.canonical' or
-      !\array_key_exists('title', $variables) or
-      !\is_array($variables['title']) or
-      !\array_key_exists('#markup', $variables['title'])
+      $route_name == 'entity.taxonomy_term.canonical' &&
+      isset($variables['title']) &&
+      isset($variables['title']['#markup'])
     ) {
-      return;
-    }
+      $term = $this->route_match->getParameter('taxonomy_term');
+      if ($term->bundle() === 'series') {
+        $variables['title'] = NULL;
+      }
 
-    $term = $this->route_match->getParameter('taxonomy_term');
-    if ($term->bundle() === 'series') {
-      $variables['title'] = NULL;
+      if (!$this->tag_utils->isTagCanonicityAware($term)) {
+        return;
+      }
+      $canonicity = $term->get('field_canonicity')->value;
+      if ($canonicity == 'canon') {
+        return;
+      }
+
+      $variables['title']['#markup'] = $term->getName();
     }
   }
 
@@ -223,6 +231,12 @@ class AASearchThemeHooks {
 
         $variables['rss_feed'] = '/taxonomy/term/' . $tid . '/rss.xml?' . $url_data['url_query'];
         $variables['taxonomy_term'] = $term;
+
+        if ($this->tag_utils->isTagCanonicityAware($term)) {
+          $variables['canon'] = $term->get('field_canonicity')->value == 'canon';
+        } else {
+          $variables['canon'] = TRUE;
+        }
 
         /** @var \Drupal\taxonomy\TermStorageInterface $taxonomy_term_storage */
         $taxonomy_term_storage = $this->entity_type_manager->getStorage('taxonomy_term');

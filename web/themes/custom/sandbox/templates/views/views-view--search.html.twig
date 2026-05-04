@@ -92,6 +92,14 @@
         </div>
       </div>
   </div>
+{% elseif view.id == "search" and view.current_display == "search_taxonomy" and taxonomy_term != NULL and not canon %}
+  <p>This tag is {{ drupal_field('field_canonicity', 'taxonomy_term', taxonomy_term.id) }} and cannot be toggled on for sorting.</p>
+  <p>This is a {{ taxonomy_term.bundle }} tag.</p>
+  {% if taxonomy_term.bundle == "fandom" %}
+  {{ drupal_view("unwrangled_tag_works", "unwrangled_fandom_tag_works_content") }}
+  {% elseif taxonomy_term.bundle == "relationship" %}
+  {{ drupal_view("unwrangled_tag_works", "unwrangled_relationship_tag_works_content") }}
+  {% endif %}
 {% else %}
   {%
     set classes = [

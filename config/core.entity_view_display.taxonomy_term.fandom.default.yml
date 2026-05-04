@@ -31,7 +31,7 @@ content:
     region: content
   field_canonicity:
     type: list_default
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     weight: 1
