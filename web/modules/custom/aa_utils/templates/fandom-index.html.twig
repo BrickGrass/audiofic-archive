@@ -1,0 +1,13 @@
+<div class="fandom-index-wrapper p-md-3 d-flex flex-row flex-wrap">
+  {% for fandom in fandoms %}
+    <div class="fandom-index-box alert alert-aa-metadata d-flex flex-column">
+      {% set taxonomy_path = path('aa_utils.fandom_page', {'taxonomy_term': fandom.root_fandom.id}) %}
+      <a href="{{ taxonomy_path }}"><h3>{{ fandom.root_fandom.name.value }}</h3></a>
+      {% for item in fandom.top_5 %}
+        {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': item.term_id}) %}
+        <span><a href="{{ taxonomy_path }}">{{ item.term_name }}</a> ({{ item.total_work_count }})</span>
+      {% endfor %}
+      <div class="text-end mt-auto">{{ fandom.more_link }}</div>
+    </div>
+  {% endfor %}
+</div>

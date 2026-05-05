@@ -1,0 +1,16 @@
+<div class="fandom-index-page-wrapper">
+  <div class=" d-flex flex-row flex-wrap justify-content-center gap-1 mb-3">
+  {% for letter, _ in fandom_index %}
+    <a href="#{{ letter }}" class="btn btn-primary">{{ letter }}</a>
+  {% endfor %}
+  </div>
+{% for letter, fandoms in fandom_index %}
+  <div class="alert alert-aa-metadata d-flex flex-column">
+    <h3 id="{{ letter }}">{{ letter }}</h3>
+    {% for fandom in fandoms %}
+      {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': fandom.term_id}) %}
+      <span><a href="{{ taxonomy_path }}">{{ fandom.term_name }}</a> ({{ fandom.work_count }})</span>
+    {% endfor %}
+  </div>
+{% endfor %}
+</div>

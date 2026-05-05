@@ -16,7 +16,7 @@ dependencies:
 id: unwrangled_tag_works
 label: 'Unwrangled Tag Works'
 module: views
-description: ''
+description: 'Blocks used for the admin tag wrangling pages & the user-facing unsorted tag pages to list all works using a non-canonical tag'
 tag: ''
 base_table: node_field_data
 base_field: nid

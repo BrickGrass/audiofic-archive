@@ -1,0 +1,20 @@
+.fandom-index-wrapper {
+    column-gap: 1rem;
+}
+
+.alert.fandom-index-box {
+    width: 100%;
+    margin-bottom: calc(var(--bs-gutter-x) * .5);
+}
+
+@media (min-width: 768px) {
+    .alert.fandom-index-box {
+        width: calc(50% - (1rem / 2));
+        margin-bottom: var(--bs-alert-margin-bottom);
+    }
+
+    .fandom-index-page-wrapper {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}

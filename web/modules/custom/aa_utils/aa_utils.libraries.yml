@@ -1,0 +1,5 @@
+fandom-index:
+  version: 1.x
+  css:
+    component:
+      css/fandom_index.css: {}

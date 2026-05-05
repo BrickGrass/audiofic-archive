@@ -41,6 +41,20 @@ class AAUtilsThemeHooks {
           'user_count' => 0,
         ],
       ],
+
+      'fandom-index' => [
+        'template' => 'fandom-index',
+        'variables' => [
+          'fandoms' => [],
+        ],
+      ],
+
+      'fandom-index-page' => [
+        'template' => 'fandom-index-page',
+        'variables' => [
+          'fandom_index' => [],
+        ],
+      ],
     ];
   }
 
