@@ -4,7 +4,6 @@ namespace Drupal\aa_utils\Controller;
 
 use Drupal\aa_utils\Service\AudioficTagUtils;
 use Drupal\Component\Utility\Html;
-use Drupal\Core\Cache\CacheableResponse;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Link;
@@ -98,6 +97,7 @@ class FandomIndexController extends ControllerBase {
       ],
       '#cache' => [
         'contexts' => ['route'],
+        // 1 day.
         'max-age' => 86400,
       ],
     ];
@@ -147,6 +147,7 @@ class FandomIndexController extends ControllerBase {
       ],
       '#cache' => [
         'contexts' => ['route'],
+        // 1 day.
         'max-age' => 86400,
       ],
     ];
