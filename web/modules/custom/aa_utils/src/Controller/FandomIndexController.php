@@ -199,14 +199,10 @@ class FandomIndexController extends ControllerBase {
       [':root_fandom_id' => $taxonomy_term->id()],
     );
 
-
-
     $fandom_index = [];
     foreach ($query->fetchAll() as $row) {
       $fandom_index[mb_strtolower(mb_substr($row->term_name, 0, 1, 'utf-8'), 'UTF-8')][] = $row;
     }
-
-
 
     return [
       '#theme' => 'fandom-index-page',
