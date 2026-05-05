@@ -1,5 +1,44 @@
 menus:
   -
+    menu_name: footer
+    title: 'Cookie Policy'
+    parent: null
+    uri: 'internal:/cookie-policy'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: 040b2790-2ca4-48f6-9a3f-d52906dbba98
+    options: {  }
+  -
+    menu_name: account
+    title: Register
+    parent: null
+    uri: 'internal:/user/register'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: -47
+    langcode: en
+    uuid: 8a4d1d10-ddd0-4d19-8d77-6007ddf74d35
+    options: {  }
+  -
+    menu_name: main
+    title: Post
+    parent: null
+    uri: 'route:<button>'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: -48
+    langcode: en
+    uuid: ed87f397-7b1d-4433-9088-5197f0d0e9ab
+    options: {  }
+  -
     menu_name: main
     title: 'Add work'
     parent: 'menu_link_content:ed87f397-7b1d-4433-9088-5197f0d0e9ab'
@@ -27,7 +66,7 @@ menus:
     options: {  }
   -
     menu_name: main
-    title: Post
+    title: Search
     parent: null
     uri: 'route:<button>'
     link_title: ''
@@ -36,20 +75,20 @@ menus:
     expanded: false
     weight: -49
     langcode: en
-    uuid: ed87f397-7b1d-4433-9088-5197f0d0e9ab
+    uuid: d3dc94a9-d87f-4628-9baa-6adda3da2923
     options: {  }
   -
     menu_name: main
-    title: Search
+    title: About
     parent: null
     uri: 'route:<button>'
     link_title: ''
     description: null
     enabled: true
     expanded: false
-    weight: -50
+    weight: -47
     langcode: en
-    uuid: d3dc94a9-d87f-4628-9baa-6adda3da2923
+    uuid: 4854f30c-75f0-4bb0-944c-a920651bbeb2
     options: {  }
   -
     menu_name: main
@@ -65,43 +104,17 @@ menus:
     uuid: 76a9970f-5027-490d-9e31-fb4c45fa0fd6
     options: {  }
   -
-    menu_name: account
-    title: Register
-    parent: null
-    uri: 'internal:/user/register'
-    link_title: ''
-    description: null
-    enabled: true
-    expanded: false
-    weight: -47
-    langcode: en
-    uuid: 8a4d1d10-ddd0-4d19-8d77-6007ddf74d35
-    options: {  }
-  -
     menu_name: main
-    title: About
+    title: 'Browse All Fandoms'
     parent: null
-    uri: 'route:<button>'
+    uri: 'internal:/fandoms'
     link_title: ''
     description: null
     enabled: true
     expanded: false
-    weight: -48
+    weight: -50
     langcode: en
-    uuid: 4854f30c-75f0-4bb0-944c-a920651bbeb2
-    options: {  }
-  -
-    menu_name: footer
-    title: 'Cookie Policy'
-    parent: null
-    uri: 'internal:/cookie-policy'
-    link_title: ''
-    description: null
-    enabled: true
-    expanded: false
-    weight: 0
-    langcode: en
-    uuid: 040b2790-2ca4-48f6-9a3f-d52906dbba98
+    uuid: bd26a525-64f8-41c6-abc0-d25e0483ecd2
     options: {  }
 taxonomies:
   category:
