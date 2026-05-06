@@ -55,6 +55,13 @@ class AudioficUtils {
     '15:00:00-20:00:00' => '15-20 hrs',
     'over 20:00:00' => 'over 20 hrs',
   ];
+  private const RATINGWEIGHTS = [
+    'General' => 0,
+    'Teen and up' => 1,
+    'Mature' => 2,
+    'Explicit' => 3,
+    'Not rated' => 4,
+  ];
 
   /**
    * Determines whether an entity is rated nsfw (no rating or null is nsfw).
@@ -267,23 +274,7 @@ class AudioficUtils {
       $data[$key] = $this->removeDuplicateEntities($data[$key]);
     }
 
-    $rating_value = [
-      "General" => 0,
-      "Teen and up" => 1,
-      "Mature" => 2,
-      "Explicit" => 3,
-      "Not rated" => 4,
-    ];
-
-    $rating = NULL;
-    foreach ($data['ratings'] as $r) {
-      if ($rating === NULL or
-          $rating_value[$rating->name->value] < $rating_value[$r->name->value]
-        ) {
-        $rating = $r;
-      }
-    }
-    $data['ratings'] = [$rating];
+    $data['ratings'] = [$this->findHighestRating($data['ratings'])];
 
     if (!in_array(FALSE, $data['archive_locked'])) {
       $data['archive_locked'] = TRUE;
@@ -292,6 +283,22 @@ class AudioficUtils {
     }
 
     return $data;
+  }
+
+  /**
+   * Finds the rating with the highest weight from those provided.
+   */
+  public function findHighestRating(array $ratings) {
+    $rating = NULL;
+    foreach ($ratings as $r) {
+      if (
+        $rating == NULL ||
+        $this::RATINGWEIGHTS[$rating->name->value] < $this::RATINGWEIGHTS[$r->name->value]
+      ) {
+        $rating = $r;
+      }
+    }
+    return $rating;
   }
 
 }

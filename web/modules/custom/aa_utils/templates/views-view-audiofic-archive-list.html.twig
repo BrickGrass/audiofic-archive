@@ -1,0 +1,29 @@
+{#
+/**
+ * Default theme implementation for Views to output an audiofic archive list.
+ *
+ * Available variables:
+ * - options: View plugin style options:
+ *   - classes: CSS classes.
+ *
+ * @see template_preprocess_views_view_audiofic_archive_player()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    'views-view-audiofic-archive-list',
+    'd-flex',
+    'flex-column',
+    'mb-2',
+    options.classes,
+  ]
+%}
+
+<div{{attributes.addClass(classes)}}>
+  {% for row in rows %}
+    {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': row.tid}) %}
+    <span><a href="{{ taxonomy_path }}">{{ row.taxonomy_term_field_data_name }}</a> ({{ row.field_legacy_series_taxonomy_term_field_data_nid }})</span>
+  {% endfor %}
+</div>

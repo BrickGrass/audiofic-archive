@@ -4,7 +4,6 @@ namespace Drupal\aa_search\Hook;
 
 use Drupal\aa_utils\Service\AudioficTagUtils;
 use Drupal\aa_utils\Service\AudioficUtils;
-use Drupal\block\Entity\Block;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
@@ -47,6 +46,14 @@ class AASearchThemeHooks {
     // Targets all exposed search forms, eg: work search, series search etc.
     if (str_starts_with($form['#id'], 'views-exposed-form-search')) {
       $this->alterViewsExposedSearch($form);
+    }
+
+    if ($form['#id'] == 'views-exposed-form-browse-legacy-series-page-1') {
+      $this->alterLegacySeriesExposedForm($form);
+    }
+
+    if ($form['#id'] == 'views-exposed-form-browse-relationships-search-page') {
+      $this->alterRelationshipSearchExposedForm($form);
     }
   }
 
@@ -344,12 +351,14 @@ class AASearchThemeHooks {
     $authors = [];
     $readers = [];
     $languages = [];
+    $ratings = [];
     $all_tags = [];
 
     foreach ($series_works as $work) {
       $authors = array_merge($authors, $this->tag_utils->fetchFieldTerms($work, 'field_author'));
       $readers = array_merge($readers, $this->tag_utils->fetchFieldTerms($work, 'field_reader'));
       $languages = array_merge($languages, $this->tag_utils->fetchFieldTerms($work, 'field_language'));
+      $ratings = array_merge($ratings, $this->tag_utils->fetchFieldTerms($work, 'field_rating'));
 
       foreach (["field_fandom2", "field_relationship", "field_category", "field_format"] as $key) {
         $all_tags = array_merge($all_tags, $this->tag_utils->fetchFieldTerms($work, $key));
@@ -359,6 +368,7 @@ class AASearchThemeHooks {
     $variables['authors'] = $this->utils->removeDuplicateEntities($authors);
     $variables['readers'] = $this->utils->removeDuplicateEntities($readers);
     $variables['languages'] = $this->utils->removeDuplicateEntities($languages);
+    $variables['rating'] = $this->utils->findHighestRating($ratings);
     $variables['all_tags'] = $this->utils->removeDuplicateEntities($all_tags);
 
     $first_work = array_first($series_works);
@@ -388,7 +398,7 @@ class AASearchThemeHooks {
     foreach ([
       'search_api_fulltext', 'fandom', 'fandom-exclude', 'relationship',
       'relationship-exclude', 'reader', 'reader-exclude', 'author', 'author-exclude',
-      'duration-from', 'duration-to', 'title',
+      'duration-from', 'duration-to',
     ] as $key) {
       $form[$key]['#attributes']['data_twig_suggestion'] = 'search';
     }
@@ -412,6 +422,32 @@ class AASearchThemeHooks {
     $form['#attached']['library'][] = 'aa_search/duration';
     $form['#attached']['library'][] = 'aa_search/search-sidebar';
     $form['#attached']['library'][] = 'aa_search/jump-to-filters';
+  }
+
+  /**
+   * Alters views exposed form for /legacy-series.
+   */
+  private function alterLegacySeriesExposedForm(&$form) {
+    // Ensure widgets that need specific styling have appropriate attribute.
+    foreach ([
+      'series_name', 'fandom', 'relationship', 'author', 'reader',
+      'category', 'language', 'format',
+    ] as $key) {
+      $form[$key]['#attributes']['data_twig_suggestion'] = 'legacy_series';
+    }
+    $form['actions']['submit']['#attributes']['data_twig_suggestion'] = 'legacy_series';
+    $form['sort_by']['#attributes']['data_twig_suggestion'] = 'legacy_series';
+    $form['sort_bef_combine']['#attributes']['data_twig_suggestion'] = 'legacy_series';
+  }
+
+  /**
+   * Alters views exposed form for /relationships.
+   */
+  private function alterRelationshipSearchExposedForm(&$form) {
+    $form['search_api_fulltext']['#attributes']['data_twig_suggestion'] = 'relationships';
+    $form['actions']['submit']['#attributes']['data_twig_suggestion'] = 'relationships';
+    $form['sort_by']['#attributes']['data_twig_suggestion'] = 'relationships';
+    $form['sort_bef_combine']['#attributes']['data_twig_suggestion'] = 'relationships';
   }
 
 }

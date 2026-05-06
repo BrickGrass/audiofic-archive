@@ -37,8 +37,11 @@
 
         <div class="d-flex justify-content-between align-items-center mb-2">
           <div class="d-flex flex-wrap gap-1 full-work-lozenges">
-            {# TODO: Actually calculate this! Not decided on the priority of ratings, but keep in mind that one of the options is NULL #}
-            <span class="badge bg-secondary me-1">Age Rating Unknown</span>
+            {{ include('bootstrap_barrio_subtheme:rating_badge',
+              { rating: rating ? rating.name.value : 'n/a',
+                view_mode: 'full'
+              })
+            }}
             <span class="badge bg-primary me-1">Legacy Series</span>
           </div>
           <div class="d-flex flex-column justify-content-end text-end full-work-dates">

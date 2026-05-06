@@ -104,11 +104,14 @@ class BootstrapBarrioSubthemeThemeHooks {
    */
   #[Hook('preprocess_views_view')]
   public function preprocessViewsView(&$variables) {
-    if ($variables['id'] != 'browse_relationships') {
+    if (
+      $variables['id'] != 'browse_relationships' &&
+      $variables['id'] != 'browse_legacy_series'
+    ) {
       return;
     }
 
-    $variables['#attached']['library'][] = 'bootstrap_barrio_subtheme/browse-relationships';
+    $variables['#attached']['library'][] = 'bootstrap_barrio_subtheme/browse-tags';
     $variables['#attached']['library'][] = 'aa_search/search-sidebar';
   }
 
