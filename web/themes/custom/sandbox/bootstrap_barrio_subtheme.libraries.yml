@@ -33,3 +33,7 @@ color.preview:
     color/preview.js: {}
   dependencies:
     - color/drupal.color
+browse-relationships:
+  css:
+    component:
+      css/browse_relationships.css: {}

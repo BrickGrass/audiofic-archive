@@ -1,0 +1,28 @@
+uuid: c7d0018b-38d7-4682-acb0-9dda86ef89bd
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.browse_relationships
+  module:
+    - system
+    - views
+  theme:
+    - bootstrap_barrio_subtheme
+id: bootstrap_barrio_exposedformbrowse_relationships
+theme: bootstrap_barrio_subtheme
+region: sidebar_first
+weight: 0
+provider: null
+plugin: 'views_exposed_filter_block:browse_relationships-search_page'
+settings:
+  id: 'views_exposed_filter_block:browse_relationships-search_page'
+  label: ''
+  label_display: '0'
+  provider: views
+  views_label: ''
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: /relationships
