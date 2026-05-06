@@ -1,0 +1,24 @@
+uuid: e85283d4-d54b-466b-b0cc-5630c09b5214
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - bootstrap_barrio_subtheme
+id: bootstrap_barrio_subtheme_breadcrumbs
+theme: bootstrap_barrio_subtheme
+region: breadcrumb
+weight: 0
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  label_display: '0'
+  provider: system
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: "/fandoms\r\n/fandoms/*"

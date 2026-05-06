@@ -1,42 +1,55 @@
 menus:
   -
-    menu_name: main
-    title: 'Add work'
-    parent: 'menu_link_content:ed87f397-7b1d-4433-9088-5197f0d0e9ab'
+    menu_name: footer
+    title: 'Cookie Policy'
+    parent: null
+    uri: 'internal:/cookie-policy'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: 040b2790-2ca4-48f6-9a3f-d52906dbba98
+    options: {  }
+  -
+    menu_name: account
+    title: Register
+    parent: null
+    uri: 'internal:/user/register'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: -47
+    langcode: en
+    uuid: 8a4d1d10-ddd0-4d19-8d77-6007ddf74d35
+    options: {  }
+  -
+    menu_name: account
+    title: 'Post Podfic'
+    parent: null
     uri: 'internal:/node/add/work'
     link_title: ''
     description: null
     enabled: true
     expanded: false
-    weight: -50
+    weight: 0
     langcode: en
-    uuid: 12513358-12d4-4e19-92bf-f6347c0a02e0
+    uuid: c4def134-cd7a-47f8-ab00-de518a4a2a24
     options: {  }
   -
-    menu_name: main
-    title: 'Add series or collection'
-    parent: 'menu_link_content:ed87f397-7b1d-4433-9088-5197f0d0e9ab'
+    menu_name: account
+    title: 'Post Series'
+    parent: null
     uri: 'internal:/node/add/playlist'
     link_title: ''
     description: null
     enabled: true
     expanded: false
-    weight: -48
+    weight: 0
     langcode: en
-    uuid: 0c42075d-f625-4de8-9cf8-b5975804c885
-    options: {  }
-  -
-    menu_name: main
-    title: Post
-    parent: null
-    uri: 'route:<button>'
-    link_title: ''
-    description: null
-    enabled: true
-    expanded: false
-    weight: -49
-    langcode: en
-    uuid: ed87f397-7b1d-4433-9088-5197f0d0e9ab
+    uuid: d7b16e88-85d2-4e27-8202-fb25942fb1e7
     options: {  }
   -
     menu_name: main
@@ -53,32 +66,6 @@ menus:
     options: {  }
   -
     menu_name: main
-    title: 'Tagging guide'
-    parent: 'menu_link_content:4854f30c-75f0-4bb0-944c-a920651bbeb2'
-    uri: 'internal:/tagging-guide'
-    link_title: ''
-    description: null
-    enabled: true
-    expanded: false
-    weight: -50
-    langcode: en
-    uuid: 76a9970f-5027-490d-9e31-fb4c45fa0fd6
-    options: {  }
-  -
-    menu_name: account
-    title: Register
-    parent: null
-    uri: 'internal:/user/register'
-    link_title: ''
-    description: null
-    enabled: true
-    expanded: false
-    weight: -47
-    langcode: en
-    uuid: 8a4d1d10-ddd0-4d19-8d77-6007ddf74d35
-    options: {  }
-  -
-    menu_name: main
     title: About
     parent: null
     uri: 'route:<button>'
@@ -91,17 +78,43 @@ menus:
     uuid: 4854f30c-75f0-4bb0-944c-a920651bbeb2
     options: {  }
   -
-    menu_name: footer
-    title: 'Cookie Policy'
-    parent: null
-    uri: 'internal:/cookie-policy'
+    menu_name: main
+    title: 'Tagging guide'
+    parent: 'menu_link_content:4854f30c-75f0-4bb0-944c-a920651bbeb2'
+    uri: 'internal:/tagging-guide'
     link_title: ''
     description: null
     enabled: true
     expanded: false
-    weight: 0
+    weight: -50
     langcode: en
-    uuid: 040b2790-2ca4-48f6-9a3f-d52906dbba98
+    uuid: 76a9970f-5027-490d-9e31-fb4c45fa0fd6
+    options: {  }
+  -
+    menu_name: main
+    title: 'Browse tags'
+    parent: null
+    uri: 'route:<button>'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: -49
+    langcode: en
+    uuid: a6a1d576-3651-421b-bc90-4705c61616ce
+    options: {  }
+  -
+    menu_name: main
+    title: 'Browse fandoms'
+    parent: 'menu_link_content:a6a1d576-3651-421b-bc90-4705c61616ce'
+    uri: 'internal:/fandoms'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: -50
+    langcode: en
+    uuid: bd26a525-64f8-41c6-abc0-d25e0483ecd2
     options: {  }
 taxonomies:
   category:

@@ -11,3 +11,23 @@ aa_utils.delete_attribution:
         type: entity:user
       node:
         type: entity:node
+
+aa_utils.fandom_index:
+  path: fandoms
+  defaults:
+    _controller: \Drupal\aa_utils\Controller\FandomIndexController::fandomIndex
+    _title: Browse All Fandoms
+  requirements:
+    _access: 'TRUE'
+
+aa_utils.fandom_page:
+  path: fandoms/{taxonomy_term}
+  defaults:
+    _controller: \Drupal\aa_utils\Controller\FandomIndexController::fandomPage
+    _title_callback: \Drupal\aa_utils\Controller\FandomIndexController::fandomPageTitle
+  requirements:
+    _access: 'TRUE'
+  options:
+    parameters:
+      taxonomy_term:
+        type: entity:taxonomy_term

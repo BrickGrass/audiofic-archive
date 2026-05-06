@@ -1,0 +1,23 @@
+#views-exposed-form-browse-legacy-series-page-1 > div,
+#views-exposed-form-browse-relationships-search-page > div {
+    flex-direction: column;
+}
+
+#views-exposed-form-browse-legacy-series-page-1 .form-actions,
+#views-exposed-form-browse-relationships-search-page .form-actions {
+    margin-bottom: 0 !important;
+    width: 100%;
+}
+
+#views-exposed-form-browse-legacy-series-page-1 button,
+#views-exposed-form-browse-relationships-search-page button {
+    width: 100%;
+}
+
+#sidebar_first {
+    padding: 0;
+}
+
+div.form-item-field-fandom2-target-id {
+    margin-bottom: 0.5rem !important;
+}

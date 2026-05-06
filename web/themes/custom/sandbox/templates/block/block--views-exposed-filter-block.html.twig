@@ -34,10 +34,14 @@ set classes = [
     'block',
     'block-' ~ configuration.provider|clean_class,
     'block-' ~ plugin_id|clean_class,
-    'collapse',
-    'dont-collapse-sm',
 ]
 %}
+{% if plugin_id != 'views_exposed_filter_block:browse_relationships-search_page' and
+      plugin_id != 'views_exposed_filter_block:browse_legacy_series-page_1'
+%}
+    {% set classes = classes|merge(['collapse', 'dont-collapse-sm']) %}
+{% endif %}
+
 <div{{ attributes.addClass(classes) }}>
 {{ title_prefix }}
 {% if label %}

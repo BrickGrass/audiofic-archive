@@ -7,6 +7,7 @@ use Drupal\aa_utils\Service\AudioficUtils;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 
@@ -17,17 +18,28 @@ class BootstrapBarrioSubthemeThemeHooks {
     protected EntityTypeManagerInterface $entity_type_manager,
     protected AudioficUtils $utils,
     protected AudioficTagUtils $tag_utils,
+    protected RouteMatchInterface $route_match,
   ) {}
 
   /**
    * Implements hook_preprocess_HOOK() for breadcrumb.
    *
    * Removes 'Home' from the breadcrumb trail.
+   *
+   * If the page is a /fandom/root_fandom page, add the fandom name to
+   * the breadcrumb.
    */
   #[Hook('preprocess_breadcrumb')]
   public function preprocessBreadcrumb(&$variables) {
     if (count($variables['breadcrumb'])) {
       array_shift($variables['breadcrumb']);
+    }
+
+    if ($this->route_match->getRouteName() == 'aa_utils.fandom_page') {
+      $taxonomy_term = $this->route_match->getParameter('taxonomy_term');
+      if (!empty($taxonomy_term)) {
+        $variables['breadcrumb'][] = ['text' => $taxonomy_term->getName()];
+      }
     }
   }
 
@@ -85,6 +97,22 @@ class BootstrapBarrioSubthemeThemeHooks {
     if ($node_type === 'playlist') {
       $this->getSeriesData($node, $variables);
     }
+  }
+
+  /**
+   * Implements hook_preprocess_views_view().
+   */
+  #[Hook('preprocess_views_view')]
+  public function preprocessViewsView(&$variables) {
+    if (
+      $variables['id'] != 'browse_relationships' &&
+      $variables['id'] != 'browse_legacy_series'
+    ) {
+      return;
+    }
+
+    $variables['#attached']['library'][] = 'bootstrap_barrio_subtheme/browse-tags';
+    $variables['#attached']['library'][] = 'aa_search/search-sidebar';
   }
 
   /**
