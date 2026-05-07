@@ -390,7 +390,6 @@ display:
         title: 'Browse relationships'
         description: ''
         weight: -49
-        enabled: true
         expanded: false
         menu_name: main
         parent: 'menu_link_content:a6a1d576-3651-421b-bc90-4705c61616ce'

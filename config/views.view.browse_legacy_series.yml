@@ -863,8 +863,12 @@ display:
       menu:
         type: normal
         title: 'Browse legacy series'
+        description: ''
+        weight: 0
+        expanded: false
         menu_name: main
         parent: 'menu_link_content:a6a1d576-3651-421b-bc90-4705c61616ce'
+        context: '0'
     cache_metadata:
       max-age: -1
       contexts:
