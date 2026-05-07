@@ -469,7 +469,8 @@ button.nav-link {
 		grid-row: 1 / span 2;
 	}
 
-	.full-work.full-work-legacy-work.no-image .full-work-main-content {
+	.full-work.full-work-legacy-work.no-image .full-work-main-content,
+	.full-work.legacy-series.no-image .full-work-main-content {
 		grid-column: 1 / span 2;
 		grid-row: 2;
 	}
