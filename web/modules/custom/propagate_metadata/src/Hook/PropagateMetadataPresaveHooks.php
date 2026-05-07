@@ -17,12 +17,16 @@ use Drupal\user\Entity\User;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
- * Class PropagateMetadataNodePresaveHooks.
+ * Class PropagateMetadataPresaveHooks.
  *
- * Ensures that the work/legacy_work/playlist node types
- * have the correct data set when saved.
+ * Ensures that entities have the correct data set when
+ * saved. Manages the following entities:
+ * - node.work
+ * - node.playlist
+ * - node.legacy_work
+ * - media
  */
-class PropagateMetadataNodePresaveHooks {
+class PropagateMetadataPresaveHooks {
   use StringTranslationTrait;
 
   public function __construct(
@@ -49,6 +53,7 @@ class PropagateMetadataNodePresaveHooks {
         // propagated down to their related series?
         $this->enforceOwnerRules($node);
         $this->updateAllCollections($node, updated_duration_seconds: $duration);
+        $this->setMediaOwner($node);
         break;
 
       case 'legacy_work':
@@ -82,6 +87,8 @@ class PropagateMetadataNodePresaveHooks {
    */
   #[Hook('node_delete')]
   public function nodeDelete(NodeInterface $node) {
+    $this->deleteMedia($node);
+
     if ($node->getType() !== 'work') {
       return;
     }
@@ -226,6 +233,51 @@ class PropagateMetadataNodePresaveHooks {
       ));
 
       $this->messenger->addError($this->t('You cannot remove other owners!'));
+    }
+  }
+
+  /**
+   * Fetches all media entities attached to a node (if any).
+   */
+  private function getAllMediaFromNode(NodeInterface $node): array {
+    $streaming_files = [];
+    $other_files = [];
+
+    if ($node->hasField('field_mp3_files')) {
+      $streaming_files = $node->get('field_mp3_files')->referencedEntities();
+    }
+
+    if ($node->hasField('field_other_files')) {
+      $other_files = $node->get('field_mp3_files')->referencedEntities();
+    }
+
+    return array_merge($streaming_files, $other_files);
+  }
+
+  /**
+   * Updates all media entities attached to a node with the new owner(s).
+   */
+  private function setMediaOwner(NodeInterface $node) {
+    $all_media = $this->getAllMediaFromNode($node);
+    $owners = $node->get('field_owner')->referencedEntities();
+
+    /** @var \Drupal\media\MediaInterface $media */
+    foreach ($all_media as $media) {
+      $media->set('field_owner', $owners);
+      $media->save();
+    }
+  }
+
+  /**
+   * Deletes all referenced media from a node.
+   */
+  private function deleteMedia(NodeInterface $node) {
+    $all_media = $this->getAllMediaFromNode($node);
+
+    /** @var \Drupal\media\MediaInterface $media */
+    foreach ($all_media as $media) {
+      dpm('Deleting media!');
+      $media->delete();
     }
   }
 

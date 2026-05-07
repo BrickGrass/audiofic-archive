@@ -109,3 +109,4 @@ components/
 **/node_modules
 db_backups/
 private_files/
+.vscode/

@@ -3,8 +3,11 @@
 namespace Drupal\propagate_metadata\Hook;
 
 use Drupal\aa_utils\Service\AudioficUtils;
+use Drupal\Core\Access\AccessResultAllowed;
+use Drupal\Core\Access\AccessResultForbidden;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\media\MediaInterface;
 use Drupal\node\NodeInterface;
 use Drupal\user\Entity\User;
 
@@ -160,6 +163,36 @@ class PropagateMetadataHooks {
     }
 
     return $grants;
+  }
+
+  /**
+   * Implements hook_ENTITY_TYPE_access() for media.
+   *
+   * Used to define custom access based on the user's reader tag.
+   */
+  #[Hook('media_access')]
+  public function mediaAccess(MediaInterface $media, $operation, AccountInterface $account) {
+    $roles = $account->getRoles();
+
+    if (in_array('administrator', $roles)) {
+      return AccessResultAllowed::allowed();
+    } elseif (!in_array('content_editor', $roles)) {
+      return AccessResultForbidden::forbidden();
+    }
+
+    $user = User::load($account->id());
+    if (empty($user)) {
+      return AccessResultForbidden::forbidden();
+    }
+
+    $user_tags = array_column($user->get('field_reader_name')->getValue(), 'target_id');
+    $media_owners = array_column($media->get('field_owner')->getValue(), 'target_id');
+    foreach ($user_tags as $user_tag) {
+      if (in_array($user_tag, $media_owners)) {
+        return AccessResultAllowed::allowed();
+      }
+    }
+    return AccessResultForbidden::forbidden();
   }
 
 }

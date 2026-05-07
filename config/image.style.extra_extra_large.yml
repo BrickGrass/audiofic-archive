@@ -1,0 +1,21 @@
+uuid: b3e20fe2-6132-4991-851c-942426513733
+langcode: en
+status: true
+dependencies: {  }
+name: extra_extra_large
+label: 'Extra Extra Large (1600x1600)'
+effects:
+  3d4eeb29-2172-4fb4-95e7-52082f6ec23e:
+    uuid: 3d4eeb29-2172-4fb4-95e7-52082f6ec23e
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 1600
+      height: 1600
+      anchor: center-center
+  5c6e423b-3f30-43b6-840d-9bd8d4fba013:
+    uuid: 5c6e423b-3f30-43b6-840d-9bd8d4fba013
+    id: image_convert
+    weight: 2
+    data:
+      extension: jpeg

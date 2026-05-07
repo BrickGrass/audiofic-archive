@@ -6,6 +6,7 @@ dependencies:
     - field.field.media.other_file.field_file_label
     - field.field.media.other_file.field_filename
     - field.field.media.other_file.field_media_file
+    - field.field.media.other_file.field_owner
     - media.type.other_file
   module:
     - file
@@ -47,6 +48,7 @@ content:
 hidden:
   created: true
   field_filename: true
+  field_owner: true
   path: true
   status: true
   uid: true

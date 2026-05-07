@@ -20,7 +20,7 @@ default_value_callback: ''
 settings:
   handler: 'default:file'
   handler_settings: {  }
-  file_directory: '[current-user:display-name]'
+  file_directory: streaming
   file_extensions: 'mp3 wav aac'
   max_filesize: ''
   description_field: false

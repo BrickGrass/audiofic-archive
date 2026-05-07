@@ -19,7 +19,7 @@ dependencies:
     - field.field.node.legacy_work.field_reader
     - field.field.node.legacy_work.field_relationship
     - field.field.node.legacy_work.field_warning
-    - image.style.thumbnail
+    - image.style.large
     - node.type.legacy_work
   module:
     - duration_field
@@ -118,7 +118,7 @@ content:
     region: content
     settings:
       progress_indicator: throbber
-      preview_image_style: thumbnail
+      preview_image_style: large
     third_party_settings: {  }
   field_duration:
     type: duration_widget

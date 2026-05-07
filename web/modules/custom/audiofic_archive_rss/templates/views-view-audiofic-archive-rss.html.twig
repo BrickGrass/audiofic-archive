@@ -24,7 +24,7 @@
     <language>en</language>
     {% if options.is_contextual and contextual_filter == "node" %}
       {% if source_node.cover_url != NULL %}
-      <itunes:image href="https://{{ hostname }}{{ source_node.cover_url }}"/>
+      <itunes:image href="{{ source_node.cover_url }}"/>
       {% elseif options.cover_url|trim is not empty %}
       <itunes:image href="https://{{ hostname }}{{ options.cover_url }}"/>
       {% endif %}
@@ -61,7 +61,7 @@
           <itunes:explicit>{{ work.explicit ? 'true' : 'false' }}</itunes:explicit>
           <link>https://{{ hostname }}/{{ work.link }}</link>
           {% if work.cover_url != NULL %}
-          <itunes:image href="https://{{ hostname }}{{ work.cover_url }}" />
+          <itunes:image href="{{ work.cover_url }}" />
           {% endif %}
         </item>
       {% endfor %}
