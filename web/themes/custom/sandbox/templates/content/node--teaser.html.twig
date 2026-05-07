@@ -137,17 +137,13 @@
             {% if node.field_rating is not empty %}
               {{ content.field_rating }}
             {% else %}
-              <span class="badge bg-secondary ms-1">Age Rating Unknown</span>
+              <span class="badge bg-secondary ms-1">{% trans %}Age Rating Unknown{% endtrans %}</span>
             {% endif %}
 
             {% if content_type == "playlist" %}
-              <span class="badge bg-primary ms-1">Series</span>
-            {% elseif content_type == "reader_collection" %}
-              <span class="badge bg-primary ms-1">Collection</span>
-            {% elseif content_type == "rec_list" %}
-              <span class="badge bg-primary ms-1">Rec List</span>
+              <span class="badge bg-primary ms-1">{% trans %}Series{% endtrans %}</span>
             {% elseif content_type == "legacy_work" %}
-              <span class="badge bg-primary ms-1">Legacy Work</span>
+              <span class="badge bg-primary ms-1">{% trans %}Legacy Work{% endtrans %}</span>
             {% endif %}
 
             {{ content.field_completion_status }}
@@ -158,39 +154,31 @@
 
             {% set duration %}
               {% if node.field_duration is not empty and content_type != "legacy_work" %}
-                {{ "duration: " }}{{ duration_value|striptags|trim }}{{ ", " }}
+                {{ "duration: " | trans }}{{ duration_value|striptags|trim }}{{ ", " }}
               {% elseif node.field_length is not empty and content_type == "legacy_work" %}
-                {{ "length: " }}{{ node.field_length[0].entity.name.value }}{{ ", " }}
+                {{ "length: " | trans }}{{ node.field_length[0].entity.name.value }}{{ ", " }}
               {% endif %}
             {% endset %}
 
-            {% if content_type == "playlist" %}
-              {% set collection_type = "series" %}
-            {% elseif content_type == "reader_collection" %}
-              {% set collection_type = "reader collection" %}
-            {% elseif content_type == "rec_list" %}
-              {% set collection_type = "rec list" %}
-              {% set collection_length = node.field_works|length %}
-            {% endif %}
             {% set collection_parts =
-              content_type in ["playlist", "reader_collection", "rec_list"] ?
-              "#{collection_length} part #{collection_type}, " : ""
+              content_type == "playlist" ?
+              "#{collection_length} part series, " : ""
             %}
 
             {% if content_type in ["work", "legacy_work"] %}
               {% set language %}
-                {{ "language: " }}{{ node.field_language[0].entity.name.value }}{{ ", " }}
+                {{ "language: " | trans }}{{ node.field_language[0].entity.name.value }}{{ ", " }}
               {% endset %}
             {% elseif node.field_languages|length > 0 %}
               {% set language %}
-                {{ "language(s): " }}
+                {{ "language(s): " | trans }}
                 {% for lang in node.field_languages %}
                   {{ lang.entity.name.value }}{{- not loop.last ? ' ' : ', ' -}}
                 {% endfor %}
               {% endset %}
             {% endif %}
 
-            <span class="ms-1">{{ duration }}{{ collection_parts }}{{ language }}published: {{ created_at }}</span>
+            <span class="ms-1">{{ duration }}{{ collection_parts | trans }}{{ language }}{% trans %}published: {% endtrans %}{{ created_at }}</span>
           </small>
         </div>
       </div>

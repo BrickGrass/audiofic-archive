@@ -40,13 +40,13 @@ set classes = [
       {{ content.field_author_name }}
       {{ content.field_cover_artist_name }}
       <span>
-        <span class="work-field-label">Joined on:</span>
+        <span class="work-field-label">{% trans %}Joined on:{% endtrans %}</span>
         <span>{{ created_at }}</span>
       </span>
     </div>
     {% if user.field_profile[0].value %}
     <div class="user-profile-bio-wrapper mb-2">
-      <h5>Bio</h5>
+      <h5>{% trans %}Bio{% endtrans %}</h5>
       {{ content.field_profile }}
     </div>
     {% endif %}
@@ -54,10 +54,10 @@ set classes = [
       {% set works_result = drupal_view_result('user_s_works', 'users_works', reader_ids) %}
       {% if works_result %}
       <div class="user-profile-works">
-        <h5>Recent works</h5>
+        <h5>{% trans %}Recent works{% endtrans %}</h5>
         {{ drupal_view('user_s_works', 'users_works', reader_ids) }}
         {% if works_result | length == 5 %}
-        <a class="user-profile-see-more" href="/search/works?reader={{ reader_ids | replace({"+": ","}) }}">See more</a>
+        <a class="user-profile-see-more" href="/search/works?reader={{ reader_ids | replace({"+": ","}) }}">{% trans %}See more{% endtrans %}</a>
         {% endif %}
       </div>
       {% endif %}
@@ -66,10 +66,10 @@ set classes = [
       {% if series_result %}
       <hr>
       <div class="user-profile-series">
-        <h5>Recent series</h5>
+        <h5>{% trans %}Recent series{% endtrans %}</h5>
         {{ drupal_view('user_s_works', 'users_series', reader_ids) }}
         {% if series_result | length == 5 %}
-        <a class="user-profile-see-more" href="/search/collections?reader={{ reader_ids | replace({"+": ","}) }}">See more</a>
+        <a class="user-profile-see-more" href="/search/collections?reader={{ reader_ids | replace({"+": ","}) }}">{% trans %}See more{% endtrans %}</a>
         {% endif %}
       </div>
       {% endif %}

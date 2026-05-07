@@ -42,13 +42,13 @@
                 view_mode: 'full'
               })
             }}
-            <span class="badge bg-primary me-1">Legacy Series</span>
+            <span class="badge bg-primary me-1">{% trans %}Legacy Series{% endtrans %}</span>
           </div>
           <div class="d-flex flex-column justify-content-end text-end full-work-dates">
             {% if created_at is not empty %}
-              <small class="fw-bold">Published: {{ created_at }}</small>
+              <small class="fw-bold">{% trans %}Published: {{ created_at }}{% endtrans %}</small>
             {% endif %}
-            <small class="fw-bold">Last Updated: {{ updated_at }}</small>
+            <small class="fw-bold">{% trans %}Last Updated: {{ updated_at }}{% endtrans %}</small>
           </div>
         </div>
 
@@ -79,7 +79,7 @@
           </div>
 
           <span>
-            <b>Language(s)</b>
+            <b>{% trans %}Language(s){% endtrans %}</b>
             {% for lang in languages %}
               {{ lang.name.value }}{{- not loop.last ? ', ' -}}
             {% endfor %}
@@ -89,15 +89,15 @@
         {# All works in this series as teaser-full (teaser + body text) #}
         <div class="mt-2">
           {% if total_nsfw > 0 %}
-            <span class="nsfw-total d-none">({{ total_nsfw }} work{{ total_nsfw > 1 ? 's' : ''}} on this page {{ total_nsfw > 1 ? 'are' : 'is'}} hidden by your filters.)</span>
+            <span class="nsfw-total d-none">{% trans %}({{ total_nsfw }} work{{ total_nsfw > 1 ? 's' : ''}} on this page {{ total_nsfw > 1 ? 'are' : 'is'}} hidden by your filters.){% endtrans %}</span>
           {% endif %}
           {{ drupal_view("search", "legacy_series_block") }}
         </div>
       </div>
   </div>
 {% elseif view.id == "search" and view.current_display == "search_taxonomy" and taxonomy_term != NULL and not canon %}
-  <p>This tag is {{ drupal_field('field_canonicity', 'taxonomy_term', taxonomy_term.id) }} and cannot be toggled on for sorting.</p>
-  <p>This is a {{ taxonomy_term.bundle }} tag.</p>
+  <p>{% trans %}This tag is {{ drupal_field('field_canonicity', 'taxonomy_term', taxonomy_term.id) }} and cannot be toggled on for sorting.{% endtrans %}</p>
+  <p>{% trans %}This is a {{ taxonomy_term.bundle }} tag.{% endtrans %}</p>
   {% if taxonomy_term.bundle == "fandom" %}
   {{ drupal_view("unwrangled_tag_works", "unwrangled_fandom_tag_works_content") }}
   {% elseif taxonomy_term.bundle == "relationship" %}
@@ -117,25 +117,25 @@
     {% set form_target = "block-bootstrap-barrio-subtheme-exposedformsearchsearch-taxonomy" %}
     {% set tag_info_btn %}
       <a class="btn btn-primary ms-1" data-bs-toggle="collapse" href="#tagInfo" role="button" aria-expanded="true" aria-controls="tagInfo">
-        Tag Info <i class="bi bi-info-circle-fill"></i>
+        {% trans %}Tag Info{% endtrans %} <i class="bi bi-info-circle-fill"></i>
       </a>
     {% endset %}
     {% if taxonomy_term != NULL and
           taxonomy_term.bundle in ["author", "reader", "curator", "cover_artist"] and
           user is not empty %}
       {% set user_profile_btn %}
-        <a class="btn btn-primary ms-1" href="/user/{{ user.id }}">View User Profile <i class="bi bi-person-fill"></i></a>
+        <a class="btn btn-primary ms-1" href="/user/{{ user.id }}">{% trans %}View User Profile{% endtrans %} <i class="bi bi-person-fill"></i></a>
       {% endset %}
     {% endif %}
   {% elseif view.current_display == "search" %}
     {% set form_target = "block-bootstrap-barrio-subtheme-exposedformsearchsearch" %}
     {% set other_search %}
-      <a class="btn btn-primary ms-1" href="/search/collections">Search Collections</a>
+      <a class="btn btn-primary ms-1" href="/search/collections">{% end %}Search Collections{% endtrans %}</a>
     {% endset %}
   {% elseif view.current_display == "search_collection" %}
     {% set form_target = "block-bootstrap-barrio-subtheme-exposedformsearchsearch-collection" %}
     {% set other_search %}
-      <a class="btn btn-primary ms-1" href="/search/works">Search Works</a>
+      <a class="btn btn-primary ms-1" href="/search/works">{% trans %}Search Works{% endtrans %}</a>
     {% endset %}
   {% endif %}
   <div{{ attributes.addClass(classes) }}>
@@ -147,11 +147,11 @@
     {% if view.current_display == "search_taxonomy" and taxonomy_term != NULL %}
       <div id="tagInfo" class="collapse">
         {# TODO: Add type of fandom tag after a comma (This tag is a Fandom tag, in the category Movie & TV Fandoms). #}
-        <p>This tag is a {{ taxonomy_term.bundle|replace({"_": " "})|title }} tag.</p>
+        <p>{% trans %}This tag is a {{ taxonomy_term.bundle|replace({"_": " "})|title }} tag.{% endtrans %}</p>
 
         {% if term_parents is not empty %}
           <p>
-            <b>Parent Tag(s):</b>
+            <b>{% trans %}Parent Tag(s):{% endtrans %}</b>
             {% for parent in term_parents %}
               {%  set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': parent.id}) %}
               <a href="{{ taxonomy_path }}">{{ parent.name.value }}</a>{{- not loop.last ? ', ' -}}
@@ -161,7 +161,7 @@
 
         {% if term_children is not empty %}
           <p>
-            <b>Child Tag(s):</b>
+            <b>{% trans %}Child Tag(s):{% endtrans %}</b>
             {% for child in term_children %}
               {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': child.id}) %}
               <a href="{{ taxonomy_path }}">{{ child.name.value }}</a>{{- not loop.last ? ', ' -}}
@@ -173,12 +173,12 @@
 
         {% if taxonomy_term.bundle in ["author", "reader", "curator", "cover_artist"] %}
           {% if user is not empty %}
-            <p>View this user's profile page <a href="/user/{{ user.id }}">here</a>.</p>
+            <p>{% trans %}View this user's profile page <a href="/user/{{ user.id }}">here{% endtrans %}</a>.</p>
           {% endif %}
 
           {% if pseudonyms is not empty %}
             <p>
-              This user also has works archived under the following names:
+              {% trans %}This user also has works archived under the following names:{% endtrans %}
               {% for tag in pseudonyms %}
                 {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': tag.id}) %}
                 <a href="{{ taxonomy_path }}">{{ tag.name.value }} ({{ tag.bundle|replace({"_": " "})|title }})</a>{{- not loop.last ? ', ' -}}
@@ -192,7 +192,7 @@
       <div class="view-header">
         {{ header }}
         {% if total_nsfw > 0 %}
-          <span class="nsfw-total d-none">({{ total_nsfw }} work{{ total_nsfw > 1 ? 's' : ''}} on this page {{ total_nsfw > 1 ? 'are' : 'is'}} hidden by your filters.)</span>
+          <span class="nsfw-total d-none">{% trans %}({{ total_nsfw }} work{{ total_nsfw > 1 ? 's' : ''}} on this page {{ total_nsfw > 1 ? 'are' : 'is'}} hidden by your filters.){% endtrans %}</span>
         {% endif %}
       </div>
     {% endif %}
@@ -214,10 +214,10 @@
         {{ tag_info_btn }}
         {{ user_profile_btn }}
         {% if view.current_display != "search_collection" %}
-        <a class="btn btn-primary ms-1" id="rssLink" href="{{ rss_feed }}">RSS <i class="bi bi-rss-fill"></i></a>
+        <a class="btn btn-primary ms-1" id="rssLink" href="{{ rss_feed }}">{% trans %}RSS{% endtrans %} <i class="bi bi-rss-fill"></i></a>
         {% endif %}
         <a id="expand-filters" class="btn btn-primary d-md-none ms-1" data-bs-toggle="collapse" href="#{{ form_target }}" role="button" aria-expanded="true" aria-controls="{{ form_target }}">
-          Filters <i class="bi bi-funnel-fill"></i>
+          {% trans %}Filters{% endtrans %} <i class="bi bi-funnel-fill"></i>
         </a>
       </div>
     {% endif %}

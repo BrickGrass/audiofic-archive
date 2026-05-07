@@ -101,10 +101,6 @@ set classes = [
 <div{{ content_attributes.addClass('node__content', 'clearfix') }}>
   {% if content_type in ["work", "legacy_work", "playlist", "reader_collection", "rec_list"] %}
     {% set has_image = node.field_cover[0].entity.uri.value != null %}
-    {# TODO: I have disabled showing the exposed filters for the work view block on series content types for now
-    will need to decide later if we still want these & implement them properly then if so! #}
-    {% set filters_enabled = false %}
-    {# {% set filters_enabled = content_type in ["playlist", "reader_collection", "rec_list"] %} #}
     {% if node.field_rating is not empty %}
       {% if node.field_rating[0].entity.name.value not in ["General", "Teen and up"] %}
         {% set explicit_rating = true %}
@@ -112,32 +108,16 @@ set classes = [
     {% else %}
       {% set explicit_rating = true %}
     {% endif %}
-    <div class="p-2 full-work {{ has_image ? '' : 'no-image' }} {{ filters_enabled ? 'filters-enabled' : '' }} {{ explicit_rating ? 'full-work-explicit' : '' }} full-work-{{ content_type|replace({'_': '-'}) }}">
-      {# TODO: When the filters are placed above the rest of the content and hidden,
-      their row gap is still rendered, so we get a double-height margin at the top of
-      the page. To fix this I'll need to add some js listening to whether the filters
-      are collapsed, and add a negative margin to the .full-work div based on that. #}
+    <div class="p-2 full-work {{ has_image ? '' : 'no-image' }} {{ explicit_rating ? 'full-work-explicit' : '' }} full-work-{{ content_type|replace({'_': '-'}) }}">
       <div class="contextual-menu">
         {{ drupal_block("node_contextual_menu", {context_mapping: {node: '@node.node_route_context:node'}}, wrapper=false) }}
         {% if content_type in ["work", "playlist"] %}
           {% set url_prefix = {"work": "work", "playlist": "series"} %}
-          <a class="btn btn-primary" href="/{{ url_prefix[content_type] }}/{{ node.id }}/rss.xml">RSS <i class="bi bi-rss-fill"></i></a>
-        {% endif %}
-        {% if filters_enabled %}
-          <a class="btn btn-primary d-md-none" data-bs-toggle="collapse" href="#full-work-filters" role="button" aria-expanded="true" aria-controls="full-work-filters">
-            Filters <i class="bi bi-funnel-fill"></i>
-          </a>
+          <a class="btn btn-primary" href="/{{ url_prefix[content_type] }}/{{ node.id }}/rss.xml">{% trans %}RSS{% endtrans %} <i class="bi bi-rss-fill"></i></a>
         {% endif %}
       </div>
       {% if has_image %}
         {{ content.field_cover }}
-      {% endif %}
-      {% if filters_enabled %}
-        <div id="full-work-filters" class="full-work-filters collapse dont-collapse-sm">
-          {% if content_type == "playlist" %}
-            {{ drupal_block("views_exposed_filter_block:seriess-works", wrapper=false) }}
-          {% endif %}
-        </div>
       {% endif %}
       <div class="d-flex flex-column w-100 full-work-main-content">
         <h1>{{ label }}</h1>
@@ -147,20 +127,20 @@ set classes = [
             {% if node.field_rating is not empty %}
               {{ content.field_rating }}
             {% else %}
-              <span class="badge bg-secondary">Age Rating Unknown</span>
+              <span class="badge bg-secondary">{% trans %}Age Rating Unknown{% endtrans %}</span>
             {% endif %}
 
             {% if content_type == "playlist" %}
-              <span class="badge bg-primary">Series</span>
+              <span class="badge bg-primary">{% trans %}Series{% endtrans %}</span>
             {% elseif content_type == "legacy_work" %}
-              <span class="badge bg-primary">Legacy Work</span>
+              <span class="badge bg-primary">{% trans %}Legacy Work{% endtrans %}</span>
             {% endif %}
 
             {{ content.field_completion_status }}
           </div>
           <div class="d-flex flex-column justify-content-end text-end full-work-dates">
-            <small class="fw-bold">Published: {{ created_at }}</small>
-            <small class="fw-bold">Last Updated: {{ updated_at }}</small>
+            <small class="fw-bold">{% trans %}Published:{% endtrans %} {{ created_at }}</small>
+            <small class="fw-bold">{% trans %}Last Updated:{% endtrans %} {{ updated_at }}</small>
           </div>
         </div>
 
@@ -188,7 +168,7 @@ set classes = [
           </div>
 
           {% if node.field_length is not empty and content_type == "legacy_work" %}
-            <span><b>Length</b> {{ node.field_length[0].entity.name.value }}</span>
+            <span><b>{% trans %}Length{% endtrans %}</b> {{ node.field_length[0].entity.name.value }}</span>
           {% endif %}
 
           {% set duration %}
@@ -196,16 +176,16 @@ set classes = [
           {% endset %}
 
           {% if node.field_duration is not empty and content_type != "legacy_work" %}
-            <span><b>Duration</b> {{ duration|striptags|trim }}</span>
+            <span><b>{% trans %}Duration{% endtrans %}</b> {{ duration|striptags|trim }}</span>
           {% endif %}
 
           {% if node.field_language is not empty %}
-            <span><b>Language</b> {{ node.field_language[0].entity.name.value }}</span>
+            <span><b>{% trans %}Language{% endtrans %}</b> {{ node.field_language[0].entity.name.value }}</span>
           {% endif %}
 
           {% if node.field_languages is not empty %}
             <span>
-              <b>Language(s)</b>
+              <b>{% trans %}Language(s){% endtrans %}</b>
               {% for lang in node.field_languages %}
                 {{ lang.entity.name.value }}{{- not loop.last ? ', ' -}}
               {% endfor %}
@@ -215,7 +195,7 @@ set classes = [
           {% if node.field_legacy_series is not empty %}
             {% set legacy_series = node.field_legacy_series[0].entity %}
             <span>
-              <b>Part of Series</b>
+              <b>{% trans %}Part of Series{% endtrans %}</b>
               <a href="{{ path('entity.taxonomy_term.canonical', {'taxonomy_term': legacy_series.id}) }}">{{ legacy_series.name.value }}</a>
             </span>
           {% endif %}
@@ -223,7 +203,7 @@ set classes = [
           {% for series_pos in series_positions %}
             {% set series = series_pos['series'] %}
             <span>
-              part {{ series_pos['position'] }} of
+              {% trans %}part {{ series_pos['position'] }} of{% endtrans %}
               <a href="{{ path('entity.node.canonical', {'node': series.id}) }}">{{ series.title.value }}</a>
             </span>
           {% endfor %}
@@ -233,14 +213,14 @@ set classes = [
           <div class="summary-and-notes">
             {% if node.field_summary is not empty %}
               <div>
-                <b>Summary</b>
+                <b>{% trans %}Summary{% endtrans %}</b>
                 <div class="ms-3">{{ content.field_summary }}</div>
               </div>
             {% endif %}
 
             {% if node.field_notes is not empty %}
               <div>
-                <b>Notes</b>
+                <b>{% trans %}Notes{% endtrans %}</b>
                 <div class="ms-3">{{ content.field_notes }}</div>
               </div>
             {% endif %}
@@ -251,7 +231,7 @@ set classes = [
           {# All works in this series as teasers #}
           <div>
             {% if explicit_rating and total_nsfw is not empty %}
-              <span class="nsfw-total d-none">({{ total_nsfw }} work{{ total_nsfw > 1 ? 's' : ''}} on this page {{ total_nsfw > 1 ? 'are' : 'is'}} hidden by your filters.)</span>
+              <span class="nsfw-total d-none">{% trans %}({{ total_nsfw }} work{{ total_nsfw > 1 ? 's' : ''}} on this page {{ total_nsfw > 1 ? 'are' : 'is'}} hidden by your filters.){% endtrans %}</span>
             {% endif %}
             {% if content_type == "playlist" %}
               {{ drupal_view("seriess", "works") }}
@@ -265,22 +245,24 @@ set classes = [
 
         {% if content_type == "legacy_work" %}
           <div class="alert alert-aa-info" role="alert">
-            Legacy works may not have ratings, tags, warnings, or summaries. Please use the links to the podfic post and written work in order to check this data before you listen.
+            {% trans %}Legacy works may not have ratings, tags, warnings, or summaries. Please use the links to the podfic post and written work in order to check this data before you listen.{% endtrans %}
           </div>
           {{ node.body.value | raw }}
         {% endif %}
       </div>
       <div class="full-work-links-downloads">
-        {% set warning_text = "To leave feedback please see the" %}
-        {% set warning_text_multiple = "written work(s) and podfic post(s)." %}
+        {% set warning_text = "To leave feedback please see the" | trans %}
+        {% set warning_text_multiple = "written work(s) and podfic post(s)." | trans %}
 
         {% if content_type == "work" and node.field_podfic_post.getvalue | length == 1 and node.field_text_post.getvalue | length == 1 %}
           <div class="alert alert-aa-info" role="alert">
             <p>
               {{ warning_text }}
+              {% trans %}
               <a href="{{ node.field_text_post.value[0].uri }}">written work</a>
               and
               <a href="{{ node.field_podfic_post.value[0].uri }}">podfic post</a>.
+              {% endtrans %}
             </p>
           </div>
         {% elseif content_type in ["work", "playlist", "reader_collection"] %}
@@ -289,14 +271,14 @@ set classes = [
             {% set text_links = content_type == "work" ? node.field_text_post.value : work_text_links %}
             {% set podfic_links = content_type == "work" ? node.field_podfic_post.value : work_podfic_links %}
             <p>
-              Written work(s):
+              {% trans %}Written work(s):{% endtrans %}
               {% for link in text_links %}
                 {% set title = content_type == "work" ? "link %s"|format(loop.index) : link.title %}
                 <a href="{{ link.uri }}">{{ title }}</a>{% if not loop.last %},{% endif %}
               {% endfor %}
             </p>
             <p>
-              Podfic post(s):
+              {% trans %}Podfic post(s):{% endtrans %}
               {% for link in podfic_links %}
                 {% set title = content_type == "work" ? "link %s"|format(loop.index) : link.title %}
                 <a href="{{ link.uri }}">{{ title }}</a>{% if not loop.last %},{% endif %}
@@ -314,9 +296,11 @@ set classes = [
         {% elseif content_type == "rec_list" %}
           {% if legacy_works %}
             <div class="alert alert-aa-info" role="alert">
+              {% trans %}
               This rec list contains legacy works which will not appear in the playlist
               or download sections. To stream or download these works, please navigate to their
-              induvidual page via the complete list of works.
+              individual page via the complete list of works.
+              {% endtrans %}
             </div>
           {% endif %}
           {{ drupal_view("rec_lists", "downloads") }}

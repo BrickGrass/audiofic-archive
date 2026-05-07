@@ -28,9 +28,9 @@
 
 {# No max for HH, max of 59 for MM & SS #}
 <div class="d-flex flex-row aa-duration-wrapper justify-content-end align-items-center ms-2">
-  <input {{ attributes.setAttribute("placeholder", "HH").setAttribute("aria-label", "Duration %s: hours"|format(title)) }} value="{{ hours is not empty ? hours : '' }}">
+  <input {{ attributes.setAttribute("placeholder", "HH" | trans).setAttribute("aria-label", "Duration %s: hours"|format(title) | trans) }} value="{{ hours is not empty ? hours : '' }}">
   <span class="ms-1 me-1">:</span>
-  <input {{ attributes.setAttribute("max", "59").setAttribute("placeholder", "MM").setAttribute("aria-label", "Duration %s: minutes"|format(title)) }} value="{{ mins is not empty ? mins : '' }}">
+  <input {{ attributes.setAttribute("max", "59").setAttribute("placeholder", "MM" | trans).setAttribute("aria-label", "Duration %s: minutes"|format(title) | trans) }} value="{{ mins is not empty ? mins : '' }}">
   <span class="ms-1 me-1">:</span>
-  <input {{ attributes.setAttribute("placeholder", "SS").setAttribute("aria-label", "Duration %s: seconds"|format(title)) }} value="{{ seconds is not empty ? seconds : '' }}">
+  <input {{ attributes.setAttribute("placeholder", "SS" | trans).setAttribute("aria-label", "Duration %s: seconds"|format(title) | trans) }} value="{{ seconds is not empty ? seconds : '' }}">
 </div>

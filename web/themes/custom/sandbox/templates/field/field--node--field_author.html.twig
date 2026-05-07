@@ -39,7 +39,7 @@
 #}
 
 <span>
-    <span class="work-field-label">Written by</span>
+    <span class="work-field-label">{% trans %}Written by{% endtrans %}</span>
     {% for item in items %}
         {{ item.content }}{{- not loop.last ? ', ' -}}
     {% endfor %}
