@@ -13,3 +13,9 @@ effects:
       width: 500
       height: null
       upscale: false
+  5be43d7c-8156-40ae-a41f-49b6885b91f0:
+    uuid: 5be43d7c-8156-40ae-a41f-49b6885b91f0
+    id: image_convert
+    weight: 2
+    data:
+      extension: jpeg

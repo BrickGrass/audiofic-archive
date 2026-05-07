@@ -19,11 +19,11 @@ dependencies:
     - field.field.node.legacy_work.field_reader
     - field.field.node.legacy_work.field_relationship
     - field.field.node.legacy_work.field_warning
-    - image.style.medium_square
     - node.type.legacy_work
+    - responsive_image.styles.details_cover
   module:
     - duration_field
-    - image
+    - responsive_image
     - text
     - user
 id: node.legacy_work.default
@@ -65,11 +65,11 @@ content:
     weight: 3
     region: content
   field_cover:
-    type: image
+    type: responsive_image
     label: hidden
     settings:
+      responsive_image_style: details_cover
       image_link: ''
-      image_style: medium_square
       image_loading:
         attribute: lazy
     third_party_settings: {  }

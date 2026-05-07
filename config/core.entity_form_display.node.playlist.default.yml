@@ -20,7 +20,7 @@ dependencies:
     - field.field.node.playlist.field_summary
     - field.field.node.playlist.field_warning
     - field.field.node.playlist.field_works_series
-    - image.style.thumbnail
+    - image.style.large
     - node.type.playlist
   module:
     - image
@@ -36,7 +36,7 @@ content:
     region: content
     settings:
       progress_indicator: throbber
-      preview_image_style: thumbnail
+      preview_image_style: large
     third_party_settings: {  }
   field_summary:
     type: text_textarea

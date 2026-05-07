@@ -31,7 +31,7 @@ dependencies:
     - field.field.node.work.field_summary
     - field.field.node.work.field_text_post
     - field.field.node.work.field_warning
-    - image.style.small_square
+    - image.style.large
     - node.type.work
   module:
     - field_group
@@ -181,7 +181,7 @@ content:
     region: content
     settings:
       progress_indicator: throbber
-      preview_image_style: small_square
+      preview_image_style: large
     third_party_settings: {  }
   field_cover_artist:
     type: tagify_entity_reference_autocomplete_widget

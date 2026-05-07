@@ -20,11 +20,11 @@ dependencies:
     - field.field.node.playlist.field_summary
     - field.field.node.playlist.field_warning
     - field.field.node.playlist.field_works_series
-    - image.style.medium
     - node.type.playlist
+    - responsive_image.styles.details_cover
   module:
     - duration_field
-    - image
+    - responsive_image
     - text
     - user
 id: node.playlist.default
@@ -59,11 +59,11 @@ content:
     weight: 3
     region: content
   field_cover:
-    type: image
+    type: responsive_image
     label: hidden
     settings:
+      responsive_image_style: details_cover
       image_link: ''
-      image_style: medium
       image_loading:
         attribute: lazy
     third_party_settings: {  }

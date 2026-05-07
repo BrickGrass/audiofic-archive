@@ -13,3 +13,9 @@ effects:
       width: 1600
       height: 1600
       anchor: center-center
+  5c6e423b-3f30-43b6-840d-9bd8d4fba013:
+    uuid: 5c6e423b-3f30-43b6-840d-9bd8d4fba013
+    id: image_convert
+    weight: 2
+    data:
+      extension: jpeg
