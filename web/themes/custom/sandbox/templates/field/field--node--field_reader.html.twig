@@ -39,7 +39,7 @@
 #}
 
 <span>
-    <span class="work-field-label">Read by</span>
+    <span class="work-field-label">{% trans %}Read by{% endtrans %}</span>
     {% for item in items %}
         {{ item.content }}{{- not loop.last ? ', ' -}}
     {% endfor %}

@@ -21,14 +21,8 @@
  */
 #}
 
-{% if output == "Explicit" %}
-  <span class="badge bg-danger ms-1">E</span>
-{% elseif output == "Mature" %}
-  <span class="badge rating-mature ms-1">M</span>
-{% elseif output == "Teens and up" %}
-  <span class="badge bg-warning ms-1">T</span>
-{% elseif output == "Gen" %}
-  <span class="badge bg-success ms-1">G</span>
-{% else %}
-  <span class="badge bg-secondary ms-1">No Age Rating</span>
-{% endif %}
+{{ include('bootstrap_barrio_subtheme:rating_badge',
+  { rating: output,
+    view_mode: "full"
+  })
+}}
