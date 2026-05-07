@@ -1,7 +1,9 @@
 {% set margin = view_mode == 'full' ? 'me-1' : 'ms-1' %}
 
+{% set alt %}
+  {{ "Rating: "|trans }}{{ rating }}
+{% endset %}
 
-{% set alt = "Rating: " + rating | trans %}
 {% if rating == "Explicit" %}
   <span class="badge bg-danger {{ margin }}" title="{{ alt }}" aria-label="{{ alt }}">E</span>
 {% elseif rating == "Mature" %}

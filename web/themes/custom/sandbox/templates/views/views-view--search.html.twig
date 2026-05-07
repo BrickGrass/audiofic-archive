@@ -96,8 +96,8 @@
       </div>
   </div>
 {% elseif view.id == "search" and view.current_display == "search_taxonomy" and taxonomy_term != NULL and not canon %}
-  <p>{% trans %}This tag is {{ drupal_field('field_canonicity', 'taxonomy_term', taxonomy_term.id) }} and cannot be toggled on for sorting.{% endtrans %}</p>
-  <p>{% trans %}This is a {{ taxonomy_term.bundle }} tag.{% endtrans %}</p>
+  <p>This tag is {{ drupal_field('field_canonicity', 'taxonomy_term', taxonomy_term.id) }} and cannot be toggled on for sorting.</p>
+  <p>This is a {{ taxonomy_term.bundle }} tag.</p>
   {% if taxonomy_term.bundle == "fandom" %}
   {{ drupal_view("unwrangled_tag_works", "unwrangled_fandom_tag_works_content") }}
   {% elseif taxonomy_term.bundle == "relationship" %}
@@ -130,7 +130,7 @@
   {% elseif view.current_display == "search" %}
     {% set form_target = "block-bootstrap-barrio-subtheme-exposedformsearchsearch" %}
     {% set other_search %}
-      <a class="btn btn-primary ms-1" href="/search/collections">{% end %}Search Collections{% endtrans %}</a>
+      <a class="btn btn-primary ms-1" href="/search/collections">{% trans %}Search Collections{% endtrans %}</a>
     {% endset %}
   {% elseif view.current_display == "search_collection" %}
     {% set form_target = "block-bootstrap-barrio-subtheme-exposedformsearchsearch-collection" %}
