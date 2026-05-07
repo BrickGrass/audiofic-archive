@@ -231,7 +231,7 @@ set classes = [
           {# All works in this series as teasers #}
           <div>
             {% if explicit_rating and total_nsfw is not empty %}
-              <span class="nsfw-total d-none">{% trans %}({{ total_nsfw }} work{{ total_nsfw > 1 ? 's' : ''}} on this page {{ total_nsfw > 1 ? 'are' : 'is'}} hidden by your filters.){% endtrans %}</span>
+              <span class="nsfw-total d-none">({{ total_nsfw }} work{{ total_nsfw > 1 ? 's' : ''}} on this page {{ total_nsfw > 1 ? 'are' : 'is'}} hidden by your filters.)</span>
             {% endif %}
             {% if content_type == "playlist" %}
               {{ drupal_view("seriess", "works") }}
