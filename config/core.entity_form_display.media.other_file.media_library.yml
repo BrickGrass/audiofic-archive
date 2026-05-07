@@ -7,6 +7,7 @@ dependencies:
     - field.field.media.other_file.field_file_label
     - field.field.media.other_file.field_filename
     - field.field.media.other_file.field_media_file
+    - field.field.media.other_file.field_owner
     - media.type.other_file
 id: media.other_file.media_library
 targetEntityType: media
@@ -33,6 +34,7 @@ hidden:
   field_file_label: true
   field_filename: true
   field_media_file: true
+  field_owner: true
   path: true
   status: true
   uid: true

@@ -1,0 +1,29 @@
+uuid: 7e1bb0af-8c77-450f-9354-311df6220769
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_owner
+    - media.type.other_file
+    - taxonomy.vocabulary.reader
+id: media.other_file.field_owner
+field_name: field_owner
+entity_type: media
+bundle: other_file
+label: Owner
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      reader: reader
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

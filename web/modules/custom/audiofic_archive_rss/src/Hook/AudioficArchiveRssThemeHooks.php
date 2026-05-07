@@ -7,6 +7,7 @@ use Drupal\aa_utils\Service\AudioficTagUtils;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Link;
 use Drupal\file\Entity\File;
+use Drupal\image\Entity\ImageStyle;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 use Drupal\taxonomy\Entity\Term;
@@ -206,7 +207,15 @@ class AudioficArchiveRssThemeHooks {
    */
   private function fetchCover(NodeInterface $node): NULL | string {
     $cover_field = $node->get('field_cover')->referencedEntities();
-    return count($cover_field) > 0 ? $cover_field[0]->createFileUrl() : NULL;
+    if (empty($cover_field)) {
+      return NULL;
+    }
+
+    // We use the extra_extra_large image style (1600x1600) to comply
+    // with apple podcast standards, see:
+    // https://podcasters.apple.com/support/5516-episode-art-template
+    $cover_image = $cover_field[0]->getFileUri();
+    return ImageStyle::load('extra_extra_large')->buildUrl($cover_image);
   }
 
   /**

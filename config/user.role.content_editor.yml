@@ -7,7 +7,6 @@ dependencies:
     - filter.format.legacy_work_html
     - media.type.mp3_file
     - media.type.other_file
-    - node.type.legacy_work
     - node.type.playlist
     - node.type.work
     - taxonomy.vocabulary.author
@@ -33,7 +32,6 @@ permissions:
   - 'access contextual links'
   - 'access file download'
   - 'cancel account'
-  - 'create legacy_work content'
   - 'create mp3_file media'
   - 'create other_file media'
   - 'create playlist content'
@@ -44,10 +42,6 @@ permissions:
   - 'create terms in relationship'
   - 'create work content'
   - 'delete media'
-  - 'delete own mp3_file media'
-  - 'delete own other_file media'
-  - 'edit own mp3_file media'
-  - 'edit own other_file media'
   - 'update media'
   - 'use text format basic_html'
   - 'use text format legacy_work_html'

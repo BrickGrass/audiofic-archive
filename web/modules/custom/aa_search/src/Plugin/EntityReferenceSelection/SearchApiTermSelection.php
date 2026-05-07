@@ -25,7 +25,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
   id: "search_index:taxonomy_term",
   label: new TranslatableMarkup("Search API Taxonomy Term selection"),
   entity_types: ["taxonomy_term"],
-  group: "search_index",
+  group: "default",
   weight: 1
 )]
 class SearchApiTermSelection extends DefaultSelection {

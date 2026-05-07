@@ -8,6 +8,7 @@ dependencies:
     - field.field.media.mp3_file.field_duration_seconds
     - field.field.media.mp3_file.field_filename
     - field.field.media.mp3_file.field_media_audio_file
+    - field.field.media.mp3_file.field_owner
     - field.field.media.mp3_file.field_use_for_duration
     - media.type.mp3_file
   module:
@@ -39,6 +40,7 @@ hidden:
   created: true
   field_duration_seconds: true
   field_filename: true
+  field_owner: true
   field_use_for_duration: true
   langcode: true
   name: true

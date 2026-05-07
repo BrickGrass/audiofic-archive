@@ -6,6 +6,7 @@ dependencies:
     - field.field.media.other_file.field_file_label
     - field.field.media.other_file.field_filename
     - field.field.media.other_file.field_media_file
+    - field.field.media.other_file.field_owner
     - media.type.other_file
   module:
     - file
@@ -37,6 +38,14 @@ content:
       use_description_as_link_text: true
     third_party_settings: {  }
     weight: 0
+    region: content
+  field_owner:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 6
     region: content
 hidden:
   created: true

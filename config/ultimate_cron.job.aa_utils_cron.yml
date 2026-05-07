@@ -1,0 +1,29 @@
+uuid: eb35004f-5d4e-4334-b585-118fec8881ab
+langcode: en
+status: true
+dependencies:
+  module:
+    - aa_utils
+title: 'Default cron handler'
+id: aa_utils_cron
+weight: 0
+module: aa_utils
+callback: 'aa_utils#cron'
+scheduler:
+  id: simple
+  configuration:
+    rules:
+      - '* * * * *'
+launcher:
+  id: serial
+  configuration:
+    timeouts:
+      lock_timeout: 3600
+    launcher:
+      thread: 0
+logger:
+  id: database
+  configuration:
+    method: '3'
+    expire: 1209600
+    retain: 1000

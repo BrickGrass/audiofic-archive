@@ -17,12 +17,16 @@ use Drupal\user\Entity\User;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
- * Class PropagateMetadataNodePresaveHooks.
+ * Class PropagateMetadataPresaveHooks.
  *
- * Ensures that the work/legacy_work/playlist node types
- * have the correct data set when saved.
+ * Ensures that entities have the correct data set when
+ * saved. Manages the following entities:
+ * - node.work
+ * - node.playlist
+ * - node.legacy_work
+ * - media
  */
-class PropagateMetadataNodePresaveHooks {
+class PropagateMetadataPresaveHooks {
   use StringTranslationTrait;
 
   public function __construct(
@@ -49,6 +53,7 @@ class PropagateMetadataNodePresaveHooks {
         // propagated down to their related series?
         $this->enforceOwnerRules($node);
         $this->updateAllCollections($node, updated_duration_seconds: $duration);
+        $this->setMediaOwner($node);
         break;
 
       case 'legacy_work':
@@ -226,6 +231,21 @@ class PropagateMetadataNodePresaveHooks {
       ));
 
       $this->messenger->addError($this->t('You cannot remove other owners!'));
+    }
+  }
+
+  /**
+   * Updates all media entities attached to a node with the new owner(s).
+   */
+  private function setMediaOwner(NodeInterface $node) {
+    $streaming_files = $node->get('field_mp3_files')->referencedEntities();
+    $other_files = $node->get('field_other_files')->referencedEntities();
+    $owners = $node->get('field_owner')->referencedEntities();
+
+    /** @var \Drupal\media\MediaInterface $media */
+    foreach (array_merge($streaming_files, $other_files) as $media) {
+      $media->set('field_owner', $owners);
+      $media->save();
     }
   }
 
