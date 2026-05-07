@@ -3,7 +3,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - image.style.extra_extra_large
     - image.style.extra_large_800x800
     - image.style.large
     - image.style.original_aspect_ratio_mobile
@@ -14,12 +13,12 @@ label: 'Details Cover'
 image_style_mappings:
   -
     image_mapping_type: image_style
-    image_mapping: extra_extra_large
+    image_mapping: extra_large_800x800
     breakpoint_id: bootstrap_barrio_subtheme.xxlarge
     multiplier: 1x
   -
     image_mapping_type: image_style
-    image_mapping: extra_large_800x800
+    image_mapping: large
     breakpoint_id: bootstrap_barrio_subtheme.xlarge
     multiplier: 1x
   -
