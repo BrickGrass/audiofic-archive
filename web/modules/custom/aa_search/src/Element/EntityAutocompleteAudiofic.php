@@ -262,8 +262,6 @@ class EntityAutocompleteAudiofic extends Textfield {
       }
 
       $entity_values[] = [
-        // TODO: is it an issue that I've removed this?
-        // 'value' => $entity_id,
         'id' => $entity_id,
         'name' => $label,
       ];
