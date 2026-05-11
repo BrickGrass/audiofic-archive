@@ -157,26 +157,42 @@
     {% if view.current_display == "search_taxonomy" and taxonomy_term != NULL %}
       <div id="tagInfo" class="collapse">
         {# TODO: Add type of fandom tag after a comma (This tag is a Fandom tag, in the category Movie & TV Fandoms). #}
-        <p>{% trans %}This tag is a {{ taxonomy_term.bundle|replace({"_": " "})|title }} tag.{% endtrans %}</p>
+        <h6>{% trans %}This is a {{ taxonomy_term.bundle|replace({"_": " "})|title }} tag.{% endtrans %}</h6>
 
         {% if term_parents is not empty %}
-          <p>
-            <b>{% trans %}Parent Tag(s):{% endtrans %}</b>
+          <div class="alert alert-aa-metadata d-flex flex-column">
+            <h6>{% trans %}Parent Tag(s):{% endtrans %}</h6>
+            <p>
             {% for parent in term_parents %}
               {%  set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': parent.id}) %}
               <a href="{{ taxonomy_path }}">{{ parent.name.value }}</a>{{- not loop.last ? ', ' -}}
             {% endfor %}
-          </p>
+            </p>
+            </div>
         {% endif %}
 
         {% if term_children is not empty %}
-          <p>
-            <b>{% trans %}Child Tag(s):{% endtrans %}</b>
+          <div class="alert alert-aa-metadata d-flex flex-column">
+            <h6>{% trans %}Child Tag(s):{% endtrans %}</h6>
+            <p>
             {% for child in term_children %}
               {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': child.id}) %}
               <a href="{{ taxonomy_path }}">{{ child.name.value }}</a>{{- not loop.last ? ', ' -}}
             {% endfor %}
-          </p>
+            </p>
+          </div>
+        {% endif %}
+
+        {% if term_synonyms is not empty %}
+          <div class="alert alert-aa-metadata d-flex flex-column">
+            <h6>{% trans %}Non-canonical Synonym(s):{% endtrans %}</h6>
+            <p>
+            {% for synonym in term_synonyms %}
+              {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': synonym.id}) %}
+              <a href="{{ taxonomy_path }}">{{ synonym.name.value }}</a>{{- not loop.last ? ', ' -}}
+            {% endfor %}
+            </p>
+          </div>
         {% endif %}
 
         {# TODO: non-canonical siblings if/when we add them #}
