@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.playlist.field_author
     - field.field.node.playlist.field_category
     - field.field.node.playlist.field_cover
+    - field.field.node.playlist.field_cover_artist
     - field.field.node.playlist.field_duration
     - field.field.node.playlist.field_fandom2
     - field.field.node.playlist.field_format
@@ -68,6 +69,14 @@ content:
         attribute: lazy
     third_party_settings: {  }
     weight: 0
+    region: content
+  field_cover_artist:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 119
     region: content
   field_duration:
     type: duration_human_display

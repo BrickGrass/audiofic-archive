@@ -78,12 +78,20 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
+  field_cover_artist:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 12
+    region: content
   field_duration:
     type: duration_time_display
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 10
+    weight: 9
     region: content
   field_language:
     type: entity_reference_label
@@ -91,7 +99,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 9
+    weight: 8
     region: content
   field_length:
     type: entity_reference_label
@@ -106,7 +114,7 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 12
+    weight: 11
     region: content
   field_rating:
     type: entity_reference_label
@@ -137,7 +145,7 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 11
+    weight: 10
     region: content
   flag_bookmark:
     settings: {  }
@@ -147,7 +155,6 @@ content:
 hidden:
   field_archive_lock: true
   field_category: true
-  field_cover_artist: true
   field_fandom2: true
   field_format: true
   field_mp3_files: true
