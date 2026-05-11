@@ -248,12 +248,16 @@ class AASearchThemeHooks {
         /** @var \Drupal\taxonomy\TermStorageInterface $taxonomy_term_storage */
         $taxonomy_term_storage = $this->entity_type_manager->getStorage('taxonomy_term');
         if ($term->parent->target_id !== 0) {
-          $parents = $taxonomy_term_storage->loadAllParents($term->id());
-          unset($parents[$term->id()]);
+          $parents = $taxonomy_term_storage->loadParents($term->id());
           $variables['term_parents'] = $parents;
         }
         $variables['term_children'] = $taxonomy_term_storage->loadTree(
           $term->bundle(), $term->id(), NULL, TRUE);
+        $variables['term_synonyms'] = $taxonomy_term_storage->loadMultiple(
+          $taxonomy_term_storage->getQuery()
+            ->accessCheck(TRUE)
+            ->condition('field_canon_sibling.entity:taxonomy_term.tid', $term->id())
+            ->execute());
 
         switch ($term->bundle()) {
           case 'author':
