@@ -116,6 +116,18 @@ class BootstrapBarrioSubthemeThemeHooks {
   }
 
   /**
+   * Implements hook_preprocess_form().
+   */
+  #[Hook('preprocess_form')]
+  public function preprocessForm(&$variables) {
+    if (!isset($variables['element']['#id']) || !in_array($variables['element']['#id'], ['user-login-form', 'user-register-form'])) {
+      return;
+    }
+
+    $variables['attributes']['class'][] = 'p-md-3';
+  }
+
+  /**
    * Find the position of this work in any series it is a member of.
    */
   private function getSeriesPositions(NodeInterface $node): array {
