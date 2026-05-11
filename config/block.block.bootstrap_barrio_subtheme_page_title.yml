@@ -23,4 +23,4 @@ visibility:
   request_path:
     id: request_path
     negate: false
-    pages: "/search/works\r\n/search/collections\r\n/taxonomy/term/*\r\n/queue\r\n/my-links/*\r\n/my-links\r\n/my-drafts\r\n/search-tags\r\n<front>\r\n/tagging-guide\r\n/fandoms\r\n/fandoms/*\r\n/relationships\r\n/legacy-series\r\n/user/register\r\n/user/login"
+    pages: "/search/works\r\n/search/collections\r\n/taxonomy/term/*\r\n/queue\r\n/my-links/*\r\n/my-links\r\n/my-drafts\r\n/search-tags\r\n<front>\r\n/tagging-guide\r\n/fandoms\r\n/fandoms/*\r\n/relationships\r\n/legacy-series\r\n/user/register\r\n/user/login\r\n/contact"

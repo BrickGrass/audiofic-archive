@@ -120,7 +120,14 @@ class BootstrapBarrioSubthemeThemeHooks {
    */
   #[Hook('preprocess_form')]
   public function preprocessForm(&$variables) {
-    if (!isset($variables['element']['#id']) || !in_array($variables['element']['#id'], ['user-login-form', 'user-register-form'])) {
+    if (
+      !isset($variables['element']['#id']) ||
+      !in_array($variables['element']['#id'], [
+        'user-login-form',
+        'user-register-form',
+        'contact-message-feedback-form',
+      ])
+    ) {
       return;
     }
 
