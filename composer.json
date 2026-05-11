@@ -38,6 +38,7 @@
         "drupal/metatag": "^2.1",
         "drupal/pathauto": "^1.13",
         "drupal/profile": "^1.11",
+        "drupal/queue_ui": "^3.2",
         "drupal/redirect": "^1.12",
         "drupal/rules": "^4.0",
         "drupal/search_api_solr": "^4.3",

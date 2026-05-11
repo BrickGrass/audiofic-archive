@@ -1,0 +1,21 @@
+uuid: 59df9a45-8e96-43d8-8009-f640e93e6976
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_to_delete
+    - node.type.legacy_work
+id: node.legacy_work.field_to_delete
+field_name: field_to_delete
+entity_type: node
+bundle: legacy_work
+label: 'To Delete'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

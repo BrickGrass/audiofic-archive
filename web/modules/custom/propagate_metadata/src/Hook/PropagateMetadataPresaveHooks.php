@@ -276,7 +276,6 @@ class PropagateMetadataPresaveHooks {
 
     /** @var \Drupal\media\MediaInterface $media */
     foreach ($all_media as $media) {
-      dpm('Deleting media!');
       $media->delete();
     }
   }

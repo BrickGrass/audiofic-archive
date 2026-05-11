@@ -1,0 +1,9 @@
+services:
+  aa_gin.route_subscriber:
+    class: Drupal\aa_gin\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }
+
+  logger.channel.delete_account_audit_log:
+    parent: logger.channel_base
+    arguments: [ 'delete_account_audit_log' ]

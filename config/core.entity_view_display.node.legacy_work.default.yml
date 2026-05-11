@@ -18,6 +18,7 @@ dependencies:
     - field.field.node.legacy_work.field_rating
     - field.field.node.legacy_work.field_reader
     - field.field.node.legacy_work.field_relationship
+    - field.field.node.legacy_work.field_to_delete
     - field.field.node.legacy_work.field_warning
     - node.type.legacy_work
     - responsive_image.styles.details_cover
@@ -155,6 +156,16 @@ content:
       link: true
     third_party_settings: {  }
     weight: 4
+    region: content
+  field_to_delete:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 122
     region: content
   field_warning:
     type: entity_reference_label

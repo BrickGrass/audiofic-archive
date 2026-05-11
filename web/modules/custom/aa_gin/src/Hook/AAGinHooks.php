@@ -29,7 +29,6 @@ class AAGinHooks {
     ])) {
       $attachments['#attached']['library'][] = 'aa_gin/content-form';
     }
-
   }
 
 }
