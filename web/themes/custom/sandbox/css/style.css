@@ -97,6 +97,16 @@ button.nav-link {
 	text-align: left;
 }
 
+/* Page footer */
+.site-footer .region .block {
+	margin: 0;
+}
+
+#block-bootstrap-barrio-subtheme-powered {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
 /* Navbar */
 #navbar-main {
 	padding-left: 15px;
