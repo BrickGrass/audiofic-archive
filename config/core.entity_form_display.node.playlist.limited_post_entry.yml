@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.playlist.field_author
     - field.field.node.playlist.field_category
     - field.field.node.playlist.field_cover
+    - field.field.node.playlist.field_cover_artist
     - field.field.node.playlist.field_duration
     - field.field.node.playlist.field_fandom2
     - field.field.node.playlist.field_format
@@ -126,6 +127,7 @@ hidden:
   body: true
   field_archive_lock: true
   field_category: true
+  field_cover_artist: true
   field_duration: true
   field_fandom2: true
   field_format: true

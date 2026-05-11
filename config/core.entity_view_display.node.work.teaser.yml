@@ -63,6 +63,14 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
+  field_cover_artist:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 7
+    region: content
   field_duration:
     type: duration_time_display
     label: hidden
@@ -111,7 +119,6 @@ hidden:
   field_archive_lock: true
   field_category: true
   field_completion_status: true
-  field_cover_artist: true
   field_format: true
   field_language: true
   field_length: true

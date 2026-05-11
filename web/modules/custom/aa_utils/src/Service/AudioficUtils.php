@@ -166,6 +166,7 @@ class AudioficUtils {
     $collection->set('field_owner', $data['owners']);
     $collection->set('field_author', $data['authors']);
     $collection->set('field_reader', $data['readers']);
+    $collection->set('field_cover_artist', $data['cover_artists']);
     $collection->set('field_fandom2', $data['fandoms']);
     $collection->set('field_relationship', $data['relationships']);
     $collection->set('field_rating', $data['ratings']);
@@ -213,6 +214,7 @@ class AudioficUtils {
       'authors' => [],
       'readers' => [],
       'owners' => [],
+      'cover_artists' => [],
       'fandoms' => [],
       'relationships' => [],
       'ratings' => [],
@@ -229,6 +231,7 @@ class AudioficUtils {
       $data['authors'] = array_merge($data['authors'], $work->get('field_author')->referencedEntities());
       $data['readers'] = array_merge($data['readers'], $work->get('field_reader')->referencedEntities());
       $data['owners'] = array_merge($data['owners'], $work->get('field_owner')->referencedEntities());
+      $data['cover_artists'] = array_merge($data['cover_artists'], $work->get('field_cover_artist')->referencedEntities());
       $data['fandoms'] = array_merge($data['fandoms'], $work->get('field_fandom2')->referencedEntities());
       $data['relationships'] = array_merge($data['relationships'], $work->get('field_relationship')->referencedEntities());
       $data['ratings'] = array_merge($data['ratings'], $work->get('field_rating')->referencedEntities());

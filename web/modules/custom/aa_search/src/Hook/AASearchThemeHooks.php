@@ -350,6 +350,7 @@ class AASearchThemeHooks {
 
     $authors = [];
     $readers = [];
+    $cover_artists = [];
     $languages = [];
     $ratings = [];
     $all_tags = [];
@@ -357,6 +358,7 @@ class AASearchThemeHooks {
     foreach ($series_works as $work) {
       $authors = array_merge($authors, $this->tag_utils->fetchFieldTerms($work, 'field_author'));
       $readers = array_merge($readers, $this->tag_utils->fetchFieldTerms($work, 'field_reader'));
+      $cover_artists = array_merge($cover_artists, $this->tag_utils->fetchFieldTerms($work, 'field_cover_artist'));
       $languages = array_merge($languages, $this->tag_utils->fetchFieldTerms($work, 'field_language'));
       $ratings = array_merge($ratings, $this->tag_utils->fetchFieldTerms($work, 'field_rating'));
 
@@ -367,6 +369,7 @@ class AASearchThemeHooks {
 
     $variables['authors'] = $this->utils->removeDuplicateEntities($authors);
     $variables['readers'] = $this->utils->removeDuplicateEntities($readers);
+    $variables['cover_artists'] = $this->utils->removeDuplicateEntities($cover_artists);
     $variables['languages'] = $this->utils->removeDuplicateEntities($languages);
     $variables['rating'] = $this->utils->findHighestRating($ratings);
     $variables['all_tags'] = $this->utils->removeDuplicateEntities($all_tags);

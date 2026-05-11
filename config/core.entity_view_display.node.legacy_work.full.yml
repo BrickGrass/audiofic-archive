@@ -59,6 +59,14 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
+  field_cover_artist:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 9
+    region: content
   field_fandom2:
     type: entity_reference_label
     label: above
@@ -73,7 +81,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 9
+    weight: 8
     region: content
   field_length:
     type: entity_reference_label
@@ -110,7 +118,6 @@ content:
 hidden:
   field_archive_lock: true
   field_category: true
-  field_cover_artist: true
   field_duration: true
   field_format: true
   field_legacy_series: true

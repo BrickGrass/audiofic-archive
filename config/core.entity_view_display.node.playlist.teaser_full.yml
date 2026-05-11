@@ -1,9 +1,9 @@
-uuid: 81e1ae47-e495-442b-8f5d-ef14a72329f8
+uuid: 00fa1d1e-7909-48be-b8cc-e17dfbfa4b6f
 langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.teaser
+    - core.entity_view_mode.node.teaser_full
     - field.field.node.playlist.body
     - field.field.node.playlist.field_archive_lock
     - field.field.node.playlist.field_author
@@ -23,89 +23,42 @@ dependencies:
     - field.field.node.playlist.field_warning
     - field.field.node.playlist.field_works_series
     - node.type.playlist
-    - responsive_image.styles.teaser_cover
   module:
-    - duration_field
-    - responsive_image
-    - text
     - user
-id: node.playlist.teaser
+id: node.playlist.teaser_full
 targetEntityType: node
 bundle: playlist
-mode: teaser
+mode: teaser_full
 content:
-  field_author:
-    type: entity_reference_label
-    label: inline
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 4
-    region: content
-  field_cover:
-    type: responsive_image
-    label: hidden
-    settings:
-      responsive_image_style: teaser_cover
-      image_link: ''
-      image_loading:
-        attribute: lazy
-    third_party_settings: {  }
-    weight: 0
-    region: content
   field_cover_artist:
     type: entity_reference_label
     label: above
     settings:
       link: true
     third_party_settings: {  }
-    weight: 3
-    region: content
-  field_duration:
-    type: duration_time_display
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 5
-    region: content
-  field_rating:
-    type: entity_reference_label
-    label: inline
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 3
-    region: content
-  field_reader:
-    type: entity_reference_label
-    label: inline
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 1
-    region: content
-  field_summary:
-    type: text_default
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 6
+    weight: 11
     region: content
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 2
+    weight: 100
     region: content
 hidden:
   body: true
   field_archive_lock: true
+  field_author: true
   field_category: true
+  field_cover: true
+  field_duration: true
   field_fandom2: true
   field_format: true
   field_languages: true
   field_length: true
   field_owner: true
+  field_rating: true
+  field_reader: true
   field_relationship: true
+  field_summary: true
   field_warning: true
   field_works_series: true
   langcode: true

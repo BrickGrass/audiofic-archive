@@ -157,6 +157,8 @@ set classes = [
 
           {{ content.field_author }}
 
+          {{ content.field_cover_artist }}
+
           <div class="mb-1">
             {% for tag in all_tags %}
               {% set vocabulary = tag.vid.value[0]["target_id"] %}

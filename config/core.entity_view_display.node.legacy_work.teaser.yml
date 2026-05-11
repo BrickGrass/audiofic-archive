@@ -51,7 +51,7 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
-  field_fandom2:
+  field_cover_artist:
     type: entity_reference_label
     label: above
     settings:
@@ -59,13 +59,21 @@ content:
     third_party_settings: {  }
     weight: 3
     region: content
+  field_fandom2:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
   field_rating:
     type: entity_reference_label
     label: inline
     settings:
       link: true
     third_party_settings: {  }
-    weight: 5
+    weight: 6
     region: content
   field_reader:
     type: entity_reference_label
@@ -81,13 +89,12 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 4
+    weight: 5
     region: content
 hidden:
   body: true
   field_archive_lock: true
   field_category: true
-  field_cover_artist: true
   field_duration: true
   field_format: true
   field_language: true
