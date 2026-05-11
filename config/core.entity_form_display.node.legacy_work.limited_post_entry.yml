@@ -19,6 +19,7 @@ dependencies:
     - field.field.node.legacy_work.field_rating
     - field.field.node.legacy_work.field_reader
     - field.field.node.legacy_work.field_relationship
+    - field.field.node.legacy_work.field_to_delete
     - field.field.node.legacy_work.field_warning
     - image.style.thumbnail
     - node.type.legacy_work
@@ -134,4 +135,5 @@ hidden:
   field_owner: true
   field_rating: true
   field_relationship: true
+  field_to_delete: true
   field_warning: true

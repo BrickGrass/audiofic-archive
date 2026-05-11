@@ -18,6 +18,7 @@ dependencies:
     - field.field.node.legacy_work.field_rating
     - field.field.node.legacy_work.field_reader
     - field.field.node.legacy_work.field_relationship
+    - field.field.node.legacy_work.field_to_delete
     - field.field.node.legacy_work.field_warning
     - image.style.large
     - node.type.legacy_work
@@ -228,6 +229,7 @@ content:
 hidden:
   created: true
   field_legacy_series: true
+  field_to_delete: true
   langcode: true
   path: true
   promote: true

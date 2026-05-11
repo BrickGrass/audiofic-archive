@@ -19,6 +19,7 @@ dependencies:
     - field.field.node.legacy_work.field_rating
     - field.field.node.legacy_work.field_reader
     - field.field.node.legacy_work.field_relationship
+    - field.field.node.legacy_work.field_to_delete
     - field.field.node.legacy_work.field_warning
     - node.type.legacy_work
     - responsive_image.styles.teaser_cover
@@ -126,6 +127,7 @@ hidden:
   field_category: true
   field_duration: true
   field_owner: true
+  field_to_delete: true
   field_warning: true
   flag_bookmark: true
   flag_to_listen: true
