@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.legacy_work.field_author
     - field.field.node.legacy_work.field_category
     - field.field.node.legacy_work.field_cover
+    - field.field.node.legacy_work.field_cover_artist
     - field.field.node.legacy_work.field_duration
     - field.field.node.legacy_work.field_fandom2
     - field.field.node.legacy_work.field_format
@@ -35,6 +36,7 @@ third_party_settings:
         - field_owner
         - field_reader
         - field_author
+        - field_cover_artist
       label: Attribution
       region: content
       parent_name: ''
@@ -95,7 +97,7 @@ content:
     third_party_settings: {  }
   field_author:
     type: tagify_entity_reference_autocomplete_widget
-    weight: 8
+    weight: 7
     region: content
     settings:
       match_operator: CONTAINS
@@ -109,7 +111,7 @@ content:
     third_party_settings: {  }
   field_category:
     type: options_buttons
-    weight: 12
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -121,6 +123,20 @@ content:
       progress_indicator: throbber
       preview_image_style: large
     third_party_settings: {  }
+  field_cover_artist:
+    type: tagify_entity_reference_autocomplete_widget
+    weight: 8
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      placeholder: ''
+      suggestions_dropdown: 1
+      show_entity_id: 0
+      show_info_label: 0
+      info_label: ''
+      parent_selection: 1
+    third_party_settings: {  }
   field_duration:
     type: duration_widget
     weight: 3
@@ -129,7 +145,7 @@ content:
     third_party_settings: {  }
   field_fandom2:
     type: tagify_entity_reference_autocomplete_widget
-    weight: 10
+    weight: 14
     region: content
     settings:
       match_operator: CONTAINS
@@ -143,19 +159,19 @@ content:
     third_party_settings: {  }
   field_format:
     type: options_buttons
-    weight: 15
+    weight: 19
     region: content
     settings: {  }
     third_party_settings: {  }
   field_language:
     type: options_select
-    weight: 16
+    weight: 20
     region: content
     settings: {  }
     third_party_settings: {  }
   field_length:
     type: options_select
-    weight: 17
+    weight: 21
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -175,13 +191,13 @@ content:
     third_party_settings: {  }
   field_rating:
     type: options_buttons
-    weight: 13
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
   field_reader:
     type: tagify_entity_reference_autocomplete_widget
-    weight: 7
+    weight: 6
     region: content
     settings:
       match_operator: CONTAINS
@@ -195,7 +211,7 @@ content:
     third_party_settings: {  }
   field_relationship:
     type: tagify_entity_reference_autocomplete_widget
-    weight: 11
+    weight: 15
     region: content
     settings:
       match_operator: CONTAINS
@@ -209,7 +225,7 @@ content:
     third_party_settings: {  }
   field_warning:
     type: options_buttons
-    weight: 14
+    weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }

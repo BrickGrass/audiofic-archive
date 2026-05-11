@@ -1,0 +1,29 @@
+uuid: 5972c256-57f5-4fe6-ba71-5e071c0aff96
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_cover_artist
+    - node.type.legacy_work
+    - taxonomy.vocabulary.cover_artist
+id: node.legacy_work.field_cover_artist
+field_name: field_cover_artist
+entity_type: node
+bundle: legacy_work
+label: 'Cover artist'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      cover_artist: cover_artist
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

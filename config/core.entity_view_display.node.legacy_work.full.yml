@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.legacy_work.field_author
     - field.field.node.legacy_work.field_category
     - field.field.node.legacy_work.field_cover
+    - field.field.node.legacy_work.field_cover_artist
     - field.field.node.legacy_work.field_duration
     - field.field.node.legacy_work.field_fandom2
     - field.field.node.legacy_work.field_format
@@ -109,6 +110,7 @@ content:
 hidden:
   field_archive_lock: true
   field_category: true
+  field_cover_artist: true
   field_duration: true
   field_format: true
   field_legacy_series: true
