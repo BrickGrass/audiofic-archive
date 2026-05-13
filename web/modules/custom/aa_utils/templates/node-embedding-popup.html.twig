@@ -1,0 +1,41 @@
+{% set modal_title = "Direct links & embedding" | t %}
+{% set modal_close = "Close" | t %}
+
+<div class="modal" id="nodeEmbeddingModal" tabindex="-1" aria-labelledby="nodeEmbeddingModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-fullscreen-lg-down">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="nodeEmbeddingModalLabel">{{ modal_title }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ modal_close }}"></button>
+      </div>
+      <div class="modal-body">
+        <h6><b>{% trans %}Direct Links{% endtrans %}</b></h6>
+        {{ media_table }}
+
+        {# TODO: Allow users to customise the html templates which are used to
+        create the generated HTML. We will expose fields like {{ url }} and {{ alt }}. #}
+        {% if cover_data %}
+          <h6><b>{% trans %}Image HTML{% endtrans %}</b></h6>
+          <code class="mt-2 mb-2 d-block">
+            {% apply escape('html') %}
+              <img src="{{ cover_data.url }}" alt={{ cover_data.alt }} />
+            {% endapply %}
+          </code>
+        {% endif %}
+
+        <h6><b>{% trans %}Audio HTML{% endtrans %}</b></h6>
+        {% for streaming_file in streaming_file_data %}
+          <code class="mt-2 mb-2 d-block">
+            {% apply escape('html')|nl2br %}
+            <audio controls="controls" preload="metadata">
+              <source src="{{ streaming_file.url }}">
+            </audio>{% endapply %}
+          </code>
+        {% endfor %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ modal_close }}</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -5,3 +5,9 @@
 {% if can_remove_attribution %}
   <a class="btn btn-primary" href="/node/{{ nid }}/user/{{ uid }}/delete">Remove my Attribution <i class="bi bi-person-dash-fill"></i></a>
 {% endif %}
+{% if has_edit_access and node_type == "work" %}
+  {% set embedding_text = "Links & Embedding" | t %}
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#nodeEmbeddingModal">
+    {{ embedding_text }} <i class="bi bi-clipboard-fill"></i>
+  </button>
+{% endif %}

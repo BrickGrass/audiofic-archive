@@ -67,6 +67,7 @@ class NodeContextualMenuBlock extends BlockBase implements ContainerFactoryPlugi
       '#theme' => 'node-contextual-menu',
       '#nid' => $nid,
       '#uid' => $this->current_user->id(),
+      '#node_type' => $node->getType(),
       '#has_edit_access' => $node->access('update', $user),
       '#can_remove_attribution' => $can_remove_attribution,
       '#cache' => [

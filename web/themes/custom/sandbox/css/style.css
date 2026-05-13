@@ -16,6 +16,14 @@ small {
 	font-size: 0.85rem;
 }
 
+code {
+	background: #d2d2d2;
+	box-decoration-break: clone;
+	padding: .1rem .3rem .2rem;
+	border-radius: .2rem;
+	color: black;
+}
+
 .disable-padding {
 	padding: 0 !important;
 }
