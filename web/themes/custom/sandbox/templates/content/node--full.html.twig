@@ -210,8 +210,14 @@ set classes = [
           {% for series_pos in series_positions %}
             {% set series = series_pos['series'] %}
             <span>
+              {% if series_pos.prev %}
+              <a href="{{ path('entity.node.canonical', {'node': series_pos.prev.id}) }}" aria-label="{{ 'Previous work in series'|t }}">«</a>
+              {% endif %}
               {% trans %}part {{ series_pos['position'] }} of{% endtrans %}
               <a href="{{ path('entity.node.canonical', {'node': series.id}) }}">{{ series.title.value }}</a>
+              {% if series_pos.next %}
+              <a href="{{ path('entity.node.canonical', {'node': series_pos.next.id}) }}" aria-label="{{ 'Next work in series'|t }}">»</a>
+              {% endif %}
             </span>
           {% endfor %}
         </div>

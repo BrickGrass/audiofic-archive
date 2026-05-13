@@ -144,9 +144,15 @@ class BootstrapBarrioSubthemeThemeHooks {
 
     foreach ($node->get('field_series')->referencedEntities() as $series) {
       $i = 1;
-      foreach ($series->get('field_works_series')->referencedEntities() as $series_work) {
+      $works = $series->get('field_works_series')->referencedEntities();
+      foreach ($works as $series_work) {
         if ($node->id() === $series_work->id()) {
-          $series_positions[] = ['series' => $series, 'position' => $i];
+          $series_positions[] = [
+            'series' => $series,
+            'position' => $i,
+            'prev' => $works[$i - 2] ?? NULL,
+            'next' => $works[$i] ?? NULL,
+          ];
           break;
         }
         $i++;
