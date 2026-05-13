@@ -5,3 +5,4 @@ type: module
 dependencies:
   - drupal:migrate
   - drupal:migrate_drupal
+  - drupal:migrate_plus

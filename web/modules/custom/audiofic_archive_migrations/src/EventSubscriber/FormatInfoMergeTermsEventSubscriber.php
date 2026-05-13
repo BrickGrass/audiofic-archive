@@ -56,14 +56,13 @@ class FormatInfoMergeTermsEventSubscriber implements EventSubscriberInterface {
 
       $source_field = $process_plugin->getSourceFieldName();
       $term_name = $row->getSource()[$source_field];
-      $new_term_name = $process_plugin::FORMAT_MAPPING[$term_name];
-      if (empty($new_term_name)) {
+      if (!isset($process_plugin::FORMAT_MAPPING[$term_name])) {
         throw new MigrateSkipRowException('', FALSE);
       }
 
       $storage = $this->entity_type_manager->getStorage('taxonomy_term');
       $terms = $storage->loadByProperties([
-        'name' => $new_term_name,
+        'name' => $process_plugin::FORMAT_MAPPING[$term_name],
         'vid' => 'info',
       ]);
       if (!empty($terms)) {
