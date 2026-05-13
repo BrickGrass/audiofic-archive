@@ -1,0 +1,23 @@
+uuid: 437e8f12-28e4-43d0-9976-d49cbd267a20
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_completion_status
+    - node.type.legacy_work
+  module:
+    - options
+id: node.legacy_work.field_completion_status
+field_name: field_completion_status
+entity_type: node
+bundle: legacy_work
+label: 'Completion status'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: complete
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -1,0 +1,7 @@
+services:
+  migrate.event.format_info_merge_terms:
+    class: Drupal\audiofic_archive_migrations\EventSubscriber\FormatInfoMergeTermsEventSubscriber
+    autowire: true
+    tags:
+      - { name: event_subscriber }
+  Drupal\audiofic_archive_migrations\EventSubscriber\FormatInfoMergeTermsEventSubscriber: '@migrate.event.format_info_merge_terms'

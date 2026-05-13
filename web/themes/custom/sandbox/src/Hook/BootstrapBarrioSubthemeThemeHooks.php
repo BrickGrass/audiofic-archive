@@ -63,7 +63,9 @@ class BootstrapBarrioSubthemeThemeHooks {
    */
   #[Hook('preprocess_field')]
   public function preprocessField(&$variables) {
-    $variables['view_mode'] = $variables['element']['#view_mode'];
+    if (isset($variables['element']['#view_mode'])) {
+      $variables['view_mode'] = $variables['element']['#view_mode'];
+    }
   }
 
   /**

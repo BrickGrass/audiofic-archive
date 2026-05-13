@@ -13,18 +13,10 @@ process:
   tid: tid
   revision_id: tid
   vid: constants/vid
-  name: name
-  'description/value': description
-  'description/format': format
+  name:
+    plugin: aa_format_merge_terms
+    source: name
   weight: weight
-  parent_id:
-    plugin: skip_on_empty
-    method: process
-    source: parent
-  parent:
-    plugin: default_value
-    default_value: 0
-    source: '@parent_id'
   changed: timestamp
   langcode: language
 destination:

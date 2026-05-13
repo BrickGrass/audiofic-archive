@@ -36,6 +36,7 @@
         "drupal/imagemagick": "^5.0",
         "drupal/inline_entity_form": "^3.0@RC",
         "drupal/metatag": "^2.1",
+        "drupal/migrate_plus": "^6.0",
         "drupal/pathauto": "^1.13",
         "drupal/profile": "^1.11",
         "drupal/queue_ui": "^3.2",

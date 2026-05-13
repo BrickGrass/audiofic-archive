@@ -58,7 +58,13 @@ process:
     plugin: sub_process
     source: taxonomy_vocabulary_7
     process:
-      target_id: tid
+      target_id:
+        plugin: migration_lookup
+        migration: aa_d7_taxonomy_term_info
+        source: tid
+  field_completion_status:
+    plugin: aa_completion_status
+    source: taxonomy_vocabulary_7
   field_language:
     -
       plugin: sub_process
@@ -112,7 +118,6 @@ migration_dependencies:
     - aa_d7_taxonomy_term_author
     - aa_d7_taxonomy_term_category
     - aa_d7_taxonomy_term_fandom
-    - aa_d7_taxonomy_term_info
     - aa_d7_taxonomy_term_language
     - aa_d7_taxonomy_term_pairings
     - aa_d7_taxonomy_term_rating
@@ -120,4 +125,5 @@ migration_dependencies:
     - aa_d7_taxonomy_term_series
     - aa_d7_taxonomy_term_time
     - aa_d7_taxonomy_term_warning
-  optional: { }
+  optional:
+    - aa_d7_taxonomy_term_info
