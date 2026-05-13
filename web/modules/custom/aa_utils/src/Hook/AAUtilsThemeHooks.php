@@ -22,6 +22,7 @@ class AAUtilsThemeHooks {
           'can_remove_attribution' => '',
           'nid' => '',
           'uid' => '',
+          'node_type' => '',
         ],
       ],
 
@@ -53,6 +54,15 @@ class AAUtilsThemeHooks {
         'template' => 'fandom-index-page',
         'variables' => [
           'fandom_index' => [],
+        ],
+      ],
+
+      'node-embedding-popup' => [
+        'template' => 'node-embedding-popup',
+        'variables' => [
+          'media_table' => [],
+          'cover_data' => [],
+          'streaming_file_data' => [],
         ],
       ],
     ];

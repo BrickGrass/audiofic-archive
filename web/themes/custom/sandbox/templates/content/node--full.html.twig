@@ -98,6 +98,11 @@ set classes = [
   </div>
   {% endif %}
 </header>
+
+{% if content_type == "work" %}
+{{ drupal_block("node_embedding_popup", {context_mapping: {node: '@node.node_route_context:node'}}, wrapper=false) }}
+{% endif %}
+
 <div{{ content_attributes.addClass('node__content', 'clearfix') }}>
   {% if content_type in ["work", "legacy_work", "playlist", "reader_collection", "rec_list"] %}
     {% set has_image = node.field_cover[0].entity.uri.value != null %}
