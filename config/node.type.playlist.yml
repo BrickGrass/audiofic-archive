@@ -11,7 +11,7 @@ third_party_settings:
 name: Series
 type: playlist
 description: null
-help: "<b>These are made up of works by the same reader or multivoice group. They can either be: \r\n<ul><li>a series - more than one work in order (the system will automatically label the parts). e.g. when recording an author's  fic series</li>\r\n<li>a collection of works on a theme, where the order isn't important - e.g. \"my hurt/comfort podfics\"</li></ul></b>"
+help: null
 new_revision: false
 preview_mode: 1
 display_submitted: false
