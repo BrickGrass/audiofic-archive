@@ -243,25 +243,7 @@ class AudioficArchiveRssThemeHooks {
         '@part_label' => !empty($label) ? ': ' . $label : '',
       ]) : '';
       $work_link = Link::fromTextAndUrl($work->getTitle() . $part_no, $work->toUrl());
-
-      $series_links = [];
-      /** @var \Drupal\node\NodeInterface $series */
-      foreach ($work->get('field_series')->referencedEntities() as $series) {
-        $j = 1;
-        $series_works = $series->get('field_works_series')->referencedEntities();
-        foreach ($series_works as $series_work) {
-          if ($work->id() == $series_work->id()) {
-            $series_label = $this->t('Part @part of @total in series @series', [
-              '@part' => $j,
-              '@total' => count($series_works),
-              '@series' => $series->getTitle(),
-            ]);
-            $series_links[] = Link::fromTextAndUrl($series_label, $series->toUrl());
-            break;
-          }
-          $j++;
-        }
-      }
+      $series_links = $this->getSeriesLinks($work);
 
       // To have the chapters of a work appear sequentially in any of
       // our feeds, they need to have sequential publishing dates.
@@ -286,6 +268,30 @@ class AudioficArchiveRssThemeHooks {
     }
 
     return $work_files;
+  }
+
+  /**
+   * Get links to each of the series a work is in.
+   */
+  private function getSeriesLinks(NodeInterface $work): array {
+    $series_links = [];
+    foreach ($work->get('field_series')->referencedEntities() as $series) {
+      $j = 1;
+      $series_works = $series->get('field_works_series')->referencedEntities();
+      foreach ($series_works as $series_work) {
+        if ($work->id() == $series_work->id()) {
+          $series_label = $this->t('Part @part of @total in series @series', [
+            '@part' => $j,
+            '@total' => count($series_works),
+            '@series' => $series->getTitle(),
+          ]);
+          $series_links[] = Link::fromTextAndUrl($series_label, $series->toUrl());
+          break;
+        }
+        $j++;
+      }
+    }
+    return $series_links;
   }
 
   /**
