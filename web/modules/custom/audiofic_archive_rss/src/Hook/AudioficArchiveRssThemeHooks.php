@@ -259,7 +259,7 @@ class AudioficArchiveRssThemeHooks {
             $series_links[] = Link::fromTextAndUrl($series_label, $series->toUrl());
             break;
           }
-          $i++;
+          $j++;
         }
       }
 
