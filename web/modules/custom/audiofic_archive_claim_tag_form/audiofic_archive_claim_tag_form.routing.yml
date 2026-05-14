@@ -1,0 +1,7 @@
+audiofic_archive_claim_tag_form.claim_tag_form:
+  path: /claim-account
+  defaults:
+    _form: \Drupal\audiofic_archive_claim_tag_form\Form\ClaimAttributionTagForm
+    _title: Claim Attribution Tags
+  requirements:
+    _role: content_editor+archivist+administrator

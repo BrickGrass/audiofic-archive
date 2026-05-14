@@ -8,6 +8,7 @@ module:
   aa_utils: 0
   admin_toolbar: 0
   admin_toolbar_tools: 0
+  audiofic_archive_claim_tag_form: 0
   audiofic_archive_migrations: 0
   audiofic_archive_player: 0
   audiofic_archive_rss: 0
