@@ -49,7 +49,7 @@
           {% endif %}
           <title>{{ part_title }}</title>
           <itunes:title>{{ part_title }}</itunes:title>
-          <description><![CDATA[{{ file.part_no }}<p>{% for label, content in work.tags %}<b>{{label}}</b>{{content}}</br>{% endfor %}</p>{{ work.summary | raw }}]]></description>
+          <description><![CDATA[{{ file.part_no }}{% for series_link in file.series_links %}<p>{{ series_link }}</p>{% endfor %}<p>{% for label, content in work.tags %}<b>{{label}}</b>{{content}}</br>{% endfor %}</p>{{ work.summary | raw }}]]></description>
           <enclosure
             length="{{ file.file_size }}"
             type="{{ file.mime_type }}"
