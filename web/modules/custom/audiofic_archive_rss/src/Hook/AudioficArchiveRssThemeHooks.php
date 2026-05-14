@@ -242,7 +242,27 @@ class AudioficArchiveRssThemeHooks {
         '@total' => $total_parts,
         '@part_label' => !empty($label) ? ': ' . $label : '',
       ]) : '';
-      $link = Link::fromTextAndUrl($work->getTitle() . $part_no, $work->toUrl());
+      $work_link = Link::fromTextAndUrl($work->getTitle() . $part_no, $work->toUrl());
+
+      $series_links = [];
+      /** @var \Drupal\node\NodeInterface $series */
+      foreach ($work->get('field_series')->referencedEntities() as $series) {
+        $j = 1;
+        $series_works = $series->get('field_works_series')->referencedEntities();
+        foreach ($series_works as $series_work) {
+          if ($work->id() == $series_work->id()) {
+            $series_label = $this->t('Part @part of @total in series @series', [
+              '@part' => $j,
+              '@total' => count($series_works),
+              '@series' => $series->getTitle(),
+            ]);
+            $series_links[] = Link::fromTextAndUrl($series_label, $series->toUrl());
+            break;
+          }
+          $i++;
+        }
+      }
+
       // To have the chapters of a work appear sequentially in any of
       // our feeds, they need to have sequential publishing dates.
       // This only ensures that a works chapters appear in order -
@@ -259,7 +279,8 @@ class AudioficArchiveRssThemeHooks {
         'uuid' => $file->uuid(),
         'duration' => !empty($duration) ? $duration[0]->value : 0,
         'date_created' => $file_created,
-        'part_no' => $link,
+        'part_no' => $work_link,
+        'series_links' => $series_links,
       ];
       $i++;
     }
