@@ -1,57 +1,5 @@
 menus:
   -
-    menu_name: footer
-    title: 'Cookie Policy'
-    parent: null
-    uri: 'internal:/cookie-policy'
-    link_title: ''
-    description: null
-    enabled: true
-    expanded: false
-    weight: 0
-    langcode: en
-    uuid: 040b2790-2ca4-48f6-9a3f-d52906dbba98
-    options: {  }
-  -
-    menu_name: account
-    title: Register
-    parent: null
-    uri: 'internal:/user/register'
-    link_title: ''
-    description: null
-    enabled: true
-    expanded: false
-    weight: -47
-    langcode: en
-    uuid: 8a4d1d10-ddd0-4d19-8d77-6007ddf74d35
-    options: {  }
-  -
-    menu_name: account
-    title: 'Post Podfic'
-    parent: null
-    uri: 'internal:/node/add/work'
-    link_title: ''
-    description: null
-    enabled: true
-    expanded: false
-    weight: 0
-    langcode: en
-    uuid: c4def134-cd7a-47f8-ab00-de518a4a2a24
-    options: {  }
-  -
-    menu_name: account
-    title: 'Post Series'
-    parent: null
-    uri: 'internal:/node/add/playlist'
-    link_title: ''
-    description: null
-    enabled: true
-    expanded: false
-    weight: 0
-    langcode: en
-    uuid: d7b16e88-85d2-4e27-8202-fb25942fb1e7
-    options: {  }
-  -
     menu_name: main
     title: Search
     parent: null
@@ -115,6 +63,71 @@ menus:
     weight: -50
     langcode: en
     uuid: bd26a525-64f8-41c6-abc0-d25e0483ecd2
+    options: {  }
+  -
+    menu_name: account
+    title: Register
+    parent: null
+    uri: 'internal:/user/register'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: -47
+    langcode: en
+    uuid: 8a4d1d10-ddd0-4d19-8d77-6007ddf74d35
+    options: {  }
+  -
+    menu_name: account
+    title: 'Post Podfic'
+    parent: null
+    uri: 'internal:/node/add/work'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: c4def134-cd7a-47f8-ab00-de518a4a2a24
+    options: {  }
+  -
+    menu_name: account
+    title: 'Post Series'
+    parent: null
+    uri: 'internal:/node/add/playlist'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: d7b16e88-85d2-4e27-8202-fb25942fb1e7
+    options: {  }
+  -
+    menu_name: footer
+    title: 'Cookie Policy'
+    parent: null
+    uri: 'internal:/cookie-policy'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: 040b2790-2ca4-48f6-9a3f-d52906dbba98
+    options: {  }
+  -
+    menu_name: footer
+    title: 'Privacy Policy'
+    parent: null
+    uri: 'internal:/privacy-policy'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: 05463454-731b-4530-b4bc-76582d42c6d7
     options: {  }
 taxonomies:
   category:
