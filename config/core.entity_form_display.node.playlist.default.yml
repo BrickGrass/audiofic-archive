@@ -25,6 +25,7 @@ dependencies:
     - node.type.playlist
   module:
     - image
+    - maxlength
     - text
 id: node.playlist.default
 targetEntityType: node
@@ -46,7 +47,11 @@ content:
     settings:
       rows: 5
       placeholder: ''
-    third_party_settings: {  }
+    third_party_settings:
+      maxlength:
+        maxlength_js: 1500
+        maxlength_js_label: 'Summary limited to @limit characters, remaining: <strong>@remaining</strong>'
+        maxlength_js_enforce: false
   field_works_series:
     type: entity_reference_autocomplete
     weight: 3

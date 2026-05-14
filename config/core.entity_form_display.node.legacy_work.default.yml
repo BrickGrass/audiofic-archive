@@ -28,6 +28,7 @@ dependencies:
     - duration_field
     - field_group
     - image
+    - maxlength
     - tagify
     - text
 third_party_settings:
@@ -88,7 +89,13 @@ content:
       summary_rows: 3
       placeholder: ''
       show_summary: false
-    third_party_settings: {  }
+    third_party_settings:
+      maxlength:
+        maxlength_js: 15000
+        maxlength_js_label: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
+        maxlength_js_summary: null
+        maxlength_js_label_summary: 'Content limited to @limit characters, remaining: <strong>@remaining</strong>'
+        maxlength_js_enforce: false
   field_archive_lock:
     type: boolean_checkbox
     weight: 4

@@ -38,6 +38,7 @@ dependencies:
     - image
     - inline_entity_form
     - link
+    - maxlength
     - tagify
     - text
 third_party_settings:
@@ -248,7 +249,11 @@ content:
     settings:
       rows: 1
       placeholder: ''
-    third_party_settings: {  }
+    third_party_settings:
+      maxlength:
+        maxlength_js: 5000
+        maxlength_js_label: 'Notes limited to @limit characters, remaining: <strong>@remaining</strong>'
+        maxlength_js_enforce: false
   field_other_files:
     type: inline_entity_form_complex
     weight: 16
@@ -342,7 +347,11 @@ content:
     settings:
       rows: 1
       placeholder: ''
-    third_party_settings: {  }
+    third_party_settings:
+      maxlength:
+        maxlength_js: 1500
+        maxlength_js_label: 'Summary limited to @limit characters, remaining: <strong>@remaining</strong>'
+        maxlength_js_enforce: false
   field_text_post:
     type: link_default
     weight: 15
