@@ -1,0 +1,4 @@
+name: Audiofic Archive Claim Tag Form
+description: Custom module which creates the contact form for users to request additional attribution tags
+core_version_requirement: ^10.1 || ^11
+type: module

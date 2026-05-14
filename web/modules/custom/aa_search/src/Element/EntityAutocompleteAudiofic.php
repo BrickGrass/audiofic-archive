@@ -173,26 +173,36 @@ class EntityAutocompleteAudiofic extends Textfield {
       $value = $element['#value'];
     }
     else {
-      foreach (json_decode($value) as $input) {
-        if (isset($input['id'])) {
-          $value[] = ['target_id' => $input['id']];
-        } elseif ($autocreate) {
-          // Auto-create item. See an example of how this is handled in
-          // \Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem::presave().
-          /** @var \Drupal\Core\Entity\EntityReferenceSelection\SelectionWithAutocreateInterface $handler */
-          $value[] = [
-            'entity' => $handler->createNewEntity(
-              $element['#target_type'],
-              $element['#autocreate']['bundle'],
-              $input['name'],
-              $element['#autocreate']['uid'],
-            ),
-          ];
+      $decoded_value = json_decode($element['#value']);
+      if (is_array($decoded_value)) {
+        foreach ($decoded_value as $input) {
+          if (isset($input['id'])) {
+            $value[] = ['target_id' => $input['id']];
+          } elseif ($autocreate) {
+            // Auto-create item. See an example of how this is handled in
+            // \Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem::presave().
+            /** @var \Drupal\Core\Entity\EntityReferenceSelection\SelectionWithAutocreateInterface $handler */
+            $value[] = [
+              'entity' => $handler->createNewEntity(
+                $element['#target_type'],
+                $element['#autocreate']['bundle'],
+                $input['name'],
+                $element['#autocreate']['uid'],
+              ),
+            ];
+          }
+        }
+      } else {
+        $decoded_value = explode(',', $element['#value']);
+        if (is_array($decoded_value)) {
+          foreach ($decoded_value as $id) {
+            $value[] = ['target_id' => $id];
+          }
         }
       }
     }
 
-    if ($element['#validate_reference'] && !empty($value)) {
+    if (isset($element['#validate_reference']) && $element['#validate_reference'] && !empty($value)) {
       // Validate existing entities.
       $ids = array_reduce($value, function ($acc, $item) {
         return isset($item['target_id']) ? array_merge($acc, [$item['target_id']]) : $acc;
