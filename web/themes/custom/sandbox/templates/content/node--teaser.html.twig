@@ -134,7 +134,7 @@
         {% endblock %}
 
         <div class="d-flex justify-content-end">
-          <small class="d-flex flex-wrap justify-content-end">
+          <div class="d-flex flex-wrap justify-content-end">
             {% if node.field_rating is not empty %}
               {{ content.field_rating }}
             {% else %}
@@ -145,6 +145,11 @@
               <span class="badge bg-primary ms-1">{% trans %}Series{% endtrans %}</span>
             {% elseif content_type == "legacy_work" %}
               <span class="badge bg-primary ms-1">{% trans %}Legacy Work{% endtrans %}</span>
+            {% endif %}
+
+            {% if archive_locked %}
+              {% set archive_lock_text = "This work is archive locked - only logged in users can view it"|t %}
+              <span class="badge bg-secondary ms-1" title="{{ archive_lock_text }}"><i class="bi bi-lock-fill"></i></span>
             {% endif %}
 
             {{ content.field_completion_status }}
@@ -179,8 +184,8 @@
               {% endset %}
             {% endif %}
 
-            <span class="ms-1">{{ duration }}{{ collection_parts | trans }}{{ language }}{% trans %}published: {% endtrans %}{{ created_at }}</span>
-          </small>
+            <small class="ms-1"><span>{{ duration }}{{ collection_parts | trans }}{{ language }}{% trans %}published: {% endtrans %}{{ created_at }}</span></small>
+          </div>
         </div>
       </div>
     </div>

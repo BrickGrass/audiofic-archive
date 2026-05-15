@@ -141,6 +141,11 @@ set classes = [
               <span class="badge bg-primary">{% trans %}Legacy Work{% endtrans %}</span>
             {% endif %}
 
+            {% if archive_locked %}
+              {% set archive_lock_text = "This work is archive locked - only logged in users can view it"|t %}
+              <span class="badge bg-secondary" title="{{ archive_lock_text }}"><i class="bi bi-lock-fill"></i></span>
+            {% endif %}
+
             {{ content.field_completion_status }}
           </div>
           <div class="d-flex flex-column justify-content-end text-end full-work-dates">

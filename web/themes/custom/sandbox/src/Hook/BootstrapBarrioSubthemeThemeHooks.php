@@ -92,6 +92,8 @@ class BootstrapBarrioSubthemeThemeHooks {
     $variables['updated_at'] = $this->date_formatter->format(
       $node->getChangedTime(), "custom", "j F Y");
 
+    $variables['archive_locked'] = $this->utils->isNodeArchiveLocked($node);
+
     if ($variables['view_mode'] === 'full' && $node_type === 'work') {
       $variables['series_positions'] = $this->getSeriesPositions($node);
     }
