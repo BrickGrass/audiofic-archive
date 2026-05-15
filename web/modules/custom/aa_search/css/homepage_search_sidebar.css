@@ -16,3 +16,7 @@
 #block-bootstrap-barrio-subtheme-complexsearchblock .form-actions {
 	margin-bottom: 0 !important;
 }
+
+#block-bootstrap-barrio-subtheme-complexsearchblock {
+    margin: 0;
+}
