@@ -3,13 +3,16 @@
 namespace Drupal\aa_gin\Hook;
 
 use Drupal\aa_utils\Service\AudioficUtils;
+use Drupal\Core\Entity\TranslatableInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\taxonomy\TermInterface;
 use Drupal\user\Entity\User;
 use Drupal\node\Entity\Node;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use function PHPUnit\Framework\isInstanceOf;
 
 class AAGinFormHooks {
   use StringTranslationTrait;
@@ -24,7 +27,7 @@ class AAGinFormHooks {
    */
   #[Hook('form_alter')]
   public function formAlter(&$form, FormStateInterface $form_state, string $form_id) {
-    $this->alterTagifySelectionHandler($form);
+    $this->alterTagify($form);
 
     if (in_array($form_id, ['node_work_form', 'node_work_edit_form'])) {
       $this->insertSeriesCreationWidget($form);
@@ -173,9 +176,12 @@ class AAGinFormHooks {
   }
 
   /**
-   * Alter tagify entity autocomplete widgets to use custom selection handler.
+   * Alter tagify entity autocomplete widgets.
+   *
+   * Make them use a custom selection handler & ensure
+   * the default help text is altered to be less confusing.
    */
-  private function alterTagifySelectionHandler(&$form) {
+  private function alterTagify(&$form) {
     foreach ($form as $key => $value) {
       if (!is_array($value)) {
         continue;
@@ -191,6 +197,33 @@ class AAGinFormHooks {
 
       $form[$key]['widget']['#selection_handler'] = 'search_index:taxonomy_term';
       $form[$key]['widget']['#selection_settings']['search_index'] = 'canon_taxonomy_terms';
+
+      if (!isset($value['widget']['#description'])) {
+        continue;
+      }
+
+      if (is_array($value['widget']['#description']) && isset($value['widget']['#description']['#items'])) {
+        // Find Drag to re-order text in list and replace
+        foreach ($value['widget']['#description']['#items'] as $desc_key => $description) {
+          if (!($description instanceof TranslatableMarkup)) {
+            continue;
+          }
+
+          if (str_starts_with($description->getUntranslatedString(), 'Drag to re-order')) {
+            $form[$key]['widget']['#description']['#items'][$desc_key] = $this->t('Drag to re-order tags.');
+          }
+        }
+      } else {
+        // Replace description if it is Drag to re-order.
+        $description = $value['widget']['#description'];
+        if (!($description instanceof TranslatableMarkup)) {
+          return;
+        }
+
+        if (str_starts_with($description->getUntranslatedString(), 'Drag to re-order')) {
+          $form[$key]['widget']['#description'] = $this->t('Drag to re-order tags.');
+        }
+      }
     }
   }
 
