@@ -11,7 +11,7 @@ field_name: field_reader
 entity_type: node
 bundle: work
 label: Podficcer
-description: 'Add the list of readers who should be credited on the work. Credited readers can remove themselves. Only those readers who are also listed in the owner field will be able to edit or delete the work. '
+description: 'Add the list of readers who should be credited on the work. Credited readers can remove themselves. Only those readers who are also listed in the owner field will be able to edit or delete the work. If there are other non-podficcer contributors (e.g. editors, coordinators of multivoice works) you can mention them in the Notes field.'
 required: true
 translatable: false
 default_value: {  }
