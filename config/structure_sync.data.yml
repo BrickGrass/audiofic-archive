@@ -1,5 +1,31 @@
 menus:
   -
+    menu_name: footer-2
+    title: 'Terms of Service'
+    parent: null
+    uri: 'internal:/terms-of-service'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: eeeb1c5e-153a-496e-842a-445dd8bd3a14
+    options: {  }
+  -
+    menu_name: footer-2
+    title: 'Content Policy'
+    parent: null
+    uri: 'internal:/content-policy'
+    link_title: ''
+    description: null
+    enabled: true
+    expanded: false
+    weight: 0
+    langcode: en
+    uuid: 278c8e78-3539-44a6-b870-8a60a72f8dfa
+    options: {  }
+  -
     menu_name: main
     title: Search
     parent: null

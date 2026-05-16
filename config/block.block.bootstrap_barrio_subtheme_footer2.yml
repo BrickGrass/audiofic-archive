@@ -1,0 +1,25 @@
+uuid: 8500be25-dd83-4721-84e0-0171894ec031
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.footer-2
+  module:
+    - system
+  theme:
+    - bootstrap_barrio_subtheme
+id: bootstrap_barrio_subtheme_footer2
+theme: bootstrap_barrio_subtheme
+region: footer_third
+weight: 0
+provider: null
+plugin: 'system_menu_block:footer-2'
+settings:
+  id: 'system_menu_block:footer-2'
+  label: 'Footer 2'
+  label_display: '0'
+  provider: system
+  level: 1
+  depth: null
+  expand_all_items: false
+visibility: {  }
