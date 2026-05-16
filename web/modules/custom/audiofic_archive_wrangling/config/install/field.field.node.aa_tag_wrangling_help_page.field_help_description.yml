@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_help_description
+    - node.type.aa_tag_wrangling_help_page
+id: node.aa_tag_wrangling_help_page.field_help_description
+field_name: field_help_description
+entity_type: node
+bundle: aa_tag_wrangling_help_page
+label: Description
+description: The description of the help page
+required: true
+translatable: true
+default_value: { }
+default_value_callback: ''
+settings: { }
+field_type: string

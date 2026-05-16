@@ -2,6 +2,7 @@
 
 namespace Drupal\audiofic_archive_wrangling\Controller;
 
+use Drupal;
 use Drupal\aa_utils\Service\AudioficTagUtils;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityTypeManager;
@@ -73,7 +74,7 @@ class TagWranglingController extends ControllerBase {
       ],
     ];
 
-    $canonical_block['title'] = $this->t('Canonical Pages');
+    $canonical_block['title'] = $this->t('Canonical Tag Pages');
     $canonical_block['content'] = [
       '#theme' => 'admin_block_content',
       '#content' => [
@@ -101,9 +102,31 @@ class TagWranglingController extends ControllerBase {
       ],
     ];
 
+    /** @var \Drupal\node\NodeStorage $node_storage */
+    $node_storage = $this->entityTypeManager()->getStorage('node');
+    // TODO: order by weight defined by the user on the node?
+    $help_pages = $node_storage->getQuery()
+      ->accessCheck(TRUE)
+      ->condition('type', 'aa_tag_wrangling_help_page')
+      ->execute();
+
+    $help_block['title'] = $this->t('Wrangling Help');
+    $help_block['content'] = [
+      '#theme' => 'admin_block_content',
+      '#content' => [],
+    ];
+    /** @var \Drupal\node\NodeInterface $help_page */
+    foreach ($node_storage->loadMultiple($help_pages) as $help_page) {
+      $help_block['content']['#content'][] = [
+        'title' => $help_page->getTitle(),
+        'description' => !$help_page->get('field_help_description')->isEmpty() ? $help_page->get('field_help_description')->value : '',
+        'url' => $help_page->toUrl(),
+      ];
+    }
+
     $build = [
       '#theme' => 'admin_page',
-      '#blocks' => [$wrangling_block, $canonical_block],
+      '#blocks' => [$wrangling_block, $canonical_block, $help_block],
       '#cache' => [
         'contexts' => ['user.roles'],
       ],

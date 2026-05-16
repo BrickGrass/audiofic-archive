@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.aa_tag_wrangling_help_page.field_help_body
+    - node.type.aa_tag_wrangling_help_page
+  module:
+    - text
+    - user
+id: node.aa_tag_wrangling_help_page.default
+targetEntityType: node
+bundle: aa_tag_wrangling_help_page
+mode: default
+content:
+  field_help_description:
+    type: string_textfield
+    weight: 101
+    region: content
+    settings: { }
+    third_party_settings: { }
+  field_help_body:
+    type: text_textarea
+    weight: 102
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }

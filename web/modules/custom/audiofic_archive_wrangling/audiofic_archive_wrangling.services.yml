@@ -1,0 +1,5 @@
+services:
+  audiofic_archive_wrangling.route_subscriber:
+    class: Drupal\audiofic_archive_wrangling\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }

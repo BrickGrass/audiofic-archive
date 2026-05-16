@@ -15,7 +15,8 @@ use Drupal\user\Entity\User;
 define('AUDIOFIC_REALM_VIEW', 'audiofic_realm_view');
 define('AUDIOFIC_GRANT_PUBLIC', 0);
 define('AUDIOFIC_GRANT_ARCHIVE_LOCKED', 1);
-define('AUDIOFIC_GRANT_ARCHIVE_UNPUBLISHED', 2);
+define('AUDIOFIC_GRANT_ARCHIVE_ADMIN_NODE', 2);
+define('AUDIOFIC_GRANT_ARCHIVE_UNPUBLISHED', 3);
 
 // Edit/Update/Delete permission realm & admin grant,
 // all other grants are based on owner roles.
@@ -69,12 +70,21 @@ class PropagateMetadataHooks {
           AUDIOFIC_GRANT_ARCHIVE_LOCKED,
           AUDIOFIC_GRANT_ARCHIVE_UNPUBLISHED,
         ];
-      } elseif (in_array('authenticated', $roles)) {
+      }
+      elseif (in_array('archivist', $roles)) {
+        $grants[AUDIOFIC_REALM_VIEW] = [
+          AUDIOFIC_GRANT_PUBLIC,
+          AUDIOFIC_GRANT_ARCHIVE_ADMIN_NODE,
+          AUDIOFIC_GRANT_ARCHIVE_LOCKED,
+        ];
+      }
+      elseif (in_array('authenticated', $roles)) {
         $grants[AUDIOFIC_REALM_VIEW] = [
           AUDIOFIC_GRANT_PUBLIC,
           AUDIOFIC_GRANT_ARCHIVE_LOCKED,
         ];
-      } else {
+      }
+      else {
         $grants[AUDIOFIC_REALM_VIEW] = [
           AUDIOFIC_GRANT_PUBLIC,
         ];
@@ -112,6 +122,15 @@ class PropagateMetadataHooks {
       $grants[] = [
         'realm' => AUDIOFIC_REALM_VIEW,
         'gid' => AUDIOFIC_GRANT_ARCHIVE_UNPUBLISHED,
+        'grant_view' => 1,
+        'grant_update' => 0,
+        'grant_delete' => 0,
+        'priority' => 0,
+      ];
+    } elseif ($node->bundle() === 'aa_tag_wrangling_help_page') {
+      $grants[] = [
+        'realm' => AUDIOFIC_REALM_VIEW,
+        'gid' => AUDIOFIC_GRANT_ARCHIVE_ADMIN_NODE,
         'grant_view' => 1,
         'grant_update' => 0,
         'grant_delete' => 0,

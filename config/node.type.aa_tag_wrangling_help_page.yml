@@ -1,0 +1,16 @@
+uuid: 24a8edad-6245-4285-a55d-1022b74972eb
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - audiofic_archive_wrangling
+_core:
+  default_config_hash: zqXXk3emdO_6znZtgr11SEPTcyw8wprRyz0P8tzRlVA
+name: 'Audiofic Archive Tag Wrangling Help Page'
+type: aa_tag_wrangling_help_page
+description: 'Content type which can be used to create help pages for tag wrangling. All pages will appear under the help section in the tag wrangling index page.'
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: false

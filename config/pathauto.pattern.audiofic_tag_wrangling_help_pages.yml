@@ -1,0 +1,22 @@
+uuid: 0397f031-750b-4294-b701-9f08efc6a4e5
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: audiofic_tag_wrangling_help_pages
+label: 'Audiofic Tag Wrangling Help Pages'
+type: 'canonical_entities:node'
+pattern: 'admin/structure/taxonomy/wrangling/help-[node:title]'
+selection_criteria:
+  9499c795-91b0-45eb-8611-8e926e1b858f:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: 9499c795-91b0-45eb-8611-8e926e1b858f
+    context_mapping:
+      node: node
+    bundles:
+      aa_tag_wrangling_help_page: aa_tag_wrangling_help_page
+selection_logic: and
+weight: -5
+relationships: {  }

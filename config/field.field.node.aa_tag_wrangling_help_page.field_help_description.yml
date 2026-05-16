@@ -1,0 +1,21 @@
+uuid: ab060593-584e-46a2-bb49-a301c1ec0d91
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_help_description
+    - node.type.aa_tag_wrangling_help_page
+_core:
+  default_config_hash: gF1_Ed7UdoWRrnmMr7h9UBo7voGh_aQEauXQEk3oQ9M
+id: node.aa_tag_wrangling_help_page.field_help_description
+field_name: field_help_description
+entity_type: node
+bundle: aa_tag_wrangling_help_page
+label: Description
+description: 'The description of the help page'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

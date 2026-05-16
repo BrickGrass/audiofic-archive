@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.aa_tag_wrangling_help_page.field_help_body
+    - node.type.aa_tag_wrangling_help_page
+  module:
+    - text
+    - user
+id: node.aa_tag_wrangling_help_page.default
+targetEntityType: node
+bundle: aa_tag_wrangling_help_page
+mode: default
+content:
+  field_help_body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: { }
+    third_party_settings: { }
+hidden: { }
