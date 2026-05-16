@@ -15,7 +15,7 @@ provider: null
 plugin: complex_search_block
 settings:
   id: complex_search_block
-  label: 'Search Works'
+  label: 'Search Podfics'
   label_display: visible
   provider: aa_search
   action_url: /search/works

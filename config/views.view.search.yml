@@ -6291,7 +6291,7 @@ display:
     display_plugin: page
     position: 1
     display_options:
-      title: 'Search Works'
+      title: 'Search Podfics'
       exposed_form:
         type: bef
         options:
@@ -8484,8 +8484,8 @@ display:
       path: search/collections
       menu:
         type: normal
-        title: 'Search series and collections'
-        description: null
+        title: 'Search series'
+        description: ''
         weight: -49
         enabled: true
         expanded: false
