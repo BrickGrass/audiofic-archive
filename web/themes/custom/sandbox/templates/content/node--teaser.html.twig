@@ -166,10 +166,9 @@
               {% endif %}
             {% endset %}
 
-            {% set collection_parts =
-              content_type == "playlist" ?
-              "#{collection_length} part series, " : ""
-            %}
+            {% set collection_parts = content_type == "playlist" ?
+                                      "#{collection_length} part series, " :
+                                      "" %}
 
             {% if content_type in ["work", "legacy_work"] %}
               {% set language %}
@@ -184,7 +183,9 @@
               {% endset %}
             {% endif %}
 
-            <small class="ms-1"><span>{{ duration }}{{ collection_parts | trans }}{{ language }}{% trans %}published: {% endtrans %}{{ created_at }}</span></small>
+            {% set published_str = "published: "|t %}
+
+            <small class="ms-1"><span>{{ duration }}{{ collection_parts | trans }}{{ language }}{{ published_str }}{{ created_at }}</span></small>
           </div>
         </div>
       </div>
