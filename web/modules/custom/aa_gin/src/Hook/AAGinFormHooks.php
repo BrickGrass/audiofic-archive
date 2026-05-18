@@ -3,7 +3,6 @@
 namespace Drupal\aa_gin\Hook;
 
 use Drupal\aa_utils\Service\AudioficUtils;
-use Drupal\Core\Entity\TranslatableInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Session\AccountInterface;
@@ -12,7 +11,6 @@ use Drupal\taxonomy\TermInterface;
 use Drupal\user\Entity\User;
 use Drupal\node\Entity\Node;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use function PHPUnit\Framework\isInstanceOf;
 
 class AAGinFormHooks {
   use StringTranslationTrait;
@@ -137,6 +135,24 @@ class AAGinFormHooks {
           'label' => $this->t('File label'),
           'weight' => 1,
         ];
+        break;
+    }
+  }
+
+  /**
+   * Implements inline_entity_form_entity_form_alter().
+   *
+   * Removes the details wrapper from the file field.
+   */
+  #[Hook('inline_entity_form_entity_form_alter')]
+  public function inlineEntityFormEntityFormAlter(&$entity_form, FormStateInterface &$form_state) {
+    switch ($entity_form['#ief_id']) {
+      case 'field_mp3_files-form':
+        $entity_form['field_media_audio_file']['widget'][0]['#do_not_wrap_in_details'] = TRUE;
+        break;
+
+      case 'field_other_files-form':
+        $entity_form['field_media_file']['widget'][0]['#do_not_wrap_in_details'] = TRUE;
         break;
     }
   }
