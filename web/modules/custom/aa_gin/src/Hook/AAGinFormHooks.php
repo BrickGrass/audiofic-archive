@@ -31,6 +31,7 @@ class AAGinFormHooks {
 
     if (in_array($form_id, ['node_work_form', 'node_work_edit_form'])) {
       $this->insertSeriesCreationWidget($form);
+      $this->removePreviewButton($form);
     }
 
     if (in_array($form_id, ['node_work_form', 'node_playlist_form', 'node_legacy_work_form'])) {
@@ -173,6 +174,16 @@ class AAGinFormHooks {
     }
 
     $form['#attached']['library'][] = 'aa_gin/add-new-tag';
+  }
+
+  /**
+   * Removes the preview button from a form.
+   *
+   * This is necessary for the work form, because the unsaved media
+   * breaks the preview function & causes unexpected behaviour.
+   */
+  private function removePreviewButton(&$form) {
+    $form['actions']['preview']['#access'] = FALSE;
   }
 
   /**
