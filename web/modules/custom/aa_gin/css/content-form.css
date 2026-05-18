@@ -20,3 +20,15 @@
         margin-inline: 0 !important;
     }
 }
+
+@media (max-width: 1024px) {
+    .gin--edit-form :where(*) .region-sticky, .gin--edit-form :is(#extra-specificity-hack, [data-drupal-admin-styles]) .region-sticky {
+        inset-block-start: calc(var(--gin-toolbar-y-offset) - var(--gin-spacing-m) - var(--gin-spacing-xxs)) !important;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1100px) {
+    .gin--edit-form :where(*) .region-sticky, .gin--edit-form :is(#extra-specificity-hack, [data-drupal-admin-styles]) .region-sticky {
+        inset-block-start: calc(var(--gin-toolbar-y-offset)) !important;
+    }
+}
