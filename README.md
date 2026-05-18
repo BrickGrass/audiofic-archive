@@ -15,9 +15,10 @@ If you have any spare time and any level of ability with web development/html+cs
 You can contact us via: jinjurlymods@squidge.org
 
 ## A sneak peek:
-<img width="1835" height="934" alt="Screenshot 2026-03-11 at 8 51 50 pm" src="https://github.com/user-attachments/assets/312d420f-debf-4698-8036-cc72273916ce" />
-<img width="1836" height="933" alt="Screenshot 2026-03-11 at 8 53 47 pm" src="https://github.com/user-attachments/assets/a4d1a596-f9da-4583-abf6-93543d7b1fc9" />
-<img width="1836" height="936" alt="Screenshot 2026-03-11 at 8 55 26 pm" src="https://github.com/user-attachments/assets/b5eacec9-09b0-4acb-9a66-5206f9fbdbd8" />
+<img width="1836" height="935" alt="Screenshot 2026-05-19 at 12 07 37 am" src="https://github.com/user-attachments/assets/711331b4-df9a-4a41-a5d9-1dd89026d292" />
+<img width="1837" height="936" alt="Screenshot 2026-05-19 at 12 08 23 am" src="https://github.com/user-attachments/assets/52e2132f-3d40-4523-85a9-8d52d0e3e5fb" />
+<img width="1838" height="936" alt="Screenshot 2026-05-19 at 12 08 37 am" src="https://github.com/user-attachments/assets/61f3d2c5-f5be-4361-bed2-2fd13d3a9ddb" />
+<img width="1837" height="936" alt="Screenshot 2026-05-19 at 12 10 15 am" src="https://github.com/user-attachments/assets/24eecc9f-c4f5-44b9-a5b1-b388f05639ec" />
 
 ## Setting up a development environment
 Before running the project you will need to ensure that you have the following tools installed:
