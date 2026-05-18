@@ -1,14 +1,12 @@
-uuid: b2f909bf-6f35-4182-bd2a-c07780f3c7a9
+uuid: 3287a327-2f97-4bba-aa4b-8e5afcc8b0f7
 langcode: en
 status: true
 dependencies:
   config:
-    - filter.format.basic_html
+    - filter.format.legacy_work_html
   module:
     - ckeditor5
-_core:
-  default_config_hash: lZlUTSJqWaN3iU0I0fhvQVgqf4ps9fxPPC-g_9aWIRc
-format: basic_html
+format: legacy_work_html
 editor: ckeditor5
 settings:
   toolbar:
@@ -18,6 +16,7 @@ settings:
       - '|'
       - link
       - blockQuote
+      - code
       - '|'
       - bulletedList
       - numberedList
@@ -28,23 +27,30 @@ settings:
   plugins:
     ckeditor5_heading:
       enabled_headings:
+        - heading2
         - heading3
         - heading4
         - heading5
         - heading6
     ckeditor5_list:
       properties:
-        reversed: false
+        reversed: true
         startIndex: true
-        styles: false
+        styles: true
       multiBlock: true
     ckeditor5_sourceEditing:
-      allowed_tags: {  }
+      allowed_tags:
+        - '<cite>'
+        - '<dl>'
+        - '<dt>'
+        - '<dd>'
+        - '<a hreflang>'
+        - '<blockquote cite>'
+        - '<audio src crossorigin preload controls>'
+        - '<h2 id="jump-*">'
+        - '<h3 id>'
+        - '<h4 id>'
+        - '<h5 id>'
+        - '<h6 id>'
 image_upload:
-  status: true
-  scheme: public
-  directory: inline-images
-  max_size: null
-  max_dimensions:
-    width: null
-    height: null
+  status: false
