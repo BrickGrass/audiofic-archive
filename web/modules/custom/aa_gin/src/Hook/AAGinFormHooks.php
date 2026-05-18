@@ -35,6 +35,17 @@ class AAGinFormHooks {
     if (in_array($form_id, ['node_work_form', 'node_playlist_form', 'node_legacy_work_form'])) {
       $this->prefillReaderOwnerFields($form);
     }
+
+    if (in_array($form_id, [
+      'node_work_form',
+      'node_work_edit_form',
+      'node_playlist_form',
+      'node_playlist_edit_form',
+      'node_legacy_work_form',
+      'node_legacy_work_edit_form',
+    ])) {
+      $this->protectMetaFields($form);
+    }
   }
 
   /**
@@ -200,6 +211,25 @@ class AAGinFormHooks {
    */
   private function removePreviewButton(&$form) {
     $form['actions']['preview']['#access'] = FALSE;
+  }
+
+  /**
+   * If the user is not admin, remove access to meta/revision fields.
+   */
+  private function protectMetaFields(&$form) {
+    if (in_array('administrator', $this->current_user->getRoles())) {
+      return;
+    }
+
+    if (isset($form['meta'])) {
+      $form['meta']['#access'] = FALSE;
+    }
+    if (isset($form['meta']['author'])) {
+      $form['meta']['author']['#access'] = FALSE;
+    }
+    if (isset($form['revision'])) {
+      $form['revision']['#access'] = FALSE;
+    }
   }
 
   /**
