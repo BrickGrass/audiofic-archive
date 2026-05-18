@@ -33,6 +33,10 @@ code {
 	margin-top: calc(var(--bs-gutter-x) * .5);
 }
 
+section.region-secondary-menu {
+	max-width: 100%;
+}
+
 @media (min-width: 768px) {
 	.breadcrumb,
 	.content .title {
