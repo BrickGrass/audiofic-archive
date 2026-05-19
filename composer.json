@@ -7,10 +7,6 @@
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
-        },
-        {
-            "type": "path",
-            "url": "upstream-configuration"
         }
     ],
     "require": {
@@ -72,10 +68,8 @@
             "locations": {
                 "web-root": "./web"
             },
-            "allowed-packages": ["pantheon-systems/drupal-integrations"],
             "file-mapping": {
                 "[project-root]/.editorconfig": false,
-                "[project-root]/pantheon.upstream.yml": false,
                 "[project-root]/.gitattributes": false
             }
         },
@@ -105,9 +99,6 @@
             }
         },
         "enable-patching": true
-    },
-    "autoload": {
-        "classmap": ["upstream-configuration/scripts/ComposerScripts.php"]
     },
     "scripts": {
         "pre-update-cmd": ["DrupalComposerManaged\\ComposerScripts::preUpdate"],
