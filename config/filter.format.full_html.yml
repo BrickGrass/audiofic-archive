@@ -37,12 +37,6 @@ filters:
       allowed_html: ''
       filter_html_help: true
       filter_html_nofollow: false
-  filter_htmlcorrector:
-    id: filter_htmlcorrector
-    provider: filter
-    status: true
-    weight: 10
-    settings: {  }
   filter_image_lazy_load:
     id: filter_image_lazy_load
     provider: filter

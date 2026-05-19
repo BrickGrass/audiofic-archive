@@ -47,10 +47,5 @@ settings:
         - '<a hreflang>'
         - '<blockquote cite>'
         - '<audio src crossorigin preload controls>'
-        - '<h2 id="jump-*">'
-        - '<h3 id>'
-        - '<h4 id>'
-        - '<h5 id>'
-        - '<h6 id>'
 image_upload:
   status: false
