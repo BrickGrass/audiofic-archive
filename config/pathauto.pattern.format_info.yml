@@ -2,17 +2,18 @@ uuid: 85652af9-6a29-4ed7-ae2d-14e7d36741e9
 langcode: en
 status: true
 dependencies:
+  config:
+    - taxonomy.vocabulary.info
   module:
     - taxonomy
 id: format_info
 label: 'Format Info'
 type: 'canonical_entities:taxonomy_term'
-pattern: 'tags/format-info/[term:name]'
+pattern: '/tags/format-info/[term:name]'
 selection_criteria:
   b11e0e2b-8b07-4d41-9ed9-a88ca620e36d:
     id: 'entity_bundle:taxonomy_term'
     negate: false
-    uuid: b11e0e2b-8b07-4d41-9ed9-a88ca620e36d
     context_mapping:
       taxonomy_term: taxonomy_term
     bundles:

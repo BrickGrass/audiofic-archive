@@ -7,10 +7,6 @@
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
-        },
-        {
-            "type": "path",
-            "url": "upstream-configuration"
         }
     ],
     "require": {
@@ -18,7 +14,7 @@
         "cweagans/composer-patches": "^1.7",
         "drupal/admin_toolbar": "^3.4",
         "drupal/auto_entitylabel": "^3.3",
-        "drupal/better_exposed_filters": "^7.0",
+        "drupal/better_exposed_filters": "^7.1",
         "drupal/bootstrap_barrio": "^5.5",
         "drupal/cer": "^5.0@beta",
         "drupal/color": "^2.0@alpha",
@@ -38,10 +34,10 @@
         "drupal/maxlength": "^3.1",
         "drupal/metatag": "^2.1",
         "drupal/migrate_plus": "^6.0",
-        "drupal/pathauto": "^1.13",
+        "drupal/pathauto": "^1.15",
         "drupal/profile": "^1.11",
         "drupal/queue_ui": "^3.2",
-        "drupal/redirect": "^1.12",
+        "drupal/redirect": "^1.13",
         "drupal/rules": "^4.0",
         "drupal/search_api_solr": "^4.3",
         "drupal/shortcutperrole": "^2.1",
@@ -53,7 +49,7 @@
         "drupal/ultimate_cron": "^2.0@alpha",
         "drupal/views_autocomplete_filters": "^2.0",
         "drupal/views_bulk_edit": "^3.0",
-        "drupal/views_bulk_operations": "^4.2",
+        "drupal/views_bulk_operations": "^4.4",
         "drupal/views_contextual_filters_or": "^1.4",
         "drupal/weight": "^3.5",
         "drush/drush": "^13",
@@ -100,18 +96,10 @@
                 "Fixes bug in views where if exposed filters are in a block the contextual filters are ignored. Remove once https://www.drupal.org/project/drupal/issues/2821962 is merged.": "patches/views-fix-exposed-contextual-filter-conflict.patch"
             },
             "drupal/gin": {
-                "Patches sidebar bugs on wide touchscreen devices. Remove once https://www.drupal.org/project/gin/issues/3463177 is merged.": "patches/gin-sidebar-resize-overlap-15791901-2.patch",
-                "Patches bug which removes the sidebar toggle entirely. Remove once https://www.drupal.org/project/gin/issues/3567613 is put in a release.": "patches/gin-restore-missing-sidebar.patch"
+                "Patches sidebar bugs on wide touchscreen devices. Remove once https://www.drupal.org/project/gin/issues/3463177 is merged.": "patches/gin-sidebar-resize-overlap-15791901-2.patch"
             }
         },
         "enable-patching": true
-    },
-    "autoload": {
-        "classmap": ["upstream-configuration/scripts/ComposerScripts.php"]
-    },
-    "scripts": {
-        "pre-update-cmd": ["DrupalComposerManaged\\ComposerScripts::preUpdate"],
-        "post-update-cmd": ["DrupalComposerManaged\\ComposerScripts::postUpdate"]
     },
     "config": {
         "preferred-install": "dist",

@@ -2,17 +2,18 @@ uuid: 8165894f-b72b-4762-be84-be4bf4178695
 langcode: en
 status: true
 dependencies:
+  config:
+    - taxonomy.vocabulary.relationship
   module:
     - taxonomy
 id: relationship
 label: Relationship
 type: 'canonical_entities:taxonomy_term'
-pattern: 'tags/relationship/[term:name]'
+pattern: '/tags/relationship/[term:name]'
 selection_criteria:
   3a32ed3d-0837-493a-ba67-d085d7dce1c3:
     id: 'entity_bundle:taxonomy_term'
     negate: false
-    uuid: 3a32ed3d-0837-493a-ba67-d085d7dce1c3
     context_mapping:
       taxonomy_term: taxonomy_term
     bundles:

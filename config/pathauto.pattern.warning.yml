@@ -2,17 +2,18 @@ uuid: 4e398997-9485-4741-98c2-370d39f8c96a
 langcode: en
 status: true
 dependencies:
+  config:
+    - taxonomy.vocabulary.warning
   module:
     - taxonomy
 id: warning
 label: Warning
 type: 'canonical_entities:taxonomy_term'
-pattern: 'tags/warning/[term:name]'
+pattern: '/tags/warning/[term:name]'
 selection_criteria:
   77fe25ba-d978-4985-beca-0503709c9b3f:
     id: 'entity_bundle:taxonomy_term'
     negate: false
-    uuid: 77fe25ba-d978-4985-beca-0503709c9b3f
     context_mapping:
       taxonomy_term: taxonomy_term
     bundles:

@@ -2,17 +2,18 @@ uuid: 7cd6d18d-4898-4f83-ab4f-742ef0d62476
 langcode: en
 status: true
 dependencies:
+  config:
+    - taxonomy.vocabulary.author
   module:
     - taxonomy
 id: author
 label: Author
 type: 'canonical_entities:taxonomy_term'
-pattern: 'tags/author/[term:name]'
+pattern: '/tags/author/[term:name]'
 selection_criteria:
   8beb33cd-591c-40ee-8860-ca4601ab1825:
     id: 'entity_bundle:taxonomy_term'
     negate: false
-    uuid: 8beb33cd-591c-40ee-8860-ca4601ab1825
     context_mapping:
       taxonomy_term: taxonomy_term
     bundles:

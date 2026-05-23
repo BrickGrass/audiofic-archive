@@ -2,17 +2,18 @@ uuid: acc7d513-c8f9-408f-9389-5006cfd03f24
 langcode: en
 status: true
 dependencies:
+  config:
+    - taxonomy.vocabulary.series
   module:
     - taxonomy
 id: legacy_series
 label: 'Legacy Series'
 type: 'canonical_entities:taxonomy_term'
-pattern: 'tags/series/[term:name]'
+pattern: '/tags/series/[term:name]'
 selection_criteria:
   5f6a2187-7b30-4e96-99ce-78109909d5b1:
     id: 'entity_bundle:taxonomy_term'
     negate: false
-    uuid: 5f6a2187-7b30-4e96-99ce-78109909d5b1
     context_mapping:
       taxonomy_term: taxonomy_term
     bundles:

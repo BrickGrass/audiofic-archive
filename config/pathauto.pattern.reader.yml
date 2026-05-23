@@ -2,17 +2,18 @@ uuid: de00b02a-18da-49d2-89b8-a3cdf85f5995
 langcode: en
 status: true
 dependencies:
+  config:
+    - taxonomy.vocabulary.reader
   module:
     - taxonomy
 id: reader
 label: Reader
 type: 'canonical_entities:taxonomy_term'
-pattern: 'tags/reader/[term:name]'
+pattern: '/tags/reader/[term:name]'
 selection_criteria:
   65a8f5a7-1576-4e1e-b813-19071eaec7b8:
     id: 'entity_bundle:taxonomy_term'
     negate: false
-    uuid: 65a8f5a7-1576-4e1e-b813-19071eaec7b8
     context_mapping:
       taxonomy_term: taxonomy_term
     bundles:

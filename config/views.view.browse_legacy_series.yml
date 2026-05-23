@@ -243,7 +243,6 @@ display:
                   is_secondary: false
                   hide_label: true
                   field_classes: ''
-                  sort_options_unsupported: ''
               field_category_target_id:
                 plugin_id: bef
                 advanced:
@@ -265,6 +264,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_language_target_id:
                 plugin_id: bef
                 advanced:
@@ -286,6 +287,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_fandom2_target_id:
                 plugin_id: bef_aa_entity_autocomplete
                 advanced:
@@ -339,6 +342,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_reader_target_id:
                 plugin_id: bef_aa_entity_autocomplete
                 advanced:

@@ -2432,6 +2432,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_category:
                 plugin_id: bef
                 advanced:
@@ -2453,6 +2455,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_format:
                 plugin_id: bef
                 advanced:
@@ -2474,6 +2478,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_language:
                 plugin_id: bef
                 advanced:
@@ -2495,6 +2501,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_warning:
                 plugin_id: bef
                 advanced:
@@ -2516,6 +2524,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_author:
                 plugin_id: bef_aa_entity_autocomplete
                 advanced:
@@ -2597,6 +2607,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_category_1:
                 plugin_id: bef
                 advanced:
@@ -2618,6 +2630,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_format_1:
                 plugin_id: bef
                 advanced:
@@ -2639,6 +2653,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_language_1:
                 plugin_id: bef
                 advanced:
@@ -2660,6 +2676,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_warning_1:
                 plugin_id: bef
                 advanced:
@@ -2681,6 +2699,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_author_1:
                 plugin_id: bef_aa_entity_autocomplete
                 advanced:
@@ -2903,6 +2923,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_category:
                 plugin_id: bef
                 advanced:
@@ -2924,6 +2946,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_format:
                 plugin_id: bef
                 advanced:
@@ -2945,6 +2969,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_language:
                 plugin_id: bef
                 advanced:
@@ -2966,6 +2992,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_warning:
                 plugin_id: bef
                 advanced:
@@ -2987,6 +3015,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_author:
                 plugin_id: bef_aa_entity_autocomplete
                 advanced:
@@ -3068,6 +3098,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_category_1:
                 plugin_id: bef
                 advanced:
@@ -3089,6 +3121,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_format_1:
                 plugin_id: bef
                 advanced:
@@ -3110,6 +3144,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_language_1:
                 plugin_id: bef
                 advanced:
@@ -3131,6 +3167,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_warning_1:
                 plugin_id: bef
                 advanced:
@@ -3152,6 +3190,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_author_1:
                 plugin_id: bef_aa_entity_autocomplete
                 advanced:
@@ -4362,6 +4402,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_category:
                 plugin_id: bef
                 advanced:
@@ -4383,6 +4425,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_format:
                 plugin_id: bef
                 advanced:
@@ -4404,6 +4448,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_language:
                 plugin_id: bef
                 advanced:
@@ -4425,6 +4471,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_warning:
                 plugin_id: bef
                 advanced:
@@ -4446,6 +4494,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_author:
                 plugin_id: bef_aa_entity_autocomplete
                 advanced:
@@ -4527,6 +4577,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_category_1:
                 plugin_id: bef
                 advanced:
@@ -4548,6 +4600,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_format_1:
                 plugin_id: bef
                 advanced:
@@ -4569,6 +4623,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_language_1:
                 plugin_id: bef
                 advanced:
@@ -4590,6 +4646,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_warning_1:
                 plugin_id: bef
                 advanced:
@@ -4611,6 +4669,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_author_1:
                 plugin_id: bef_aa_entity_autocomplete
                 advanced:
@@ -4855,6 +4915,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_category:
                 plugin_id: bef
                 advanced:
@@ -4876,6 +4938,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_format:
                 plugin_id: bef
                 advanced:
@@ -4897,6 +4961,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_language:
                 plugin_id: bef
                 advanced:
@@ -4918,6 +4984,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_warning:
                 plugin_id: bef
                 advanced:
@@ -4939,6 +5007,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_author:
                 plugin_id: bef_aa_entity_autocomplete
                 advanced:
@@ -5020,6 +5090,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_category_1:
                 plugin_id: bef
                 advanced:
@@ -5041,6 +5113,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_format_1:
                 plugin_id: bef
                 advanced:
@@ -5062,6 +5136,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_language_1:
                 plugin_id: bef
                 advanced:
@@ -5083,6 +5159,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_warning_1:
                 plugin_id: bef
                 advanced:
@@ -5104,6 +5182,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_author_1:
                 plugin_id: bef_aa_entity_autocomplete
                 advanced:
@@ -6343,7 +6423,6 @@ display:
                   is_secondary: false
                   hide_label: true
                   field_classes: ''
-                  sort_options_unsupported: ''
               title:
                 plugin_id: default
                 advanced:
@@ -6354,7 +6433,6 @@ display:
                   is_secondary: false
                   hide_label: true
                   field_classes: ''
-                  sort_options_unsupported: ''
               field_completion_status:
                 plugin_id: bef_single
                 advanced:
@@ -6392,6 +6470,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_category:
                 plugin_id: bef
                 advanced:
@@ -6413,6 +6493,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_format:
                 plugin_id: bef
                 advanced:
@@ -6434,6 +6516,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_language:
                 plugin_id: bef
                 advanced:
@@ -6455,6 +6539,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_warning:
                 plugin_id: bef
                 advanced:
@@ -6476,6 +6562,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_author:
                 plugin_id: bef_aa_entity_autocomplete
                 advanced:
@@ -6577,6 +6665,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_category_1:
                 plugin_id: bef
                 advanced:
@@ -6598,6 +6688,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_format_1:
                 plugin_id: bef
                 advanced:
@@ -6619,6 +6711,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_language_1:
                 plugin_id: bef
                 advanced:
@@ -6640,6 +6734,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_warning_1:
                 plugin_id: bef
                 advanced:
@@ -6661,6 +6757,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_author_1:
                 plugin_id: bef_aa_entity_autocomplete
                 advanced:
@@ -6735,7 +6833,6 @@ display:
                   is_secondary: false
                   hide_label: false
                   field_classes: ''
-                  sort_options_unsupported: ''
               field_duration_seconds_1:
                 plugin_id: bef_duration
                 advanced:
@@ -6746,7 +6843,6 @@ display:
                   is_secondary: false
                   hide_label: false
                   field_classes: ''
-                  sort_options_unsupported: ''
       sorts:
         changed:
           id: changed
@@ -6988,6 +7084,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_category:
                 plugin_id: bef
                 advanced:
@@ -7009,6 +7107,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_format:
                 plugin_id: bef
                 advanced:
@@ -7030,6 +7130,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_language:
                 plugin_id: bef
                 advanced:
@@ -7051,6 +7153,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_warning:
                 plugin_id: bef
                 advanced:
@@ -7072,6 +7176,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_author:
                 plugin_id: bef_aa_entity_autocomplete
                 advanced:
@@ -7153,6 +7259,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_category_1:
                 plugin_id: bef
                 advanced:
@@ -7174,6 +7282,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_format_1:
                 plugin_id: bef
                 advanced:
@@ -7195,6 +7305,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_language_1:
                 plugin_id: bef
                 advanced:
@@ -7216,6 +7328,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_warning_1:
                 plugin_id: bef
                 advanced:
@@ -7237,6 +7351,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_author_1:
                 plugin_id: bef_aa_entity_autocomplete
                 advanced:
@@ -8570,7 +8686,6 @@ display:
                   is_secondary: false
                   hide_label: true
                   field_classes: ''
-                  sort_options_unsupported: ''
               title:
                 plugin_id: default
                 advanced:
@@ -8581,7 +8696,6 @@ display:
                   is_secondary: false
                   hide_label: true
                   field_classes: ''
-                  sort_options_unsupported: ''
               field_completion_status:
                 plugin_id: bef_single
                 advanced:
@@ -8619,6 +8733,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_category:
                 plugin_id: bef
                 advanced:
@@ -8640,6 +8756,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_format:
                 plugin_id: bef
                 advanced:
@@ -8661,6 +8779,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_language:
                 plugin_id: bef
                 advanced:
@@ -8682,6 +8802,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_warning:
                 plugin_id: bef
                 advanced:
@@ -8703,6 +8825,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_author:
                 plugin_id: bef_aa_entity_autocomplete
                 advanced:
@@ -8804,6 +8928,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_category_1:
                 plugin_id: bef
                 advanced:
@@ -8825,6 +8951,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_format_1:
                 plugin_id: bef
                 advanced:
@@ -8846,6 +8974,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_language_1:
                 plugin_id: bef
                 advanced:
@@ -8867,6 +8997,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_warning_1:
                 plugin_id: bef
                 advanced:
@@ -8888,6 +9020,8 @@ display:
                 soft_limit: 0
                 soft_limit_label_less: 'Show less'
                 soft_limit_label_more: 'Show more'
+                scrollable: false
+                scrollable_height: 300
               field_author_1:
                 plugin_id: bef_aa_entity_autocomplete
                 advanced:
@@ -8962,7 +9096,6 @@ display:
                   is_secondary: false
                   hide_label: false
                   field_classes: ''
-                  sort_options_unsupported: ''
               field_duration_seconds_1:
                 plugin_id: bef_duration
                 advanced:
@@ -8973,7 +9106,6 @@ display:
                   is_secondary: false
                   hide_label: false
                   field_classes: ''
-                  sort_options_unsupported: ''
       arguments:
         search_api_all_terms:
           id: search_api_all_terms
