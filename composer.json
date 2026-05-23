@@ -68,10 +68,8 @@
             "locations": {
                 "web-root": "./web"
             },
-            "allowed-packages": ["pantheon-systems/drupal-integrations"],
             "file-mapping": {
                 "[project-root]/.editorconfig": false,
-                "[project-root]/pantheon.upstream.yml": false,
                 "[project-root]/.gitattributes": false
             }
         },
