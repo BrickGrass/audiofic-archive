@@ -882,6 +882,10 @@ if (getenv('IS_DDEV_PROJECT') == 'true' && file_exists(__DIR__ . '/settings.ddev
   include __DIR__ . '/settings.ddev.php';
 }
 
+if (getenv('AUDIOFIC_ARCHIVE_PRODUCTION') == 'true' && file_exists(__DIR__ . '/settings.production.php')) {
+  include __DIR__ . '/settings.production.php';
+}
+
 /**
  * Load local development override configuration, if available.
  *
