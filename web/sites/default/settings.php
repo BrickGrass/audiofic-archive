@@ -882,7 +882,8 @@ if (getenv('IS_DDEV_PROJECT') == 'true' && file_exists(__DIR__ . '/settings.ddev
   include __DIR__ . '/settings.ddev.php';
 }
 
-if (getenv('AUDIOFIC_ARCHIVE_PRODUCTION') == 'true' && file_exists(__DIR__ . '/settings.production.php')) {
+$environment = getenv('DRUPAL_ENV') ?: $_SERVER['DRUPAL_ENV'] ?? 'development';
+if ($environment == 'production' && file_exists(__DIR__ . '/settings.production.php')) {
   include __DIR__ . '/settings.production.php';
 }
 
