@@ -904,3 +904,7 @@ if ($environment == 'production' && file_exists(__DIR__ . '/settings.production.
 # if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 #   include $app_root . '/' . $site_path . '/settings.local.php';
 # }
+
+if (PHP_SAPI !== 'cli') {
+  error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+}
