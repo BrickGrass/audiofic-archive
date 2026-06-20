@@ -177,6 +177,11 @@ class UserCancelForm extends FormBase {
       ->condition('uid', $this->user->id())
       ->execute();
 
+    if (empty($nodes)) {
+      $this->user->delete();
+      return;
+    }
+
     $batch = new BatchBuilder();
     $batch->setTitle('Running batch process.')
       ->setFinishCallback([self::class, 'batchFinished'])
