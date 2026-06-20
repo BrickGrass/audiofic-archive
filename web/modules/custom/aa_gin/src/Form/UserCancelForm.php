@@ -138,6 +138,10 @@ class UserCancelForm extends FormBase {
   private function deleteOwnedContent() {
     $user_tags = array_column($this->user->get('field_reader_name')->getValue(), 'target_id');
 
+    if (empty($user_tags)) {
+      return;
+    }
+
     /** @var \Drupal\node\NodeStorage $node_storage */
     $node_storage = $this->entityTypeManager->getStorage('node');
 
