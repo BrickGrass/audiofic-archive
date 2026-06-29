@@ -107,7 +107,8 @@
   </div>
 {% elseif view.id == "search" and view.current_display == "search_taxonomy" and taxonomy_term != NULL and not canon %}
   <p>This tag is {{ drupal_field('field_canonicity', 'taxonomy_term', taxonomy_term.id) }} and cannot be toggled on for sorting.</p>
-  <p>This is a {{ taxonomy_term.bundle }} tag.</p>
+  {# TODO: Add type of fandom tag after a comma (This tag is a Fandom tag, in the category Movie & TV Fandoms). #}
+  <p>{{ 'This is a @type tag.'|t({'@type': taxonomy_term.bundle|replace({'_': ' '})|title }) }}</p>
   {% if taxonomy_term.bundle == "fandom" %}
   {{ drupal_view("unwrangled_tag_works", "unwrangled_fandom_tag_works_content") }}
   {% elseif taxonomy_term.bundle == "relationship" %}
@@ -157,7 +158,7 @@
     {% if view.current_display == "search_taxonomy" and taxonomy_term != NULL %}
       <div id="tagInfo" class="collapse">
         {# TODO: Add type of fandom tag after a comma (This tag is a Fandom tag, in the category Movie & TV Fandoms). #}
-        <h6>{% trans %}This is a {{ taxonomy_term.bundle|replace({"_": " "})|title }} tag.{% endtrans %}</h6>
+        <h6>{{ 'This is a @type tag.'|t({'@type': taxonomy_term.bundle|replace({'_': ' '})|title }) }}</h6>
 
         {% if term_parents is not empty %}
           <div class="alert alert-aa-metadata d-flex flex-column">
