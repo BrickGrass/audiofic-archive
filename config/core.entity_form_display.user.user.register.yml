@@ -6,6 +6,9 @@ dependencies:
     - core.entity_form_mode.user.register
     - field.field.user.user.field_author_name
     - field.field.user.user.field_cover_artist_name
+    - field.field.user.user.field_last_password_reset
+    - field.field.user.user.field_password_expiration
+    - field.field.user.user.field_pending_expire_sent
     - field.field.user.user.field_profile
     - field.field.user.user.field_reader_name
   module:
@@ -97,6 +100,9 @@ hidden:
   contact: true
   field_author_name: true
   field_cover_artist_name: true
+  field_last_password_reset: true
+  field_password_expiration: true
+  field_pending_expire_sent: true
   field_profile: true
   field_reader_name: true
   langcode: true
