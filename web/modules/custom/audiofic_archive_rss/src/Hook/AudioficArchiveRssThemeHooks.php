@@ -97,9 +97,11 @@ class AudioficArchiveRssThemeHooks {
   private function setPaginationData(&$variables) {
     /** @var \Drupal\views\Plugin\views\pager\Full $pager */
     $pager = $variables['view']->pager;
+    if (empty($pager)) {
+      return;
+    }
     $current_page = $pager->getCurrentPage();
-
-    if ($current_page == NULL) {
+    if (empty($current_page)) {
       return;
     }
 
