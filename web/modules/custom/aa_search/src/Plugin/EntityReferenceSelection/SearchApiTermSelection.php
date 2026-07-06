@@ -3,7 +3,6 @@
 namespace Drupal\aa_search\Plugin\EntityReferenceSelection;
 
 use Drupal\Component\Utility\Html;
-use Drupal\Core\Config\ConfigValueException;
 use Drupal\Core\Entity\Attribute\EntityReferenceSelection;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
@@ -94,6 +93,10 @@ class SearchApiTermSelection extends DefaultSelection {
    * {@inheritdoc}
    */
   public function getReferenceableEntities($match = NULL, $match_operator = 'CONTAINS', $limit = 0) {
+    if (ctype_space($match)) {
+      return [];
+    }
+
     $target_type = $this->getConfiguration()['target_type'];
 
     $query = $this->buildSearchQuery($match)
