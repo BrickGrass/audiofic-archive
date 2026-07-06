@@ -169,16 +169,6 @@ set classes = [
 
           {{ content.field_cover_artist }}
 
-          <div class="mb-1">
-            {% for tag in all_tags %}
-              {% set vocabulary = tag.vid.value[0]["target_id"] %}
-              {% set fandom_or_ship = vocabulary in ["fandom", "relationship"] ? "fw-bolder" : "" %}
-              {% set warning = vocabulary == "warning" ? "fst-italic" : "" %}
-              {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': tag.id}) %}
-              <a class="{{ fandom_or_ship }} {{ warning }}" href="{{ taxonomy_path }}">{{ tag.name.value }}</a>{{- not loop.last ? ', ' -}}
-            {% endfor %}
-          </div>
-
           {% if node.field_length is not empty and content_type == "legacy_work" %}
             <span><b>{% trans %}Length{% endtrans %}</b> {{ node.field_length[0].entity.name.value }}</span>
           {% endif %}
@@ -203,6 +193,16 @@ set classes = [
               {% endfor %}
             </span>
           {% endif %}
+
+          <div class="mb-2 mt-2">
+            {% for tag in all_tags %}
+              {% set vocabulary = tag.vid.value[0]["target_id"] %}
+              {% set fandom_or_ship = vocabulary in ["fandom", "relationship"] ? "fw-bolder" : "" %}
+              {% set warning = vocabulary == "warning" ? "fst-italic" : "" %}
+              {% set taxonomy_path = path('entity.taxonomy_term.canonical', {'taxonomy_term': tag.id}) %}
+              <a class="{{ fandom_or_ship }} {{ warning }}" href="{{ taxonomy_path }}">{{ tag.name.value }}</a>{{- not loop.last ? ', ' -}}
+            {% endfor %}
+          </div>
 
           {% if node.field_legacy_series is not empty %}
             {% set legacy_series = node.field_legacy_series[0].entity %}
