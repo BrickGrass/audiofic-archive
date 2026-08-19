@@ -77,7 +77,7 @@
 	text-decoration: underline;
 }
 
-.full-work-player-playlist > button:nth-child(even) {
+.full-work-player-playlist > button:nth-child(even of button:not(.d-none)) {
 	background-color: #5C5C5B;
 }
 
